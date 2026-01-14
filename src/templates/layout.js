@@ -558,5 +558,5 @@ export function layout(title, content, activeMenu = '') {
     }
   </script>
 </body>
-</html>\`;
+</html>`;
 }
