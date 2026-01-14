@@ -464,46 +464,46 @@ export function layout(title, content, activeMenu = '') {
 
     <div class="nav-section">
       <div class="nav-section-title">Menu Principal</div>
-      <a href="/" class="nav-item \${activeMenu === 'home' ? 'active' : ''}">
+      <a href="/" class="nav-item ${activeMenu === 'home' ? 'active' : ''}">
         <i class="fas fa-home"></i> Dashboard
       </a>
-      <a href="/playbook" class="nav-item \${activeMenu === 'playbook' ? 'active' : ''}">
+      <a href="/playbook" class="nav-item ${activeMenu === 'playbook' ? 'active' : ''}">
         <i class="fas fa-book"></i> Playbook
       </a>
-      <a href="/calculadora" class="nav-item \${activeMenu === 'calculadora' ? 'active' : ''}">
+      <a href="/calculadora" class="nav-item ${activeMenu === 'calculadora' ? 'active' : ''}">
         <i class="fas fa-calculator"></i> Calculadora
       </a>
     </div>
 
     <div class="nav-section">
       <div class="nav-section-title">Gestao</div>
-      <a href="/clientes" class="nav-item \${activeMenu === 'clientes' ? 'active' : ''}">
+      <a href="/clientes" class="nav-item ${activeMenu === 'clientes' ? 'active' : ''}">
         <i class="fas fa-users"></i> Clientes
       </a>
-      <a href="/propostas" class="nav-item \${activeMenu === 'propostas' ? 'active' : ''}">
+      <a href="/propostas" class="nav-item ${activeMenu === 'propostas' ? 'active' : ''}">
         <i class="fas fa-file-invoice"></i> Propostas
       </a>
-      <a href="/contratos" class="nav-item \${activeMenu === 'contratos' ? 'active' : ''}">
+      <a href="/contratos" class="nav-item ${activeMenu === 'contratos' ? 'active' : ''}">
         <i class="fas fa-file-signature"></i> Contratos
       </a>
     </div>
 
     <div class="nav-section">
       <div class="nav-section-title">Recursos</div>
-      <a href="/playbook/scripts" class="nav-item \${activeMenu === 'scripts' ? 'active' : ''}">
+      <a href="/playbook/scripts" class="nav-item ${activeMenu === 'scripts' ? 'active' : ''}">
         <i class="fas fa-comment-dots"></i> Scripts
       </a>
-      <a href="/playbook/objecoes" class="nav-item \${activeMenu === 'objecoes' ? 'active' : ''}">
+      <a href="/playbook/objecoes" class="nav-item ${activeMenu === 'objecoes' ? 'active' : ''}">
         <i class="fas fa-shield-alt"></i> Objecoes
       </a>
-      <a href="/playbook/planos" class="nav-item \${activeMenu === 'planos' ? 'active' : ''}">
+      <a href="/playbook/planos" class="nav-item ${activeMenu === 'planos' ? 'active' : ''}">
         <i class="fas fa-tags"></i> Planos
       </a>
     </div>
   </nav>
 
   <main class="main-content">
-    \${content}
+    ${content}
   </main>
 
   <div class="toast-container" id="toastContainer"></div>
