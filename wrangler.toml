@@ -1,0 +1,8 @@
+name = "playbook-vendas-paper"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "papervines-playbook"
+database_id = "a73b2208-94cd-481c-acfb-516e3e7c0e29"
