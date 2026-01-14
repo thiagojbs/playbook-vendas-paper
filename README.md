@@ -91,3 +91,4 @@ O sistema usa Cloudflare D1 com as seguintes tabelas:
 ## Licenca
 
 Propriedade de Paper Vines Digital.
+# Deploy trigger: Wed Jan 14 23:49:14 UTC 2026
