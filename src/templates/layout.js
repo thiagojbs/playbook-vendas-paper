@@ -1,4 +1,4 @@
-// Template base para todas as páginas
+// Template base para todas as páginas - Paper Vines Playbook
 export function layout(title, content, activeMenu = '') {
   return `<!DOCTYPE html>
 <html lang="pt-BR">
