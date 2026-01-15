@@ -54,9 +54,9 @@ export async function getSteps(env) {
   return { items: panel.steps || [], panel };
 }
 
-// Buscar detalhes do painel
+// Buscar detalhes do painel com steps incluídos
 export async function getPanel(env) {
-  return fetchCRM(`/crm/v1/panel/${PANEL_ID}`, env);
+  return fetchCRM(`/crm/v1/panel/${PANEL_ID}?IncludeDetails=steps,tags`, env);
 }
 
 // Buscar cards por etapa específica
