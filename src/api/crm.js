@@ -48,14 +48,10 @@ export async function getCardById(env, cardId) {
   return fetchCRM(`/crm/v1/panel/card/${cardId}?IncludeDetails=contact,tags,annotations`, env);
 }
 
-// Buscar todos os steps (etapas) do painel
+// Buscar todos os steps (etapas) do painel - obtidos do próprio painel
 export async function getSteps(env) {
-  const params = new URLSearchParams({
-    PanelId: PANEL_ID,
-    PageSize: '50'
-  });
-
-  return fetchCRM(`/crm/v1/panel/step?${params}`, env);
+  const panel = await getPanel(env);
+  return { items: panel.steps || [], panel };
 }
 
 // Buscar detalhes do painel
