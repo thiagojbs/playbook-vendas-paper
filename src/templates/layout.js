@@ -63,35 +63,26 @@ export function layout(title, content, activeMenu = '') {
     .logo {
       display: flex;
       align-items: center;
-      gap: 12px;
     }
 
-    .logo-icon {
-      width: 40px;
-      height: 40px;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      border-radius: 10px;
+    .logo-link {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 18px;
+      flex-direction: column;
+      align-items: flex-start;
+      text-decoration: none;
+      gap: 2px;
     }
 
-    .logo-text {
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .logo-text span {
-      color: var(--primary);
+    .logo-img {
+      height: 32px;
+      width: auto;
     }
 
     .logo-subtitle {
-      font-size: 12px;
-      color: var(--text-secondary);
-      font-weight: 400;
+      font-size: 13px;
+      color: var(--primary);
+      font-weight: 600;
+      letter-spacing: 0.5px;
     }
 
     .header-status {
@@ -873,13 +864,10 @@ export function layout(title, content, activeMenu = '') {
   <header class="header">
     <div class="header-content">
       <div class="logo">
-        <div class="logo-icon">
-          <i class="fas fa-leaf"></i>
-        </div>
-        <div>
-          <div class="logo-text">Paper Vines <span>Playbook</span></div>
-          <div class="logo-subtitle">Sistema de Vendas e Propostas</div>
-        </div>
+        <a href="/" class="logo-link">
+          <img src="https://papervines.digital/assets/logo-paper-ixAv9qZx.png" alt="Paper Vines" class="logo-img">
+          <div class="logo-subtitle">Playbook de Vendas</div>
+        </a>
       </div>
       <div class="header-status">Online - Multi-User</div>
     </div>
