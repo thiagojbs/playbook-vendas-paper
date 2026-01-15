@@ -7,22 +7,28 @@ const PANEL_ID = '5369fc64-cc15-41d3-a780-664878183b8b';
 // Função helper para fazer requisições ao CRM
 async function fetchCRM(endpoint, env, options = {}) {
   const apiKey = env.CRM_API_KEY || 'pn_hynXVnpyybGt1unkdPLhzYuyUJN7atcfvxCqs13E';
+  const url = `${CRM_BASE_URL}${endpoint}`;
 
-  const response = await fetch(`${CRM_BASE_URL}${endpoint}`, {
-    ...options,
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      ...options.headers
+  try {
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        ...options.headers
+      }
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`CRM API Error: ${response.status} - ${errorText}`);
     }
-  });
 
-  if (!response.ok) {
-    throw new Error(`CRM API Error: ${response.status} ${response.statusText}`);
+    return response.json();
+  } catch (error) {
+    throw new Error(`CRM Request Failed: ${error.message} (URL: ${url})`);
   }
-
-  return response.json();
 }
 
 // Buscar todos os cards do painel (com paginação)
