@@ -3,6 +3,7 @@ import { PROCESSO_VENDAS, SCRIPTS, OBJECOES, CHECKLIST_COMERCIAL, CHECKLIST_CONT
 import { PLANOS_CHATBOTS, PLANOS_TELECOM, PLANOS_IA } from '../data/precos.js';
 import { OBJECOES_EXPANDIDAS, TECNICAS_GERAIS, GATILHOS_MENTAIS, DIFERENCIAIS, ESTATISTICAS_PAPERVINES } from '../data/objecoes.js';
 import { ETAPAS_FUNIL, SCRIPTS_STATS, SEQUENCIAS_COMPLETAS, DICAS_COMUNICACAO, TEMPLATES_SEGMENTO } from '../data/scripts.js';
+import { POLITICAS_WHATSAPP, POLITICAS_META_ANUNCIOS, PRECOS_WHATSAPP, REQUISITOS_API_EXPANDIDOS, FLUXO_IMPLANTACAO, PERGUNTAS_FREQUENTES, DIFERENCIAIS_PAPERVINES, LINKS_IMPORTANTES } from '../data/playbook-expandido.js';
 
 export function renderPlaybook(path) {
   let content = '';
@@ -15,14 +16,368 @@ export function renderPlaybook(path) {
 }
 
 function renderPlaybookMain() {
-  let etapasHtml = PROCESSO_VENDAS.etapas.map(etapa => {
-    let acoesHtml = etapa.acoes.map(acao => '<li style="display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--border);"><i class="fas fa-check-circle" style="color: var(--primary);"></i>' + acao + '</li>').join('');
-    return '<div class="accordion"><div class="accordion-header"><div class="accordion-title"><span style="width: 28px; height: 28px; background: var(--primary); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; margin-right: 8px;">' + etapa.numero + '</span>' + etapa.titulo + '<span class="badge badge-info" style="margin-left: 12px;">' + etapa.tempo_estimado + '</span></div><i class="fas fa-chevron-down"></i></div><div class="accordion-content"><p style="margin-bottom: 16px; color: var(--text-secondary);">' + etapa.descricao + '</p><div style="font-weight: 500; margin-bottom: 8px;">Acoes:</div><ul style="list-style: none; padding: 0;">' + acoesHtml + '</ul></div></div>';
-  }).join('');
-  
-  let checklistHtml = CHECKLIST_COMERCIAL.slice(0, 6).map(item => '<div style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border);"><input type="checkbox" style="width: 20px; height: 20px; accent-color: var(--primary);"><span>' + item.item + '</span></div>').join('');
+  // Diferenciais Paper Vines
+  const diferenciaisHtml = DIFERENCIAIS_PAPERVINES.map(d => `
+    <div style="display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: ${d.destaque ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(16, 185, 129, 0.1))' : 'white'}; border: 1px solid ${d.destaque ? 'var(--primary)' : 'var(--border)'}; border-radius: 12px; ${d.destaque ? 'box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);' : ''}">
+      <div style="width: 44px; height: 44px; background: ${d.destaque ? 'var(--primary)' : 'var(--bg-page)'}; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+        <i class="fas fa-${d.icone}" style="color: ${d.destaque ? 'white' : 'var(--primary)'}; font-size: 18px;"></i>
+      </div>
+      <div>
+        <div style="font-weight: 600; margin-bottom: 4px;">${d.titulo}</div>
+        <div style="font-size: 13px; color: var(--text-secondary);">${d.descricao}</div>
+      </div>
+    </div>
+  `).join('');
 
-  return '<div class="page-header"><h1 class="page-title">Playbook de Vendas</h1><p class="page-subtitle">Guia completo do processo comercial Paper Vines</p></div><div class="card fade-in"><div class="card-header"><h3 class="card-title"><i class="fas fa-route"></i> Etapas do Processo de Vendas</h3></div>' + etapasHtml + '</div><div class="grid grid-2"><div class="card fade-in"><div class="card-header"><h3 class="card-title"><i class="fas fa-clipboard-list"></i> Checklist Comercial</h3></div>' + checklistHtml + '</div><div class="card fade-in"><div class="card-header"><h3 class="card-title"><i class="fas fa-link"></i> Links Uteis</h3></div><div style="display: flex; flex-direction: column; gap: 8px;"><a href="' + LINKS_UTEIS.apresentacao + '" target="_blank" class="nav-item"><i class="fas fa-presentation"></i> Apresentacao</a><a href="' + LINKS_UTEIS.propostas_figma + '" target="_blank" class="nav-item"><i class="fas fa-file-invoice"></i> Propostas (Figma)</a><a href="' + LINKS_UTEIS.modelos_contrato + '" target="_blank" class="nav-item"><i class="fas fa-file-contract"></i> Modelos de Contrato</a><a href="' + LINKS_UTEIS.clicksign + '" target="_blank" class="nav-item"><i class="fas fa-signature"></i> ClickSign</a><a href="' + LINKS_UTEIS.asaas_clientes + '" target="_blank" class="nav-item"><i class="fas fa-money-bill"></i> Asaas</a></div></div></div>';
+  // Precos WhatsApp
+  const precosHtml = PRECOS_WHATSAPP.categorias.map(cat => `
+    <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px; text-align: center; position: relative; overflow: hidden;">
+      <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: ${cat.cor};"></div>
+      <div style="width: 48px; height: 48px; background: ${cat.cor}15; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+        <i class="fas fa-${cat.icone}" style="color: ${cat.cor}; font-size: 20px;"></i>
+      </div>
+      <div style="font-weight: 600; font-size: 16px; margin-bottom: 4px;">${cat.nome}</div>
+      <div style="font-size: 28px; font-weight: 700; color: ${cat.cor};">$${cat.valor.toFixed(4)}</div>
+      <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 12px;">USD por conversa</div>
+      <div style="font-size: 12px; color: var(--text-secondary); text-align: left; padding: 12px; background: var(--bg-page); border-radius: 8px;">
+        ${cat.descricao}
+      </div>
+    </div>
+  `).join('');
+
+  const beneficiosHtml = PRECOS_WHATSAPP.beneficios.map(b => `
+    <div style="display: flex; align-items: flex-start; gap: 12px; padding: 12px; background: rgba(16, 185, 129, 0.08); border-radius: 8px;">
+      <i class="fas fa-gift" style="color: var(--secondary); font-size: 16px; margin-top: 2px;"></i>
+      <div>
+        <div style="font-weight: 600; font-size: 14px;">${b.titulo}</div>
+        <div style="font-size: 12px; color: var(--text-secondary);">${b.descricao}</div>
+      </div>
+    </div>
+  `).join('');
+
+  // Politicas WhatsApp
+  const politicasWhatsappHtml = POLITICAS_WHATSAPP.secoes.map(sec => `
+    <div class="accordion">
+      <div class="accordion-header">
+        <div class="accordion-title">
+          <i class="fas fa-${sec.icone}" style="color: var(--primary); margin-right: 8px;"></i>
+          ${sec.titulo}
+        </div>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="accordion-content">
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          ${sec.itens.map(item => `
+            <li style="display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border);">
+              <i class="fas fa-check-circle" style="color: var(--secondary); margin-top: 3px;"></i>
+              <span style="font-size: 13px;">${item}</span>
+            </li>
+          `).join('')}
+        </ul>
+      </div>
+    </div>
+  `).join('');
+
+  const consequenciasHtml = POLITICAS_WHATSAPP.consequencias.map(c => `
+    <div style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: rgba(239, 68, 68, 0.08); border-radius: 6px; font-size: 12px;">
+      <i class="fas fa-exclamation-triangle" style="color: #ef4444;"></i>
+      ${c}
+    </div>
+  `).join('');
+
+  // Politicas Meta Anuncios
+  const metaProibidoHtml = POLITICAS_META_ANUNCIOS.proibido.map(p => `
+    <div style="display: flex; align-items: flex-start; gap: 10px; padding: 10px; border-bottom: 1px solid var(--border);">
+      <i class="fas fa-times-circle" style="color: #ef4444; margin-top: 3px;"></i>
+      <div>
+        <div style="font-weight: 500; font-size: 13px;">${p.item}</div>
+        <div style="font-size: 12px; color: var(--text-secondary);">${p.descricao}</div>
+      </div>
+    </div>
+  `).join('');
+
+  const metaRestritoHtml = POLITICAS_META_ANUNCIOS.restrito_18.map(r => `
+    <div style="display: flex; align-items: center; gap: 8px; padding: 8px 0; font-size: 13px;">
+      <i class="fas fa-user-shield" style="color: #f59e0b;"></i>
+      ${r}
+    </div>
+  `).join('');
+
+  // Requisitos API
+  const requisitosHtml = REQUISITOS_API_EXPANDIDOS.itens.map(req => `
+    <div style="display: flex; align-items: flex-start; gap: 16px; padding: 16px; background: white; border: 1px solid var(--border); border-radius: 12px; ${req.obrigatorio ? 'border-left: 4px solid ' + req.cor : ''}">
+      <div style="width: 44px; height: 44px; background: ${req.cor}15; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+        <i class="fas fa-${req.icone}" style="color: ${req.cor}; font-size: 18px;"></i>
+      </div>
+      <div style="flex: 1;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+          <span style="font-weight: 600;">${req.requisito}</span>
+          ${req.obrigatorio ? '<span class="badge badge-danger" style="font-size: 10px;">OBRIGATORIO</span>' : '<span class="badge badge-info" style="font-size: 10px;">RECOMENDADO</span>'}
+        </div>
+        <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;">${req.descricao}</div>
+        <div style="font-size: 12px; padding: 8px 12px; background: var(--bg-page); border-radius: 6px;">
+          <i class="fas fa-lightbulb" style="color: #f59e0b; margin-right: 6px;"></i>
+          <strong>Dica:</strong> ${req.dica}
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Fluxo de Implantacao
+  const fluxoHtml = FLUXO_IMPLANTACAO.etapas.map((etapa, index) => `
+    <div style="display: flex; gap: 16px; position: relative;">
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <div style="width: 40px; height: 40px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 16px; z-index: 1;">
+          ${etapa.numero}
+        </div>
+        ${index < FLUXO_IMPLANTACAO.etapas.length - 1 ? '<div style="width: 2px; flex: 1; background: var(--primary); margin: 4px 0;"></div>' : ''}
+      </div>
+      <div style="flex: 1; padding-bottom: ${index < FLUXO_IMPLANTACAO.etapas.length - 1 ? '24px' : '0'};">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+          <span style="font-weight: 600; font-size: 16px;">${etapa.titulo}</span>
+          <span class="badge badge-info">${etapa.tempo}</span>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          ${etapa.acoes.map(acao => `
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 8px 12px; background: var(--bg-page); border-radius: 6px;">
+              <i class="fas fa-check" style="color: var(--secondary);"></i>
+              ${acao}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Perguntas Frequentes
+  const faqHtml = PERGUNTAS_FREQUENTES.map(faq => `
+    <div class="accordion">
+      <div class="accordion-header">
+        <div class="accordion-title">
+          <i class="fas fa-question-circle" style="color: var(--primary); margin-right: 8px;"></i>
+          ${faq.pergunta}
+        </div>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="accordion-content">
+        <p style="margin: 0; font-size: 14px; line-height: 1.6;">${faq.resposta}</p>
+      </div>
+    </div>
+  `).join('');
+
+  // Links Importantes
+  const linksHtml = Object.entries(LINKS_IMPORTANTES).map(([categoria, links]) => {
+    const categoriaLabel = categoria === 'politicas' ? 'Politicas e Regras' :
+                          categoria === 'ferramentas' ? 'Ferramentas de Trabalho' : 'Tutoriais e Recursos';
+    const categoriaIcon = categoria === 'politicas' ? 'shield-alt' :
+                         categoria === 'ferramentas' ? 'tools' : 'graduation-cap';
+    return `
+      <div style="margin-bottom: 24px;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+          <i class="fas fa-${categoriaIcon}" style="color: var(--primary);"></i>
+          <span style="font-weight: 600;">${categoriaLabel}</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          ${links.map(link => `
+            <a href="${link.url}" target="_blank" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: white; border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: inherit; transition: all 0.2s;">
+              <i class="fas fa-external-link-alt" style="color: var(--primary);"></i>
+              <div style="flex: 1;">
+                <div style="font-weight: 500; font-size: 14px;">${link.titulo}</div>
+                <div style="font-size: 12px; color: var(--text-secondary);">${link.descricao}</div>
+              </div>
+              <i class="fas fa-chevron-right" style="color: var(--text-secondary);"></i>
+            </a>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Processo de Vendas (do original)
+  const etapasVendaHtml = PROCESSO_VENDAS.etapas.map(etapa => {
+    const acoesHtml = etapa.acoes.map(acao => `
+      <li style="display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--border);">
+        <i class="fas fa-check-circle" style="color: var(--primary);"></i>
+        ${acao}
+      </li>
+    `).join('');
+    return `
+      <div class="accordion">
+        <div class="accordion-header">
+          <div class="accordion-title">
+            <span style="width: 28px; height: 28px; background: var(--primary); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; margin-right: 8px; color: white;">${etapa.numero}</span>
+            ${etapa.titulo}
+            <span class="badge badge-info" style="margin-left: 12px;">${etapa.tempo_estimado}</span>
+          </div>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="accordion-content">
+          <p style="margin-bottom: 16px; color: var(--text-secondary);">${etapa.descricao}</p>
+          <div style="font-weight: 500; margin-bottom: 8px;">Acoes:</div>
+          <ul style="list-style: none; padding: 0;">${acoesHtml}</ul>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Checklist
+  const checklistHtml = CHECKLIST_COMERCIAL.map(item => `
+    <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border);">
+      <input type="checkbox" style="width: 18px; height: 18px; accent-color: var(--primary);">
+      <span style="font-size: 13px;">${item.item}</span>
+    </div>
+  `).join('');
+
+  return `
+    <div class="page-header">
+      <h1 class="page-title"><i class="fas fa-book-open"></i> Playbook de Vendas</h1>
+      <p class="page-subtitle">Guia completo do processo comercial Paper Vines - Politicas, Precos e Boas Praticas</p>
+    </div>
+
+    <!-- Diferenciais -->
+    <div class="card fade-in" style="margin-bottom: 24px; background: linear-gradient(135deg, #f8f9fa, white);">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-trophy" style="color: #f59e0b;"></i> Por que Paper Vines?</h3>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+        ${diferenciaisHtml}
+      </div>
+    </div>
+
+    <!-- Precos WhatsApp -->
+    <div class="card fade-in" style="margin-bottom: 24px;">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fab fa-whatsapp" style="color: #25D366;"></i> ${PRECOS_WHATSAPP.titulo}</h3>
+        <a href="${PRECOS_WHATSAPP.link}" target="_blank" class="badge badge-info" style="text-decoration: none;">
+          <i class="fas fa-external-link-alt"></i> Ver tabela completa
+        </a>
+      </div>
+      <div style="margin-bottom: 16px; padding: 12px 16px; background: rgba(59, 130, 246, 0.08); border-radius: 8px; border-left: 4px solid #3b82f6;">
+        <i class="fas fa-info-circle" style="color: #3b82f6; margin-right: 8px;"></i>
+        <span style="font-size: 13px;"><strong>Atualizado:</strong> ${PRECOS_WHATSAPP.atualizacao} | ${PRECOS_WHATSAPP.info_importante}</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px;">
+        ${precosHtml}
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+        ${beneficiosHtml}
+      </div>
+    </div>
+
+    <!-- Politicas WhatsApp -->
+    <div class="card fade-in" style="margin-bottom: 24px;">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-shield-alt" style="color: #25D366;"></i> ${POLITICAS_WHATSAPP.titulo}</h3>
+        <a href="${POLITICAS_WHATSAPP.link}" target="_blank" class="badge badge-success" style="text-decoration: none;">
+          <i class="fas fa-external-link-alt"></i> Enviar para cliente
+        </a>
+      </div>
+      <p style="color: var(--text-secondary); margin-bottom: 16px; font-size: 14px;">${POLITICAS_WHATSAPP.resumo}</p>
+      ${politicasWhatsappHtml}
+      <div style="margin-top: 20px;">
+        <div style="font-weight: 600; margin-bottom: 12px; color: #ef4444;">
+          <i class="fas fa-exclamation-triangle"></i> Consequencias de Violacoes
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+          ${consequenciasHtml}
+        </div>
+      </div>
+    </div>
+
+    <!-- Politicas Meta Anuncios -->
+    <div class="card fade-in" style="margin-bottom: 24px;">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fab fa-meta" style="color: #1877F2;"></i> ${POLITICAS_META_ANUNCIOS.titulo}</h3>
+        <a href="${POLITICAS_META_ANUNCIOS.link}" target="_blank" class="badge badge-info" style="text-decoration: none;">
+          <i class="fas fa-external-link-alt"></i> Ver politica completa
+        </a>
+      </div>
+      <p style="color: var(--text-secondary); margin-bottom: 16px; font-size: 14px;">${POLITICAS_META_ANUNCIOS.resumo}</p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div>
+          <div style="font-weight: 600; margin-bottom: 12px; color: #ef4444;">
+            <i class="fas fa-ban"></i> Conteudo Proibido
+          </div>
+          <div style="background: rgba(239, 68, 68, 0.05); border-radius: 8px; padding: 4px;">
+            ${metaProibidoHtml}
+          </div>
+        </div>
+        <div>
+          <div style="font-weight: 600; margin-bottom: 12px; color: #f59e0b;">
+            <i class="fas fa-user-shield"></i> Restrito a +18
+          </div>
+          <div style="background: rgba(245, 158, 11, 0.05); border-radius: 8px; padding: 12px;">
+            ${metaRestritoHtml}
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 16px; padding: 16px; background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(59, 130, 246, 0.08)); border-radius: 8px; border-left: 4px solid var(--primary);">
+        <div style="font-weight: 600; margin-bottom: 4px;">
+          <i class="fas fa-lightbulb" style="color: var(--primary);"></i> Dica para o Vendedor
+        </div>
+        <p style="margin: 0; font-size: 13px; color: var(--text-secondary);">${POLITICAS_META_ANUNCIOS.dica_vendedor}</p>
+      </div>
+    </div>
+
+    <!-- Requisitos API -->
+    <div class="card fade-in" style="margin-bottom: 24px;">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-cogs" style="color: var(--primary);"></i> ${REQUISITOS_API_EXPANDIDOS.titulo}</h3>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        ${requisitosHtml}
+      </div>
+    </div>
+
+    <!-- Fluxo de Implantacao -->
+    <div class="card fade-in" style="margin-bottom: 24px;">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-project-diagram" style="color: var(--primary);"></i> ${FLUXO_IMPLANTACAO.titulo}</h3>
+        <span class="badge badge-info">7-14 dias em media</span>
+      </div>
+      <div style="padding: 20px 0;">
+        ${fluxoHtml}
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-bottom: 24px;">
+      <!-- Processo de Vendas -->
+      <div class="card fade-in">
+        <div class="card-header">
+          <h3 class="card-title"><i class="fas fa-route"></i> Etapas do Processo de Vendas</h3>
+        </div>
+        ${etapasVendaHtml}
+      </div>
+
+      <!-- FAQ -->
+      <div class="card fade-in">
+        <div class="card-header">
+          <h3 class="card-title"><i class="fas fa-question-circle"></i> Perguntas Frequentes</h3>
+        </div>
+        ${faqHtml}
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <!-- Checklist -->
+      <div class="card fade-in">
+        <div class="card-header">
+          <h3 class="card-title"><i class="fas fa-clipboard-list"></i> Checklist Comercial</h3>
+        </div>
+        ${checklistHtml}
+      </div>
+
+      <!-- Links Importantes -->
+      <div class="card fade-in">
+        <div class="card-header">
+          <h3 class="card-title"><i class="fas fa-link"></i> Links Importantes</h3>
+        </div>
+        ${linksHtml}
+      </div>
+    </div>
+  `;
 }
 
 function renderScripts() {
