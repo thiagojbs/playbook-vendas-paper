@@ -899,6 +899,9 @@ export function layout(title, content, activeMenu = '') {
       <a href="/desempenho" class="nav-tab ${activeMenu === 'desempenho' ? 'active' : ''}">
         <i class="fas fa-chart-line"></i> Desempenho
       </a>
+      <a href="/desempenho/crm" class="nav-tab ${activeMenu === 'crm' ? 'active' : ''}" style="background: ${activeMenu === 'crm' ? 'rgba(16, 185, 129, 0.15)' : 'rgba(16, 185, 129, 0.05)'}; border: 1px solid rgba(16, 185, 129, 0.3);">
+        <i class="fas fa-broadcast-tower" style="color: #10b981;"></i> <span style="color: #10b981; font-weight: 600;">CRM Live</span>
+      </a>
     </div>
   </nav>
 

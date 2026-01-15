@@ -177,158 +177,169 @@ function renderDesempenhoHome(env) {
 
 function renderCRM(env) {
   const content = `
-    <div class="page-header">
-      <h1 class="page-title"><i class="fas fa-database"></i> CRM em Tempo Real</h1>
-      <p class="page-subtitle">Dados sincronizados diretamente do CRM Paper Vines</p>
-    </div>
-
-    <!-- Status de Conexão -->
-    <div class="card fade-in" style="margin-bottom: 24px; background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(16, 185, 129, 0.08)); border-left: 4px solid var(--primary);">
-      <div style="display: flex; align-items: center; justify-content: space-between;">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <div id="statusIcon" style="width: 12px; height: 12px; background: #f59e0b; border-radius: 50%; animation: pulse 2s infinite;"></div>
-          <span id="statusText" style="font-weight: 500;">Conectando ao CRM...</span>
+    <!-- Header Compacto com Status -->
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div id="statusIcon" style="width: 10px; height: 10px; background: #f59e0b; border-radius: 50%; animation: pulse 2s infinite;"></div>
+          <span id="statusText" style="font-size: 13px; color: var(--text-secondary);">Conectando...</span>
         </div>
-        <button class="btn btn-primary btn-sm" onclick="carregarDadosCRM()">
-          <i class="fas fa-sync-alt"></i> Atualizar
-        </button>
+        <span class="badge badge-info" id="ultimaAtualizacao" style="font-size: 11px;">--:--</span>
+      </div>
+      <button class="btn btn-sm" onclick="carregarDadosCRM()" style="background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3);">
+        <i class="fas fa-sync-alt"></i> Atualizar
+      </button>
+    </div>
+
+    <!-- KPIs Compactos em Linha -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px;">
+      <div style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.05)); border-radius: 12px; padding: 16px; border: 1px solid rgba(139, 92, 246, 0.2);">
+        <div style="font-size: 28px; font-weight: 700; color: #8b5cf6;" id="totalCards">-</div>
+        <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">Total Cards</div>
+      </div>
+      <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05)); border-radius: 12px; padding: 16px; border: 1px solid rgba(16, 185, 129, 0.2);">
+        <div style="font-size: 28px; font-weight: 700; color: #10b981;" id="cardsHoje">-</div>
+        <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">Hoje</div>
+      </div>
+      <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05)); border-radius: 12px; padding: 16px; border: 1px solid rgba(59, 130, 246, 0.2);">
+        <div style="font-size: 28px; font-weight: 700; color: #3b82f6;" id="cardsSemana">-</div>
+        <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">Semana</div>
+      </div>
+      <div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05)); border-radius: 12px; padding: 16px; border: 1px solid rgba(245, 158, 11, 0.2);">
+        <div style="font-size: 28px; font-weight: 700; color: #f59e0b;" id="cardsMes">-</div>
+        <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">Mês</div>
       </div>
     </div>
 
-    <!-- Cards de Resumo -->
-    <div class="stats-grid" id="resumoCRM">
-      <div class="stat-card purple">
-        <div class="stat-value" id="totalCards">-</div>
-        <div class="stat-label">Total de Cards</div>
-      </div>
-      <div class="stat-card orange">
-        <div class="stat-value" id="cardsHoje">-</div>
-        <div class="stat-label">Novos Hoje</div>
-      </div>
-      <div class="stat-card green">
-        <div class="stat-value" id="cardsSemana">-</div>
-        <div class="stat-label">Esta Semana</div>
-      </div>
-      <div class="stat-card purple">
-        <div class="stat-value" id="cardsMes">-</div>
-        <div class="stat-label">Este Mês</div>
-      </div>
-    </div>
+    <!-- Layout Principal: Funil + Sidebar -->
+    <div style="display: grid; grid-template-columns: 1fr 320px; gap: 20px;">
 
-    <!-- Funil Visual -->
-    <div class="card fade-in" style="margin-top: 24px;">
-      <div class="card-header">
-        <h3 class="card-title"><i class="fas fa-filter"></i> Funil de Vendas</h3>
-        <span class="badge badge-info" id="ultimaAtualizacao">-</span>
-      </div>
-      <div id="funilContainer" style="padding: 20px 0;">
-        <div style="text-align: center; padding: 60px; color: var(--text-secondary);">
-          <i class="fas fa-spinner fa-spin" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
-          <p>Carregando dados do funil...</p>
+      <!-- Coluna Principal: Funil Compacto -->
+      <div class="card fade-in" style="padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h3 style="font-size: 14px; font-weight: 600; color: var(--text-primary); margin: 0;"><i class="fas fa-filter" style="margin-right: 8px; color: var(--primary);"></i>Pipeline de Vendas</h3>
+          <span id="totalPipeline" style="font-size: 12px; color: var(--text-secondary);">-</span>
         </div>
-      </div>
-    </div>
-
-    <!-- Tabela de Etapas -->
-    <div class="card fade-in" style="margin-top: 24px;">
-      <div class="card-header">
-        <h3 class="card-title"><i class="fas fa-list"></i> Etapas do Funil</h3>
-      </div>
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Etapa</th>
-              <th>Cards</th>
-              <th>Valor Total</th>
-              <th>% do Funil</th>
-            </tr>
-          </thead>
-          <tbody id="tabelaEtapas">
-            <tr>
-              <td colspan="5" style="text-align: center; padding: 40px; color: var(--text-secondary);">
-                <i class="fas fa-spinner fa-spin"></i> Carregando...
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Taxas de Conversão -->
-    <div class="grid grid-2" style="margin-top: 24px;">
-      <div class="card fade-in">
-        <div class="card-header">
-          <h3 class="card-title"><i class="fas fa-percentage"></i> Taxas de Conversão</h3>
-        </div>
-        <div id="taxasConversaoCRM">
+        <div id="funilContainer">
           <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
-            <i class="fas fa-spinner fa-spin" style="font-size: 24px;"></i>
-            <p>Calculando...</p>
+            <i class="fas fa-spinner fa-spin" style="font-size: 24px; opacity: 0.5;"></i>
           </div>
         </div>
       </div>
 
-      <div class="card fade-in">
-        <div class="card-header">
-          <h3 class="card-title"><i class="fas fa-chart-pie"></i> Distribuição do Funil</h3>
+      <!-- Sidebar: Métricas Rápidas -->
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+
+        <!-- Distribuição Visual -->
+        <div class="card fade-in" style="padding: 16px;">
+          <h4 style="font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin: 0 0 12px 0; letter-spacing: 0.5px;">
+            <i class="fas fa-chart-pie" style="margin-right: 6px;"></i>Distribuição
+          </h4>
+          <div id="distribuicaoFunil">
+            <div style="text-align: center; padding: 20px;"><i class="fas fa-spinner fa-spin"></i></div>
+          </div>
         </div>
-        <div id="distribuicaoFunil">
-          <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
-            <i class="fas fa-spinner fa-spin" style="font-size: 24px;"></i>
-            <p>Calculando...</p>
+
+        <!-- Top 5 Conversões -->
+        <div class="card fade-in" style="padding: 16px; flex: 1;">
+          <h4 style="font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin: 0 0 12px 0; letter-spacing: 0.5px;">
+            <i class="fas fa-exchange-alt" style="margin-right: 6px;"></i>Conversões
+          </h4>
+          <div id="taxasConversaoCRM">
+            <div style="text-align: center; padding: 20px;"><i class="fas fa-spinner fa-spin"></i></div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Tabela Compacta (Colapsável) -->
+    <details class="card fade-in" style="margin-top: 20px; cursor: pointer;" open>
+      <summary style="padding: 16px; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; user-select: none;">
+        <i class="fas fa-table" style="color: var(--primary);"></i>
+        Detalhes por Etapa
+        <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 12px; transition: transform 0.3s;"></i>
+      </summary>
+      <div style="padding: 0 16px 16px;">
+        <div style="overflow-x: auto;">
+          <table style="font-size: 13px;">
+            <thead>
+              <tr>
+                <th style="padding: 10px 12px;">#</th>
+                <th style="padding: 10px 12px;">Etapa</th>
+                <th style="padding: 10px 12px; text-align: center;">Qty</th>
+                <th style="padding: 10px 12px; text-align: right;">Valor</th>
+                <th style="padding: 10px 12px; width: 120px;">%</th>
+              </tr>
+            </thead>
+            <tbody id="tabelaEtapas">
+              <tr><td colspan="5" style="text-align: center; padding: 30px;"><i class="fas fa-spinner fa-spin"></i></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
 
     <style>
-      @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
+      @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+      @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+
+      .pipeline-row {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border-color);
+        animation: slideIn 0.3s ease forwards;
+        opacity: 0;
       }
-      .funil-step {
+      .pipeline-row:last-child { border-bottom: none; }
+      .pipeline-bar {
+        height: 32px;
+        border-radius: 6px;
         display: flex;
         align-items: center;
-        margin-bottom: 8px;
-      }
-      .funil-bar {
-        height: 48px;
-        background: linear-gradient(135deg, var(--primary), #6366f1);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 16px;
+        padding: 0 12px;
         color: white;
+        font-size: 12px;
         font-weight: 500;
-        transition: all 0.3s;
-        min-width: 120px;
-      }
-      .funil-bar:hover {
-        transform: translateX(8px);
-        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
-      }
-      .conversion-arrow {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 8px 0;
-        color: var(--text-secondary);
-        font-size: 13px;
-      }
-      .progress-bar {
-        height: 8px;
-        background: var(--bg-page);
-        border-radius: 4px;
+        transition: all 0.2s;
+        white-space: nowrap;
         overflow: hidden;
+        text-overflow: ellipsis;
       }
-      .progress-fill {
-        height: 100%;
-        background: linear-gradient(90deg, var(--primary), var(--secondary));
+      .pipeline-bar:hover { transform: scaleX(1.02); filter: brightness(1.1); }
+      .pipeline-count {
+        font-size: 18px;
+        font-weight: 700;
+        min-width: 45px;
+        text-align: right;
+      }
+      .pipeline-conv {
+        font-size: 11px;
+        color: var(--text-secondary);
+        min-width: 55px;
+        text-align: right;
+      }
+      .conv-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 8px;
         border-radius: 4px;
-        transition: width 0.5s ease;
+        font-size: 11px;
+        font-weight: 600;
+      }
+      .conv-high { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+      .conv-mid { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+      .conv-low { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+
+      details summary::-webkit-details-marker { display: none; }
+      details[open] summary .fa-chevron-down { transform: rotate(180deg); }
+
+      @media (max-width: 900px) {
+        .card { grid-template-columns: 1fr !important; }
+        div[style*="grid-template-columns: 1fr 320px"] { grid-template-columns: 1fr !important; }
       }
     </style>
 
@@ -338,10 +349,9 @@ function renderCRM(env) {
       async function carregarDadosCRM() {
         const statusIcon = document.getElementById('statusIcon');
         const statusText = document.getElementById('statusText');
-
         statusIcon.style.background = '#f59e0b';
-        statusIcon.style.animation = 'pulse 1s infinite';
-        statusText.textContent = 'Sincronizando com CRM...';
+        statusIcon.style.animation = 'pulse 0.8s infinite';
+        statusText.textContent = 'Sincronizando...';
 
         try {
           const response = await fetch('/api/crm/metrics');
@@ -351,95 +361,60 @@ function renderCRM(env) {
             dadosCRM = data;
             statusIcon.style.background = '#10b981';
             statusIcon.style.animation = 'none';
-            statusText.textContent = 'Conectado ao CRM Paper Vines';
-
+            statusText.textContent = 'Conectado';
             atualizarInterface(data);
           } else {
-            throw new Error(data.error || 'Erro ao carregar dados');
+            throw new Error(data.error || 'Erro');
           }
         } catch (error) {
-          console.error('Erro:', error);
           statusIcon.style.background = '#ef4444';
           statusIcon.style.animation = 'none';
-          statusText.textContent = 'Erro ao conectar: ' + error.message;
-
-          // Mostrar erro na interface
-          document.getElementById('funilContainer').innerHTML = \`
-            <div style="text-align: center; padding: 40px; color: #ef4444;">
-              <i class="fas fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 16px;"></i>
-              <p>Não foi possível carregar os dados do CRM.</p>
-              <p style="font-size: 13px; color: var(--text-secondary);">\${error.message}</p>
-              <button class="btn btn-primary" onclick="carregarDadosCRM()" style="margin-top: 16px;">
-                <i class="fas fa-redo"></i> Tentar Novamente
-              </button>
-            </div>
-          \`;
+          statusText.textContent = 'Erro: ' + error.message.substring(0, 30);
+          document.getElementById('funilContainer').innerHTML = '<div style="text-align: center; padding: 40px; color: #ef4444;"><i class="fas fa-exclamation-triangle" style="font-size: 32px;"></i><p style="margin-top: 12px; font-size: 13px;">'+error.message+'</p><button class="btn btn-sm" onclick="carregarDadosCRM()" style="margin-top: 12px;"><i class="fas fa-redo"></i> Tentar</button></div>';
         }
       }
 
       function atualizarInterface(data) {
-        // Atualizar resumo
         document.getElementById('totalCards').textContent = data.summary.totalCards || 0;
         document.getElementById('cardsHoje').textContent = data.summary.cardsToday || 0;
         document.getElementById('cardsSemana').textContent = data.summary.cardsThisWeek || 0;
         document.getElementById('cardsMes').textContent = data.summary.cardsThisMonth || 0;
 
-        // Atualizar timestamp
-        const timestamp = new Date(data.timestamp);
-        document.getElementById('ultimaAtualizacao').textContent = 'Atualizado: ' + timestamp.toLocaleTimeString('pt-BR');
+        const ts = new Date(data.timestamp);
+        document.getElementById('ultimaAtualizacao').textContent = ts.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'});
+        document.getElementById('totalPipeline').textContent = data.summary.totalCards + ' cards no pipeline';
 
-        // Renderizar funil
         renderizarFunil(data.steps, data.summary.totalCards);
-
-        // Renderizar tabela
         renderizarTabela(data.steps, data.summary.totalCards);
-
-        // Renderizar conversões
         renderizarConversoes(data.conversions);
-
-        // Renderizar distribuição
         renderizarDistribuicao(data.steps, data.summary.totalCards);
       }
 
       function renderizarFunil(steps, total) {
         if (!steps || steps.length === 0) {
-          document.getElementById('funilContainer').innerHTML = \`
-            <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
-              <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;"></i>
-              <p>Nenhuma etapa encontrada no funil.</p>
-            </div>
-          \`;
+          document.getElementById('funilContainer').innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-secondary);"><i class="fas fa-inbox" style="font-size: 32px; opacity: 0.3;"></i><p>Nenhuma etapa</p></div>';
           return;
         }
 
         const maxCount = Math.max(...steps.map(s => s.count), 1);
-        const colors = ['#8b5cf6', '#f59e0b', '#3b82f6', '#ec4899', '#10b981', '#6366f1', '#ef4444', '#14b8a6'];
+        const colors = ['#8b5cf6', '#f59e0b', '#3b82f6', '#ec4899', '#10b981', '#6366f1', '#ef4444', '#14b8a6', '#a855f7', '#0ea5e9', '#f97316', '#84cc16'];
 
         let html = '';
-        steps.forEach((step, index) => {
-          const width = Math.max((step.count / maxCount) * 100, 15);
-          const color = colors[index % colors.length];
+        steps.forEach((step, i) => {
+          const width = Math.max((step.count / maxCount) * 100, 20);
+          const color = colors[i % colors.length];
+          const nextStep = steps[i + 1];
+          const convRate = nextStep && step.count > 0 ? ((nextStep.count / step.count) * 100).toFixed(0) : null;
 
-          html += \`
-            <div class="funil-step">
-              <div class="funil-bar" style="width: \${width}%; background: linear-gradient(135deg, \${color}, \${color}cc);">
-                <span>\${step.title}</span>
-                <span style="font-size: 20px; font-weight: 700;">\${step.count}</span>
-              </div>
-            </div>
-          \`;
-
-          // Adicionar seta de conversão
-          if (index < steps.length - 1) {
-            const nextStep = steps[index + 1];
-            const convRate = step.count > 0 ? ((nextStep.count / step.count) * 100).toFixed(1) : 0;
-            html += \`
-              <div class="conversion-arrow">
-                <i class="fas fa-arrow-down" style="margin-right: 8px;"></i>
-                \${convRate}% conversão
-              </div>
-            \`;
+          html += '<div class="pipeline-row" style="animation-delay: ' + (i * 0.05) + 's;">';
+          html += '<div class="pipeline-bar" style="width: ' + width + '%; background: linear-gradient(90deg, ' + color + ', ' + color + 'cc);">' + step.title + '</div>';
+          html += '<div class="pipeline-count" style="color: ' + color + ';">' + step.count + '</div>';
+          if (convRate !== null) {
+            html += '<div class="pipeline-conv"><i class="fas fa-arrow-down" style="font-size: 9px;"></i> ' + convRate + '%</div>';
+          } else {
+            html += '<div class="pipeline-conv"></div>';
           }
+          html += '</div>';
         });
 
         document.getElementById('funilContainer').innerHTML = html;
@@ -447,134 +422,88 @@ function renderCRM(env) {
 
       function renderizarTabela(steps, total) {
         if (!steps || steps.length === 0) {
-          document.getElementById('tabelaEtapas').innerHTML = \`
-            <tr>
-              <td colspan="5" style="text-align: center; padding: 40px; color: var(--text-secondary);">
-                Nenhuma etapa encontrada
-              </td>
-            </tr>
-          \`;
+          document.getElementById('tabelaEtapas').innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 30px;">Sem dados</td></tr>';
           return;
         }
 
-        const badges = ['badge-purple', 'badge-warning', 'badge-info', 'badge-success', 'badge-purple', 'badge-orange', 'badge-danger', 'badge-info'];
-
+        const colors = ['#8b5cf6', '#f59e0b', '#3b82f6', '#ec4899', '#10b981', '#6366f1', '#ef4444', '#14b8a6', '#a855f7', '#0ea5e9', '#f97316', '#84cc16'];
         let html = '';
-        steps.forEach((step, index) => {
-          const percent = total > 0 ? ((step.count / total) * 100).toFixed(1) : 0;
-          const badge = badges[index % badges.length];
-
-          html += \`
-            <tr>
-              <td>\${index + 1}</td>
-              <td><span class="badge \${badge}">\${step.title}</span></td>
-              <td><strong>\${step.count}</strong></td>
-              <td>R$ \${(step.totalValue || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
-              <td>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <div class="progress-bar" style="flex: 1;">
-                    <div class="progress-fill" style="width: \${percent}%;"></div>
-                  </div>
-                  <span>\${percent}%</span>
-                </div>
-              </td>
-            </tr>
-          \`;
+        steps.forEach((step, i) => {
+          const pct = total > 0 ? ((step.count / total) * 100).toFixed(1) : 0;
+          const color = colors[i % colors.length];
+          html += '<tr>';
+          html += '<td style="padding: 10px 12px; color: var(--text-secondary);">' + (i + 1) + '</td>';
+          html += '<td style="padding: 10px 12px;"><span style="display: inline-block; width: 8px; height: 8px; background: ' + color + '; border-radius: 2px; margin-right: 8px;"></span>' + step.title + '</td>';
+          html += '<td style="padding: 10px 12px; text-align: center; font-weight: 600;">' + step.count + '</td>';
+          html += '<td style="padding: 10px 12px; text-align: right; font-size: 12px;">R$ ' + (step.totalValue || 0).toLocaleString('pt-BR') + '</td>';
+          html += '<td style="padding: 10px 12px;"><div style="display: flex; align-items: center; gap: 6px;"><div style="flex: 1; height: 4px; background: var(--bg-page); border-radius: 2px;"><div style="width: ' + pct + '%; height: 100%; background: ' + color + '; border-radius: 2px;"></div></div><span style="font-size: 11px; min-width: 36px; text-align: right;">' + pct + '%</span></div></td>';
+          html += '</tr>';
         });
-
         document.getElementById('tabelaEtapas').innerHTML = html;
       }
 
       function renderizarConversoes(conversions) {
         if (!conversions || conversions.length === 0) {
-          document.getElementById('taxasConversaoCRM').innerHTML = \`
-            <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
-              Dados insuficientes para calcular conversões
-            </div>
-          \`;
+          document.getElementById('taxasConversaoCRM').innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-secondary); font-size: 12px;">Sem dados</div>';
           return;
         }
 
-        const colors = ['purple', 'orange', 'green', 'blue', 'pink'];
-
-        let html = '<div style="display: flex; flex-direction: column; gap: 12px;">';
-        conversions.forEach((conv, index) => {
-          const color = colors[index % colors.length];
-          const rateClass = conv.rate >= 50 ? 'badge-success' : conv.rate >= 20 ? 'badge-warning' : 'badge-danger';
-
-          html += \`
-            <div class="req-item" style="padding: 12px;">
-              <div class="req-icon \${color}"><i class="fas fa-arrow-right"></i></div>
-              <div style="flex: 1;">
-                <div style="font-weight: 500; font-size: 13px;">\${conv.from} → \${conv.to}</div>
-                <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
-                  <div class="progress-bar" style="flex: 1; height: 6px;">
-                    <div class="progress-fill" style="width: \${Math.min(conv.rate, 100)}%;"></div>
-                  </div>
-                  <span class="badge \${rateClass}">\${conv.rate}%</span>
-                </div>
-              </div>
-            </div>
-          \`;
+        const top5 = conversions.slice(0, 6);
+        let html = '<div style="display: flex; flex-direction: column; gap: 8px;">';
+        top5.forEach(conv => {
+          const cls = conv.rate >= 50 ? 'conv-high' : conv.rate >= 20 ? 'conv-mid' : 'conv-low';
+          html += '<div style="display: flex; align-items: center; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border-color);">';
+          html += '<span style="font-size: 11px; color: var(--text-secondary); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="' + conv.from + ' → ' + conv.to + '">' + conv.from.substring(0, 12) + ' → ' + conv.to.substring(0, 12) + '</span>';
+          html += '<span class="conv-badge ' + cls + '">' + conv.rate + '%</span>';
+          html += '</div>';
         });
         html += '</div>';
-
         document.getElementById('taxasConversaoCRM').innerHTML = html;
       }
 
       function renderizarDistribuicao(steps, total) {
         if (!steps || steps.length === 0 || total === 0) {
-          document.getElementById('distribuicaoFunil').innerHTML = \`
-            <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
-              Dados insuficientes
-            </div>
-          \`;
+          document.getElementById('distribuicaoFunil').innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-secondary); font-size: 12px;">Sem dados</div>';
           return;
         }
 
-        const colors = ['#8b5cf6', '#f59e0b', '#3b82f6', '#ec4899', '#10b981', '#6366f1'];
+        const colors = ['#8b5cf6', '#f59e0b', '#3b82f6', '#ec4899', '#10b981', '#6366f1', '#ef4444', '#14b8a6', '#a855f7', '#0ea5e9', '#f97316', '#84cc16'];
 
-        let html = '<div style="display: flex; flex-direction: column; gap: 8px;">';
-        steps.forEach((step, index) => {
-          const percent = ((step.count / total) * 100).toFixed(1);
-          const color = colors[index % colors.length];
-
-          html += \`
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <div style="width: 12px; height: 12px; background: \${color}; border-radius: 3px;"></div>
-              <div style="flex: 1; font-size: 13px;">\${step.title}</div>
-              <div style="font-weight: 600;">\${step.count}</div>
-              <div style="font-size: 12px; color: var(--text-secondary); width: 50px; text-align: right;">\${percent}%</div>
-            </div>
-          \`;
+        // Barra horizontal compacta
+        let html = '<div style="display: flex; height: 20px; border-radius: 4px; overflow: hidden; margin-bottom: 12px;">';
+        steps.forEach((step, i) => {
+          const pct = (step.count / total) * 100;
+          if (pct > 0) {
+            html += '<div style="width: ' + pct + '%; background: ' + colors[i % colors.length] + ';" title="' + step.title + ': ' + step.count + '"></div>';
+          }
         });
         html += '</div>';
 
-        // Adicionar barra visual
-        html += '<div style="margin-top: 16px; display: flex; height: 24px; border-radius: 6px; overflow: hidden;">';
-        steps.forEach((step, index) => {
-          const percent = (step.count / total) * 100;
-          const color = colors[index % colors.length];
-          if (percent > 0) {
-            html += \`<div style="width: \${percent}%; background: \${color};" title="\${step.title}: \${step.count}"></div>\`;
-          }
+        // Top 5 etapas
+        const top5 = [...steps].sort((a, b) => b.count - a.count).slice(0, 5);
+        html += '<div style="display: flex; flex-direction: column; gap: 6px;">';
+        top5.forEach((step, i) => {
+          const origIndex = steps.findIndex(s => s.id === step.id);
+          const pct = ((step.count / total) * 100).toFixed(0);
+          html += '<div style="display: flex; align-items: center; gap: 8px; font-size: 11px;">';
+          html += '<div style="width: 8px; height: 8px; background: ' + colors[origIndex % colors.length] + '; border-radius: 2px; flex-shrink: 0;"></div>';
+          html += '<span style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + step.title + '</span>';
+          html += '<span style="font-weight: 600;">' + pct + '%</span>';
+          html += '</div>';
         });
         html += '</div>';
 
         document.getElementById('distribuicaoFunil').innerHTML = html;
       }
 
-      // Carregar dados ao iniciar
       document.addEventListener('DOMContentLoaded', () => {
         carregarDadosCRM();
-
-        // Auto-refresh a cada 5 minutos
-        setInterval(carregarDadosCRM, 5 * 60 * 1000);
+        setInterval(carregarDadosCRM, 3 * 60 * 1000); // Refresh a cada 3 min
       });
     </script>
   `;
 
-  return layout('CRM em Tempo Real', content, 'desempenho');
+  return layout('CRM Live', content, 'crm');
 }
 
 function renderPlanejamento(env) {
