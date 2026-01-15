@@ -865,7 +865,7 @@ export function layout(title, content, activeMenu = '') {
     <div class="header-content">
       <div class="logo">
         <a href="/" class="logo-link">
-          <img src="https://papervines.digital/assets/logo-paper-ixAv9qZx.png" alt="Paper Vines" class="logo-img">
+          <img src="https://doc.papervines.digital/images/logo-paper.png" alt="Paper Vines" class="logo-img">
           <div class="logo-subtitle">Playbook de Vendas</div>
         </a>
       </div>
