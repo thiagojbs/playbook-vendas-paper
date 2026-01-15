@@ -1,7 +1,7 @@
 // API de integração com o CRM Paper Vines
 // Documentação: https://flwchat.readme.io/reference
 
-const CRM_BASE_URL = 'https://api.chat.papervines.digital';
+const CRM_BASE_URL = 'https://api.wts.chat';
 const PANEL_ID = '5369fc64-cc15-41d3-a780-664878183b8b';
 
 // Função helper para fazer requisições ao CRM
