@@ -25,6 +25,10 @@ export default {
     try {
       if (path.startsWith('/api/')) {
         const response = await handleAPI(request, env, path);
+        // Se já for uma Response (do CRM), retorna diretamente
+        if (response instanceof Response) {
+          return response;
+        }
         return new Response(JSON.stringify(response), {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });

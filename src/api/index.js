@@ -1,5 +1,12 @@
+import { handleCRMAPI } from './crm.js';
+
 export async function handleAPI(request, env, path) {
   const method = request.method;
+
+  // Rotas do CRM
+  if (path.startsWith('/api/crm/')) {
+    return await handleCRMAPI(request, env, path);
+  }
 
   if (path === '/api/clientes' && method === 'GET') {
     return await getClientes(env);

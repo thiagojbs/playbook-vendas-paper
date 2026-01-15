@@ -21,6 +21,8 @@ export async function renderDesempenho(env, path) {
     return renderAcompanhamento(env);
   } else if (path === '/desempenho/relatorio') {
     return renderRelatorio(env);
+  } else if (path === '/desempenho/crm') {
+    return renderCRM(env);
   }
   return renderDesempenhoHome(env);
 }
@@ -29,7 +31,7 @@ function renderDesempenhoHome(env) {
   const content = `
     <div class="page-header">
       <h1 class="page-title"><i class="fas fa-chart-line"></i> Desempenho do Vendedor</h1>
-      <p class="page-subtitle">Planejamento, acompanhamento diário e relatórios de desempenho</p>
+      <p class="page-subtitle">Planejamento, acompanhamento diário e dados do CRM em tempo real</p>
     </div>
 
     <div class="stats-grid">
@@ -45,9 +47,13 @@ function renderDesempenhoHome(env) {
         <div class="stat-value"><i class="fas fa-chart-bar"></i></div>
         <div class="stat-label">Relatório Mensal</div>
       </div>
+      <div class="stat-card purple">
+        <div class="stat-value"><i class="fas fa-database"></i></div>
+        <div class="stat-label">CRM em Tempo Real</div>
+      </div>
     </div>
 
-    <div class="grid grid-3">
+    <div class="grid grid-2" style="margin-bottom: 24px;">
       <a href="/desempenho/planejamento" class="card fade-in" style="text-decoration: none; color: inherit; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;">
         <div class="card-header">
           <h3 class="card-title"><i class="fas fa-bullseye"></i> Planejamento</h3>
@@ -79,7 +85,9 @@ function renderDesempenhoHome(env) {
           </div>
         </div>
       </a>
+    </div>
 
+    <div class="grid grid-2">
       <a href="/desempenho/relatorio" class="card fade-in" style="text-decoration: none; color: inherit; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;">
         <div class="card-header">
           <h3 class="card-title"><i class="fas fa-chart-bar"></i> Relatório</h3>
@@ -95,9 +103,26 @@ function renderDesempenhoHome(env) {
           </div>
         </div>
       </a>
+
+      <a href="/desempenho/crm" class="card fade-in" style="text-decoration: none; color: inherit; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(16, 185, 129, 0.05)); border: 2px solid var(--primary);">
+        <div class="card-header">
+          <h3 class="card-title"><i class="fas fa-database"></i> CRM em Tempo Real</h3>
+          <span class="badge badge-success">NOVO</span>
+        </div>
+        <p style="color: var(--text-secondary); margin-bottom: 16px;">
+          Acompanhe os dados do seu funil de vendas diretamente do CRM Paper Vines. Veja cards, etapas e conversões em tempo real.
+        </p>
+        <div class="feature-item" style="border-left-color: var(--primary);">
+          <div class="feature-icon"><i class="fas fa-sync"></i></div>
+          <div>
+            <div class="feature-title">Dados Sincronizados</div>
+            <div class="feature-desc">Integração direta com CRM</div>
+          </div>
+        </div>
+      </a>
     </div>
 
-    <div class="card fade-in">
+    <div class="card fade-in" style="margin-top: 24px;">
       <div class="card-header">
         <h3 class="card-title"><i class="fas fa-info-circle"></i> Como funciona o Funil de Vendas</h3>
       </div>
@@ -148,6 +173,408 @@ function renderDesempenhoHome(env) {
   `;
 
   return layout('Desempenho', content, 'desempenho');
+}
+
+function renderCRM(env) {
+  const content = `
+    <div class="page-header">
+      <h1 class="page-title"><i class="fas fa-database"></i> CRM em Tempo Real</h1>
+      <p class="page-subtitle">Dados sincronizados diretamente do CRM Paper Vines</p>
+    </div>
+
+    <!-- Status de Conexão -->
+    <div class="card fade-in" style="margin-bottom: 24px; background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(16, 185, 129, 0.08)); border-left: 4px solid var(--primary);">
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div id="statusIcon" style="width: 12px; height: 12px; background: #f59e0b; border-radius: 50%; animation: pulse 2s infinite;"></div>
+          <span id="statusText" style="font-weight: 500;">Conectando ao CRM...</span>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="carregarDadosCRM()">
+          <i class="fas fa-sync-alt"></i> Atualizar
+        </button>
+      </div>
+    </div>
+
+    <!-- Cards de Resumo -->
+    <div class="stats-grid" id="resumoCRM">
+      <div class="stat-card purple">
+        <div class="stat-value" id="totalCards">-</div>
+        <div class="stat-label">Total de Cards</div>
+      </div>
+      <div class="stat-card orange">
+        <div class="stat-value" id="cardsHoje">-</div>
+        <div class="stat-label">Novos Hoje</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-value" id="cardsSemana">-</div>
+        <div class="stat-label">Esta Semana</div>
+      </div>
+      <div class="stat-card purple">
+        <div class="stat-value" id="cardsMes">-</div>
+        <div class="stat-label">Este Mês</div>
+      </div>
+    </div>
+
+    <!-- Funil Visual -->
+    <div class="card fade-in" style="margin-top: 24px;">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-filter"></i> Funil de Vendas</h3>
+        <span class="badge badge-info" id="ultimaAtualizacao">-</span>
+      </div>
+      <div id="funilContainer" style="padding: 20px 0;">
+        <div style="text-align: center; padding: 60px; color: var(--text-secondary);">
+          <i class="fas fa-spinner fa-spin" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+          <p>Carregando dados do funil...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabela de Etapas -->
+    <div class="card fade-in" style="margin-top: 24px;">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-list"></i> Etapas do Funil</h3>
+      </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Etapa</th>
+              <th>Cards</th>
+              <th>Valor Total</th>
+              <th>% do Funil</th>
+            </tr>
+          </thead>
+          <tbody id="tabelaEtapas">
+            <tr>
+              <td colspan="5" style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                <i class="fas fa-spinner fa-spin"></i> Carregando...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Taxas de Conversão -->
+    <div class="grid grid-2" style="margin-top: 24px;">
+      <div class="card fade-in">
+        <div class="card-header">
+          <h3 class="card-title"><i class="fas fa-percentage"></i> Taxas de Conversão</h3>
+        </div>
+        <div id="taxasConversaoCRM">
+          <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+            <i class="fas fa-spinner fa-spin" style="font-size: 24px;"></i>
+            <p>Calculando...</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card fade-in">
+        <div class="card-header">
+          <h3 class="card-title"><i class="fas fa-chart-pie"></i> Distribuição do Funil</h3>
+        </div>
+        <div id="distribuicaoFunil">
+          <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+            <i class="fas fa-spinner fa-spin" style="font-size: 24px;"></i>
+            <p>Calculando...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+      .funil-step {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+      .funil-bar {
+        height: 48px;
+        background: linear-gradient(135deg, var(--primary), #6366f1);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px;
+        color: white;
+        font-weight: 500;
+        transition: all 0.3s;
+        min-width: 120px;
+      }
+      .funil-bar:hover {
+        transform: translateX(8px);
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+      }
+      .conversion-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 0;
+        color: var(--text-secondary);
+        font-size: 13px;
+      }
+      .progress-bar {
+        height: 8px;
+        background: var(--bg-page);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        border-radius: 4px;
+        transition: width 0.5s ease;
+      }
+    </style>
+
+    <script>
+      let dadosCRM = null;
+
+      async function carregarDadosCRM() {
+        const statusIcon = document.getElementById('statusIcon');
+        const statusText = document.getElementById('statusText');
+
+        statusIcon.style.background = '#f59e0b';
+        statusIcon.style.animation = 'pulse 1s infinite';
+        statusText.textContent = 'Sincronizando com CRM...';
+
+        try {
+          const response = await fetch('/api/crm/metrics');
+          const data = await response.json();
+
+          if (data.success) {
+            dadosCRM = data;
+            statusIcon.style.background = '#10b981';
+            statusIcon.style.animation = 'none';
+            statusText.textContent = 'Conectado ao CRM Paper Vines';
+
+            atualizarInterface(data);
+          } else {
+            throw new Error(data.error || 'Erro ao carregar dados');
+          }
+        } catch (error) {
+          console.error('Erro:', error);
+          statusIcon.style.background = '#ef4444';
+          statusIcon.style.animation = 'none';
+          statusText.textContent = 'Erro ao conectar: ' + error.message;
+
+          // Mostrar erro na interface
+          document.getElementById('funilContainer').innerHTML = \`
+            <div style="text-align: center; padding: 40px; color: #ef4444;">
+              <i class="fas fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 16px;"></i>
+              <p>Não foi possível carregar os dados do CRM.</p>
+              <p style="font-size: 13px; color: var(--text-secondary);">\${error.message}</p>
+              <button class="btn btn-primary" onclick="carregarDadosCRM()" style="margin-top: 16px;">
+                <i class="fas fa-redo"></i> Tentar Novamente
+              </button>
+            </div>
+          \`;
+        }
+      }
+
+      function atualizarInterface(data) {
+        // Atualizar resumo
+        document.getElementById('totalCards').textContent = data.summary.totalCards || 0;
+        document.getElementById('cardsHoje').textContent = data.summary.cardsToday || 0;
+        document.getElementById('cardsSemana').textContent = data.summary.cardsThisWeek || 0;
+        document.getElementById('cardsMes').textContent = data.summary.cardsThisMonth || 0;
+
+        // Atualizar timestamp
+        const timestamp = new Date(data.timestamp);
+        document.getElementById('ultimaAtualizacao').textContent = 'Atualizado: ' + timestamp.toLocaleTimeString('pt-BR');
+
+        // Renderizar funil
+        renderizarFunil(data.steps, data.summary.totalCards);
+
+        // Renderizar tabela
+        renderizarTabela(data.steps, data.summary.totalCards);
+
+        // Renderizar conversões
+        renderizarConversoes(data.conversions);
+
+        // Renderizar distribuição
+        renderizarDistribuicao(data.steps, data.summary.totalCards);
+      }
+
+      function renderizarFunil(steps, total) {
+        if (!steps || steps.length === 0) {
+          document.getElementById('funilContainer').innerHTML = \`
+            <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+              <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;"></i>
+              <p>Nenhuma etapa encontrada no funil.</p>
+            </div>
+          \`;
+          return;
+        }
+
+        const maxCount = Math.max(...steps.map(s => s.count), 1);
+        const colors = ['#8b5cf6', '#f59e0b', '#3b82f6', '#ec4899', '#10b981', '#6366f1', '#ef4444', '#14b8a6'];
+
+        let html = '';
+        steps.forEach((step, index) => {
+          const width = Math.max((step.count / maxCount) * 100, 15);
+          const color = colors[index % colors.length];
+
+          html += \`
+            <div class="funil-step">
+              <div class="funil-bar" style="width: \${width}%; background: linear-gradient(135deg, \${color}, \${color}cc);">
+                <span>\${step.title}</span>
+                <span style="font-size: 20px; font-weight: 700;">\${step.count}</span>
+              </div>
+            </div>
+          \`;
+
+          // Adicionar seta de conversão
+          if (index < steps.length - 1) {
+            const nextStep = steps[index + 1];
+            const convRate = step.count > 0 ? ((nextStep.count / step.count) * 100).toFixed(1) : 0;
+            html += \`
+              <div class="conversion-arrow">
+                <i class="fas fa-arrow-down" style="margin-right: 8px;"></i>
+                \${convRate}% conversão
+              </div>
+            \`;
+          }
+        });
+
+        document.getElementById('funilContainer').innerHTML = html;
+      }
+
+      function renderizarTabela(steps, total) {
+        if (!steps || steps.length === 0) {
+          document.getElementById('tabelaEtapas').innerHTML = \`
+            <tr>
+              <td colspan="5" style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                Nenhuma etapa encontrada
+              </td>
+            </tr>
+          \`;
+          return;
+        }
+
+        const badges = ['badge-purple', 'badge-warning', 'badge-info', 'badge-success', 'badge-purple', 'badge-orange', 'badge-danger', 'badge-info'];
+
+        let html = '';
+        steps.forEach((step, index) => {
+          const percent = total > 0 ? ((step.count / total) * 100).toFixed(1) : 0;
+          const badge = badges[index % badges.length];
+
+          html += \`
+            <tr>
+              <td>\${index + 1}</td>
+              <td><span class="badge \${badge}">\${step.title}</span></td>
+              <td><strong>\${step.count}</strong></td>
+              <td>R$ \${(step.totalValue || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
+              <td>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div class="progress-bar" style="flex: 1;">
+                    <div class="progress-fill" style="width: \${percent}%;"></div>
+                  </div>
+                  <span>\${percent}%</span>
+                </div>
+              </td>
+            </tr>
+          \`;
+        });
+
+        document.getElementById('tabelaEtapas').innerHTML = html;
+      }
+
+      function renderizarConversoes(conversions) {
+        if (!conversions || conversions.length === 0) {
+          document.getElementById('taxasConversaoCRM').innerHTML = \`
+            <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+              Dados insuficientes para calcular conversões
+            </div>
+          \`;
+          return;
+        }
+
+        const colors = ['purple', 'orange', 'green', 'blue', 'pink'];
+
+        let html = '<div style="display: flex; flex-direction: column; gap: 12px;">';
+        conversions.forEach((conv, index) => {
+          const color = colors[index % colors.length];
+          const rateClass = conv.rate >= 50 ? 'badge-success' : conv.rate >= 20 ? 'badge-warning' : 'badge-danger';
+
+          html += \`
+            <div class="req-item" style="padding: 12px;">
+              <div class="req-icon \${color}"><i class="fas fa-arrow-right"></i></div>
+              <div style="flex: 1;">
+                <div style="font-weight: 500; font-size: 13px;">\${conv.from} → \${conv.to}</div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+                  <div class="progress-bar" style="flex: 1; height: 6px;">
+                    <div class="progress-fill" style="width: \${Math.min(conv.rate, 100)}%;"></div>
+                  </div>
+                  <span class="badge \${rateClass}">\${conv.rate}%</span>
+                </div>
+              </div>
+            </div>
+          \`;
+        });
+        html += '</div>';
+
+        document.getElementById('taxasConversaoCRM').innerHTML = html;
+      }
+
+      function renderizarDistribuicao(steps, total) {
+        if (!steps || steps.length === 0 || total === 0) {
+          document.getElementById('distribuicaoFunil').innerHTML = \`
+            <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+              Dados insuficientes
+            </div>
+          \`;
+          return;
+        }
+
+        const colors = ['#8b5cf6', '#f59e0b', '#3b82f6', '#ec4899', '#10b981', '#6366f1'];
+
+        let html = '<div style="display: flex; flex-direction: column; gap: 8px;">';
+        steps.forEach((step, index) => {
+          const percent = ((step.count / total) * 100).toFixed(1);
+          const color = colors[index % colors.length];
+
+          html += \`
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 12px; height: 12px; background: \${color}; border-radius: 3px;"></div>
+              <div style="flex: 1; font-size: 13px;">\${step.title}</div>
+              <div style="font-weight: 600;">\${step.count}</div>
+              <div style="font-size: 12px; color: var(--text-secondary); width: 50px; text-align: right;">\${percent}%</div>
+            </div>
+          \`;
+        });
+        html += '</div>';
+
+        // Adicionar barra visual
+        html += '<div style="margin-top: 16px; display: flex; height: 24px; border-radius: 6px; overflow: hidden;">';
+        steps.forEach((step, index) => {
+          const percent = (step.count / total) * 100;
+          const color = colors[index % colors.length];
+          if (percent > 0) {
+            html += \`<div style="width: \${percent}%; background: \${color};" title="\${step.title}: \${step.count}"></div>\`;
+          }
+        });
+        html += '</div>';
+
+        document.getElementById('distribuicaoFunil').innerHTML = html;
+      }
+
+      // Carregar dados ao iniciar
+      document.addEventListener('DOMContentLoaded', () => {
+        carregarDadosCRM();
+
+        // Auto-refresh a cada 5 minutos
+        setInterval(carregarDadosCRM, 5 * 60 * 1000);
+      });
+    </script>
+  `;
+
+  return layout('CRM em Tempo Real', content, 'desempenho');
 }
 
 function renderPlanejamento(env) {
