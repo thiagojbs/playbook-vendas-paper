@@ -893,9 +893,11 @@ export function layout(title, content, activeMenu = '') {
       <a href="/playbook/agentes" class="nav-tab ${activeMenu === 'planos' ? 'active' : ''}">
         <i class="fas fa-robot"></i> Agentes IA
       </a>
+      <!-- Link Clientes oculto ate implementar autenticacao
       <a href="/clientes" class="nav-tab ${activeMenu === 'clientes' ? 'active' : ''}">
         <i class="fas fa-users"></i> Clientes
       </a>
+      -->
       <a href="/desempenho" class="nav-tab ${activeMenu === 'desempenho' ? 'active' : ''}">
         <i class="fas fa-chart-line"></i> Desempenho
       </a>
