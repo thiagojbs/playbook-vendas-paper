@@ -3,8 +3,8 @@ import { layout } from '../templates/layout.js';
 export function renderCalculadora() {
   const content = `
     <div class="page-header">
-      <h1 class="page-title">Calculadora de Propostas</h1>
-      <p class="page-subtitle">Monte propostas personalizadas para seus clientes</p>
+      <h1 class="page-title"><i class="fas fa-calculator"></i> Calculadora de Propostas</h1>
+      <p class="page-subtitle">Monte propostas personalizadas baseadas na tabela oficial de precos</p>
     </div>
 
     <div class="grid grid-3">
@@ -14,93 +14,191 @@ export function renderCalculadora() {
         </div>
 
         <form id="calculadoraForm">
+          <!-- PLANO BASE -->
+          <div style="margin-bottom: 24px;">
+            <h4 style="color: var(--primary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-box"></i> Plano Base
+            </h4>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
+              <label class="plano-card" id="plano_essential">
+                <input type="radio" name="plano" value="essential" onchange="calcularProposta()" checked>
+                <div class="plano-content">
+                  <div class="plano-nome">Essential</div>
+                  <div class="plano-preco">R$ 487<span>/mes</span></div>
+                  <div class="plano-info">3 usuarios | WhatsApp</div>
+                </div>
+              </label>
+              <label class="plano-card" id="plano_pro">
+                <input type="radio" name="plano" value="pro" onchange="calcularProposta()">
+                <div class="plano-content">
+                  <div class="plano-nome">Pro</div>
+                  <div class="plano-preco">R$ 687<span>/mes</span></div>
+                  <div class="plano-info">5 usuarios | Multi-canal</div>
+                </div>
+              </label>
+              <label class="plano-card popular" id="plano_plus">
+                <input type="radio" name="plano" value="plus" onchange="calcularProposta()">
+                <div class="plano-content">
+                  <span class="badge badge-success" style="position: absolute; top: -10px; right: 10px; font-size: 10px;">POPULAR</span>
+                  <div class="plano-nome">Plus+</div>
+                  <div class="plano-preco">R$ 987<span>/mes</span></div>
+                  <div class="plano-info">10 usuarios | Multi-canal</div>
+                </div>
+              </label>
+              <label class="plano-card" id="plano_advanced">
+                <input type="radio" name="plano" value="advanced" onchange="calcularProposta()">
+                <div class="plano-content">
+                  <div class="plano-nome">Advanced</div>
+                  <div class="plano-preco">R$ 1.487<span>/mes</span></div>
+                  <div class="plano-info">20 usuarios | Multi-canal</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- USUARIOS E CANAIS -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+            <div style="grid-column: span 2;">
+              <h4 style="color: var(--accent); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-users"></i> Usuarios e Canais Adicionais
+              </h4>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Usuarios Adicionais</label>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="number" class="form-input" id="usuarios_adicionais" value="0" min="0" max="200" onchange="calcularProposta()" style="width: 80px;">
+                <span class="badge badge-info" id="preco_usuario">R$ 107/usuario</span>
+              </div>
+              <small style="color: var(--text-secondary); margin-top: 4px; display: block;">Usuarios alem dos inclusos no plano</small>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">WhatsApp Adicional</label>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="number" class="form-input" id="whatsapp_adicional" value="0" min="0" max="20" onchange="calcularProposta()" style="width: 80px;">
+                <span class="badge badge-success">R$ 89/canal</span>
+              </div>
+              <small style="color: var(--text-secondary); margin-top: 4px; display: block;">Numeros de WhatsApp extras</small>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Instagram Direct Adicional</label>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="number" class="form-input" id="instagram_adicional" value="0" min="0" max="10" onchange="calcularProposta()" style="width: 80px;">
+                <span class="badge badge-purple">R$ 69/canal</span>
+              </div>
+              <small style="color: var(--text-secondary); margin-top: 4px; display: block;" id="instagram_info">Incluso no Pro, Plus+ e Advanced</small>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Messenger Adicional</label>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="number" class="form-input" id="messenger_adicional" value="0" min="0" max="10" onchange="calcularProposta()" style="width: 80px;">
+                <span class="badge badge-info">R$ 69/canal</span>
+              </div>
+              <small style="color: var(--text-secondary); margin-top: 4px; display: block;" id="messenger_info">Incluso no Pro, Plus+ e Advanced</small>
+            </div>
+          </div>
+
+          <!-- EXTRAS MENSAIS -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+            <div style="grid-column: span 3;">
+              <h4 style="color: var(--secondary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-plus-circle"></i> Extras e Complementos (Mensal)
+              </h4>
+            </div>
+
+            <label class="checkbox-card">
+              <input type="checkbox" id="automacao_ilimitada" onchange="calcularProposta()">
+              <div class="checkbox-content">
+                <i class="fas fa-robot"></i>
+                <div>
+                  <div class="checkbox-title">Automacao Ilimitada</div>
+                  <div class="checkbox-preco">+R$ 147/mes</div>
+                </div>
+              </div>
+            </label>
+
+            <label class="checkbox-card">
+              <input type="checkbox" id="integracao_asaas" onchange="calcularProposta()">
+              <div class="checkbox-content">
+                <i class="fas fa-credit-card"></i>
+                <div>
+                  <div class="checkbox-title">Integracao ASAAS Bank</div>
+                  <div class="checkbox-preco">+R$ 99/mes</div>
+                </div>
+              </div>
+            </label>
+
+            <label class="checkbox-card">
+              <input type="checkbox" id="pagamentos" onchange="calcularProposta()">
+              <div class="checkbox-content">
+                <i class="fas fa-money-bill-wave"></i>
+                <div>
+                  <div class="checkbox-title">Modulo Pagamentos</div>
+                  <div class="checkbox-preco">+R$ 99/mes</div>
+                </div>
+              </div>
+            </label>
+
+            <div class="form-group" style="grid-column: span 3;">
+              <label class="form-label">IA Transcricao de Audio</label>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="number" class="form-input" id="transcricao_audio" value="0" min="0" max="100" onchange="calcularProposta()" style="width: 80px;">
+                <span class="badge badge-warning">R$ 6,99/usuario</span>
+                <span style="color: var(--text-secondary); font-size: 13px;">usuarios com transcricao</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- IMPLANTACAO -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+            <div style="grid-column: span 2;">
+              <h4 style="color: #f59e0b; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-cogs"></i> Taxa de Implantacao (Unica)
+              </h4>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Taxa de Implantacao do Plano</label>
+              <div class="valor-display" id="taxa_implantacao_plano" style="font-size: 20px;">R$ 1.090,00</div>
+              <small style="color: var(--text-secondary);">Valor baseado no plano selecionado</small>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Parcelas da Implantacao</label>
+              <select class="form-select" id="parcelas_implantacao" onchange="calcularProposta()">
+                <option value="1">A vista</option>
+                <option value="2">2x sem juros</option>
+                <option value="3">3x sem juros</option>
+                <option value="4">4x sem juros</option>
+                <option value="6">6x sem juros</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- CHATBOTS E IA -->
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <div style="grid-column: span 2;"><h4 style="color: var(--primary); margin-bottom: 16px;"><i class="fas fa-desktop"></i> Licenca Plataforma Paper Vines</h4></div>
-
-            <div class="form-group">
-              <label class="form-label">Usuarios Totais</label>
-              <select class="form-select" id="usuarios" onchange="calcularProposta()">
-                <option value="3" data-preco="0">3 usuarios (incluso)</option>
-                <option value="4" data-preco="39">4 usuarios (+R$ 39)</option>
-                <option value="5" data-preco="78">5 usuarios (+R$ 78)</option>
-                <option value="10" data-preco="273">10 usuarios (+R$ 273)</option>
-              </select>
+            <div style="grid-column: span 2;">
+              <h4 style="color: var(--primary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-magic"></i> Servicos de Implantacao Adicional (Taxa Unica)
+              </h4>
             </div>
-
-            <div class="form-group">
-              <label class="form-label">Canais de WhatsApp</label>
-              <select class="form-select" id="whatsapp" onchange="calcularProposta()">
-                <option value="1" data-preco="0">1 canal (incluso)</option>
-                <option value="2" data-preco="89">2 canais (+R$ 89)</option>
-                <option value="3" data-preco="178">3 canais (+R$ 178)</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Instagram (Direct)</label>
-              <select class="form-select" id="instagram" onchange="calcularProposta()">
-                <option value="0" data-preco="0">Nao</option>
-                <option value="1" data-preco="69">Sim (+R$ 69)</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Facebook (Messenger)</label>
-              <select class="form-select" id="messenger" onchange="calcularProposta()">
-                <option value="0" data-preco="0">Nao</option>
-                <option value="1" data-preco="69">Sim (+R$ 69)</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Infraestrutura de Nuvem</label>
-              <select class="form-select" id="infraestrutura" onchange="calcularProposta()">
-                <option value="ate_5000" data-preco="0" data-suporte="230">Ate 5.000 contatos (incluso)</option>
-                <option value="5001_10000" data-preco="900" data-suporte="630">5.001 ate 10.000 (+R$ 900)</option>
-                <option value="10001_20000" data-preco="1800" data-suporte="630">10.001 ate 20.000 (+R$ 1.800)</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Transcricao de Audio com IA</label>
-              <select class="form-select" id="transcricao" onchange="calcularProposta()">
-                <option value="0" data-preco="0">Nao</option>
-                <option value="1" data-preco="6.99">1 usuario (+R$ 6,99)</option>
-                <option value="3" data-preco="20.97">3 usuarios (+R$ 20,97)</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Integracao Asas</label>
-              <select class="form-select" id="asas" onchange="calcularProposta()">
-                <option value="0" data-preco="0">Nao</option>
-                <option value="1" data-preco="99">Sim (+R$ 99)</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Agentes Inteligentes (mensal)</label>
-              <select class="form-select" id="agentes_mensal" onchange="calcularProposta()">
-                <option value="0" data-preco="0">Nao</option>
-                <option value="1" data-preco="150">Sim (+R$ 150/mes)</option>
-              </select>
-            </div>
-
-            <div style="grid-column: span 2; margin-top: 24px;"><h4 style="color: var(--accent); margin-bottom: 16px;"><i class="fas fa-cogs"></i> Implantacoes (Taxa Unica)</h4></div>
 
             <div class="form-group">
               <label class="form-label">Plano de Chatbots</label>
               <select class="form-select" id="chatbot" onchange="calcularProposta()">
                 <option value="nenhum" data-preco="0">Nenhum</option>
-                <option value="basic" data-preco="1500">Basic (R$ 1.500)</option>
-                <option value="master" data-preco="2600">Master (R$ 2.600)</option>
-                <option value="fusion" data-preco="3600">Fusion (R$ 3.600)</option>
+                <option value="basic" data-preco="1500">Basic - 3 chatbots (R$ 1.500)</option>
+                <option value="master" data-preco="2600">Master - 5 chatbots (R$ 2.600)</option>
+                <option value="fusion" data-preco="3600">Fusion - 7 chatbots (R$ 3.600)</option>
               </select>
             </div>
 
             <div class="form-group">
               <label class="form-label">Plano de Agentes IA</label>
-              <select class="form-select" id="ia" onchange="calcularProposta()">
+              <select class="form-select" id="agentes_ia" onchange="calcularProposta()">
                 <option value="nenhum" data-preco="0">Nenhum</option>
                 <option value="basic" data-preco="2500">Basic - 3 agentes (R$ 2.500)</option>
                 <option value="master" data-preco="3800">Master - 5 agentes (R$ 3.800)</option>
@@ -121,7 +219,7 @@ export function renderCalculadora() {
             <div class="form-group">
               <label class="form-label">Verificacao BM do Meta</label>
               <select class="form-select" id="verificacao_bm" onchange="calcularProposta()">
-                <option value="0" data-preco="0">Nao</option>
+                <option value="0" data-preco="0">Nao necessario</option>
                 <option value="1" data-preco="250">Sim (+R$ 250)</option>
               </select>
             </div>
@@ -129,39 +227,61 @@ export function renderCalculadora() {
         </form>
       </div>
 
+      <!-- RESUMO -->
       <div class="card" style="position: sticky; top: 32px; height: fit-content;">
         <div class="card-header">
-          <h3 class="card-title"><i class="fas fa-receipt"></i> Resumo</h3>
+          <h3 class="card-title"><i class="fas fa-receipt"></i> Resumo da Proposta</h3>
         </div>
 
-        <div style="margin-bottom: 24px;">
-          <div style="color: var(--text-secondary); font-size: 14px; margin-bottom: 4px;">Mensalidade</div>
-          <div class="valor-display" id="valorMensalidade">R$ 717,00</div>
-        </div>
+        <div id="resumoItens" style="margin-bottom: 16px; font-size: 13px;"></div>
 
-        <hr style="border: none; border-top: 1px solid var(--border); margin: 20px 0;">
-
-        <div style="margin-bottom: 24px;">
-          <div style="color: var(--text-secondary); font-size: 14px; margin-bottom: 4px;">Implantacao (taxa unica)</div>
-          <div class="valor-display" id="valorImplantacao" style="color: var(--accent);">R$ 0,00</div>
-        </div>
-
-        <hr style="border: none; border-top: 1px solid var(--border); margin: 20px 0;">
-
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--bg-dark); border-radius: 8px; margin-bottom: 20px;">
-          <div>
-            <div style="font-size: 12px; color: var(--text-secondary);">PRIMEIRO MES</div>
-            <div style="font-size: 24px; font-weight: 700; color: var(--success);" id="valorTotal">R$ 717,00</div>
+        <div style="margin-bottom: 20px; padding: 16px; background: var(--bg-page); border-radius: 8px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="color: var(--text-secondary);">Plano Base:</span>
+            <span id="resumoPlanoBase" style="font-weight: 600;">R$ 487,00</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="color: var(--text-secondary);">Adicionais:</span>
+            <span id="resumoAdicionais" style="font-weight: 600;">R$ 0,00</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px dashed var(--border);">
+            <span style="font-weight: 600;">MENSALIDADE:</span>
+            <span id="valorMensalidade" style="font-weight: 700; color: var(--primary); font-size: 18px;">R$ 487,00</span>
           </div>
         </div>
 
-        <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="gerarProposta()">
-          <i class="fas fa-file-export"></i> Gerar Proposta
-        </button>
+        <div style="margin-bottom: 20px; padding: 16px; background: rgba(245, 158, 11, 0.1); border-radius: 8px; border-left: 4px solid #f59e0b;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="color: var(--text-secondary);">Implantacao Plano:</span>
+            <span id="resumoImplantacaoPlano" style="font-weight: 600;">R$ 1.090,00</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="color: var(--text-secondary);">Servicos Extras:</span>
+            <span id="resumoServicosExtras" style="font-weight: 600;">R$ 0,00</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px dashed var(--border);">
+            <span style="font-weight: 600;">IMPLANTACAO:</span>
+            <span id="valorImplantacao" style="font-weight: 700; color: #f59e0b; font-size: 18px;">R$ 1.090,00</span>
+          </div>
+          <div id="parcelamentoInfo" style="font-size: 12px; color: var(--text-secondary); margin-top: 8px;"></div>
+        </div>
 
-        <button class="btn btn-secondary" style="width: 100%; justify-content: center; margin-top: 8px;" onclick="copiarResumo()">
-          <i class="fas fa-copy"></i> Copiar Resumo
-        </button>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 12px; margin-bottom: 20px;">
+          <div>
+            <div style="font-size: 12px; color: rgba(255,255,255,0.8);">PRIMEIRO MES</div>
+            <div style="font-size: 28px; font-weight: 700; color: white;" id="valorTotal">R$ 1.577,00</div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="gerarProposta()">
+            <i class="fas fa-file-export"></i> Gerar Proposta
+          </button>
+
+          <button class="btn btn-secondary" style="width: 100%; justify-content: center;" onclick="copiarResumo()">
+            <i class="fas fa-copy"></i> Copiar Resumo
+          </button>
+        </div>
       </div>
     </div>
 
@@ -181,58 +301,266 @@ export function renderCalculadora() {
       </div>
     </div>
 
+    <style>
+      .plano-card {
+        display: block;
+        padding: 16px;
+        border: 2px solid var(--border);
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+      }
+      .plano-card:hover {
+        border-color: var(--primary);
+        transform: translateY(-2px);
+      }
+      .plano-card input {
+        display: none;
+      }
+      .plano-card input:checked + .plano-content {
+        color: var(--primary);
+      }
+      .plano-card:has(input:checked) {
+        border-color: var(--primary);
+        background: rgba(139, 92, 246, 0.05);
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+      }
+      .plano-card.popular {
+        border-color: var(--secondary);
+      }
+      .plano-card.popular:has(input:checked) {
+        border-color: var(--secondary);
+        background: rgba(16, 185, 129, 0.05);
+      }
+      .plano-nome {
+        font-weight: 700;
+        font-size: 16px;
+        margin-bottom: 4px;
+      }
+      .plano-preco {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 4px;
+      }
+      .plano-preco span {
+        font-size: 12px;
+        font-weight: 400;
+        color: var(--text-secondary);
+      }
+      .plano-info {
+        font-size: 11px;
+        color: var(--text-secondary);
+      }
+
+      .checkbox-card {
+        display: flex;
+        align-items: center;
+        padding: 16px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .checkbox-card:hover {
+        border-color: var(--primary);
+      }
+      .checkbox-card input {
+        display: none;
+      }
+      .checkbox-card:has(input:checked) {
+        border-color: var(--secondary);
+        background: rgba(16, 185, 129, 0.05);
+      }
+      .checkbox-card:has(input:checked) i {
+        color: var(--secondary);
+      }
+      .checkbox-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .checkbox-content i {
+        font-size: 20px;
+        color: var(--text-secondary);
+      }
+      .checkbox-title {
+        font-weight: 600;
+        font-size: 13px;
+      }
+      .checkbox-preco {
+        font-size: 12px;
+        color: var(--secondary);
+        font-weight: 600;
+      }
+    </style>
+
     <script>
-      const MENSALIDADE_BASE = 487;
-      const SUPORTE_BASE = 230;
+      const PLANOS = {
+        essential: { nome: 'Essential', valor: 487, usuarios: 3, implantacao: 1090, usuarioAdicional: 107, canais: ['whatsapp'] },
+        pro: { nome: 'Pro', valor: 687, usuarios: 5, implantacao: 1490, usuarioAdicional: 87, canais: ['whatsapp', 'instagram', 'messenger'] },
+        plus: { nome: 'Plus+', valor: 987, usuarios: 10, implantacao: 1990, usuarioAdicional: 57, canais: ['whatsapp', 'instagram', 'messenger'] },
+        advanced: { nome: 'Advanced', valor: 1487, usuarios: 20, implantacao: 2499, usuarioAdicional: 47, canais: ['whatsapp', 'instagram', 'messenger'] }
+      };
+
+      function getPlanoSelecionado() {
+        const radios = document.getElementsByName('plano');
+        for (let radio of radios) {
+          if (radio.checked) return radio.value;
+        }
+        return 'essential';
+      }
 
       function calcularProposta() {
-        let mensalidade = MENSALIDADE_BASE;
-        const usuarios = document.getElementById('usuarios');
-        mensalidade += parseFloat(usuarios.options[usuarios.selectedIndex].dataset.preco);
-        const whatsapp = document.getElementById('whatsapp');
-        mensalidade += parseFloat(whatsapp.options[whatsapp.selectedIndex].dataset.preco);
-        const instagram = document.getElementById('instagram');
-        mensalidade += parseFloat(instagram.options[instagram.selectedIndex].dataset.preco);
-        const messenger = document.getElementById('messenger');
-        mensalidade += parseFloat(messenger.options[messenger.selectedIndex].dataset.preco);
-        const infra = document.getElementById('infraestrutura');
-        mensalidade += parseFloat(infra.options[infra.selectedIndex].dataset.preco);
-        const suportePreco = parseFloat(infra.options[infra.selectedIndex].dataset.suporte);
-        mensalidade += suportePreco;
-        const transcricao = document.getElementById('transcricao');
-        mensalidade += parseFloat(transcricao.options[transcricao.selectedIndex].dataset.preco);
-        const asas = document.getElementById('asas');
-        mensalidade += parseFloat(asas.options[asas.selectedIndex].dataset.preco);
-        const agentesMensal = document.getElementById('agentes_mensal');
-        mensalidade += parseFloat(agentesMensal.options[agentesMensal.selectedIndex].dataset.preco);
+        const planoKey = getPlanoSelecionado();
+        const plano = PLANOS[planoKey];
 
-        let implantacao = 0;
+        // Atualizar preco do usuario adicional
+        document.getElementById('preco_usuario').textContent = 'R$ ' + plano.usuarioAdicional + '/usuario';
+
+        // Atualizar info de canais
+        const temMulticanal = plano.canais.includes('instagram');
+        document.getElementById('instagram_info').textContent = temMulticanal ? '1 canal ja incluso no plano' : 'Nao incluso no Essential';
+        document.getElementById('messenger_info').textContent = temMulticanal ? '1 canal ja incluso no plano' : 'Nao incluso no Essential';
+
+        // Calcular mensalidade
+        let mensalidadeBase = plano.valor;
+        let adicionais = 0;
+        let itensResumo = [];
+
+        // Usuarios adicionais
+        const usuariosAdicionais = parseInt(document.getElementById('usuarios_adicionais').value) || 0;
+        if (usuariosAdicionais > 0) {
+          const custoUsuarios = usuariosAdicionais * plano.usuarioAdicional;
+          adicionais += custoUsuarios;
+          itensResumo.push('+ ' + usuariosAdicionais + ' usuarios: R$ ' + custoUsuarios.toFixed(2));
+        }
+
+        // WhatsApp adicional
+        const whatsappAdicional = parseInt(document.getElementById('whatsapp_adicional').value) || 0;
+        if (whatsappAdicional > 0) {
+          const custoWhatsapp = whatsappAdicional * 89;
+          adicionais += custoWhatsapp;
+          itensResumo.push('+ ' + whatsappAdicional + ' WhatsApp: R$ ' + custoWhatsapp.toFixed(2));
+        }
+
+        // Instagram adicional
+        const instagramAdicional = parseInt(document.getElementById('instagram_adicional').value) || 0;
+        if (instagramAdicional > 0) {
+          const custoInstagram = instagramAdicional * 69;
+          adicionais += custoInstagram;
+          itensResumo.push('+ ' + instagramAdicional + ' Instagram: R$ ' + custoInstagram.toFixed(2));
+        }
+
+        // Messenger adicional
+        const messengerAdicional = parseInt(document.getElementById('messenger_adicional').value) || 0;
+        if (messengerAdicional > 0) {
+          const custoMessenger = messengerAdicional * 69;
+          adicionais += custoMessenger;
+          itensResumo.push('+ ' + messengerAdicional + ' Messenger: R$ ' + custoMessenger.toFixed(2));
+        }
+
+        // Extras mensais
+        if (document.getElementById('automacao_ilimitada').checked) {
+          adicionais += 147;
+          itensResumo.push('Automacao Ilimitada: R$ 147,00');
+        }
+        if (document.getElementById('integracao_asaas').checked) {
+          adicionais += 99;
+          itensResumo.push('Integracao ASAAS: R$ 99,00');
+        }
+        if (document.getElementById('pagamentos').checked) {
+          adicionais += 99;
+          itensResumo.push('Modulo Pagamentos: R$ 99,00');
+        }
+
+        const transcricaoUsuarios = parseInt(document.getElementById('transcricao_audio').value) || 0;
+        if (transcricaoUsuarios > 0) {
+          const custoTranscricao = transcricaoUsuarios * 6.99;
+          adicionais += custoTranscricao;
+          itensResumo.push('Transcricao IA (' + transcricaoUsuarios + '): R$ ' + custoTranscricao.toFixed(2));
+        }
+
+        const mensalidadeTotal = mensalidadeBase + adicionais;
+
+        // Calcular implantacao
+        let implantacaoPlano = plano.implantacao;
+        let servicosExtras = 0;
+
         const chatbot = document.getElementById('chatbot');
-        implantacao += parseFloat(chatbot.options[chatbot.selectedIndex].dataset.preco);
-        const ia = document.getElementById('ia');
-        implantacao += parseFloat(ia.options[ia.selectedIndex].dataset.preco);
-        const telecom = document.getElementById('telecom');
-        implantacao += parseFloat(telecom.options[telecom.selectedIndex].dataset.preco);
-        const verificacaoBm = document.getElementById('verificacao_bm');
-        implantacao += parseFloat(verificacaoBm.options[verificacaoBm.selectedIndex].dataset.preco);
+        servicosExtras += parseFloat(chatbot.options[chatbot.selectedIndex].dataset.preco);
 
-        document.getElementById('valorMensalidade').textContent = formatCurrency(mensalidade);
-        document.getElementById('valorImplantacao').textContent = formatCurrency(implantacao);
-        document.getElementById('valorTotal').textContent = formatCurrency(mensalidade + implantacao);
+        const agentesIa = document.getElementById('agentes_ia');
+        servicosExtras += parseFloat(agentesIa.options[agentesIa.selectedIndex].dataset.preco);
+
+        const telecom = document.getElementById('telecom');
+        servicosExtras += parseFloat(telecom.options[telecom.selectedIndex].dataset.preco);
+
+        const verificacaoBm = document.getElementById('verificacao_bm');
+        servicosExtras += parseFloat(verificacaoBm.options[verificacaoBm.selectedIndex].dataset.preco);
+
+        const implantacaoTotal = implantacaoPlano + servicosExtras;
+
+        // Parcelamento
+        const parcelas = parseInt(document.getElementById('parcelas_implantacao').value);
+        const valorParcela = implantacaoTotal / parcelas;
+
+        // Atualizar UI
+        document.getElementById('taxa_implantacao_plano').textContent = formatCurrency(implantacaoPlano);
+        document.getElementById('resumoPlanoBase').textContent = formatCurrency(mensalidadeBase);
+        document.getElementById('resumoAdicionais').textContent = formatCurrency(adicionais);
+        document.getElementById('valorMensalidade').textContent = formatCurrency(mensalidadeTotal);
+        document.getElementById('resumoImplantacaoPlano').textContent = formatCurrency(implantacaoPlano);
+        document.getElementById('resumoServicosExtras').textContent = formatCurrency(servicosExtras);
+        document.getElementById('valorImplantacao').textContent = formatCurrency(implantacaoTotal);
+        document.getElementById('valorTotal').textContent = formatCurrency(mensalidadeTotal + implantacaoTotal);
+
+        // Parcelamento info
+        if (parcelas > 1) {
+          document.getElementById('parcelamentoInfo').textContent = parcelas + 'x de ' + formatCurrency(valorParcela) + ' sem juros';
+        } else {
+          document.getElementById('parcelamentoInfo').textContent = '';
+        }
+
+        // Itens resumo
+        document.getElementById('resumoItens').innerHTML = itensResumo.length > 0 ?
+          '<div style="padding: 12px; background: var(--bg-page); border-radius: 8px; margin-bottom: 8px;">' +
+          itensResumo.map(i => '<div style="padding: 4px 0; font-size: 12px; color: var(--text-secondary);">' + i + '</div>').join('') +
+          '</div>' : '';
       }
 
       function gerarProposta() {
-        const usuarios = document.getElementById('usuarios').value;
-        const whatsapp = document.getElementById('whatsapp').value;
-        const instagram = document.getElementById('instagram').value;
-        const messenger = document.getElementById('messenger').value;
+        const planoKey = getPlanoSelecionado();
+        const plano = PLANOS[planoKey];
+        const usuariosAdicionais = parseInt(document.getElementById('usuarios_adicionais').value) || 0;
+        const totalUsuarios = plano.usuarios + usuariosAdicionais;
+        const whatsappAdicional = parseInt(document.getElementById('whatsapp_adicional').value) || 0;
+        const totalWhatsapp = 1 + whatsappAdicional;
         const mensalidade = document.getElementById('valorMensalidade').textContent;
         const implantacao = document.getElementById('valorImplantacao').textContent;
+        const parcelas = parseInt(document.getElementById('parcelas_implantacao').value);
+        const valorParcela = parseFloat(implantacao.replace(/[^0-9,]/g, '').replace(',', '.')) / parcelas;
 
-        let proposta = '*Licenca Plataforma Paper Vines*\\nUsuarios: ate ' + usuarios + '\\nWhatsApp: ' + whatsapp;
-        if (instagram === '1') proposta += '\\nInstagram: 1';
-        if (messenger === '1') proposta += '\\nMessenger: 1';
-        proposta += '\\nSuporte para duvidas de usabilidade.\\n\\n*Mensalidade: ' + mensalidade + '*\\n\\nA tecnologia e poderosa, mas quem ativa esse poder e o suporte certo.\\nNossa equipe esta preparada para superar suas expectativas.\\n\\n*Validade da proposta: 7 dias*';
+        let proposta = '*PROPOSTA PAPER VINES*\\n\\n';
+        proposta += '*Plano: ' + plano.nome + '*\\n';
+        proposta += 'Usuarios: ate ' + totalUsuarios + '\\n';
+        proposta += 'WhatsApp: ' + totalWhatsapp + ' canal(is)\\n';
+
+        if (plano.canais.includes('instagram')) {
+          proposta += 'Instagram Direct: incluso\\n';
+          proposta += 'Messenger: incluso\\n';
+        }
+
+        proposta += '\\n*Mensalidade: ' + mensalidade + '*\\n\\n';
+        proposta += '*Implantacao: ' + implantacao + '*\\n';
+        if (parcelas > 1) {
+          proposta += '(' + parcelas + 'x de R$ ' + valorParcela.toFixed(2).replace('.', ',') + ' sem juros)\\n';
+        }
+
+        proposta += '\\nA tecnologia e poderosa, mas quem ativa esse poder e o suporte certo.\\n';
+        proposta += 'Nossa equipe esta preparada para superar suas expectativas.\\n\\n';
+        proposta += '*Validade da proposta: 7 dias*';
 
         document.getElementById('propostaContent').textContent = proposta.replace(/\\\\n/g, '\\n');
         openModal('propostaModal');
@@ -244,13 +572,16 @@ export function renderCalculadora() {
       }
 
       function copiarResumo() {
+        const planoKey = getPlanoSelecionado();
+        const plano = PLANOS[planoKey];
         const mensalidade = document.getElementById('valorMensalidade').textContent;
         const implantacao = document.getElementById('valorImplantacao').textContent;
         const total = document.getElementById('valorTotal').textContent;
-        const resumo = 'Mensalidade: ' + mensalidade + '\\nImplantacao: ' + implantacao + '\\nTotal 1o mes: ' + total;
+        const resumo = 'Plano: ' + plano.nome + '\\nMensalidade: ' + mensalidade + '\\nImplantacao: ' + implantacao + '\\nTotal 1o mes: ' + total;
         navigator.clipboard.writeText(resumo).then(() => { showToast('Resumo copiado!'); });
       }
 
+      // Inicializar
       calcularProposta();
     </script>
   `;
