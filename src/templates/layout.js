@@ -896,6 +896,9 @@ export function layout(title, content, activeMenu = '') {
       <a href="/clientes" class="nav-tab ${activeMenu === 'clientes' ? 'active' : ''}">
         <i class="fas fa-users"></i> Clientes
       </a>
+      <a href="/desempenho" class="nav-tab ${activeMenu === 'desempenho' ? 'active' : ''}">
+        <i class="fas fa-chart-line"></i> Desempenho
+      </a>
     </div>
   </nav>
 

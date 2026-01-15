@@ -4,6 +4,7 @@ import { renderCalculadora } from './pages/calculadora.js';
 import { renderClientes } from './pages/clientes.js';
 import { renderPropostas } from './pages/propostas.js';
 import { renderContratos } from './pages/contratos.js';
+import { renderDesempenho } from './pages/desempenho.js';
 import { handleAPI } from './api/index.js';
 
 export default {
@@ -48,6 +49,9 @@ export default {
           break;
         case path === '/contratos' || path.startsWith('/contratos/'):
           html = await renderContratos(env);
+          break;
+        case path === '/desempenho' || path.startsWith('/desempenho/'):
+          html = await renderDesempenho(env, path);
           break;
         default:
           html = renderHome();

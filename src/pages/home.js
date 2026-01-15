@@ -76,6 +76,40 @@ export function renderHome() {
             <div class="feature-desc">Tabela completa de todos os planos</div>
           </div>
         </div>
+        <div class="feature-item">
+          <div class="feature-icon"><i class="fas fa-check"></i></div>
+          <div>
+            <div class="feature-title">Desempenho</div>
+            <div class="feature-desc">Planejamento, acompanhamento e relatorios</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card fade-in" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%); border-color: var(--primary);">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-chart-line"></i> Acompanhamento de Desempenho</h3>
+        <a href="/desempenho" class="btn btn-primary btn-sm"><i class="fas fa-arrow-right"></i> Acessar</a>
+      </div>
+      <p style="color: var(--text-secondary); margin-bottom: 16px;">
+        Novo modulo para planejar suas metas, registrar atividades diarias e acompanhar seu desempenho com relatorios detalhados.
+      </p>
+      <div class="grid grid-3" style="gap: 12px;">
+        <a href="/desempenho/planejamento" class="quick-btn" style="flex-direction: column; padding: 20px; gap: 8px;">
+          <i class="fas fa-bullseye" style="font-size: 24px; color: var(--primary);"></i>
+          <span>Planejamento</span>
+          <small style="color: var(--text-secondary); font-size: 12px;">Calcular metas do funil</small>
+        </a>
+        <a href="/desempenho/acompanhamento" class="quick-btn" style="flex-direction: column; padding: 20px; gap: 8px;">
+          <i class="fas fa-calendar-check" style="font-size: 24px; color: var(--accent);"></i>
+          <span>Acompanhamento</span>
+          <small style="color: var(--text-secondary); font-size: 12px;">Registrar atividades</small>
+        </a>
+        <a href="/desempenho/relatorio" class="quick-btn" style="flex-direction: column; padding: 20px; gap: 8px;">
+          <i class="fas fa-chart-bar" style="font-size: 24px; color: var(--secondary);"></i>
+          <span>Relatorio</span>
+          <small style="color: var(--text-secondary); font-size: 12px;">Ver metricas mensais</small>
+        </a>
       </div>
     </div>
 
@@ -192,6 +226,11 @@ export function renderHome() {
               <td><span class="badge badge-purple">POST</span></td>
               <td><code>/api/clientes</code></td>
               <td>API CRUD de clientes</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-success">GET</span></td>
+              <td><code>/desempenho</code></td>
+              <td>Planejamento e acompanhamento de vendas</td>
             </tr>
           </tbody>
         </table>
