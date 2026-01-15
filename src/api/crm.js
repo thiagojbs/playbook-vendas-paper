@@ -6,7 +6,10 @@ const PANEL_ID = '5369fc64-cc15-41d3-a780-664878183b8b';
 
 // Função helper para fazer requisições ao CRM
 async function fetchCRM(endpoint, env, options = {}) {
-  const apiKey = env.CRM_API_KEY || 'pn_hynXVnpyybGt1unkdPLhzYuyUJN7atcfvxCqs13E';
+  const apiKey = env.CRM_API_KEY;
+  if (!apiKey) {
+    throw new Error('CRM_API_KEY não configurada. Configure nas variáveis de ambiente do Cloudflare Workers.');
+  }
   const url = `${CRM_BASE_URL}${endpoint}`;
 
   try {
