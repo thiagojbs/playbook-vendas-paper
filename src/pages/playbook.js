@@ -2,6 +2,7 @@ import { layout } from '../templates/layout.js';
 import { PROCESSO_VENDAS, SCRIPTS, OBJECOES, CHECKLIST_COMERCIAL, CHECKLIST_CONTRATO, LINKS_UTEIS } from '../data/playbook.js';
 import { PLANOS_CHATBOTS, PLANOS_TELECOM, PLANOS_IA } from '../data/precos.js';
 import { OBJECOES_EXPANDIDAS, TECNICAS_GERAIS, GATILHOS_MENTAIS, DIFERENCIAIS, ESTATISTICAS_PAPERVINES } from '../data/objecoes.js';
+import { ETAPAS_FUNIL, SCRIPTS_STATS, SEQUENCIAS_COMPLETAS, DICAS_COMUNICACAO, TEMPLATES_SEGMENTO } from '../data/scripts.js';
 
 export function renderPlaybook(path) {
   let content = '';
@@ -25,9 +26,308 @@ function renderPlaybookMain() {
 }
 
 function renderScripts() {
-  let prospeccaoHtml = SCRIPTS.prospeccao.map(script => '<div style="margin-bottom: 20px;"><div style="font-weight: 500; margin-bottom: 8px;">' + script.titulo + '</div><div class="message-box"><button class="copy-btn" onclick="copyToClipboard(`' + script.mensagem.replace(/`/g, '\\`') + '`, this)"><i class="fas fa-copy"></i> Copiar</button>' + script.mensagem + '</div></div>').join('');
-  
-  return '<div class="page-header"><h1 class="page-title">Scripts de Vendas</h1><p class="page-subtitle">Mensagens prontas para cada etapa</p></div><div class="tabs"><div class="tab active" data-tab="prospeccao">Prospeccao</div><div class="tab" data-tab="teste">Teste Gratuito</div><div class="tab" data-tab="proposta">Proposta</div></div><div class="tab-contents"><div id="prospeccao" class="tab-content active"><div class="card"><div class="card-header"><h3 class="card-title"><i class="fas fa-bullhorn"></i> Mensagens de Prospeccao</h3></div>' + prospeccaoHtml + '</div></div><div id="teste" class="tab-content"><div class="card"><div class="card-header"><h3 class="card-title"><i class="fas fa-vial"></i> ' + SCRIPTS.teste_gratuito.titulo + '</h3></div><div class="message-box"><button class="copy-btn" onclick="copyToClipboard(`' + SCRIPTS.teste_gratuito.mensagem.replace(/`/g, '\\`') + '`, this)"><i class="fas fa-copy"></i> Copiar</button>' + SCRIPTS.teste_gratuito.mensagem + '</div></div></div><div id="proposta" class="tab-content"><div class="card"><div class="card-header"><h3 class="card-title"><i class="fas fa-file-invoice"></i> ' + SCRIPTS.envio_proposta.titulo + '</h3></div><div class="message-box"><button class="copy-btn" onclick="copyToClipboard(`' + SCRIPTS.envio_proposta.mensagem.replace(/`/g, '\\`') + '`, this)"><i class="fas fa-copy"></i> Copiar</button>' + SCRIPTS.envio_proposta.mensagem + '</div></div></div></div>';
+  // Stats
+  const statsHtml = `
+    <div class="stats-grid" style="margin-bottom: 24px;">
+      <div class="stat-card purple">
+        <div class="stat-value">${SCRIPTS_STATS.total_scripts}</div>
+        <div class="stat-label">Scripts Prontos</div>
+      </div>
+      <div class="stat-card orange">
+        <div class="stat-value">${SCRIPTS_STATS.categorias}</div>
+        <div class="stat-label">Etapas do Funil</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-value">${SCRIPTS_STATS.sequencias}</div>
+        <div class="stat-label">Sequencias Automaticas</div>
+      </div>
+      <div class="stat-card purple">
+        <div class="stat-value">${SCRIPTS_STATS.taxa_resposta}</div>
+        <div class="stat-label">Taxa Media de Resposta</div>
+      </div>
+    </div>
+  `;
+
+  // Dicas de Comunicacao
+  const dicasHtml = DICAS_COMUNICACAO.map(cat => `
+    <div style="background: white; border: 1px solid var(--border); border-radius: 8px; padding: 16px;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+        <div style="width: 32px; height: 32px; background: var(--primary); border-radius: 6px; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-${cat.icone}" style="color: white; font-size: 14px;"></i>
+        </div>
+        <span style="font-weight: 600;">${cat.titulo}</span>
+      </div>
+      <ul style="list-style: none; padding: 0; margin: 0; font-size: 13px;">
+        ${cat.dicas.map(d => `<li style="padding: 4px 0; color: var(--text-secondary);"><i class="fas fa-check" style="color: var(--secondary); margin-right: 8px;"></i>${d}</li>`).join('')}
+      </ul>
+    </div>
+  `).join('');
+
+  // Tabs de etapas do funil
+  const etapas = Object.entries(ETAPAS_FUNIL);
+  const tabsHtml = etapas.map(([key, etapa], index) => `
+    <div class="tab ${index === 0 ? 'active' : ''}" data-tab="${key}">
+      <i class="fas fa-${etapa.icone}" style="color: ${etapa.cor};"></i> ${etapa.nome}
+    </div>
+  `).join('');
+
+  // Conteudo de cada etapa
+  const tabContentsHtml = etapas.map(([key, etapa], index) => {
+    const scriptsHtml = etapa.scripts.map(script => {
+      const variacoesHtml = script.variacoes.length > 0 ? `
+        <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
+          <div style="font-weight: 500; margin-bottom: 12px; font-size: 13px; color: var(--text-secondary);">
+            <i class="fas fa-random"></i> Variacoes disponiveis:
+          </div>
+          ${script.variacoes.map(v => `
+            <div style="margin-bottom: 12px;">
+              <div style="font-size: 12px; font-weight: 500; color: var(--primary); margin-bottom: 6px;">${v.nome}</div>
+              <div class="message-box" style="font-size: 12px;">
+                <button class="copy-btn" onclick="copyToClipboard(\`${v.mensagem.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`, this)">
+                  <i class="fas fa-copy"></i> Copiar
+                </button>
+                ${v.mensagem}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      ` : '';
+
+      const gatilhosHtml = script.gatilhos.map(g => `<span class="badge badge-purple" style="font-size: 11px; margin-right: 4px;">${g}</span>`).join('');
+
+      const tipoBadge = script.tipo === 'principal' ? 'badge-success' :
+                        script.tipo === 'followup' ? 'badge-warning' :
+                        script.tipo === 'objecao' ? 'badge-danger' : 'badge-info';
+      const tipoLabel = script.tipo === 'principal' ? 'PRINCIPAL' :
+                        script.tipo === 'followup' ? 'FOLLOW-UP' :
+                        script.tipo === 'objecao' ? 'OBJECAO' :
+                        script.tipo === 'informativo' ? 'INFO' : 'VARIACAO';
+
+      return `
+        <div class="accordion" style="margin-bottom: 16px;">
+          <div class="accordion-header" style="border-left: 4px solid ${etapa.cor};">
+            <div class="accordion-title">
+              <span class="badge ${tipoBadge}" style="margin-right: 8px; font-size: 10px;">${tipoLabel}</span>
+              ${script.titulo}
+            </div>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="accordion-content" style="padding: 0;">
+            <div style="padding: 16px; background: #f8f9fa; border-bottom: 1px solid var(--border);">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 13px;">
+                <div>
+                  <i class="fas fa-info-circle" style="color: var(--primary);"></i>
+                  <strong>Contexto:</strong> ${script.contexto}
+                </div>
+                <div>
+                  <i class="fas fa-lightbulb" style="color: #f59e0b;"></i>
+                  <strong>Dica:</strong> ${script.dica}
+                </div>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 0;">
+              <!-- Script Principal -->
+              <div style="padding: 20px; border-right: 1px solid var(--border);">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                  <div style="width: 28px; height: 28px; background: #25D366; border-radius: 6px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fab fa-whatsapp" style="color: white; font-size: 14px;"></i>
+                  </div>
+                  <span style="font-weight: 600; font-size: 14px;">Script Principal</span>
+                </div>
+
+                <div class="message-box" style="font-size: 13px; white-space: pre-wrap;">
+                  <button class="copy-btn" onclick="copyToClipboard(\`${script.mensagem.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`, this)">
+                    <i class="fas fa-copy"></i> Copiar
+                  </button>
+                  ${script.mensagem}
+                </div>
+
+                ${variacoesHtml}
+              </div>
+
+              <!-- Gatilhos e Info -->
+              <div style="padding: 20px; background: #fafafa;">
+                <div style="font-weight: 500; margin-bottom: 12px; font-size: 13px;">
+                  <i class="fas fa-brain" style="color: var(--primary);"></i> Gatilhos Utilizados
+                </div>
+                <div style="margin-bottom: 20px;">
+                  ${gatilhosHtml}
+                </div>
+
+                <div style="font-weight: 500; margin-bottom: 8px; font-size: 13px;">
+                  <i class="fas fa-check-circle" style="color: var(--secondary);"></i> Por que funciona
+                </div>
+                <ul style="list-style: none; padding: 0; font-size: 12px; color: var(--text-secondary);">
+                  ${script.gatilhos.map(g => `<li style="padding: 4px 0;">• ${g}</li>`).join('')}
+                </ul>
+
+                <div style="margin-top: 16px; padding: 12px; background: rgba(139, 92, 246, 0.1); border-radius: 8px;">
+                  <div style="font-size: 11px; color: var(--primary); font-weight: 500;">
+                    <i class="fas fa-hashtag"></i> ID: ${script.id}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    return `
+      <div id="${key}" class="tab-content ${index === 0 ? 'active' : ''}">
+        <div style="display: grid; grid-template-columns: 1fr auto; gap: 16px; margin-bottom: 20px; padding: 16px; background: rgba(139, 92, 246, 0.05); border-radius: 8px; border-left: 4px solid ${etapa.cor};">
+          <div>
+            <div style="font-weight: 600; margin-bottom: 4px;">${etapa.descricao}</div>
+            <div style="font-size: 13px; color: var(--text-secondary);">
+              <strong>Objetivo:</strong> ${etapa.objetivo}
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <span class="badge badge-info" style="font-size: 12px;">
+              <i class="fas fa-clock"></i> ${etapa.tempo_ideal}
+            </span>
+          </div>
+        </div>
+        ${scriptsHtml}
+      </div>
+    `;
+  }).join('');
+
+  // Sequencias
+  const sequenciasHtml = SEQUENCIAS_COMPLETAS.map(seq => `
+    <div class="card" style="margin-bottom: 0;">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+        <div style="width: 40px; height: 40px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-${seq.icone}" style="color: white;"></i>
+        </div>
+        <div>
+          <div style="font-weight: 600;">${seq.nome}</div>
+          <div style="font-size: 12px; color: var(--text-secondary);">${seq.descricao}</div>
+        </div>
+      </div>
+      <div style="position: relative; padding-left: 20px;">
+        ${seq.etapas.map((etapa, i) => `
+          <div style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; ${i < seq.etapas.length - 1 ? 'border-left: 2px solid var(--primary); margin-left: -11px; padding-left: 20px;' : 'margin-left: -11px; padding-left: 20px;'}">
+            <div style="width: 20px; height: 20px; background: ${i === seq.etapas.length - 1 ? 'var(--secondary)' : 'var(--primary)'}; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-left: -10px;">
+              <span style="color: white; font-size: 10px; font-weight: 600;">${i + 1}</span>
+            </div>
+            <div style="flex: 1;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: 500; font-size: 13px;">${etapa.acao}</span>
+                <span class="badge badge-info" style="font-size: 10px;">Dia ${etapa.dia}</span>
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+
+  // Templates por Segmento
+  const segmentosHtml = Object.entries(TEMPLATES_SEGMENTO).map(([key, seg]) => `
+    <div class="accordion">
+      <div class="accordion-header">
+        <div class="accordion-title">
+          <i class="fas fa-${seg.icone}" style="color: var(--primary); margin-right: 8px;"></i>
+          ${seg.nome}
+        </div>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="accordion-content">
+        <div style="margin-bottom: 16px;">
+          <div style="font-size: 12px; font-weight: 500; color: var(--text-secondary); margin-bottom: 8px;">Dores principais:</div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            ${seg.dores.map(d => `<span class="badge badge-warning" style="font-size: 11px;">${d}</span>`).join('')}
+          </div>
+        </div>
+        <div class="message-box" style="font-size: 13px;">
+          <button class="copy-btn" onclick="copyToClipboard(\`${seg.script_personalizado.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`, this)">
+            <i class="fas fa-copy"></i> Copiar
+          </button>
+          ${seg.script_personalizado}
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Script Teste Gratuito (do arquivo original)
+  const testeGratuitoHtml = `
+    <div class="card" style="border-color: var(--secondary);">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-gift" style="color: var(--secondary);"></i> Convite para Teste Gratuito</h3>
+        <span class="badge badge-success">ALTA CONVERSAO</span>
+      </div>
+      <p style="color: var(--text-secondary); margin-bottom: 16px; font-size: 13px;">
+        Use este script para convidar leads qualificados a testar a plataforma gratuitamente por 14 dias.
+      </p>
+      <div class="message-box" style="font-size: 13px;">
+        <button class="copy-btn" onclick="copyToClipboard(\`${SCRIPTS.teste_gratuito.mensagem.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`, this)">
+          <i class="fas fa-copy"></i> Copiar
+        </button>
+        ${SCRIPTS.teste_gratuito.mensagem}
+      </div>
+    </div>
+  `;
+
+  return `
+    <div class="page-header">
+      <h1 class="page-title"><i class="fas fa-comment-dots"></i> Central de Scripts</h1>
+      <p class="page-subtitle">Mensagens prontas e otimizadas para cada etapa do funil de vendas</p>
+    </div>
+
+    ${statsHtml}
+
+    <div class="card fade-in" style="margin-bottom: 24px;">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-lightbulb"></i> Dicas de Comunicacao</h3>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+        ${dicasHtml}
+      </div>
+    </div>
+
+    <div class="card fade-in" style="margin-bottom: 24px;">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-layer-group"></i> Scripts por Etapa do Funil</h3>
+        <span class="badge badge-info">${Object.values(ETAPAS_FUNIL).reduce((acc, e) => acc + e.scripts.length, 0)} scripts</span>
+      </div>
+
+      <div class="tabs" style="margin-bottom: 20px; flex-wrap: wrap;">
+        ${tabsHtml}
+      </div>
+
+      <div class="tab-contents">
+        ${tabContentsHtml}
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-bottom: 24px;">
+      <div class="card fade-in">
+        <div class="card-header">
+          <h3 class="card-title"><i class="fas fa-route"></i> Sequencias de Follow-up</h3>
+        </div>
+        <p style="color: var(--text-secondary); margin-bottom: 16px; font-size: 13px;">
+          Siga estas sequencias para maximizar suas taxas de resposta e conversao.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          ${sequenciasHtml}
+        </div>
+      </div>
+
+      <div class="card fade-in">
+        <div class="card-header">
+          <h3 class="card-title"><i class="fas fa-bullseye"></i> Templates por Segmento</h3>
+        </div>
+        <p style="color: var(--text-secondary); margin-bottom: 16px; font-size: 13px;">
+          Scripts personalizados para as principais verticais de mercado.
+        </p>
+        ${segmentosHtml}
+      </div>
+    </div>
+
+    ${testeGratuitoHtml}
+  `;
 }
 
 function renderObjecoes() {
