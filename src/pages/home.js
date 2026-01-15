@@ -2,238 +2,307 @@ import { layout } from '../templates/layout.js';
 
 export function renderHome() {
   const content = `
-    <div class="page-header">
-      <h1 class="page-title"><i class="fas fa-chart-bar"></i> Visao Geral</h1>
-      <p class="page-subtitle">Bem-vindo ao Playbook de Vendas Paper Vines - Sistema completo para consultores comerciais</p>
-    </div>
-
-    <div class="stats-grid">
-      <div class="stat-card purple">
-        <div class="stat-value">6</div>
-        <div class="stat-label">Etapas do Processo</div>
-      </div>
-      <div class="stat-card orange">
-        <div class="stat-value">8</div>
-        <div class="stat-label">Scripts Prontos</div>
-      </div>
-      <div class="stat-card green">
-        <div class="stat-value">6</div>
-        <div class="stat-label">Tratativas de Objecoes</div>
-      </div>
-      <div class="stat-card orange">
-        <div class="stat-value">9</div>
-        <div class="stat-label">Planos Disponiveis</div>
-      </div>
-    </div>
-
-    <div class="card fade-in">
-      <div class="card-header">
-        <h3 class="card-title"><i class="fas fa-info-circle"></i> O que e o Playbook de Vendas?</h3>
-      </div>
-      <p style="color: var(--text-secondary); margin-bottom: 20px;">
-        Um sistema completo que permite que consultores comerciais tenham acesso a todo o material necessario para vender a plataforma Paper Vines. Inclui scripts, tratativas de objecoes, calculadora de propostas e gestao de clientes.
-      </p>
-      <div class="feature-list">
-        <div class="feature-item">
-          <div class="feature-icon"><i class="fas fa-check"></i></div>
+    <!-- Hero Section -->
+    <div style="background: linear-gradient(135deg, var(--primary) 0%, #6366f1 50%, var(--accent) 100%); border-radius: 20px; padding: 40px; margin-bottom: 32px; position: relative; overflow: hidden;">
+      <div style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+      <div style="position: absolute; bottom: -30px; left: 30%; width: 100px; height: 100px; background: rgba(255,255,255,0.08); border-radius: 50%;"></div>
+      <div style="position: relative; z-index: 1;">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+          <div style="width: 56px; height: 56px; background: rgba(255,255,255,0.2); border-radius: 16px; display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-rocket" style="font-size: 28px; color: white;"></i>
+          </div>
           <div>
-            <div class="feature-title">Processo de Vendas</div>
-            <div class="feature-desc">6 etapas detalhadas do processo comercial</div>
+            <h1 style="color: white; font-size: 32px; font-weight: 700; margin: 0;">Playbook de Vendas</h1>
+            <p style="color: rgba(255,255,255,0.8); margin: 4px 0 0 0; font-size: 16px;">Paper Vines - Sistema Comercial Completo</p>
           </div>
         </div>
-        <div class="feature-item">
-          <div class="feature-icon"><i class="fas fa-check"></i></div>
-          <div>
-            <div class="feature-title">Scripts Prontos</div>
-            <div class="feature-desc">Mensagens para cada etapa da venda</div>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon"><i class="fas fa-check"></i></div>
-          <div>
-            <div class="feature-title">Calculadora</div>
-            <div class="feature-desc">Calculo automatico de propostas</div>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon"><i class="fas fa-check"></i></div>
-          <div>
-            <div class="feature-title">Objecoes</div>
-            <div class="feature-desc">Respostas prontas para objecoes comuns</div>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon"><i class="fas fa-check"></i></div>
-          <div>
-            <div class="feature-title">Gestao de Clientes</div>
-            <div class="feature-desc">CRUD completo para acompanhamento</div>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon"><i class="fas fa-check"></i></div>
-          <div>
-            <div class="feature-title">Planos e Precos</div>
-            <div class="feature-desc">Tabela completa de todos os planos</div>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon"><i class="fas fa-check"></i></div>
-          <div>
-            <div class="feature-title">Desempenho</div>
-            <div class="feature-desc">Planejamento, acompanhamento e relatorios</div>
-          </div>
+        <p style="color: rgba(255,255,255,0.9); font-size: 15px; max-width: 600px; line-height: 1.6; margin-bottom: 24px;">
+          Tudo que voce precisa para vender: scripts prontos, calculadora de propostas, tratativas de objecoes e gestao completa do funil de vendas.
+        </p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="/calculadora" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: white; color: var(--primary); border-radius: 12px; font-weight: 600; text-decoration: none; transition: transform 0.2s;">
+            <i class="fas fa-calculator"></i> Criar Proposta
+          </a>
+          <a href="/playbook" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: rgba(255,255,255,0.2); color: white; border-radius: 12px; font-weight: 600; text-decoration: none; border: 1px solid rgba(255,255,255,0.3);">
+            <i class="fas fa-book-open"></i> Ver Playbook
+          </a>
         </div>
       </div>
     </div>
 
-    <div class="card fade-in" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%); border-color: var(--primary);">
-      <div class="card-header">
-        <h3 class="card-title"><i class="fas fa-chart-line"></i> Acompanhamento de Desempenho</h3>
-        <a href="/desempenho" class="btn btn-primary btn-sm"><i class="fas fa-arrow-right"></i> Acessar</a>
+    <!-- Ferramentas Principais -->
+    <div style="margin-bottom: 32px;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px;">
+        <i class="fas fa-toolbox" style="color: var(--primary); font-size: 20px;"></i>
+        <h2 style="font-size: 20px; font-weight: 600; margin: 0;">Ferramentas do Consultor</h2>
       </div>
-      <p style="color: var(--text-secondary); margin-bottom: 16px;">
-        Novo modulo para planejar suas metas, registrar atividades diarias e acompanhar seu desempenho com relatorios detalhados.
-      </p>
-      <div class="grid grid-3" style="gap: 12px;">
-        <a href="/desempenho/planejamento" class="quick-btn" style="flex-direction: column; padding: 20px; gap: 8px;">
-          <i class="fas fa-bullseye" style="font-size: 24px; color: var(--primary);"></i>
-          <span>Planejamento</span>
-          <small style="color: var(--text-secondary); font-size: 12px;">Calcular metas do funil</small>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+
+        <a href="/calculadora" style="text-decoration: none; color: inherit;">
+          <div style="background: white; border: 2px solid var(--border); border-radius: 16px; padding: 24px; text-align: center; transition: all 0.3s; cursor: pointer;" onmouseover="this.style.borderColor='var(--primary)'; this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 24px rgba(139, 92, 246, 0.15)';" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+            <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #8b5cf6, #a78bfa); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+              <i class="fas fa-calculator" style="font-size: 28px; color: white;"></i>
+            </div>
+            <div style="font-weight: 600; font-size: 16px; margin-bottom: 4px;">Calculadora</div>
+            <div style="font-size: 13px; color: var(--text-secondary);">Gerar propostas personalizadas</div>
+          </div>
         </a>
-        <a href="/desempenho/acompanhamento" class="quick-btn" style="flex-direction: column; padding: 20px; gap: 8px;">
-          <i class="fas fa-calendar-check" style="font-size: 24px; color: var(--accent);"></i>
-          <span>Acompanhamento</span>
-          <small style="color: var(--text-secondary); font-size: 12px;">Registrar atividades</small>
+
+        <a href="/playbook/scripts" style="text-decoration: none; color: inherit;">
+          <div style="background: white; border: 2px solid var(--border); border-radius: 16px; padding: 24px; text-align: center; transition: all 0.3s; cursor: pointer;" onmouseover="this.style.borderColor='var(--accent)'; this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 24px rgba(245, 158, 11, 0.15)';" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+            <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #f59e0b, #fbbf24); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+              <i class="fas fa-comment-dots" style="font-size: 28px; color: white;"></i>
+            </div>
+            <div style="font-weight: 600; font-size: 16px; margin-bottom: 4px;">Scripts</div>
+            <div style="font-size: 13px; color: var(--text-secondary);">Mensagens prontas para copiar</div>
+          </div>
         </a>
-        <a href="/desempenho/relatorio" class="quick-btn" style="flex-direction: column; padding: 20px; gap: 8px;">
-          <i class="fas fa-chart-bar" style="font-size: 24px; color: var(--secondary);"></i>
-          <span>Relatorio</span>
-          <small style="color: var(--text-secondary); font-size: 12px;">Ver metricas mensais</small>
+
+        <a href="/playbook/objecoes" style="text-decoration: none; color: inherit;">
+          <div style="background: white; border: 2px solid var(--border); border-radius: 16px; padding: 24px; text-align: center; transition: all 0.3s; cursor: pointer;" onmouseover="this.style.borderColor='var(--secondary)'; this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 24px rgba(16, 185, 129, 0.15)';" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+            <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #10b981, #34d399); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+              <i class="fas fa-shield-alt" style="font-size: 28px; color: white;"></i>
+            </div>
+            <div style="font-weight: 600; font-size: 16px; margin-bottom: 4px;">Objecoes</div>
+            <div style="font-size: 13px; color: var(--text-secondary);">Respostas para contornar</div>
+          </div>
+        </a>
+
+        <a href="/clientes" style="text-decoration: none; color: inherit;">
+          <div style="background: white; border: 2px solid var(--border); border-radius: 16px; padding: 24px; text-align: center; transition: all 0.3s; cursor: pointer;" onmouseover="this.style.borderColor='#3b82f6'; this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 24px rgba(59, 130, 246, 0.15)';" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+            <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #3b82f6, #60a5fa); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+              <i class="fas fa-users" style="font-size: 28px; color: white;"></i>
+            </div>
+            <div style="font-weight: 600; font-size: 16px; margin-bottom: 4px;">Clientes</div>
+            <div style="font-size: 13px; color: var(--text-secondary);">Gerenciar pipeline</div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Grid de Conteudo -->
+    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 32px;">
+
+      <!-- Fluxo de Vendas Simplificado -->
+      <div style="background: white; border: 1px solid var(--border); border-radius: 16px; padding: 24px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <i class="fas fa-route" style="color: var(--primary); font-size: 18px;"></i>
+            <h3 style="font-size: 18px; font-weight: 600; margin: 0;">Fluxo de Vendas</h3>
+          </div>
+          <a href="/playbook" style="font-size: 13px; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 4px;">
+            Ver completo <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px; overflow-x: auto; padding-bottom: 8px;">
+          <div style="flex: 1; min-width: 120px; text-align: center; padding: 16px 12px; background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.05)); border-radius: 12px; border: 1px solid rgba(139, 92, 246, 0.2);">
+            <div style="width: 36px; height: 36px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; color: white; font-weight: 700;">1</div>
+            <div style="font-weight: 600; font-size: 13px;">Prospeccao</div>
+            <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">Identificar leads</div>
+          </div>
+          <i class="fas fa-chevron-right" style="color: var(--text-secondary); flex-shrink: 0;"></i>
+          <div style="flex: 1; min-width: 120px; text-align: center; padding: 16px 12px; background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05)); border-radius: 12px; border: 1px solid rgba(245, 158, 11, 0.2);">
+            <div style="width: 36px; height: 36px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; color: white; font-weight: 700;">2</div>
+            <div style="font-weight: 600; font-size: 13px;">Qualificacao</div>
+            <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">Verificar perfil</div>
+          </div>
+          <i class="fas fa-chevron-right" style="color: var(--text-secondary); flex-shrink: 0;"></i>
+          <div style="flex: 1; min-width: 120px; text-align: center; padding: 16px 12px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05)); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.2);">
+            <div style="width: 36px; height: 36px; background: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; color: white; font-weight: 700;">3</div>
+            <div style="font-weight: 600; font-size: 13px;">Demo</div>
+            <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">Apresentar solucao</div>
+          </div>
+          <i class="fas fa-chevron-right" style="color: var(--text-secondary); flex-shrink: 0;"></i>
+          <div style="flex: 1; min-width: 120px; text-align: center; padding: 16px 12px; background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(236, 72, 153, 0.05)); border-radius: 12px; border: 1px solid rgba(236, 72, 153, 0.2);">
+            <div style="width: 36px; height: 36px; background: #ec4899; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; color: white; font-weight: 700;">4</div>
+            <div style="font-weight: 600; font-size: 13px;">Proposta</div>
+            <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">Enviar valores</div>
+          </div>
+          <i class="fas fa-chevron-right" style="color: var(--text-secondary); flex-shrink: 0;"></i>
+          <div style="flex: 1; min-width: 120px; text-align: center; padding: 16px 12px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05)); border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.2);">
+            <div style="width: 36px; height: 36px; background: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; color: white; font-weight: 700;">5</div>
+            <div style="font-weight: 600; font-size: 13px;">Fechamento</div>
+            <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">Contrato assinado</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Desempenho Card -->
+      <div style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(16, 185, 129, 0.08)); border: 1px solid var(--primary); border-radius: 16px; padding: 24px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+          <div style="width: 40px; height: 40px; background: var(--primary); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-chart-line" style="color: white; font-size: 18px;"></i>
+          </div>
+          <div>
+            <h3 style="font-size: 16px; font-weight: 600; margin: 0;">Seu Desempenho</h3>
+            <p style="font-size: 12px; color: var(--text-secondary); margin: 0;">Acompanhe suas metas</p>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <a href="/desempenho/planejamento" style="display: flex; align-items: center; gap: 12px; padding: 12px; background: white; border-radius: 10px; text-decoration: none; color: inherit; transition: transform 0.2s;" onmouseover="this.style.transform='translateX(4px)'" onmouseout="this.style.transform='translateX(0)'">
+            <i class="fas fa-bullseye" style="color: var(--primary); font-size: 16px;"></i>
+            <div style="flex: 1;">
+              <div style="font-weight: 500; font-size: 14px;">Planejamento</div>
+              <div style="font-size: 11px; color: var(--text-secondary);">Definir metas do mes</div>
+            </div>
+            <i class="fas fa-chevron-right" style="color: var(--text-secondary); font-size: 12px;"></i>
+          </a>
+          <a href="/desempenho/acompanhamento" style="display: flex; align-items: center; gap: 12px; padding: 12px; background: white; border-radius: 10px; text-decoration: none; color: inherit; transition: transform 0.2s;" onmouseover="this.style.transform='translateX(4px)'" onmouseout="this.style.transform='translateX(0)'">
+            <i class="fas fa-calendar-check" style="color: var(--accent); font-size: 16px;"></i>
+            <div style="flex: 1;">
+              <div style="font-weight: 500; font-size: 14px;">Acompanhamento</div>
+              <div style="font-size: 11px; color: var(--text-secondary);">Registrar atividades</div>
+            </div>
+            <i class="fas fa-chevron-right" style="color: var(--text-secondary); font-size: 12px;"></i>
+          </a>
+          <a href="/desempenho/relatorio" style="display: flex; align-items: center; gap: 12px; padding: 12px; background: white; border-radius: 10px; text-decoration: none; color: inherit; transition: transform 0.2s;" onmouseover="this.style.transform='translateX(4px)'" onmouseout="this.style.transform='translateX(0)'">
+            <i class="fas fa-chart-bar" style="color: var(--secondary); font-size: 16px;"></i>
+            <div style="flex: 1;">
+              <div style="font-weight: 500; font-size: 14px;">Relatorio</div>
+              <div style="font-size: 11px; color: var(--text-secondary);">Analisar resultados</div>
+            </div>
+            <i class="fas fa-chevron-right" style="color: var(--text-secondary); font-size: 12px;"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Segunda linha: Links e Requisitos -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px;">
+
+      <!-- Links Rapidos -->
+      <div style="background: white; border: 1px solid var(--border); border-radius: 16px; padding: 24px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+          <i class="fas fa-external-link-alt" style="color: var(--primary); font-size: 18px;"></i>
+          <h3 style="font-size: 18px; font-weight: 600; margin: 0;">Links Rapidos</h3>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <a href="https://www.figma.com/deck/fU8KjN7JpjpzhxNRZzfqlp" target="_blank" style="display: flex; align-items: center; gap: 12px; padding: 14px; background: var(--bg-page); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;" onmouseover="this.style.background='rgba(139, 92, 246, 0.1)'" onmouseout="this.style.background='var(--bg-page)'">
+            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #f24e1e, #ff7262); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+              <i class="fab fa-figma" style="color: white; font-size: 18px;"></i>
+            </div>
+            <div>
+              <div style="font-weight: 500; font-size: 13px;">Apresentacao</div>
+              <div style="font-size: 11px; color: var(--text-secondary);">Slides para clientes</div>
+            </div>
+          </a>
+          <a href="https://www.figma.com/files/team/1082649090502569616/project/412083277/Vendas" target="_blank" style="display: flex; align-items: center; gap: 12px; padding: 14px; background: var(--bg-page); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;" onmouseover="this.style.background='rgba(139, 92, 246, 0.1)'" onmouseout="this.style.background='var(--bg-page)'">
+            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #a259ff, #c084fc); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+              <i class="fas fa-file-invoice" style="color: white; font-size: 18px;"></i>
+            </div>
+            <div>
+              <div style="font-weight: 500; font-size: 13px;">Propostas</div>
+              <div style="font-size: 11px; color: var(--text-secondary);">Modelos no Figma</div>
+            </div>
+          </a>
+          <a href="https://drive.google.com/drive/folders/1hTxC7rcN2MvAtusrG-gj6CxkT6FvhTe1" target="_blank" style="display: flex; align-items: center; gap: 12px; padding: 14px; background: var(--bg-page); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;" onmouseover="this.style.background='rgba(139, 92, 246, 0.1)'" onmouseout="this.style.background='var(--bg-page)'">
+            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4285f4, #60a5fa); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+              <i class="fab fa-google-drive" style="color: white; font-size: 18px;"></i>
+            </div>
+            <div>
+              <div style="font-weight: 500; font-size: 13px;">Contratos</div>
+              <div style="font-size: 11px; color: var(--text-secondary);">Modelos no Drive</div>
+            </div>
+          </a>
+          <a href="https://chat.papervines.digital/trial/sign-up" target="_blank" style="display: flex; align-items: center; gap: 12px; padding: 14px; background: var(--bg-page); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;" onmouseover="this.style.background='rgba(139, 92, 246, 0.1)'" onmouseout="this.style.background='var(--bg-page)'">
+            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #34d399); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+              <i class="fas fa-vial" style="color: white; font-size: 18px;"></i>
+            </div>
+            <div>
+              <div style="font-weight: 500; font-size: 13px;">Teste Gratuito</div>
+              <div style="font-size: 11px; color: var(--text-secondary);">Link para cliente</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Requisitos API -->
+      <div style="background: white; border: 1px solid var(--border); border-radius: 16px; padding: 24px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+          <i class="fab fa-whatsapp" style="color: #25D366; font-size: 20px;"></i>
+          <h3 style="font-size: 18px; font-weight: 600; margin: 0;">Requisitos API Meta</h3>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: rgba(37, 211, 102, 0.08); border-radius: 10px; border-left: 3px solid #25D366;">
+            <i class="fab fa-whatsapp" style="color: #25D366; font-size: 18px;"></i>
+            <div>
+              <div style="font-weight: 500; font-size: 13px;">WhatsApp Business</div>
+              <div style="font-size: 11px; color: var(--text-secondary);">Numero deve ser Business</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: rgba(24, 119, 242, 0.08); border-radius: 10px; border-left: 3px solid #1877F2;">
+            <i class="fab fa-meta" style="color: #1877F2; font-size: 18px;"></i>
+            <div>
+              <div style="font-weight: 500; font-size: 13px;">Business Manager</div>
+              <div style="font-size: 11px; color: var(--text-secondary);">Acesso para thiago@papervines.digital</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: rgba(245, 158, 11, 0.08); border-radius: 10px; border-left: 3px solid #f59e0b;">
+            <i class="fas fa-credit-card" style="color: #f59e0b; font-size: 18px;"></i>
+            <div>
+              <div style="font-weight: 500; font-size: 13px;">Cartao Internacional</div>
+              <div style="font-size: 11px; color: var(--text-secondary);">Preferencialmente fisico</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: rgba(139, 92, 246, 0.08); border-radius: 10px; border-left: 3px solid var(--primary);">
+            <i class="fas fa-globe" style="color: var(--primary); font-size: 18px;"></i>
+            <div>
+              <div style="font-weight: 500; font-size: 13px;">Site com CNPJ</div>
+              <div style="font-size: 11px; color: var(--text-secondary);">Dados da empresa no rodape</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Planos Resumo -->
+    <div style="background: white; border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 32px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <i class="fas fa-tags" style="color: var(--primary); font-size: 18px;"></i>
+          <h3 style="font-size: 18px; font-weight: 600; margin: 0;">Planos Paper Vines</h3>
+        </div>
+        <a href="/playbook/planos" style="font-size: 13px; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 4px;">
+          Ver detalhes <i class="fas fa-arrow-right"></i>
         </a>
       </div>
-    </div>
-
-    <div class="grid grid-2">
-      <div class="card fade-in">
-        <div class="card-header">
-          <h3 class="card-title"><i class="fas fa-rocket"></i> Acesso Rapido</h3>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+        <div style="text-align: center; padding: 20px; background: var(--bg-page); border-radius: 12px; border: 1px solid var(--border);">
+          <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;">ESSENTIAL</div>
+          <div style="font-size: 28px; font-weight: 700; color: var(--primary);">R$ 487</div>
+          <div style="font-size: 12px; color: var(--text-secondary);">3 usuarios</div>
         </div>
-        <div class="quick-buttons">
-          <a href="/calculadora" class="quick-btn primary"><i class="fas fa-calculator"></i> Calculadora</a>
-          <a href="/playbook/scripts" class="quick-btn"><i class="fas fa-comment-dots"></i> Scripts</a>
-          <a href="/clientes" class="quick-btn"><i class="fas fa-user-plus"></i> Novo Cliente</a>
-          <a href="/playbook/objecoes" class="quick-btn"><i class="fas fa-shield-alt"></i> Objecoes</a>
+        <div style="text-align: center; padding: 20px; background: var(--bg-page); border-radius: 12px; border: 1px solid var(--border);">
+          <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;">PRO</div>
+          <div style="font-size: 28px; font-weight: 700; color: var(--accent);">R$ 687</div>
+          <div style="font-size: 12px; color: var(--text-secondary);">5 usuarios</div>
         </div>
-      </div>
-
-      <div class="card fade-in">
-        <div class="card-header">
-          <h3 class="card-title"><i class="fas fa-link"></i> Links Uteis</h3>
+        <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(16, 185, 129, 0.1)); border-radius: 12px; border: 2px solid var(--primary); position: relative;">
+          <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; font-size: 10px; font-weight: 600; padding: 2px 10px; border-radius: 10px;">POPULAR</div>
+          <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;">PLUS+</div>
+          <div style="font-size: 28px; font-weight: 700; color: var(--primary);">R$ 987</div>
+          <div style="font-size: 12px; color: var(--text-secondary);">10 usuarios</div>
         </div>
-        <div class="link-list">
-          <a href="https://www.figma.com/deck/fU8KjN7JpjpzhxNRZzfqlp" target="_blank" class="link-item">
-            <i class="fas fa-presentation"></i> Apresentacao Clientes
-          </a>
-          <a href="https://www.figma.com/files/team/1082649090502569616/project/412083277/Vendas" target="_blank" class="link-item">
-            <i class="fas fa-file-invoice"></i> Modelos de Proposta
-          </a>
-          <a href="https://drive.google.com/drive/folders/1hTxC7rcN2MvAtusrG-gj6CxkT6FvhTe1" target="_blank" class="link-item">
-            <i class="fas fa-file-contract"></i> Modelos de Contrato
-          </a>
-          <a href="https://chat.papervines.digital/trial/sign-up" target="_blank" class="link-item">
-            <i class="fas fa-vial"></i> Link Teste Gratuito
-          </a>
+        <div style="text-align: center; padding: 20px; background: var(--bg-page); border-radius: 12px; border: 1px solid var(--border);">
+          <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;">ADVANCED</div>
+          <div style="font-size: 28px; font-weight: 700; color: var(--secondary);">R$ 1.487</div>
+          <div style="font-size: 12px; color: var(--text-secondary);">20 usuarios</div>
         </div>
       </div>
     </div>
 
-    <div class="card fade-in">
-      <div class="card-header">
-        <h3 class="card-title"><i class="fas fa-exclamation-triangle"></i> Requisitos para API Oficial do Meta</h3>
+    <!-- Dica do Dia -->
+    <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); border: 1px solid #f59e0b; border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 16px;">
+      <div style="width: 48px; height: 48px; background: #f59e0b; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+        <i class="fas fa-lightbulb" style="color: white; font-size: 22px;"></i>
       </div>
-      <div class="req-grid">
-        <div class="req-item">
-          <div class="req-icon green"><i class="fab fa-whatsapp"></i></div>
-          <div>
-            <div class="req-title">Numero WhatsApp Business</div>
-            <div class="req-desc">Deve ser Business se quiser usar no celular e na plataforma.</div>
-          </div>
-        </div>
-        <div class="req-item">
-          <div class="req-icon blue"><i class="fab fa-meta"></i></div>
-          <div>
-            <div class="req-title">Gerenciador de Negocios (BM)</div>
-            <div class="req-desc">Dar acesso para thiago@papervines.digital</div>
-          </div>
-        </div>
-        <div class="req-item">
-          <div class="req-icon orange"><i class="fas fa-credit-card"></i></div>
-          <div>
-            <div class="req-title">Cartao Internacional</div>
-            <div class="req-desc">Preferencialmente fisico, para pagamentos do WhatsApp.</div>
-          </div>
-        </div>
-        <div class="req-item">
-          <div class="req-icon purple"><i class="fas fa-globe"></i></div>
-          <div>
-            <div class="req-title">Site com CNPJ</div>
-            <div class="req-desc">Site da empresa com dados do CNPJ no rodape.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card fade-in">
-      <div class="card-header">
-        <h3 class="card-title"><i class="fas fa-table"></i> Endpoints Disponiveis</h3>
-      </div>
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Metodo</th>
-              <th>Endpoint</th>
-              <th>Descricao</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="badge badge-success">GET</span></td>
-              <td><code>/</code></td>
-              <td>Esta pagina de visao geral</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-success">GET</span></td>
-              <td><code>/playbook</code></td>
-              <td>Processo de vendas completo</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-success">GET</span></td>
-              <td><code>/playbook/scripts</code></td>
-              <td>Scripts de mensagens</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-success">GET</span></td>
-              <td><code>/calculadora</code></td>
-              <td>Calculadora de propostas</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-success">GET</span></td>
-              <td><code>/clientes</code></td>
-              <td>Gestao de clientes</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-purple">POST</span></td>
-              <td><code>/api/clientes</code></td>
-              <td>API CRUD de clientes</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-success">GET</span></td>
-              <td><code>/desempenho</code></td>
-              <td>Planejamento e acompanhamento de vendas</td>
-            </tr>
-          </tbody>
-        </table>
+      <div>
+        <div style="font-weight: 600; margin-bottom: 4px; color: #92400e;">Dica de Vendas</div>
+        <div style="font-size: 14px; color: #78350f;">Sempre ofereça o <strong>teste gratuito de 14 dias</strong> antes de falar de preço. Deixe o cliente experimentar o valor da plataforma primeiro!</div>
       </div>
     </div>
   `;
