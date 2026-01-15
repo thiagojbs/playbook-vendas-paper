@@ -14,10 +14,10 @@ export function layout(title, content, activeMenu = '') {
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --primary: #16a34a;
-      --primary-dark: #15803d;
-      --primary-light: #22c55e;
-      --secondary: #8b5cf6;
+      --primary: #8b5cf6;
+      --primary-dark: #7c3aed;
+      --primary-light: #a78bfa;
+      --secondary: #10b981;
       --accent: #f97316;
       --bg-page: #f8fafc;
       --bg-card: #ffffff;
@@ -154,7 +154,7 @@ export function layout(title, content, activeMenu = '') {
     .nav-tab.active {
       color: var(--primary);
       border-bottom-color: var(--primary);
-      background: rgba(22, 163, 74, 0.05);
+      background: rgba(139, 92, 246, 0.05);
     }
 
     .nav-tab i {
@@ -243,20 +243,20 @@ export function layout(title, content, activeMenu = '') {
       border-left: 4px solid var(--primary);
     }
 
-    .stat-card.purple { border-left-color: var(--secondary); }
+    .stat-card.purple { border-left-color: var(--primary); }
     .stat-card.orange { border-left-color: var(--accent); }
-    .stat-card.green { border-left-color: var(--primary); }
+    .stat-card.green { border-left-color: var(--secondary); }
 
     .stat-value {
       font-size: 36px;
       font-weight: 700;
-      color: var(--secondary);
+      color: var(--primary);
       margin-bottom: 4px;
     }
 
-    .stat-card.purple .stat-value { color: var(--secondary); }
+    .stat-card.purple .stat-value { color: var(--primary); }
     .stat-card.orange .stat-value { color: var(--accent); }
-    .stat-card.green .stat-value { color: var(--primary); }
+    .stat-card.green .stat-value { color: var(--secondary); }
 
     .stat-label {
       color: var(--text-secondary);
@@ -313,7 +313,7 @@ export function layout(title, content, activeMenu = '') {
     }
 
     .btn-secondary:hover {
-      background: #7c3aed;
+      background: #059669;
     }
 
     .btn-outline {
@@ -359,7 +359,7 @@ export function layout(title, content, activeMenu = '') {
     .form-input:focus, .form-select:focus, .form-textarea:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
     }
 
     .form-input::placeholder {
@@ -548,7 +548,7 @@ export function layout(title, content, activeMenu = '') {
     .accordion-header.active {
       border-color: var(--primary);
       border-radius: 8px 8px 0 0;
-      background: rgba(22, 163, 74, 0.05);
+      background: rgba(139, 92, 246, 0.05);
     }
 
     .accordion-title {
@@ -670,7 +670,7 @@ export function layout(title, content, activeMenu = '') {
 
     .quick-btn:hover {
       border-color: var(--primary);
-      background: rgba(22, 163, 74, 0.05);
+      background: rgba(139, 92, 246, 0.05);
       color: var(--primary);
     }
 
@@ -709,10 +709,10 @@ export function layout(title, content, activeMenu = '') {
       flex-shrink: 0;
     }
 
-    .req-icon.green { background: rgba(22, 163, 74, 0.15); color: var(--primary); }
+    .req-icon.green { background: rgba(16, 185, 129, 0.15); color: var(--secondary); }
     .req-icon.blue { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
     .req-icon.orange { background: rgba(249, 115, 22, 0.15); color: var(--accent); }
-    .req-icon.purple { background: rgba(139, 92, 246, 0.15); color: var(--secondary); }
+    .req-icon.purple { background: rgba(139, 92, 246, 0.15); color: var(--primary); }
 
     .req-title {
       font-weight: 600;

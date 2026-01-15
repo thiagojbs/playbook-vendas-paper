@@ -20,7 +20,7 @@ export function renderHome() {
         <div class="stat-value">6</div>
         <div class="stat-label">Tratativas de Objecoes</div>
       </div>
-      <div class="stat-card purple">
+      <div class="stat-card orange">
         <div class="stat-value">9</div>
         <div class="stat-label">Planos Disponiveis</div>
       </div>
