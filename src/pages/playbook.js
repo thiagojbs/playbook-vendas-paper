@@ -4,13 +4,14 @@ import { PLANOS_CHATBOTS, PLANOS_TELECOM, PLANOS_IA } from '../data/precos.js';
 import { OBJECOES_EXPANDIDAS, TECNICAS_GERAIS, GATILHOS_MENTAIS, DIFERENCIAIS, ESTATISTICAS_PAPERVINES } from '../data/objecoes.js';
 import { ETAPAS_FUNIL, SCRIPTS_STATS, SEQUENCIAS_COMPLETAS, DICAS_COMUNICACAO, TEMPLATES_SEGMENTO } from '../data/scripts.js';
 import { POLITICAS_WHATSAPP, POLITICAS_META_ANUNCIOS, PRECOS_WHATSAPP, REQUISITOS_API_EXPANDIDOS, FLUXO_IMPLANTACAO, PERGUNTAS_FREQUENTES, DIFERENCIAIS_PAPERVINES, LINKS_IMPORTANTES } from '../data/playbook-expandido.js';
+import { AGENTES_INFO, TIPOS_AGENTES, AGENTES_EXEMPLOS, VERTICAIS, METRICAS_GERAIS, COMPARATIVO_HUMANO, FERRAMENTAS_DISPONIVEIS } from '../data/agentes.js';
 
 export function renderPlaybook(path) {
   let content = '';
   let activeMenu = 'playbook';
   if (path.includes('/scripts')) { content = renderScripts(); activeMenu = 'scripts'; }
   else if (path.includes('/objecoes')) { content = renderObjecoes(); activeMenu = 'objecoes'; }
-  else if (path.includes('/planos')) { content = renderPlanos(); activeMenu = 'planos'; }
+  else if (path.includes('/agentes') || path.includes('/planos')) { content = renderAgentes(); activeMenu = 'planos'; }
   else { content = renderPlaybookMain(); }
   return layout('Playbook', content, activeMenu);
 }
@@ -897,22 +898,310 @@ function renderObjecoes() {
   `;
 }
 
-function renderPlanos() {
-  let chatbotsHtml = Object.entries(PLANOS_CHATBOTS).map(([key, plano]) => {
-    let funcsHtml = plano.funcionalidades.map(f => '<li style="display: flex; align-items: flex-start; gap: 8px; padding: 8px 0;"><i class="fas fa-check" style="color: var(--primary);"></i><span>' + f + '</span></li>').join('');
-    let popular = key === 'fusion' ? '<div style="background: var(--primary); color: white; text-align: center; padding: 6px; margin: -24px -24px 16px; border-radius: 12px 12px 0 0; font-size: 12px; font-weight: 600;">MAIS POPULAR</div>' : '';
-    return '<div class="card" style="border-color: ' + (key === 'fusion' ? 'var(--primary)' : 'var(--border)') + ';">' + popular + '<h3 style="font-size: 18px; margin-bottom: 8px;">' + plano.nome + '</h3><div class="valor-display">R$ ' + plano.valor.toLocaleString('pt-BR') + '</div><div class="valor-label">taxa unica ou ' + plano.parcelado + '</div><hr style="border: none; border-top: 1px solid var(--border); margin: 20px 0;"><ul style="list-style: none; padding: 0;">' + funcsHtml + '</ul></div>';
-  }).join('');
+function renderAgentes() {
+  // Cards de metricas gerais
+  const metricasHtml = `
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 32px;">
+      <div style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.05)); border-radius: 16px; padding: 20px; text-align: center; border: 1px solid rgba(139, 92, 246, 0.2);">
+        <div style="font-size: 32px; font-weight: 700; color: #8b5cf6;">${METRICAS_GERAIS.roi_medio}</div>
+        <div style="font-size: 12px; color: var(--text-secondary); text-transform: uppercase;">ROI Medio</div>
+      </div>
+      <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05)); border-radius: 16px; padding: 20px; text-align: center; border: 1px solid rgba(16, 185, 129, 0.2);">
+        <div style="font-size: 32px; font-weight: 700; color: #10b981;">${METRICAS_GERAIS.reducao_custo_medio}</div>
+        <div style="font-size: 12px; color: var(--text-secondary); text-transform: uppercase;">Reducao Custo</div>
+      </div>
+      <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05)); border-radius: 16px; padding: 20px; text-align: center; border: 1px solid rgba(59, 130, 246, 0.2);">
+        <div style="font-size: 32px; font-weight: 700; color: #3b82f6;">${METRICAS_GERAIS.disponibilidade}</div>
+        <div style="font-size: 12px; color: var(--text-secondary); text-transform: uppercase;">Disponibilidade</div>
+      </div>
+      <div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05)); border-radius: 16px; padding: 20px; text-align: center; border: 1px solid rgba(245, 158, 11, 0.2);">
+        <div style="font-size: 32px; font-weight: 700; color: #f59e0b;">${METRICAS_GERAIS.aumento_satisfacao}</div>
+        <div style="font-size: 12px; color: var(--text-secondary); text-transform: uppercase;">Satisfacao</div>
+      </div>
+    </div>
+  `;
 
-  let telecomHtml = Object.entries(PLANOS_TELECOM).map(([key, plano]) => {
-    let funcsHtml = plano.funcionalidades.map(f => '<li style="display: flex; align-items: flex-start; gap: 8px; padding: 8px 0;"><i class="fas fa-check" style="color: var(--primary);"></i><span>' + f + '</span></li>').join('');
-    return '<div class="card"><h3 style="font-size: 18px; margin-bottom: 8px;">' + plano.nome + '</h3><div class="valor-display">R$ ' + plano.valor.toLocaleString('pt-BR') + '</div><div class="valor-label">taxa unica</div><hr style="border: none; border-top: 1px solid var(--border); margin: 20px 0;"><ul style="list-style: none; padding: 0;">' + funcsHtml + '</ul></div>';
-  }).join('');
+  // Tipos de agentes
+  const tiposHtml = Object.entries(TIPOS_AGENTES).map(([key, tipo]) => `
+    <div style="background: white; border: 1px solid var(--border); border-radius: 16px; padding: 24px; border-top: 4px solid ${tipo.cor};">
+      <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+        <div style="width: 56px; height: 56px; background: ${tipo.cor}15; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-${tipo.icone}" style="font-size: 24px; color: ${tipo.cor};"></i>
+        </div>
+        <div>
+          <h3 style="margin: 0; font-size: 18px;">${tipo.nome}</h3>
+          <p style="margin: 4px 0 0; font-size: 13px; color: var(--text-secondary);">${tipo.descricao}</p>
+        </div>
+      </div>
+      <ul style="list-style: none; padding: 0; margin: 0;">
+        ${tipo.caracteristicas.map(c => `
+          <li style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border);">
+            <i class="fas fa-check-circle" style="color: ${tipo.cor};"></i>
+            <span style="font-size: 13px;">${c}</span>
+          </li>
+        `).join('')}
+      </ul>
+    </div>
+  `).join('');
 
-  let iaHtml = Object.entries(PLANOS_IA).map(([key, plano]) => {
-    let compsHtml = plano.componentes.map(c => '<li style="display: flex; align-items: flex-start; gap: 8px; padding: 8px 0;"><i class="fas fa-robot" style="color: var(--primary);"></i><span>' + c + '</span></li>').join('');
-    return '<div class="card"><h3 style="font-size: 18px; margin-bottom: 8px;">' + plano.nome + '</h3><div class="valor-display">R$ ' + plano.valor.toLocaleString('pt-BR') + '</div><div class="valor-label">taxa unica</div><hr style="border: none; border-top: 1px solid var(--border); margin: 20px 0;"><ul style="list-style: none; padding: 0;">' + compsHtml + '</ul></div>';
-  }).join('');
+  // Cards de agentes
+  const agentesHtml = AGENTES_EXEMPLOS.map(agente => `
+    <div class="card fade-in" style="border-top: 4px solid ${agente.cor}; position: relative; overflow: hidden;">
+      <div style="position: absolute; top: 12px; right: 12px;">
+        <span class="badge" style="background: ${agente.tipo === 'supervisor' ? 'rgba(139, 92, 246, 0.15)' : 'rgba(16, 185, 129, 0.15)'}; color: ${agente.tipo === 'supervisor' ? '#8b5cf6' : '#10b981'}; font-size: 10px;">
+          <i class="fas fa-${agente.tipo === 'supervisor' ? 'crown' : 'robot'}"></i> ${agente.tipo === 'supervisor' ? 'Supervisor' : 'Executor'}
+        </span>
+      </div>
 
-  return '<div class="page-header"><h1 class="page-title">Planos e Servicos</h1><p class="page-subtitle">Detalhes de todos os planos</p></div><div class="tabs"><div class="tab active" data-tab="chatbots">Chatbots</div><div class="tab" data-tab="telecom">Telecom</div><div class="tab" data-tab="ia">Agentes IA</div></div><div class="tab-contents"><div id="chatbots" class="tab-content active"><div class="grid grid-3">' + chatbotsHtml + '</div></div><div id="telecom" class="tab-content"><div class="grid grid-3">' + telecomHtml + '</div></div><div id="ia" class="tab-content"><div class="grid grid-3">' + iaHtml + '</div></div></div>';
+      <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+        <div style="width: 52px; height: 52px; background: ${agente.cor}15; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+          <i class="fas fa-${agente.icone}" style="font-size: 22px; color: ${agente.cor};"></i>
+        </div>
+        <div>
+          <h3 style="margin: 0; font-size: 16px; font-weight: 600;">${agente.nome}</h3>
+          <p style="margin: 4px 0 0; font-size: 12px; color: var(--text-secondary);">${agente.funcao}</p>
+        </div>
+      </div>
+
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5;">${agente.descricao}</p>
+
+      <!-- Metricas do Agente -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px;">
+        ${Object.entries(agente.metricas).map(([key, value]) => `
+          <div style="background: var(--bg-page); border-radius: 8px; padding: 10px; text-align: center;">
+            <div style="font-size: 16px; font-weight: 700; color: ${agente.cor};">${value}</div>
+            <div style="font-size: 10px; color: var(--text-secondary); text-transform: uppercase;">${key.replace(/_/g, ' ')}</div>
+          </div>
+        `).join('')}
+      </div>
+
+      <!-- Ferramentas -->
+      <div style="margin-bottom: 16px;">
+        <div style="font-size: 11px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 8px;">
+          <i class="fas fa-tools" style="margin-right: 4px;"></i> Ferramentas
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+          ${agente.ferramentas.map(f => `
+            <span style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6; padding: 4px 10px; border-radius: 12px; font-size: 11px;">${f}</span>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Casos de Uso -->
+      <div style="margin-bottom: 16px;">
+        <div style="font-size: 11px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 8px;">
+          <i class="fas fa-lightbulb" style="margin-right: 4px;"></i> Ideal para
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+          ${agente.casos_uso.map(c => `
+            <span style="background: var(--bg-page); padding: 4px 10px; border-radius: 12px; font-size: 11px; color: var(--text-secondary);">${c}</span>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Prompt Exemplo (Accordion) -->
+      <details style="background: var(--bg-page); border-radius: 8px; overflow: hidden;">
+        <summary style="padding: 12px; cursor: pointer; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+          <i class="fas fa-code" style="color: var(--primary);"></i>
+          Ver exemplo de prompt
+          <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 10px; transition: transform 0.2s;"></i>
+        </summary>
+        <div style="padding: 12px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-secondary); font-family: monospace; line-height: 1.6; background: rgba(0,0,0,0.02);">
+          ${agente.prompt_exemplo}
+        </div>
+      </details>
+    </div>
+  `).join('');
+
+  // Verticais/Segmentos
+  const verticaisHtml = VERTICAIS.map(v => `
+    <div style="background: white; border: 1px solid var(--border); border-radius: 16px; padding: 20px; border-left: 4px solid ${v.cor};">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+        <div style="width: 44px; height: 44px; background: ${v.cor}15; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-${v.icone}" style="font-size: 18px; color: ${v.cor};"></i>
+        </div>
+        <div>
+          <h4 style="margin: 0; font-size: 16px;">${v.segmento}</h4>
+          <div style="font-size: 11px; color: var(--text-secondary);">${v.agentes_recomendados.length} agentes recomendados</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <div style="font-size: 11px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">CASOS DE USO</div>
+        ${v.casos.map(c => `
+          <div style="display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 12px;">
+            <i class="fas fa-check" style="color: ${v.cor}; font-size: 10px;"></i> ${c}
+          </div>
+        `).join('')}
+      </div>
+
+      <div style="background: linear-gradient(135deg, ${v.cor}10, ${v.cor}05); border-radius: 10px; padding: 14px;">
+        <div style="font-size: 11px; font-weight: 600; color: var(--text-secondary); margin-bottom: 10px;">ECONOMIA ESTIMADA</div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: center;">
+          <div>
+            <div style="font-size: 18px; font-weight: 700; color: ${v.cor};">${v.economia.funcionarios}</div>
+            <div style="font-size: 9px; color: var(--text-secondary);">FUNCIONARIOS</div>
+          </div>
+          <div>
+            <div style="font-size: 18px; font-weight: 700; color: ${v.cor};">${v.economia.horas_mes}</div>
+            <div style="font-size: 9px; color: var(--text-secondary);">HORAS/MES</div>
+          </div>
+          <div>
+            <div style="font-size: 18px; font-weight: 700; color: ${v.cor};">${v.economia.reducao_custo}</div>
+            <div style="font-size: 9px; color: var(--text-secondary);">REDUCAO</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 4px;">
+        ${v.agentes_recomendados.map(a => {
+          const agente = AGENTES_EXEMPLOS.find(ag => ag.id === a);
+          return agente ? `<span style="background: ${agente.cor}15; color: ${agente.cor}; padding: 3px 8px; border-radius: 10px; font-size: 10px;"><i class="fas fa-${agente.icone}"></i> ${agente.nome.split(' ')[1] || agente.nome.split(' ')[0]}</span>` : '';
+        }).join('')}
+      </div>
+    </div>
+  `).join('');
+
+  // Comparativo Humano vs IA
+  const comparativoHtml = `
+    <div class="card fade-in" style="margin-top: 32px;">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-balance-scale" style="color: var(--primary);"></i> ${COMPARATIVO_HUMANO.titulo}</h3>
+      </div>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; font-size: 13px;">
+          <thead>
+            <tr style="background: var(--bg-page);">
+              <th style="padding: 14px; text-align: left;">Metrica</th>
+              <th style="padding: 14px; text-align: center;"><i class="fas fa-user" style="margin-right: 6px;"></i>Humano</th>
+              <th style="padding: 14px; text-align: center;"><i class="fas fa-robot" style="margin-right: 6px; color: var(--primary);"></i>Agente IA</th>
+              <th style="padding: 14px; text-align: center;">Vantagem</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${COMPARATIVO_HUMANO.metricas.map((m, i) => `
+              <tr style="border-bottom: 1px solid var(--border); ${i % 2 === 0 ? '' : 'background: rgba(139, 92, 246, 0.02);'}">
+                <td style="padding: 14px; font-weight: 500;">${m.metrica}</td>
+                <td style="padding: 14px; text-align: center; color: var(--text-secondary);">${m.humano}</td>
+                <td style="padding: 14px; text-align: center; font-weight: 600; color: var(--primary);">${m.ia}</td>
+                <td style="padding: 14px; text-align: center;">
+                  <span style="background: rgba(16, 185, 129, 0.15); color: #10b981; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;">${m.vantagem}</span>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+
+  // Ferramentas disponiveis
+  const ferramentasHtml = `
+    <div class="card fade-in" style="margin-top: 24px;">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-plug" style="color: var(--secondary);"></i> Integracoes Disponiveis</h3>
+        <span class="badge badge-info">${FERRAMENTAS_DISPONIVEIS.length}+ ferramentas</span>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+        ${FERRAMENTAS_DISPONIVEIS.map(f => `
+          <div style="display: flex; align-items: center; gap: 10px; background: var(--bg-page); padding: 10px 16px; border-radius: 10px;">
+            <i class="${f.fab ? 'fab' : 'fas'} fa-${f.icone}" style="color: var(--primary);"></i>
+            <span style="font-size: 13px;">${f.nome}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  return `
+    <div class="page-header">
+      <h1 class="page-title"><i class="fas fa-robot"></i> ${AGENTES_INFO.titulo}</h1>
+      <p class="page-subtitle">${AGENTES_INFO.subtitulo}</p>
+    </div>
+
+    <!-- Banner Principal -->
+    <div style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(16, 185, 129, 0.1)); border-radius: 20px; padding: 32px; margin-bottom: 32px; border: 1px solid rgba(139, 92, 246, 0.2);">
+      <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 300px;">
+          <h2 style="margin: 0 0 12px; font-size: 24px;">Transforme seu atendimento com IA</h2>
+          <p style="margin: 0; color: var(--text-secondary); line-height: 1.6;">${AGENTES_INFO.descricao}</p>
+          <a href="${AGENTES_INFO.doc_link}" target="_blank" class="btn btn-primary" style="margin-top: 20px; display: inline-flex; align-items: center; gap: 8px;">
+            <i class="fas fa-book"></i> Ver Documentacao Completa
+          </a>
+        </div>
+        <div style="display: flex; gap: 16px;">
+          <div style="text-align: center; padding: 20px; background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+            <div style="font-size: 36px; font-weight: 700; color: var(--primary);">${AGENTES_EXEMPLOS.length}</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">Modelos de Agentes</div>
+          </div>
+          <div style="text-align: center; padding: 20px; background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+            <div style="font-size: 36px; font-weight: 700; color: var(--secondary);">${VERTICAIS.length}</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">Verticais Atendidas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Metricas Gerais -->
+    ${metricasHtml}
+
+    <!-- Tipos de Agentes -->
+    <div class="card fade-in" style="margin-bottom: 32px;">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-sitemap" style="color: var(--primary);"></i> Arquitetura de Agentes</h3>
+      </div>
+      <p style="color: var(--text-secondary); margin-bottom: 20px;">A plataforma trabalha com dois tipos de agentes que se complementam:</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        ${tiposHtml}
+      </div>
+    </div>
+
+    <!-- Catalogo de Agentes -->
+    <div style="margin-bottom: 32px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+        <h2 style="margin: 0; font-size: 20px;"><i class="fas fa-th-large" style="color: var(--primary); margin-right: 10px;"></i>Catalogo de Agentes</h2>
+        <span class="badge badge-purple">${AGENTES_EXEMPLOS.length} modelos prontos</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px;">
+        ${agentesHtml}
+      </div>
+    </div>
+
+    <!-- Verticais/Segmentos -->
+    <div class="card fade-in" style="margin-bottom: 32px;">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-industry" style="color: var(--secondary);"></i> Aplicacao por Segmento</h3>
+        <span class="badge badge-success">Economia comprovada</span>
+      </div>
+      <p style="color: var(--text-secondary); margin-bottom: 20px;">Veja como os agentes podem ser aplicados em diferentes verticais de mercado:</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+        ${verticaisHtml}
+      </div>
+    </div>
+
+    <!-- Comparativo -->
+    ${comparativoHtml}
+
+    <!-- Ferramentas -->
+    ${ferramentasHtml}
+
+    <!-- CTA Final -->
+    <div style="background: linear-gradient(135deg, var(--primary), #6366f1); border-radius: 20px; padding: 40px; margin-top: 32px; text-align: center; color: white;">
+      <h2 style="margin: 0 0 12px; font-size: 28px;">Pronto para automatizar seu atendimento?</h2>
+      <p style="margin: 0 0 24px; opacity: 0.9;">Implemente agentes inteligentes em ${METRICAS_GERAIS.tempo_implementacao} e reduza custos em ate ${METRICAS_GERAIS.reducao_custo_medio}</p>
+      <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+        <a href="https://chat.papervines.digital/trial/sign-up" target="_blank" class="btn" style="background: white; color: var(--primary); font-weight: 600;">
+          <i class="fas fa-rocket"></i> Comecar Teste Gratuito
+        </a>
+        <a href="${AGENTES_INFO.doc_link}" target="_blank" class="btn" style="background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3);">
+          <i class="fas fa-book"></i> Ler Documentacao
+        </a>
+      </div>
+    </div>
+
+    <style>
+      details[open] summary .fa-chevron-down { transform: rotate(180deg); }
+      details summary::-webkit-details-marker { display: none; }
+    </style>
+  `;
 }

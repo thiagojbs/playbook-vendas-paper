@@ -890,8 +890,8 @@ export function layout(title, content, activeMenu = '') {
       <a href="/calculadora" class="nav-tab ${activeMenu === 'calculadora' ? 'active' : ''}">
         <i class="fas fa-calculator"></i> Calculadora
       </a>
-      <a href="/playbook/planos" class="nav-tab ${activeMenu === 'planos' ? 'active' : ''}">
-        <i class="fas fa-tags"></i> Planos
+      <a href="/playbook/agentes" class="nav-tab ${activeMenu === 'planos' ? 'active' : ''}">
+        <i class="fas fa-robot"></i> Agentes IA
       </a>
       <a href="/clientes" class="nav-tab ${activeMenu === 'clientes' ? 'active' : ''}">
         <i class="fas fa-users"></i> Clientes
