@@ -134,7 +134,8 @@ async function getContactsById(env, contactIds) {
     const batch = contactIds.slice(i, i + batchSize);
     const promises = batch.map(async (id) => {
       try {
-        const contact = await fetchCRM(`/contact/v1/contact/${id}`, env);
+        // Endpoint correto: /core/v1/contact/{id} conforme documentação
+        const contact = await fetchCRM(`/core/v1/contact/${id}`, env);
         return { id, contact };
       } catch (error) {
         return { id, contact: null };
@@ -154,7 +155,7 @@ async function getContactsById(env, contactIds) {
 
 // Buscar contato por ID
 export async function getContactById(env, contactId) {
-  return fetchCRM(`/contact/v1/contact/${contactId}`, env);
+  return fetchCRM(`/core/v1/contact/${contactId}`, env);
 }
 
 // Buscar métricas de origem dos contatos
