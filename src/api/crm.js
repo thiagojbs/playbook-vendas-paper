@@ -159,6 +159,78 @@ export async function getContactById(env, contactId) {
   return fetchCRM(`/core/v1/contact/${contactId}`, env);
 }
 
+// Normalizar nome do canal para exibição amigável
+function normalizeChannelName(value) {
+  if (!value) return 'Orgânico';
+
+  const normalized = value.toLowerCase().trim();
+
+  // Mapeamento de nomes técnicos para nomes legíveis
+  const channelMap = {
+    // Instagram
+    'instagram': 'Instagram',
+    'ig': 'Instagram',
+    'insta': 'Instagram',
+    'instagram_stories': 'Instagram',
+    'instagram_feed': 'Instagram',
+    'instagram_reels': 'Instagram',
+
+    // Facebook
+    'facebook': 'Facebook',
+    'fb': 'Facebook',
+    'facebook_feed': 'Facebook',
+    'facebook_stories': 'Facebook',
+    'meta': 'Facebook',
+
+    // Google
+    'google': 'Google Ads',
+    'google_ads': 'Google Ads',
+    'googleads': 'Google Ads',
+    'gads': 'Google Ads',
+    'adwords': 'Google Ads',
+    'google_search': 'Google Ads',
+    'google_display': 'Google Ads',
+    'pmax': 'Google Ads',
+
+    // WhatsApp
+    'whatsapp': 'WhatsApp',
+    'wpp': 'WhatsApp',
+    'wts': 'WhatsApp',
+
+    // Outros canais comuns
+    'tiktok': 'TikTok',
+    'youtube': 'YouTube',
+    'linkedin': 'LinkedIn',
+    'twitter': 'Twitter/X',
+    'x': 'Twitter/X',
+    'email': 'E-mail',
+    'sms': 'SMS',
+    'referral': 'Indicação',
+    'organic': 'Orgânico',
+    'direct': 'Direto',
+    'site': 'Site',
+    'website': 'Site',
+    'landing': 'Landing Page',
+    'lp': 'Landing Page'
+  };
+
+  // Verificar mapeamento direto
+  if (channelMap[normalized]) {
+    return channelMap[normalized];
+  }
+
+  // Verificar se contém palavras-chave
+  if (normalized.includes('instagram') || normalized.includes('insta')) return 'Instagram';
+  if (normalized.includes('facebook') || normalized.includes('fb_')) return 'Facebook';
+  if (normalized.includes('google') || normalized.includes('gads')) return 'Google Ads';
+  if (normalized.includes('whatsapp') || normalized.includes('wpp')) return 'WhatsApp';
+  if (normalized.includes('tiktok')) return 'TikTok';
+  if (normalized.includes('youtube')) return 'YouTube';
+
+  // Retornar valor original capitalizado se não encontrar mapeamento
+  return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+}
+
 // Buscar métricas de origem dos contatos
 export async function getSourceMetrics(env) {
   try {
@@ -178,10 +250,16 @@ export async function getSourceMetrics(env) {
     const contactsMap = await getContactsById(env, Array.from(allContactIds));
 
     // Mapear origens
-    const sourceStats = {};
     const channelStats = {};
     const campaignStats = {};
+    const contentStats = {};
     const cardsBySource = [];
+
+    // Debug: guardar dados brutos para análise
+    const debugData = {
+      sampleContacts: [],
+      uniqueFields: new Set()
+    };
 
     for (const card of cards) {
       // Pegar o primeiro contato associado ao card
@@ -207,50 +285,94 @@ export async function getSourceMetrics(env) {
         continue;
       }
 
-      // Extrair dados de origem do contato (baseado na documentação da API)
-      const source = contact.origin || 'Desconhecido';
+      // Debug: guardar amostra dos primeiros contatos para análise
+      if (debugData.sampleContacts.length < 5) {
+        debugData.sampleContacts.push({
+          contactId: contact.id,
+          name: contact.name,
+          origin: contact.origin,
+          utm: contact.utm,
+          source: contact.source,
+          channel: contact.channel,
+          metadata: contact.metadata,
+          customFields: contact.customFields,
+          tags: contact.tags,
+          allKeys: Object.keys(contact)
+        });
+      }
+
+      // Extrair dados de origem - tentar múltiplos campos possíveis
       const utm = contact.utm || {};
-      const campaign = utm.campaign || null;
-      const content = utm.content || null;
-      const medium = utm.medium || null;
-      const utmSource = utm.source || null;
+      const metadata = contact.metadata || {};
 
-      // Estatísticas por fonte/origem (Instagram, Facebook, WhatsApp, etc)
-      if (!sourceStats[source]) {
-        sourceStats[source] = { count: 0, cards: [], value: 0 };
+      // UTM params (padrão)
+      const utmSource = utm.source || metadata.utm_source || metadata.source || null;
+      const utmMedium = utm.medium || metadata.utm_medium || metadata.medium || null;
+      const utmCampaign = utm.campaign || metadata.utm_campaign || metadata.campaign || null;
+      const utmContent = utm.content || metadata.utm_content || metadata.content || null;
+
+      // Campos alternativos que podem conter origem
+      const contactSource = contact.source || contact.channel || null;
+      const contactOrigin = contact.origin || null;
+
+      // Determinar o canal de marketing (prioridade: utm_source > contact.source > origin)
+      let channel = 'Orgânico';
+      if (utmSource) {
+        channel = normalizeChannelName(utmSource);
+      } else if (contactSource) {
+        channel = normalizeChannelName(contactSource);
+      } else if (utmMedium && utmMedium !== 'REFERRAL') {
+        channel = normalizeChannelName(utmMedium);
+      } else if (contactOrigin && contactOrigin !== 'CREATED_FROM_HUB' && contactOrigin !== 'CREATED_BY_USER') {
+        channel = normalizeChannelName(contactOrigin);
       }
-      sourceStats[source].count++;
-      sourceStats[source].value += card.monetaryAmount || 0;
-      sourceStats[source].cards.push({
-        id: card.id,
-        title: card.title,
-        contactName: contact.name,
-        phone: contact.phoneNumber,
-        createdAt: card.createdAt
-      });
 
-      // Estatísticas por UTM source (canal de marketing)
-      const channelName = utmSource || medium || 'Orgânico';
-      if (!channelStats[channelName]) {
-        channelStats[channelName] = { count: 0, value: 0 };
+      // Estatísticas por canal de marketing (Instagram, Facebook, Google, etc)
+      if (!channelStats[channel]) {
+        channelStats[channel] = { count: 0, value: 0, cards: [] };
       }
-      channelStats[channelName].count++;
-      channelStats[channelName].value += card.monetaryAmount || 0;
+      channelStats[channel].count++;
+      channelStats[channel].value += card.monetaryAmount || 0;
 
-      // Estatísticas por campanha (se houver)
-      if (campaign) {
-        if (!campaignStats[campaign]) {
-          campaignStats[campaign] = {
-            id: campaign,
-            content: content,
-            medium: medium,
+      // Estatísticas por campanha (agrupado pelo ID da campanha)
+      if (utmCampaign) {
+        const campaignKey = utmCampaign;
+        if (!campaignStats[campaignKey]) {
+          campaignStats[campaignKey] = {
+            id: utmCampaign,
+            contents: {},  // Agrupar conteúdos dentro da campanha
+            channel: channel,
+            medium: utmMedium,
             count: 0,
-            value: 0,
-            source: source
+            value: 0
           };
         }
-        campaignStats[campaign].count++;
-        campaignStats[campaign].value += card.monetaryAmount || 0;
+        campaignStats[campaignKey].count++;
+        campaignStats[campaignKey].value += card.monetaryAmount || 0;
+
+        // Agrupar conteúdos dentro da campanha
+        if (utmContent) {
+          if (!campaignStats[campaignKey].contents[utmContent]) {
+            campaignStats[campaignKey].contents[utmContent] = { count: 0, value: 0 };
+          }
+          campaignStats[campaignKey].contents[utmContent].count++;
+          campaignStats[campaignKey].contents[utmContent].value += card.monetaryAmount || 0;
+        }
+      }
+
+      // Estatísticas por conteúdo (separado)
+      if (utmContent) {
+        if (!contentStats[utmContent]) {
+          contentStats[utmContent] = {
+            content: utmContent,
+            channel: channel,
+            campaign: utmCampaign,
+            count: 0,
+            value: 0
+          };
+        }
+        contentStats[utmContent].count++;
+        contentStats[utmContent].value += card.monetaryAmount || 0;
       }
 
       // Cards com info de origem
@@ -259,29 +381,38 @@ export async function getSourceMetrics(env) {
         cardTitle: card.title,
         contactName: contact.name,
         phone: contact.phoneNumber,
-        source: source,
-        channel: channelName,
-        campaign: campaign,
-        content: content,
-        medium: medium,
+        channel: channel,
+        campaign: utmCampaign,
+        content: utmContent,
+        medium: utmMedium,
         createdAt: card.createdAt,
         stepId: card.stepId,
         value: card.monetaryAmount || 0
       });
     }
 
-    // Ordenar por quantidade
-    const sortedSources = Object.entries(sourceStats)
-      .map(([name, data]) => ({ name, ...data, cards: undefined })) // Remover cards para resposta mais leve
-      .sort((a, b) => b.count - a.count);
-
+    // Ordenar canais por quantidade
     const sortedChannels = Object.entries(channelStats)
-      .map(([name, data]) => ({ name, ...data }))
+      .map(([name, data]) => ({ name, count: data.count, value: data.value }))
       .sort((a, b) => b.count - a.count);
 
+    // Ordenar campanhas por quantidade
     const sortedCampaigns = Object.values(campaignStats)
+      .map(c => ({
+        ...c,
+        contents: Object.entries(c.contents).map(([content, data]) => ({
+          content,
+          count: data.count,
+          value: data.value
+        })).sort((a, b) => b.count - a.count)
+      }))
       .sort((a, b) => b.count - a.count)
-      .slice(0, 20); // Top 20 campanhas
+      .slice(0, 30); // Top 30 campanhas
+
+    // Ordenar conteúdos por quantidade
+    const sortedContents = Object.values(contentStats)
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 30); // Top 30 conteúdos
 
     // Ordenar cards por data de criação (mais recentes primeiro)
     cardsBySource.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -291,14 +422,16 @@ export async function getSourceMetrics(env) {
       timestamp: new Date().toISOString(),
       summary: {
         totalCards: cards.length,
-        totalWithSource: cardsBySource.filter(c => c.source !== 'Desconhecido').length,
+        totalWithChannel: cardsBySource.filter(c => c.channel !== 'Outros' && c.channel !== 'Orgânico').length,
         totalCampaigns: Object.keys(campaignStats).length,
+        totalContents: Object.keys(contentStats).length,
         totalContacts: Object.keys(contactsMap).length
       },
-      sources: sortedSources,
       channels: sortedChannels,
       campaigns: sortedCampaigns,
-      recentCards: cardsBySource.slice(0, 50) // Últimos 50 cards com origem
+      contents: sortedContents,
+      recentCards: cardsBySource.slice(0, 50),
+      debug: debugData // Temporário para análise
     };
   } catch (error) {
     return {
