@@ -442,7 +442,7 @@ export function renderCalculadora() {
           <button class="modal-close" onclick="closeModal('propostaModal')">&times;</button>
         </div>
         <div class="modal-body">
-          <div id="propostaContent" style="white-space: pre-wrap; font-family: monospace; background: var(--bg-dark); padding: 20px; border-radius: 8px; max-height: 400px; overflow-y: auto;"></div>
+          <div id="propostaContent" style="white-space: pre-wrap; font-family: 'Segoe UI', system-ui, sans-serif; background: linear-gradient(135deg, #1a1a2e, #16213e); color: #ffffff; padding: 24px; border-radius: 12px; max-height: 450px; overflow-y: auto; line-height: 1.6; font-size: 14px;"></div>
         </div>
         <div class="modal-footer">
           <button class="btn btn-secondary" onclick="closeModal('propostaModal')">Fechar</button>
@@ -968,30 +968,120 @@ export function renderCalculadora() {
         const totalUsuarios = plano.usuarios + usuariosAdicionais;
         const whatsappAdicional = parseInt(document.getElementById('whatsapp_adicional').value) || 0;
         const totalWhatsapp = 1 + whatsappAdicional;
+        const instagramAdicional = parseInt(document.getElementById('instagram_adicional').value) || 0;
+        const messengerAdicional = parseInt(document.getElementById('messenger_adicional').value) || 0;
         const mensalidade = document.getElementById('valorMensalidade').textContent;
         const implantacao = document.getElementById('valorImplantacao').textContent;
         const parcelas = parseInt(document.getElementById('parcelas_implantacao').value);
         const valorParcela = parseFloat(implantacao.replace(/[^0-9,]/g, '').replace(',', '.')) / parcelas;
+        const temConsultoria = document.getElementById('consultoria').checked;
+        const temInfraestrutura = (planoKey === 'plus' || planoKey === 'advanced');
 
-        let proposta = '*PROPOSTA PAPER VINES*\\n\\n';
-        proposta += '*Plano: ' + plano.nome + '*\\n';
-        proposta += 'Usuarios: ate ' + totalUsuarios + '\\n';
-        proposta += 'WhatsApp: ' + totalWhatsapp + ' canal(is)\\n';
+        let proposta = '📋 *PROPOSTA COMERCIAL*\\n';
+        proposta += '━━━━━━━━━━━━━━━━━━━━━━━\\n\\n';
+
+        proposta += '🏢 *PAPER VINES*\\n';
+        proposta += 'Solucoes em Automacao e CRM\\n\\n';
+
+        proposta += '📦 *PLANO SELECIONADO*\\n';
+        proposta += '▸ ' + plano.nome.toUpperCase() + '\\n\\n';
+
+        proposta += '👥 *RECURSOS INCLUSOS*\\n';
+        proposta += '▸ Usuarios: ' + totalUsuarios + ' licencas\\n';
+        proposta += '▸ WhatsApp: ' + totalWhatsapp + ' canal(is)\\n';
 
         if (plano.canais.includes('instagram')) {
-          proposta += 'Instagram Direct: incluso\\n';
-          proposta += 'Messenger: incluso\\n';
+          const totalInstagram = 1 + instagramAdicional;
+          const totalMessenger = 1 + messengerAdicional;
+          proposta += '▸ Instagram: ' + totalInstagram + ' canal(is)\\n';
+          proposta += '▸ Messenger: ' + totalMessenger + ' canal(is)\\n';
+        } else if (instagramAdicional > 0 || messengerAdicional > 0) {
+          if (instagramAdicional > 0) proposta += '▸ Instagram: ' + instagramAdicional + ' canal(is)\\n';
+          if (messengerAdicional > 0) proposta += '▸ Messenger: ' + messengerAdicional + ' canal(is)\\n';
         }
 
-        proposta += '\\n*Mensalidade: ' + mensalidade + '*\\n\\n';
-        proposta += '*Implantacao: ' + implantacao + '*\\n';
+        // Extras mensais
+        let extras = [];
+        if (document.getElementById('automacao_ilimitada').checked) extras.push('Automacao Ilimitada');
+        if (document.getElementById('integracao_asaas').checked) extras.push('Integracao ASAAS Bank');
+        if (document.getElementById('pagamentos').checked) extras.push('Modulo Pagamentos');
+        if (temConsultoria) extras.push('Consultoria Paper Vines');
+
+        const transcricaoUsuarios = parseInt(document.getElementById('transcricao_audio').value) || 0;
+        if (transcricaoUsuarios > 0) extras.push('Transcricao IA (' + transcricaoUsuarios + ' usuarios)');
+
+        // Infraestrutura
+        if (temInfraestrutura) {
+          const infraRadios = document.getElementsByName('infraestrutura');
+          for (let radio of infraRadios) {
+            if (radio.checked && radio.value !== 'ate_5000') {
+              const labelMap = {
+                '5001_10000': '5k-10k contatos',
+                '10001_20000': '10k-20k contatos',
+                '20001_40000': '20k-40k contatos'
+              };
+              extras.push('Infraestrutura Nuvem (' + labelMap[radio.value] + ')');
+              break;
+            }
+          }
+        }
+
+        if (extras.length > 0) {
+          proposta += '\\n✨ *EXTRAS INCLUSOS*\\n';
+          extras.forEach(e => { proposta += '▸ ' + e + '\\n'; });
+        }
+
+        proposta += '\\n━━━━━━━━━━━━━━━━━━━━━━━\\n\\n';
+
+        proposta += '💰 *INVESTIMENTO*\\n\\n';
+        proposta += '📅 Mensalidade: *' + mensalidade + '*\\n\\n';
+        proposta += '🚀 Implantacao: *' + implantacao + '*\\n';
         if (parcelas > 1) {
-          proposta += '(' + parcelas + 'x de R$ ' + valorParcela.toFixed(2).replace('.', ',') + ' sem juros)\\n';
+          proposta += '   (' + parcelas + 'x de R$ ' + valorParcela.toFixed(2).replace('.', ',') + ' sem juros)\\n';
+        }
+        if (temConsultoria) {
+          proposta += '   🎁 Desconto consultoria aplicado!\\n';
         }
 
-        proposta += '\\nA tecnologia e poderosa, mas quem ativa esse poder e o suporte certo.\\n';
-        proposta += 'Nossa equipe esta preparada para superar suas expectativas.\\n\\n';
-        proposta += '*Validade da proposta: 7 dias*';
+        // Servicos extras de implantacao
+        let servicosUnica = [];
+        if (document.getElementById('verificacao_bm').checked) servicosUnica.push('Verificacao Business Manager Meta');
+
+        const websiteRadios = document.getElementsByName('website');
+        for (let radio of websiteRadios) {
+          if (radio.checked && radio.value !== 'nenhum') {
+            const nomes = { starter: 'Website Starter', business: 'Website Business', premium: 'Website Premium' };
+            servicosUnica.push(nomes[radio.value]);
+            break;
+          }
+        }
+
+        const agentesRadios = document.getElementsByName('agentes_ia');
+        for (let radio of agentesRadios) {
+          if (radio.checked && radio.value !== 'nenhum') {
+            const nomes = { starter: 'Agentes IA Starter', business: 'Agentes IA Business', enterprise: 'Agentes IA Enterprise' };
+            servicosUnica.push(nomes[radio.value]);
+            break;
+          }
+        }
+
+        if (servicosUnica.length > 0) {
+          proposta += '\\n🔧 *SERVICOS ADICIONAIS*\\n';
+          servicosUnica.forEach(s => { proposta += '▸ ' + s + '\\n'; });
+        }
+
+        proposta += '\\n━━━━━━━━━━━━━━━━━━━━━━━\\n\\n';
+
+        proposta += '💡 A tecnologia e poderosa, mas quem\\n';
+        proposta += '   ativa esse poder e o suporte certo.\\n\\n';
+
+        proposta += '🤝 Nossa equipe esta preparada para\\n';
+        proposta += '   superar suas expectativas!\\n\\n';
+
+        proposta += '⏰ *Validade: 7 dias*\\n\\n';
+
+        proposta += '━━━━━━━━━━━━━━━━━━━━━━━\\n';
+        proposta += '🌿 Paper Vines | papervines.com.br';
 
         document.getElementById('propostaContent').textContent = proposta.replace(/\\\\n/g, '\\n');
         openModal('propostaModal');
