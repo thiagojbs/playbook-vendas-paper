@@ -674,18 +674,18 @@ function renderCRM(env) {
 
       function atualizarInterfaceOrigens(data) {
         // KPIs
-        document.getElementById('totalOrigensIdentificadas').textContent = data.summary.totalWithSource || 0;
-        document.getElementById('totalCanais').textContent = data.sources?.length || 0;
+        document.getElementById('totalOrigensIdentificadas').textContent = data.summary.totalWithChannel || 0;
+        document.getElementById('totalCanais').textContent = data.channels?.length || 0;
         document.getElementById('totalCampanhas').textContent = data.summary.totalCampaigns || 0;
 
         // Melhor canal
-        if (data.sources && data.sources.length > 0) {
-          document.getElementById('melhorCanal').textContent = data.sources[0].name.substring(0, 10);
+        if (data.channels && data.channels.length > 0) {
+          document.getElementById('melhorCanal').textContent = data.channels[0].name.substring(0, 10);
         }
 
         document.getElementById('qtdCardsOrigem').textContent = data.recentCards?.length || 0;
 
-        renderizarOrigens(data.sources);
+        renderizarOrigens(data.channels);
         renderizarCampanhas(data.campaigns);
         renderizarTabelaOrigens(data.recentCards);
       }
@@ -744,20 +744,31 @@ function renderCRM(env) {
         }
 
         let html = '';
-        campaigns.slice(0, 8).forEach((camp, i) => {
-          const { icon, color } = getSourceIcon(camp.source);
+        campaigns.slice(0, 10).forEach((camp, i) => {
+          const { icon, color } = getSourceIcon(camp.channel);
+          const campId = camp.id || '';
+          const campIdDisplay = campId.length > 18 ? campId.substring(0, 18) + '...' : campId;
 
           html += '<div class="campaign-row" style="border-left-color: ' + color + ';">';
           html += '<div style="display: flex; justify-content: space-between; align-items: center;">';
           html += '<div style="flex: 1; min-width: 0;">';
-          html += '<div style="font-size: 11px; color: var(--text-secondary); display: flex; align-items: center; gap: 4px;"><i class="' + icon + '" style="color: ' + color + ';"></i> ' + (camp.source || 'Ads') + '</div>';
-          html += '<div style="font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="' + camp.id + '">ID: ' + camp.id.substring(0, 20) + '...</div>';
-          if (camp.content) {
-            html += '<div style="font-size: 11px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;" title="' + camp.content + '">' + camp.content.substring(0, 40) + '...</div>';
+          html += '<div style="font-size: 11px; color: var(--text-secondary); display: flex; align-items: center; gap: 4px;"><i class="' + icon + '" style="color: ' + color + ';"></i> ' + (camp.channel || 'Ads') + '</div>';
+          html += '<div style="font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="' + campId + '">Campanha: ' + campIdDisplay + '</div>';
+
+          // Mostrar conteúdos da campanha
+          if (camp.contents && camp.contents.length > 0) {
+            html += '<div style="margin-top: 4px; padding-left: 8px; border-left: 2px solid var(--border);">';
+            camp.contents.slice(0, 2).forEach(cont => {
+              const contentDisplay = cont.content.length > 35 ? cont.content.substring(0, 35) + '...' : cont.content;
+              html += '<div style="font-size: 10px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px;" title="' + cont.content + '"><i class="fas fa-comment-dots" style="margin-right: 4px; opacity: 0.5;"></i>' + contentDisplay + ' <span style="color: ' + color + '; font-weight: 600;">(' + cont.count + ')</span></div>';
+            });
+            html += '</div>';
           }
+
           html += '</div>';
           html += '<div style="text-align: right; margin-left: 12px;">';
-          html += '<div style="font-size: 18px; font-weight: 700; color: ' + color + ';">' + camp.count + '</div>';
+          html += '<div style="font-size: 20px; font-weight: 700; color: ' + color + ';">' + camp.count + '</div>';
+          html += '<div style="font-size: 10px; color: var(--text-secondary);">leads</div>';
           html += '</div>';
           html += '</div>';
           html += '</div>';
@@ -774,15 +785,17 @@ function renderCRM(env) {
 
         let html = '';
         cards.forEach(card => {
-          const { icon, color } = getSourceIcon(card.source);
+          const { icon, color } = getSourceIcon(card.channel);
           const data = card.createdAt ? new Date(card.createdAt).toLocaleDateString('pt-BR') : '-';
+          const campaignDisplay = card.campaign ? (card.campaign.length > 15 ? card.campaign.substring(0, 15) + '...' : card.campaign) : '-';
+          const contentDisplay = card.content ? (card.content.length > 30 ? card.content.substring(0, 30) + '...' : card.content) : '-';
 
           html += '<tr>';
           html += '<td style="padding: 8px;"><span style="font-weight: 600;">' + (card.cardTitle || '-') + '</span></td>';
           html += '<td style="padding: 8px;">' + (card.contactName || '-') + '</td>';
-          html += '<td style="padding: 8px;"><span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; background: ' + color + '15; border-radius: 4px; font-size: 11px;"><i class="' + icon + '" style="color: ' + color + '; font-size: 12px;"></i>' + (card.source || '-') + '</span></td>';
-          html += '<td style="padding: 8px; font-size: 11px; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="' + (card.campaign || '') + '">' + (card.campaign ? card.campaign.substring(0, 15) + '...' : '-') + '</td>';
-          html += '<td style="padding: 8px; font-size: 11px; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="' + (card.content || '') + '">' + (card.content ? card.content.substring(0, 25) + '...' : '-') + '</td>';
+          html += '<td style="padding: 8px;"><span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; background: ' + color + '15; border-radius: 4px; font-size: 11px;"><i class="' + icon + '" style="color: ' + color + '; font-size: 12px;"></i>' + (card.channel || '-') + '</span></td>';
+          html += '<td style="padding: 8px; font-size: 11px; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="' + (card.campaign || '') + '">' + campaignDisplay + '</td>';
+          html += '<td style="padding: 8px; font-size: 11px; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="' + (card.content || '') + '">' + contentDisplay + '</td>';
           html += '<td style="padding: 8px; text-align: right; font-size: 11px; color: var(--text-secondary);">' + data + '</td>';
           html += '</tr>';
         });
