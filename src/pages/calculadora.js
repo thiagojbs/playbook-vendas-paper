@@ -178,50 +178,121 @@ export function renderCalculadora() {
             </div>
           </div>
 
-          <!-- CHATBOTS E IA -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <!-- SERVICOS ADICIONAIS (TAXA UNICA) -->
+          <div style="margin-bottom: 24px;">
             <div style="grid-column: span 2;">
               <h4 style="color: var(--primary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
-                <i class="fas fa-magic"></i> Servicos de Implantacao Adicional (Taxa Unica)
+                <i class="fas fa-plus-square"></i> Servicos Adicionais (Taxa Unica)
               </h4>
             </div>
 
-            <div class="form-group">
-              <label class="form-label">Plano de Chatbots</label>
-              <select class="form-select" id="chatbot" onchange="calcularProposta()">
-                <option value="nenhum" data-preco="0">Nenhum</option>
-                <option value="basic" data-preco="1500">Basic - 3 chatbots (R$ 1.500)</option>
-                <option value="master" data-preco="2600">Master - 5 chatbots (R$ 2.600)</option>
-                <option value="fusion" data-preco="3600">Fusion - 7 chatbots (R$ 3.600)</option>
-              </select>
+            <!-- Verificacao BM Meta -->
+            <label class="checkbox-card" style="margin-bottom: 16px;">
+              <input type="checkbox" id="verificacao_bm" onchange="calcularProposta()">
+              <div class="checkbox-content">
+                <i class="fab fa-meta" style="color: #1877F2;"></i>
+                <div style="flex: 1;">
+                  <div class="checkbox-title">Verificacao Business Manager Meta</div>
+                  <div style="font-size: 11px; color: var(--text-secondary);">Verificacao de conta comercial para uso de API oficial</div>
+                </div>
+                <div class="checkbox-preco" style="color: #1877F2;">R$ 250</div>
+              </div>
+            </label>
+
+            <!-- Desenvolvimento de Website -->
+            <div style="margin-bottom: 20px;">
+              <label class="form-label" style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                <i class="fas fa-globe" style="color: #3b82f6;"></i> Desenvolvimento de Website
+              </label>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                <label class="servico-card" id="site_nenhum">
+                  <input type="radio" name="website" value="nenhum" data-preco="0" onchange="calcularProposta()" checked>
+                  <div class="servico-content">
+                    <div class="servico-badge">-</div>
+                    <div class="servico-nome">Nenhum</div>
+                    <div class="servico-preco">R$ 0</div>
+                  </div>
+                </label>
+                <label class="servico-card" id="site_starter">
+                  <input type="radio" name="website" value="starter" data-preco="950" onchange="calcularProposta()">
+                  <div class="servico-content">
+                    <div class="servico-badge" style="background: #3b82f6;">P</div>
+                    <div class="servico-nome">Starter</div>
+                    <div class="servico-preco">R$ 950</div>
+                    <div class="servico-desc">4 Blocos</div>
+                    <div class="servico-itens">Menu + Header + Sobre + Rodape</div>
+                  </div>
+                </label>
+                <label class="servico-card popular" id="site_business">
+                  <input type="radio" name="website" value="business" data-preco="1300" onchange="calcularProposta()">
+                  <div class="servico-content">
+                    <span class="badge badge-success" style="position: absolute; top: -8px; right: 8px; font-size: 9px;">POPULAR</span>
+                    <div class="servico-badge" style="background: #10b981;">M</div>
+                    <div class="servico-nome">Business</div>
+                    <div class="servico-preco">R$ 1.300</div>
+                    <div class="servico-desc">6 Blocos</div>
+                    <div class="servico-itens">+ Diferenciais + Precos</div>
+                  </div>
+                </label>
+                <label class="servico-card" id="site_premium" style="grid-column: 2;">
+                  <input type="radio" name="website" value="premium" data-preco="1500" onchange="calcularProposta()">
+                  <div class="servico-content">
+                    <div class="servico-badge" style="background: #8b5cf6;">G</div>
+                    <div class="servico-nome">Premium</div>
+                    <div class="servico-preco">R$ 1.500</div>
+                    <div class="servico-desc">9 Blocos</div>
+                    <div class="servico-itens">+ Depoimentos + CTA + WhatsApp + Form</div>
+                  </div>
+                </label>
+              </div>
             </div>
 
-            <div class="form-group">
-              <label class="form-label">Plano de Agentes IA</label>
-              <select class="form-select" id="agentes_ia" onchange="calcularProposta()">
-                <option value="nenhum" data-preco="0">Nenhum</option>
-                <option value="basic" data-preco="2500">Basic - 3 agentes (R$ 2.500)</option>
-                <option value="master" data-preco="3800">Master - 5 agentes (R$ 3.800)</option>
-                <option value="fusion" data-preco="5300">Fusion - 7 agentes (R$ 5.300)</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Solucao Telecom</label>
-              <select class="form-select" id="telecom" onchange="calcularProposta()">
-                <option value="nenhum" data-preco="0">Nenhum</option>
-                <option value="basic" data-preco="990">Basic (R$ 990)</option>
-                <option value="master" data-preco="2600">Master (R$ 2.600)</option>
-                <option value="fusion" data-preco="3600">Fusion (R$ 3.600)</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Verificacao BM do Meta</label>
-              <select class="form-select" id="verificacao_bm" onchange="calcularProposta()">
-                <option value="0" data-preco="0">Nao necessario</option>
-                <option value="1" data-preco="250">Sim (+R$ 250)</option>
-              </select>
+            <!-- Implementacao Agentes IA -->
+            <div>
+              <label class="form-label" style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                <i class="fas fa-robot" style="color: #8b5cf6;"></i> Implementacao de Agentes de I.A.
+              </label>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                <label class="servico-card" id="ia_nenhum">
+                  <input type="radio" name="agentes_ia" value="nenhum" data-preco="0" onchange="calcularProposta()" checked>
+                  <div class="servico-content">
+                    <div class="servico-badge">-</div>
+                    <div class="servico-nome">Nenhum</div>
+                    <div class="servico-preco">R$ 0</div>
+                  </div>
+                </label>
+                <label class="servico-card" id="ia_starter">
+                  <input type="radio" name="agentes_ia" value="starter" data-preco="2500" onchange="calcularProposta()">
+                  <div class="servico-content">
+                    <div class="servico-badge" style="background: #3b82f6;">P</div>
+                    <div class="servico-nome">Starter</div>
+                    <div class="servico-preco">R$ 2.500</div>
+                    <div class="servico-desc">3 Agentes</div>
+                    <div class="servico-itens">Supervisor + SDR + Tecnico</div>
+                  </div>
+                </label>
+                <label class="servico-card popular" id="ia_business">
+                  <input type="radio" name="agentes_ia" value="business" data-preco="3800" onchange="calcularProposta()">
+                  <div class="servico-content">
+                    <span class="badge badge-success" style="position: absolute; top: -8px; right: 8px; font-size: 9px;">POPULAR</span>
+                    <div class="servico-badge" style="background: #10b981;">M</div>
+                    <div class="servico-nome">Business</div>
+                    <div class="servico-preco">R$ 3.800</div>
+                    <div class="servico-desc">5 Agentes</div>
+                    <div class="servico-itens">+ Cobranca + Agendamento</div>
+                  </div>
+                </label>
+                <label class="servico-card" id="ia_enterprise" style="grid-column: 2;">
+                  <input type="radio" name="agentes_ia" value="enterprise" data-preco="5300" onchange="calcularProposta()">
+                  <div class="servico-content">
+                    <div class="servico-badge" style="background: #8b5cf6;">G</div>
+                    <div class="servico-nome">Enterprise</div>
+                    <div class="servico-preco">R$ 5.300</div>
+                    <div class="servico-desc">7 Agentes</div>
+                    <div class="servico-itens">+ Resgate + Vendas</div>
+                  </div>
+                </label>
+              </div>
             </div>
           </div>
         </form>
@@ -394,6 +465,74 @@ export function renderCalculadora() {
         color: var(--secondary);
         font-weight: 600;
       }
+
+      /* Cards de servico estilo McDonald's */
+      .servico-card {
+        display: block;
+        padding: 16px;
+        border: 2px solid var(--border);
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+        text-align: center;
+        background: white;
+      }
+      .servico-card:hover {
+        border-color: var(--primary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      }
+      .servico-card input { display: none; }
+      .servico-card:has(input:checked) {
+        border-color: var(--primary);
+        background: rgba(139, 92, 246, 0.05);
+        box-shadow: 0 4px 16px rgba(139, 92, 246, 0.2);
+      }
+      .servico-card.popular:has(input:checked) {
+        border-color: var(--secondary);
+        background: rgba(16, 185, 129, 0.05);
+        box-shadow: 0 4px 16px rgba(16, 185, 129, 0.2);
+      }
+      .servico-badge {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--border);
+        color: white;
+        font-weight: 700;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 10px;
+      }
+      .servico-nome {
+        font-weight: 700;
+        font-size: 15px;
+        margin-bottom: 4px;
+      }
+      .servico-preco {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 4px;
+      }
+      .servico-card:has(input:checked) .servico-preco { color: var(--primary); }
+      .servico-card.popular:has(input:checked) .servico-preco { color: var(--secondary); }
+      .servico-desc {
+        font-size: 11px;
+        color: var(--text-secondary);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+      }
+      .servico-itens {
+        font-size: 10px;
+        color: var(--text-secondary);
+        line-height: 1.4;
+      }
     </style>
 
     <script>
@@ -488,17 +627,28 @@ export function renderCalculadora() {
         let implantacaoPlano = plano.implantacao;
         let servicosExtras = 0;
 
-        const chatbot = document.getElementById('chatbot');
-        servicosExtras += parseFloat(chatbot.options[chatbot.selectedIndex].dataset.preco);
+        // Verificacao BM Meta
+        if (document.getElementById('verificacao_bm').checked) {
+          servicosExtras += 250;
+        }
 
-        const agentesIa = document.getElementById('agentes_ia');
-        servicosExtras += parseFloat(agentesIa.options[agentesIa.selectedIndex].dataset.preco);
+        // Website
+        const websiteRadios = document.getElementsByName('website');
+        for (let radio of websiteRadios) {
+          if (radio.checked) {
+            servicosExtras += parseFloat(radio.dataset.preco);
+            break;
+          }
+        }
 
-        const telecom = document.getElementById('telecom');
-        servicosExtras += parseFloat(telecom.options[telecom.selectedIndex].dataset.preco);
-
-        const verificacaoBm = document.getElementById('verificacao_bm');
-        servicosExtras += parseFloat(verificacaoBm.options[verificacaoBm.selectedIndex].dataset.preco);
+        // Agentes IA
+        const agentesRadios = document.getElementsByName('agentes_ia');
+        for (let radio of agentesRadios) {
+          if (radio.checked) {
+            servicosExtras += parseFloat(radio.dataset.preco);
+            break;
+          }
+        }
 
         const implantacaoTotal = implantacaoPlano + servicosExtras;
 
