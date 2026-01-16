@@ -25,7 +25,10 @@ export function renderCalculadora() {
                 <div class="plano-content">
                   <div class="plano-nome">Essential</div>
                   <div class="plano-preco">R$ 487<span>/mes</span></div>
-                  <div class="plano-info">3 usuarios | WhatsApp</div>
+                  <div class="plano-canais">
+                    <span><i class="fas fa-users"></i> 3 Usuarios</span>
+                    <span><i class="fab fa-whatsapp"></i> 1 WhatsApp</span>
+                  </div>
                 </div>
               </label>
               <label class="plano-card" id="plano_pro">
@@ -33,7 +36,12 @@ export function renderCalculadora() {
                 <div class="plano-content">
                   <div class="plano-nome">Pro</div>
                   <div class="plano-preco">R$ 687<span>/mes</span></div>
-                  <div class="plano-info">5 usuarios | Multi-canal</div>
+                  <div class="plano-canais">
+                    <span><i class="fas fa-users"></i> 5 Usuarios</span>
+                    <span><i class="fab fa-whatsapp"></i> 1 WhatsApp</span>
+                    <span><i class="fab fa-instagram"></i> Instagram</span>
+                    <span><i class="fab fa-facebook-messenger"></i> Messenger</span>
+                  </div>
                 </div>
               </label>
               <label class="plano-card popular" id="plano_plus">
@@ -42,7 +50,12 @@ export function renderCalculadora() {
                   <span class="badge badge-success" style="position: absolute; top: -10px; right: 10px; font-size: 10px;">POPULAR</span>
                   <div class="plano-nome">Plus+</div>
                   <div class="plano-preco">R$ 987<span>/mes</span></div>
-                  <div class="plano-info">10 usuarios | Multi-canal</div>
+                  <div class="plano-canais">
+                    <span><i class="fas fa-users"></i> 10 Usuarios</span>
+                    <span><i class="fab fa-whatsapp"></i> 1 WhatsApp</span>
+                    <span><i class="fab fa-instagram"></i> Instagram</span>
+                    <span><i class="fab fa-facebook-messenger"></i> Messenger</span>
+                  </div>
                 </div>
               </label>
               <label class="plano-card" id="plano_advanced">
@@ -50,7 +63,12 @@ export function renderCalculadora() {
                 <div class="plano-content">
                   <div class="plano-nome">Advanced</div>
                   <div class="plano-preco">R$ 1.487<span>/mes</span></div>
-                  <div class="plano-info">20 usuarios | Multi-canal</div>
+                  <div class="plano-canais">
+                    <span><i class="fas fa-users"></i> 20 Usuarios</span>
+                    <span><i class="fab fa-whatsapp"></i> 1 WhatsApp</span>
+                    <span><i class="fab fa-instagram"></i> Instagram</span>
+                    <span><i class="fab fa-facebook-messenger"></i> Messenger</span>
+                  </div>
                 </div>
               </label>
             </div>
@@ -150,6 +168,50 @@ export function renderCalculadora() {
                 <span style="color: var(--text-secondary); font-size: 13px;">usuarios com transcricao</span>
               </div>
             </div>
+
+            <!-- INFRAESTRUTURA DE NUVEM - Apenas Plus+ e Advanced -->
+            <div id="infraestrutura_container" style="grid-column: span 3; display: none;">
+              <div style="margin-top: 16px; padding: 16px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(139, 92, 246, 0.08)); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.2);">
+                <label class="form-label" style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                  <i class="fas fa-cloud" style="color: #3b82f6;"></i>
+                  Infraestrutura de Nuvem
+                  <span class="badge badge-info" style="font-size: 9px;">PLUS+ E ADVANCED</span>
+                </label>
+                <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 12px;">
+                  Processamento de contatos unicos ativos no mes
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+                  <label class="infra-card">
+                    <input type="radio" name="infraestrutura" value="ate_5000" data-preco="0" onchange="calcularProposta()" checked>
+                    <div class="infra-content">
+                      <span class="infra-limite">Ate 5.000</span>
+                      <span class="infra-preco gratis">Gratis</span>
+                    </div>
+                  </label>
+                  <label class="infra-card">
+                    <input type="radio" name="infraestrutura" value="5001_10000" data-preco="900" onchange="calcularProposta()">
+                    <div class="infra-content">
+                      <span class="infra-limite">5.001 - 10.000</span>
+                      <span class="infra-preco">R$ 900/mes</span>
+                    </div>
+                  </label>
+                  <label class="infra-card">
+                    <input type="radio" name="infraestrutura" value="10001_20000" data-preco="1500" onchange="calcularProposta()">
+                    <div class="infra-content">
+                      <span class="infra-limite">10.001 - 20.000</span>
+                      <span class="infra-preco">R$ 1.500/mes</span>
+                    </div>
+                  </label>
+                  <label class="infra-card">
+                    <input type="radio" name="infraestrutura" value="20001_40000" data-preco="2800" onchange="calcularProposta()">
+                    <div class="infra-content">
+                      <span class="infra-limite">20.001 - 40.000</span>
+                      <span class="infra-preco">R$ 2.800/mes</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- IMPLANTACAO -->
@@ -184,61 +246,61 @@ export function renderCalculadora() {
               <i class="fas fa-plus-square"></i> Servicos Adicionais (Taxa Unica)
             </h4>
 
-            <!-- Verificacao BM + Website em linha -->
-            <div style="display: grid; grid-template-columns: auto 1fr; gap: 16px; margin-bottom: 16px;">
-              <!-- Verificacao BM Meta -->
-              <label class="checkbox-card-mini">
+            <!-- Verificacao BM Meta - Linha propria -->
+            <div style="margin-bottom: 16px;">
+              <label class="checkbox-card-mini" style="display: inline-flex;">
                 <input type="checkbox" id="verificacao_bm" onchange="calcularProposta()">
                 <div class="checkbox-content-mini">
-                  <i class="fab fa-meta" style="color: #1877F2; font-size: 16px;"></i>
+                  <i class="fab fa-meta" style="color: #1877F2; font-size: 18px;"></i>
                   <div>
-                    <div style="font-weight: 600; font-size: 12px;">Verificacao BM Meta</div>
-                    <div style="font-size: 14px; font-weight: 700; color: #1877F2;">R$ 250</div>
+                    <div style="font-weight: 600; font-size: 13px;">Verificacao Business Manager Meta</div>
+                    <div style="font-size: 11px; color: var(--text-secondary);">Verificacao de conta comercial para API oficial</div>
                   </div>
+                  <div style="font-size: 16px; font-weight: 700; color: #1877F2; margin-left: 12px;">R$ 250</div>
                 </div>
               </label>
+            </div>
 
-              <!-- Website - 4 opcoes em linha -->
-              <div>
-                <div style="font-size: 11px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
-                  <i class="fas fa-globe" style="color: #3b82f6;"></i> Website
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
-                  <label class="servico-mini">
-                    <input type="radio" name="website" value="nenhum" data-preco="0" onchange="calcularProposta()" checked>
-                    <div class="servico-mini-content">
-                      <span class="mini-nome">Nenhum</span>
-                      <span class="mini-preco">-</span>
-                    </div>
-                  </label>
-                  <label class="servico-mini">
-                    <input type="radio" name="website" value="starter" data-preco="950" onchange="calcularProposta()">
-                    <div class="servico-mini-content">
-                      <span class="mini-badge" style="background: #3b82f6;">P</span>
-                      <span class="mini-nome">Starter</span>
-                      <span class="mini-preco">R$ 950</span>
-                      <span class="mini-desc">4 blocos</span>
-                    </div>
-                  </label>
-                  <label class="servico-mini popular">
-                    <input type="radio" name="website" value="business" data-preco="1300" onchange="calcularProposta()">
-                    <div class="servico-mini-content">
-                      <span class="mini-badge" style="background: #10b981;">M</span>
-                      <span class="mini-nome">Business</span>
-                      <span class="mini-preco">R$ 1.300</span>
-                      <span class="mini-desc">6 blocos</span>
-                    </div>
-                  </label>
-                  <label class="servico-mini">
-                    <input type="radio" name="website" value="premium" data-preco="1500" onchange="calcularProposta()">
-                    <div class="servico-mini-content">
-                      <span class="mini-badge" style="background: #8b5cf6;">G</span>
-                      <span class="mini-nome">Premium</span>
-                      <span class="mini-preco">R$ 1.500</span>
-                      <span class="mini-desc">9 blocos</span>
-                    </div>
-                  </label>
-                </div>
+            <!-- Website - 4 opcoes em linha -->
+            <div style="margin-bottom: 16px;">
+              <div style="font-size: 11px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <i class="fas fa-globe" style="color: #3b82f6;"></i> Desenvolvimento de Website
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+                <label class="servico-mini">
+                  <input type="radio" name="website" value="nenhum" data-preco="0" onchange="calcularProposta()" checked>
+                  <div class="servico-mini-content">
+                    <span class="mini-nome">Nenhum</span>
+                    <span class="mini-preco">-</span>
+                  </div>
+                </label>
+                <label class="servico-mini">
+                  <input type="radio" name="website" value="starter" data-preco="950" onchange="calcularProposta()">
+                  <div class="servico-mini-content">
+                    <span class="mini-badge" style="background: #3b82f6;">P</span>
+                    <span class="mini-nome">Starter</span>
+                    <span class="mini-preco">R$ 950</span>
+                    <span class="mini-desc">4 blocos</span>
+                  </div>
+                </label>
+                <label class="servico-mini popular">
+                  <input type="radio" name="website" value="business" data-preco="1300" onchange="calcularProposta()">
+                  <div class="servico-mini-content">
+                    <span class="mini-badge" style="background: #10b981;">M</span>
+                    <span class="mini-nome">Business</span>
+                    <span class="mini-preco">R$ 1.300</span>
+                    <span class="mini-desc">6 blocos</span>
+                  </div>
+                </label>
+                <label class="servico-mini">
+                  <input type="radio" name="website" value="premium" data-preco="1500" onchange="calcularProposta()">
+                  <div class="servico-mini-content">
+                    <span class="mini-badge" style="background: #8b5cf6;">G</span>
+                    <span class="mini-nome">Premium</span>
+                    <span class="mini-preco">R$ 1.500</span>
+                    <span class="mini-desc">9 blocos</span>
+                  </div>
+                </label>
               </div>
             </div>
 
@@ -410,10 +472,29 @@ export function renderCalculadora() {
         font-weight: 400;
         color: var(--text-secondary);
       }
-      .plano-info {
-        font-size: 11px;
-        color: var(--text-secondary);
+      .plano-canais {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-top: 8px;
       }
+      .plano-canais span {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 10px;
+        color: var(--text-secondary);
+        background: var(--bg-page);
+        padding: 3px 6px;
+        border-radius: 4px;
+      }
+      .plano-canais i {
+        font-size: 10px;
+      }
+      .plano-canais .fa-whatsapp { color: #25D366; }
+      .plano-canais .fa-instagram { color: #E4405F; }
+      .plano-canais .fa-facebook-messenger { color: #0084FF; }
+      .plano-canais .fa-users { color: var(--primary); }
 
       .checkbox-card {
         display: flex;
@@ -539,6 +620,45 @@ export function renderCalculadora() {
         font-size: 9px;
         color: var(--text-secondary);
       }
+
+      /* Cards de infraestrutura */
+      .infra-card {
+        display: block;
+        padding: 12px;
+        border: 2px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: center;
+        background: white;
+      }
+      .infra-card:hover {
+        border-color: #3b82f6;
+        transform: translateY(-1px);
+      }
+      .infra-card input { display: none; }
+      .infra-card:has(input:checked) {
+        border-color: #3b82f6;
+        background: rgba(59, 130, 246, 0.08);
+      }
+      .infra-content {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .infra-limite {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+      .infra-preco {
+        font-size: 13px;
+        font-weight: 700;
+        color: #3b82f6;
+      }
+      .infra-preco.gratis {
+        color: #10b981;
+      }
     </style>
 
     <script>
@@ -568,6 +688,17 @@ export function renderCalculadora() {
         const temMulticanal = plano.canais.includes('instagram');
         document.getElementById('instagram_info').textContent = temMulticanal ? '1 canal ja incluso no plano' : 'Nao incluso no Essential';
         document.getElementById('messenger_info').textContent = temMulticanal ? '1 canal ja incluso no plano' : 'Nao incluso no Essential';
+
+        // Mostrar/ocultar infraestrutura (apenas Plus+ e Advanced)
+        const infraContainer = document.getElementById('infraestrutura_container');
+        const temInfraestrutura = planoKey === 'plus' || planoKey === 'advanced';
+        infraContainer.style.display = temInfraestrutura ? 'block' : 'none';
+
+        // Se nao tem infraestrutura, resetar para "ate_5000"
+        if (!temInfraestrutura) {
+          const infraRadios = document.getElementsByName('infraestrutura');
+          infraRadios[0].checked = true;
+        }
 
         // Calcular mensalidade
         let mensalidadeBase = plano.valor;
@@ -625,6 +756,24 @@ export function renderCalculadora() {
           const custoTranscricao = transcricaoUsuarios * 6.99;
           adicionais += custoTranscricao;
           itensResumo.push('Transcricao IA (' + transcricaoUsuarios + '): R$ ' + custoTranscricao.toFixed(2));
+        }
+
+        // Infraestrutura de Nuvem (apenas Plus+ e Advanced)
+        if (temInfraestrutura) {
+          const infraRadios = document.getElementsByName('infraestrutura');
+          for (let radio of infraRadios) {
+            if (radio.checked && parseFloat(radio.dataset.preco) > 0) {
+              const custoInfra = parseFloat(radio.dataset.preco);
+              adicionais += custoInfra;
+              const labelMap = {
+                '5001_10000': '5k-10k contatos',
+                '10001_20000': '10k-20k contatos',
+                '20001_40000': '20k-40k contatos'
+              };
+              itensResumo.push('Infraestrutura (' + labelMap[radio.value] + '): R$ ' + custoInfra.toFixed(2));
+              break;
+            }
+          }
         }
 
         const mensalidadeTotal = mensalidadeBase + adicionais;
