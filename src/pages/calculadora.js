@@ -180,116 +180,106 @@ export function renderCalculadora() {
 
           <!-- SERVICOS ADICIONAIS (TAXA UNICA) -->
           <div style="margin-bottom: 24px;">
-            <div style="grid-column: span 2;">
-              <h4 style="color: var(--primary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
-                <i class="fas fa-plus-square"></i> Servicos Adicionais (Taxa Unica)
-              </h4>
-            </div>
+            <h4 style="color: var(--primary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-plus-square"></i> Servicos Adicionais (Taxa Unica)
+            </h4>
 
-            <!-- Verificacao BM Meta -->
-            <label class="checkbox-card" style="margin-bottom: 16px;">
-              <input type="checkbox" id="verificacao_bm" onchange="calcularProposta()">
-              <div class="checkbox-content">
-                <i class="fab fa-meta" style="color: #1877F2;"></i>
-                <div style="flex: 1;">
-                  <div class="checkbox-title">Verificacao Business Manager Meta</div>
-                  <div style="font-size: 11px; color: var(--text-secondary);">Verificacao de conta comercial para uso de API oficial</div>
+            <!-- Verificacao BM + Website em linha -->
+            <div style="display: grid; grid-template-columns: auto 1fr; gap: 16px; margin-bottom: 16px;">
+              <!-- Verificacao BM Meta -->
+              <label class="checkbox-card-mini">
+                <input type="checkbox" id="verificacao_bm" onchange="calcularProposta()">
+                <div class="checkbox-content-mini">
+                  <i class="fab fa-meta" style="color: #1877F2; font-size: 16px;"></i>
+                  <div>
+                    <div style="font-weight: 600; font-size: 12px;">Verificacao BM Meta</div>
+                    <div style="font-size: 14px; font-weight: 700; color: #1877F2;">R$ 250</div>
+                  </div>
                 </div>
-                <div class="checkbox-preco" style="color: #1877F2;">R$ 250</div>
-              </div>
-            </label>
-
-            <!-- Desenvolvimento de Website -->
-            <div style="margin-bottom: 20px;">
-              <label class="form-label" style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-                <i class="fas fa-globe" style="color: #3b82f6;"></i> Desenvolvimento de Website
               </label>
-              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
-                <label class="servico-card" id="site_nenhum">
-                  <input type="radio" name="website" value="nenhum" data-preco="0" onchange="calcularProposta()" checked>
-                  <div class="servico-content">
-                    <div class="servico-badge">-</div>
-                    <div class="servico-nome">Nenhum</div>
-                    <div class="servico-preco">R$ 0</div>
-                  </div>
-                </label>
-                <label class="servico-card" id="site_starter">
-                  <input type="radio" name="website" value="starter" data-preco="950" onchange="calcularProposta()">
-                  <div class="servico-content">
-                    <div class="servico-badge" style="background: #3b82f6;">P</div>
-                    <div class="servico-nome">Starter</div>
-                    <div class="servico-preco">R$ 950</div>
-                    <div class="servico-desc">4 Blocos</div>
-                    <div class="servico-itens">Menu + Header + Sobre + Rodape</div>
-                  </div>
-                </label>
-                <label class="servico-card popular" id="site_business">
-                  <input type="radio" name="website" value="business" data-preco="1300" onchange="calcularProposta()">
-                  <div class="servico-content">
-                    <span class="badge badge-success" style="position: absolute; top: -8px; right: 8px; font-size: 9px;">POPULAR</span>
-                    <div class="servico-badge" style="background: #10b981;">M</div>
-                    <div class="servico-nome">Business</div>
-                    <div class="servico-preco">R$ 1.300</div>
-                    <div class="servico-desc">6 Blocos</div>
-                    <div class="servico-itens">+ Diferenciais + Precos</div>
-                  </div>
-                </label>
-                <label class="servico-card" id="site_premium" style="grid-column: 2;">
-                  <input type="radio" name="website" value="premium" data-preco="1500" onchange="calcularProposta()">
-                  <div class="servico-content">
-                    <div class="servico-badge" style="background: #8b5cf6;">G</div>
-                    <div class="servico-nome">Premium</div>
-                    <div class="servico-preco">R$ 1.500</div>
-                    <div class="servico-desc">9 Blocos</div>
-                    <div class="servico-itens">+ Depoimentos + CTA + WhatsApp + Form</div>
-                  </div>
-                </label>
+
+              <!-- Website - 4 opcoes em linha -->
+              <div>
+                <div style="font-size: 11px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                  <i class="fas fa-globe" style="color: #3b82f6;"></i> Website
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+                  <label class="servico-mini">
+                    <input type="radio" name="website" value="nenhum" data-preco="0" onchange="calcularProposta()" checked>
+                    <div class="servico-mini-content">
+                      <span class="mini-nome">Nenhum</span>
+                      <span class="mini-preco">-</span>
+                    </div>
+                  </label>
+                  <label class="servico-mini">
+                    <input type="radio" name="website" value="starter" data-preco="950" onchange="calcularProposta()">
+                    <div class="servico-mini-content">
+                      <span class="mini-badge" style="background: #3b82f6;">P</span>
+                      <span class="mini-nome">Starter</span>
+                      <span class="mini-preco">R$ 950</span>
+                      <span class="mini-desc">4 blocos</span>
+                    </div>
+                  </label>
+                  <label class="servico-mini popular">
+                    <input type="radio" name="website" value="business" data-preco="1300" onchange="calcularProposta()">
+                    <div class="servico-mini-content">
+                      <span class="mini-badge" style="background: #10b981;">M</span>
+                      <span class="mini-nome">Business</span>
+                      <span class="mini-preco">R$ 1.300</span>
+                      <span class="mini-desc">6 blocos</span>
+                    </div>
+                  </label>
+                  <label class="servico-mini">
+                    <input type="radio" name="website" value="premium" data-preco="1500" onchange="calcularProposta()">
+                    <div class="servico-mini-content">
+                      <span class="mini-badge" style="background: #8b5cf6;">G</span>
+                      <span class="mini-nome">Premium</span>
+                      <span class="mini-preco">R$ 1.500</span>
+                      <span class="mini-desc">9 blocos</span>
+                    </div>
+                  </label>
+                </div>
               </div>
             </div>
 
-            <!-- Implementacao Agentes IA -->
+            <!-- Agentes IA - 4 opcoes em linha -->
             <div>
-              <label class="form-label" style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-                <i class="fas fa-robot" style="color: #8b5cf6;"></i> Implementacao de Agentes de I.A.
-              </label>
-              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
-                <label class="servico-card" id="ia_nenhum">
+              <div style="font-size: 11px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <i class="fas fa-robot" style="color: #8b5cf6;"></i> Implementacao Agentes I.A.
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+                <label class="servico-mini">
                   <input type="radio" name="agentes_ia" value="nenhum" data-preco="0" onchange="calcularProposta()" checked>
-                  <div class="servico-content">
-                    <div class="servico-badge">-</div>
-                    <div class="servico-nome">Nenhum</div>
-                    <div class="servico-preco">R$ 0</div>
+                  <div class="servico-mini-content">
+                    <span class="mini-nome">Nenhum</span>
+                    <span class="mini-preco">-</span>
                   </div>
                 </label>
-                <label class="servico-card" id="ia_starter">
+                <label class="servico-mini">
                   <input type="radio" name="agentes_ia" value="starter" data-preco="2500" onchange="calcularProposta()">
-                  <div class="servico-content">
-                    <div class="servico-badge" style="background: #3b82f6;">P</div>
-                    <div class="servico-nome">Starter</div>
-                    <div class="servico-preco">R$ 2.500</div>
-                    <div class="servico-desc">3 Agentes</div>
-                    <div class="servico-itens">Supervisor + SDR + Tecnico</div>
+                  <div class="servico-mini-content">
+                    <span class="mini-badge" style="background: #3b82f6;">P</span>
+                    <span class="mini-nome">Starter</span>
+                    <span class="mini-preco">R$ 2.500</span>
+                    <span class="mini-desc">3 agentes</span>
                   </div>
                 </label>
-                <label class="servico-card popular" id="ia_business">
+                <label class="servico-mini popular">
                   <input type="radio" name="agentes_ia" value="business" data-preco="3800" onchange="calcularProposta()">
-                  <div class="servico-content">
-                    <span class="badge badge-success" style="position: absolute; top: -8px; right: 8px; font-size: 9px;">POPULAR</span>
-                    <div class="servico-badge" style="background: #10b981;">M</div>
-                    <div class="servico-nome">Business</div>
-                    <div class="servico-preco">R$ 3.800</div>
-                    <div class="servico-desc">5 Agentes</div>
-                    <div class="servico-itens">+ Cobranca + Agendamento</div>
+                  <div class="servico-mini-content">
+                    <span class="mini-badge" style="background: #10b981;">M</span>
+                    <span class="mini-nome">Business</span>
+                    <span class="mini-preco">R$ 3.800</span>
+                    <span class="mini-desc">5 agentes</span>
                   </div>
                 </label>
-                <label class="servico-card" id="ia_enterprise" style="grid-column: 2;">
+                <label class="servico-mini">
                   <input type="radio" name="agentes_ia" value="enterprise" data-preco="5300" onchange="calcularProposta()">
-                  <div class="servico-content">
-                    <div class="servico-badge" style="background: #8b5cf6;">G</div>
-                    <div class="servico-nome">Enterprise</div>
-                    <div class="servico-preco">R$ 5.300</div>
-                    <div class="servico-desc">7 Agentes</div>
-                    <div class="servico-itens">+ Resgate + Vendas</div>
+                  <div class="servico-mini-content">
+                    <span class="mini-badge" style="background: #8b5cf6;">G</span>
+                    <span class="mini-nome">Enterprise</span>
+                    <span class="mini-preco">R$ 5.300</span>
+                    <span class="mini-desc">7 agentes</span>
                   </div>
                 </label>
               </div>
@@ -466,72 +456,88 @@ export function renderCalculadora() {
         font-weight: 600;
       }
 
-      /* Cards de servico estilo McDonald's */
-      .servico-card {
-        display: block;
-        padding: 16px;
+      /* Checkbox mini para BM Meta */
+      .checkbox-card-mini {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
         border: 2px solid var(--border);
-        border-radius: 12px;
+        border-radius: 10px;
         cursor: pointer;
         transition: all 0.2s;
-        position: relative;
+        background: white;
+        min-width: 160px;
+      }
+      .checkbox-card-mini:hover { border-color: #1877F2; }
+      .checkbox-card-mini input { display: none; }
+      .checkbox-card-mini:has(input:checked) {
+        border-color: #1877F2;
+        background: rgba(24, 119, 242, 0.05);
+      }
+      .checkbox-content-mini {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* Cards de servico compactos */
+      .servico-mini {
+        display: block;
+        padding: 10px 8px;
+        border: 2px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.15s;
         text-align: center;
         background: white;
       }
-      .servico-card:hover {
+      .servico-mini:hover {
         border-color: var(--primary);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        transform: translateY(-1px);
       }
-      .servico-card input { display: none; }
-      .servico-card:has(input:checked) {
+      .servico-mini input { display: none; }
+      .servico-mini:has(input:checked) {
         border-color: var(--primary);
-        background: rgba(139, 92, 246, 0.05);
-        box-shadow: 0 4px 16px rgba(139, 92, 246, 0.2);
+        background: rgba(139, 92, 246, 0.08);
       }
-      .servico-card.popular:has(input:checked) {
+      .servico-mini.popular:has(input:checked) {
         border-color: var(--secondary);
-        background: rgba(16, 185, 129, 0.05);
-        box-shadow: 0 4px 16px rgba(16, 185, 129, 0.2);
+        background: rgba(16, 185, 129, 0.08);
       }
-      .servico-badge {
-        width: 40px;
-        height: 40px;
+      .servico-mini-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+      }
+      .mini-badge {
+        width: 24px;
+        height: 24px;
         border-radius: 50%;
         background: var(--border);
         color: white;
         font-weight: 700;
-        font-size: 18px;
+        font-size: 11px;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 0 auto 10px;
+        margin-bottom: 2px;
       }
-      .servico-nome {
-        font-weight: 700;
-        font-size: 15px;
-        margin-bottom: 4px;
+      .mini-nome {
+        font-weight: 600;
+        font-size: 11px;
+        color: var(--text-primary);
       }
-      .servico-preco {
-        font-size: 20px;
+      .mini-preco {
+        font-size: 13px;
         font-weight: 700;
         color: var(--primary);
-        margin-bottom: 4px;
       }
-      .servico-card:has(input:checked) .servico-preco { color: var(--primary); }
-      .servico-card.popular:has(input:checked) .servico-preco { color: var(--secondary); }
-      .servico-desc {
-        font-size: 11px;
+      .servico-mini:has(input:checked) .mini-preco { color: var(--primary); }
+      .servico-mini.popular:has(input:checked) .mini-preco { color: var(--secondary); }
+      .mini-desc {
+        font-size: 9px;
         color: var(--text-secondary);
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 4px;
-      }
-      .servico-itens {
-        font-size: 10px;
-        color: var(--text-secondary);
-        line-height: 1.4;
       }
     </style>
 
