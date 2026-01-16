@@ -186,10 +186,21 @@ function renderCRM(env) {
         </div>
         <span class="badge badge-info" id="ultimaAtualizacao" style="font-size: 11px;">--:--</span>
       </div>
-      <button class="btn btn-sm" onclick="carregarDadosCRM()" style="background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3);">
-        <i class="fas fa-sync-alt"></i> Atualizar
-      </button>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn btn-sm tab-btn active" id="tabPipeline" onclick="showTab('pipeline')" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6; border: 1px solid rgba(139, 92, 246, 0.3);">
+          <i class="fas fa-filter"></i> Pipeline
+        </button>
+        <button class="btn btn-sm tab-btn" id="tabOrigens" onclick="showTab('origens')" style="background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3);">
+          <i class="fas fa-bullseye"></i> Origens
+        </button>
+        <button class="btn btn-sm" onclick="carregarDadosCRM()" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3);">
+          <i class="fas fa-sync-alt"></i>
+        </button>
+      </div>
     </div>
+
+    <!-- ========== SECAO PIPELINE ========== -->
+    <div id="pipelineSection">
 
     <!-- KPIs Compactos em Linha -->
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px;">
@@ -253,7 +264,7 @@ function renderCRM(env) {
     </div>
 
     <!-- Tabela Compacta (Colapsável) -->
-    <details class="card fade-in" style="margin-top: 20px; cursor: pointer;" open>
+    <details class="card fade-in pipeline-section" style="margin-top: 20px; cursor: pointer;" open>
       <summary style="padding: 16px; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; user-select: none;">
         <i class="fas fa-table" style="color: var(--primary);"></i>
         Detalhes por Etapa
@@ -278,6 +289,92 @@ function renderCRM(env) {
         </div>
       </div>
     </details>
+    </div>
+
+    <!-- ========== SECAO ORIGENS (Oculta por padrao) ========== -->
+    <div id="origensSection" style="display: none;">
+
+    <!-- KPIs de Origem -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px;">
+      <div style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(236, 72, 153, 0.05)); border-radius: 12px; padding: 16px; border: 1px solid rgba(236, 72, 153, 0.2);">
+        <div style="font-size: 28px; font-weight: 700; color: #ec4899;" id="totalOrigensIdentificadas">-</div>
+        <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">Com Origem</div>
+      </div>
+      <div style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.05)); border-radius: 12px; padding: 16px; border: 1px solid rgba(139, 92, 246, 0.2);">
+        <div style="font-size: 28px; font-weight: 700; color: #8b5cf6;" id="totalCanais">-</div>
+        <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">Canais</div>
+      </div>
+      <div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05)); border-radius: 12px; padding: 16px; border: 1px solid rgba(245, 158, 11, 0.2);">
+        <div style="font-size: 28px; font-weight: 700; color: #f59e0b;" id="totalCampanhas">-</div>
+        <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">Campanhas</div>
+      </div>
+      <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05)); border-radius: 12px; padding: 16px; border: 1px solid rgba(16, 185, 129, 0.2);">
+        <div style="font-size: 28px; font-weight: 700; color: #10b981;" id="melhorCanal">-</div>
+        <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">Melhor Canal</div>
+      </div>
+    </div>
+
+    <!-- Layout Origens: Cards + Campanhas -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+
+      <!-- Origens/Fontes -->
+      <div class="card fade-in" style="padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h3 style="font-size: 14px; font-weight: 600; color: var(--text-primary); margin: 0;">
+            <i class="fas fa-bullseye" style="margin-right: 8px; color: #ec4899;"></i>Performance por Canal
+          </h3>
+        </div>
+        <div id="origemContainer">
+          <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+            <i class="fas fa-spinner fa-spin" style="font-size: 24px; opacity: 0.5;"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Campanhas -->
+      <div class="card fade-in" style="padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h3 style="font-size: 14px; font-weight: 600; color: var(--text-primary); margin: 0;">
+            <i class="fas fa-ad" style="margin-right: 8px; color: #f59e0b;"></i>Top Campanhas
+          </h3>
+        </div>
+        <div id="campanhasContainer">
+          <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+            <i class="fas fa-spinner fa-spin" style="font-size: 24px; opacity: 0.5;"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabela de Cards Recentes com Origem -->
+    <details class="card fade-in" style="margin-top: 20px; cursor: pointer;">
+      <summary style="padding: 16px; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; user-select: none;">
+        <i class="fas fa-list" style="color: var(--secondary);"></i>
+        Cards Recentes com Origem
+        <span class="badge badge-info" id="qtdCardsOrigem" style="margin-left: 8px;">-</span>
+        <i class="fas fa-chevron-down" style="margin-left: auto; font-size: 12px; transition: transform 0.3s;"></i>
+      </summary>
+      <div style="padding: 0 16px 16px;">
+        <div style="overflow-x: auto;">
+          <table style="font-size: 12px;">
+            <thead>
+              <tr>
+                <th style="padding: 10px 8px;">Card</th>
+                <th style="padding: 10px 8px;">Contato</th>
+                <th style="padding: 10px 8px;">Canal</th>
+                <th style="padding: 10px 8px;">Campanha</th>
+                <th style="padding: 10px 8px;">Conteudo</th>
+                <th style="padding: 10px 8px; text-align: right;">Data</th>
+              </tr>
+            </thead>
+            <tbody id="tabelaCardsOrigem">
+              <tr><td colspan="6" style="text-align: center; padding: 30px;"><i class="fas fa-spinner fa-spin"></i></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+    </div>
 
     <style>
       @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
@@ -340,11 +437,46 @@ function renderCRM(env) {
       @media (max-width: 900px) {
         .card { grid-template-columns: 1fr !important; }
         div[style*="grid-template-columns: 1fr 320px"] { grid-template-columns: 1fr !important; }
+        div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+      }
+
+      .tab-btn { transition: all 0.2s; }
+      .tab-btn.active { font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+
+      .source-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        background: var(--bg-page);
+        transition: all 0.2s;
+      }
+      .source-row:hover { transform: translateX(4px); }
+      .source-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: white;
+      }
+      .campaign-row {
+        padding: 10px 12px;
+        border-left: 3px solid var(--primary);
+        margin-bottom: 8px;
+        background: var(--bg-page);
+        border-radius: 0 8px 8px 0;
       }
     </style>
 
     <script>
       let dadosCRM = null;
+      let dadosOrigens = null;
+      let currentTab = 'pipeline';
 
       async function carregarDadosCRM() {
         const statusIcon = document.getElementById('statusIcon');
@@ -494,6 +626,168 @@ function renderCRM(env) {
         html += '</div>';
 
         document.getElementById('distribuicaoFunil').innerHTML = html;
+      }
+
+      // ========== FUNCOES DE ABAS ==========
+      function showTab(tab) {
+        currentTab = tab;
+        document.getElementById('pipelineSection').style.display = tab === 'pipeline' ? 'block' : 'none';
+        document.getElementById('origensSection').style.display = tab === 'origens' ? 'block' : 'none';
+
+        document.getElementById('tabPipeline').classList.toggle('active', tab === 'pipeline');
+        document.getElementById('tabOrigens').classList.toggle('active', tab === 'origens');
+
+        // Carregar dados de origem se necessario
+        if (tab === 'origens' && !dadosOrigens) {
+          carregarDadosOrigens();
+        }
+      }
+
+      // ========== FUNCOES DE ORIGEM ==========
+      async function carregarDadosOrigens() {
+        const statusIcon = document.getElementById('statusIcon');
+        const statusText = document.getElementById('statusText');
+        statusIcon.style.background = '#f59e0b';
+        statusIcon.style.animation = 'pulse 0.8s infinite';
+        statusText.textContent = 'Carregando origens...';
+
+        try {
+          const response = await fetch('/api/crm/sources');
+          const data = await response.json();
+
+          if (data.success) {
+            dadosOrigens = data;
+            statusIcon.style.background = '#10b981';
+            statusIcon.style.animation = 'none';
+            statusText.textContent = 'Conectado';
+            atualizarInterfaceOrigens(data);
+          } else {
+            throw new Error(data.error || 'Erro ao carregar origens');
+          }
+        } catch (error) {
+          statusIcon.style.background = '#ef4444';
+          statusIcon.style.animation = 'none';
+          statusText.textContent = 'Erro: ' + error.message.substring(0, 30);
+          document.getElementById('origemContainer').innerHTML = '<div style="text-align: center; padding: 40px; color: #ef4444;"><i class="fas fa-exclamation-triangle" style="font-size: 32px;"></i><p style="margin-top: 12px; font-size: 13px;">'+error.message+'</p></div>';
+        }
+      }
+
+      function atualizarInterfaceOrigens(data) {
+        // KPIs
+        document.getElementById('totalOrigensIdentificadas').textContent = data.summary.totalWithSource || 0;
+        document.getElementById('totalCanais').textContent = data.sources?.length || 0;
+        document.getElementById('totalCampanhas').textContent = data.summary.totalCampaigns || 0;
+
+        // Melhor canal
+        if (data.sources && data.sources.length > 0) {
+          document.getElementById('melhorCanal').textContent = data.sources[0].name.substring(0, 10);
+        }
+
+        document.getElementById('qtdCardsOrigem').textContent = data.recentCards?.length || 0;
+
+        renderizarOrigens(data.sources);
+        renderizarCampanhas(data.campaigns);
+        renderizarTabelaOrigens(data.recentCards);
+      }
+
+      function getSourceIcon(source) {
+        const s = (source || '').toLowerCase();
+        if (s.includes('instagram')) return { icon: 'fab fa-instagram', color: '#E4405F' };
+        if (s.includes('facebook')) return { icon: 'fab fa-facebook-f', color: '#1877F2' };
+        if (s.includes('whatsapp')) return { icon: 'fab fa-whatsapp', color: '#25D366' };
+        if (s.includes('google')) return { icon: 'fab fa-google', color: '#4285F4' };
+        if (s.includes('linkedin')) return { icon: 'fab fa-linkedin-in', color: '#0A66C2' };
+        if (s.includes('tiktok')) return { icon: 'fab fa-tiktok', color: '#000000' };
+        if (s.includes('youtube')) return { icon: 'fab fa-youtube', color: '#FF0000' };
+        if (s.includes('organic') || s.includes('organico')) return { icon: 'fas fa-leaf', color: '#10b981' };
+        if (s.includes('referral') || s.includes('indicacao')) return { icon: 'fas fa-user-friends', color: '#8b5cf6' };
+        if (s.includes('site') || s.includes('website')) return { icon: 'fas fa-globe', color: '#3b82f6' };
+        return { icon: 'fas fa-bullseye', color: '#6b7280' };
+      }
+
+      function renderizarOrigens(sources) {
+        if (!sources || sources.length === 0) {
+          document.getElementById('origemContainer').innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-secondary);"><i class="fas fa-inbox" style="font-size: 32px; opacity: 0.3;"></i><p>Nenhuma origem identificada</p></div>';
+          return;
+        }
+
+        const total = sources.reduce((sum, s) => sum + s.count, 0);
+        let html = '';
+
+        sources.slice(0, 8).forEach((source, i) => {
+          const { icon, color } = getSourceIcon(source.name);
+          const pct = total > 0 ? ((source.count / total) * 100).toFixed(1) : 0;
+
+          html += '<div class="source-row">';
+          html += '<div class="source-icon" style="background: ' + color + ';"><i class="' + icon + '"></i></div>';
+          html += '<div style="flex: 1;">';
+          html += '<div style="font-weight: 600; font-size: 13px;">' + source.name + '</div>';
+          html += '<div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">';
+          html += '<div style="flex: 1; height: 4px; background: var(--border); border-radius: 2px;"><div style="width: ' + pct + '%; height: 100%; background: ' + color + '; border-radius: 2px;"></div></div>';
+          html += '<span style="font-size: 11px; color: var(--text-secondary);">' + pct + '%</span>';
+          html += '</div>';
+          html += '</div>';
+          html += '<div style="text-align: right;">';
+          html += '<div style="font-size: 20px; font-weight: 700; color: ' + color + ';">' + source.count + '</div>';
+          html += '<div style="font-size: 10px; color: var(--text-secondary);">cards</div>';
+          html += '</div>';
+          html += '</div>';
+        });
+
+        document.getElementById('origemContainer').innerHTML = html;
+      }
+
+      function renderizarCampanhas(campaigns) {
+        if (!campaigns || campaigns.length === 0) {
+          document.getElementById('campanhasContainer').innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-secondary);"><i class="fas fa-ad" style="font-size: 32px; opacity: 0.3;"></i><p>Nenhuma campanha identificada</p></div>';
+          return;
+        }
+
+        let html = '';
+        campaigns.slice(0, 8).forEach((camp, i) => {
+          const { icon, color } = getSourceIcon(camp.source);
+
+          html += '<div class="campaign-row" style="border-left-color: ' + color + ';">';
+          html += '<div style="display: flex; justify-content: space-between; align-items: center;">';
+          html += '<div style="flex: 1; min-width: 0;">';
+          html += '<div style="font-size: 11px; color: var(--text-secondary); display: flex; align-items: center; gap: 4px;"><i class="' + icon + '" style="color: ' + color + ';"></i> ' + (camp.source || 'Ads') + '</div>';
+          html += '<div style="font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="' + camp.id + '">ID: ' + camp.id.substring(0, 20) + '...</div>';
+          if (camp.content) {
+            html += '<div style="font-size: 11px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;" title="' + camp.content + '">' + camp.content.substring(0, 40) + '...</div>';
+          }
+          html += '</div>';
+          html += '<div style="text-align: right; margin-left: 12px;">';
+          html += '<div style="font-size: 18px; font-weight: 700; color: ' + color + ';">' + camp.count + '</div>';
+          html += '</div>';
+          html += '</div>';
+          html += '</div>';
+        });
+
+        document.getElementById('campanhasContainer').innerHTML = html;
+      }
+
+      function renderizarTabelaOrigens(cards) {
+        if (!cards || cards.length === 0) {
+          document.getElementById('tabelaCardsOrigem').innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 30px;">Sem dados de origem</td></tr>';
+          return;
+        }
+
+        let html = '';
+        cards.forEach(card => {
+          const { icon, color } = getSourceIcon(card.source);
+          const data = card.createdAt ? new Date(card.createdAt).toLocaleDateString('pt-BR') : '-';
+
+          html += '<tr>';
+          html += '<td style="padding: 8px;"><span style="font-weight: 600;">' + (card.cardTitle || '-') + '</span></td>';
+          html += '<td style="padding: 8px;">' + (card.contactName || '-') + '</td>';
+          html += '<td style="padding: 8px;"><span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; background: ' + color + '15; border-radius: 4px; font-size: 11px;"><i class="' + icon + '" style="color: ' + color + '; font-size: 12px;"></i>' + (card.source || '-') + '</span></td>';
+          html += '<td style="padding: 8px; font-size: 11px; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="' + (card.campaign || '') + '">' + (card.campaign ? card.campaign.substring(0, 15) + '...' : '-') + '</td>';
+          html += '<td style="padding: 8px; font-size: 11px; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="' + (card.content || '') + '">' + (card.content ? card.content.substring(0, 25) + '...' : '-') + '</td>';
+          html += '<td style="padding: 8px; text-align: right; font-size: 11px; color: var(--text-secondary);">' + data + '</td>';
+          html += '</tr>';
+        });
+
+        document.getElementById('tabelaCardsOrigem').innerHTML = html;
       }
 
       document.addEventListener('DOMContentLoaded', () => {

@@ -88,7 +88,7 @@ export async function getCardsByPeriod(env, startDate, endDate) {
 }
 
 // Buscar todos os cards com todas as páginas
-export async function getAllCards(env) {
+export async function getAllCards(env, includeContact = false) {
   let allItems = [];
   let pageNumber = 1;
   let hasMore = true;
@@ -100,6 +100,11 @@ export async function getAllCards(env) {
       PageNumber: pageNumber.toString(),
       IncludeArchived: 'false'
     });
+
+    // Incluir detalhes do contato se solicitado
+    if (includeContact) {
+      params.set('IncludeDetails', 'contact');
+    }
 
     const response = await fetchCRM(`/crm/v1/panel/card?${params}`, env);
 
@@ -122,6 +127,123 @@ export async function getAllCards(env) {
   }
 
   return { items: allItems, total: allItems.length };
+}
+
+// Buscar contato por ID
+export async function getContactById(env, contactId) {
+  return fetchCRM(`/contact/v1/contact/${contactId}`, env);
+}
+
+// Buscar métricas de origem dos contatos
+export async function getSourceMetrics(env) {
+  try {
+    // Buscar todos os cards com detalhes de contato
+    const cardsResponse = await getAllCards(env, true);
+    const cards = cardsResponse.items || [];
+
+    // Mapear origens
+    const sourceStats = {};
+    const channelStats = {};
+    const campaignStats = {};
+    const cardsBySource = [];
+
+    for (const card of cards) {
+      const contact = card.contact;
+      if (!contact) continue;
+
+      // Extrair dados de origem do contato
+      const source = contact.source || 'Desconhecido';
+      const channel = contact.channelType || contact.channel || 'Outros';
+      const campaign = contact.utmCampaign || contact.campaignId || null;
+      const content = contact.utmContent || contact.adContent || null;
+      const adId = contact.utmTerm || contact.adId || null;
+
+      // Estatísticas por fonte (Instagram, Facebook, WhatsApp, etc)
+      if (!sourceStats[source]) {
+        sourceStats[source] = { count: 0, cards: [], value: 0 };
+      }
+      sourceStats[source].count++;
+      sourceStats[source].value += card.monetaryAmount || 0;
+      sourceStats[source].cards.push({
+        id: card.id,
+        title: card.title,
+        contactName: contact.name,
+        phone: contact.phoneNumber,
+        createdAt: card.createdAt
+      });
+
+      // Estatísticas por canal
+      if (!channelStats[channel]) {
+        channelStats[channel] = { count: 0, value: 0 };
+      }
+      channelStats[channel].count++;
+      channelStats[channel].value += card.monetaryAmount || 0;
+
+      // Estatísticas por campanha (se houver)
+      if (campaign) {
+        if (!campaignStats[campaign]) {
+          campaignStats[campaign] = {
+            id: campaign,
+            content: content,
+            count: 0,
+            value: 0,
+            source: source
+          };
+        }
+        campaignStats[campaign].count++;
+        campaignStats[campaign].value += card.monetaryAmount || 0;
+      }
+
+      // Cards com info de origem
+      cardsBySource.push({
+        cardId: card.id,
+        cardTitle: card.title,
+        contactName: contact.name,
+        phone: contact.phoneNumber,
+        source: source,
+        channel: channel,
+        campaign: campaign,
+        content: content,
+        adId: adId,
+        createdAt: card.createdAt,
+        stepId: card.stepId,
+        value: card.monetaryAmount || 0
+      });
+    }
+
+    // Ordenar por quantidade
+    const sortedSources = Object.entries(sourceStats)
+      .map(([name, data]) => ({ name, ...data }))
+      .sort((a, b) => b.count - a.count);
+
+    const sortedChannels = Object.entries(channelStats)
+      .map(([name, data]) => ({ name, ...data }))
+      .sort((a, b) => b.count - a.count);
+
+    const sortedCampaigns = Object.values(campaignStats)
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 20); // Top 20 campanhas
+
+    return {
+      success: true,
+      timestamp: new Date().toISOString(),
+      summary: {
+        totalCards: cards.length,
+        totalWithSource: cardsBySource.filter(c => c.source !== 'Desconhecido').length,
+        totalCampaigns: Object.keys(campaignStats).length
+      },
+      sources: sortedSources,
+      channels: sortedChannels,
+      campaigns: sortedCampaigns,
+      recentCards: cardsBySource.slice(0, 50) // Últimos 50 cards com origem
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: error.message,
+      timestamp: new Date().toISOString()
+    };
+  }
 }
 
 // Calcular métricas do funil
@@ -263,6 +385,10 @@ export async function handleCRMAPI(request, env, path) {
       case '/api/crm/metrics':
       case '/api/crm/funnel':
         data = await getFunnelMetrics(env);
+        break;
+
+      case '/api/crm/sources':
+        data = await getSourceMetrics(env);
         break;
 
       default:
