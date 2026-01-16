@@ -160,6 +160,33 @@ export function renderCalculadora() {
               </div>
             </label>
 
+            <!-- CONSULTORIA - Card destacado -->
+            <div style="grid-column: span 3; margin-top: 8px;">
+              <label class="consultoria-card" id="consultoria_card">
+                <input type="checkbox" id="consultoria" onchange="calcularProposta()">
+                <div class="consultoria-content">
+                  <div class="consultoria-left">
+                    <div class="consultoria-icon">
+                      <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div>
+                      <div class="consultoria-title">
+                        <i class="fas fa-star" style="color: #f59e0b; font-size: 10px;"></i>
+                        Consultoria Paper Vines
+                      </div>
+                      <div class="consultoria-desc">Acompanhamento, treinamento e implementacao de fluxos pro-ativa</div>
+                    </div>
+                  </div>
+                  <div class="consultoria-right">
+                    <div class="consultoria-preco" id="consultoria_preco">R$ 365/mes</div>
+                    <div class="consultoria-desconto">
+                      <i class="fas fa-gift"></i> Desconto na implantacao
+                    </div>
+                  </div>
+                </div>
+              </label>
+            </div>
+
             <div class="form-group" style="grid-column: span 3;">
               <label class="form-label">IA Transcricao de Audio</label>
               <div style="display: flex; gap: 8px; align-items: center;">
@@ -659,14 +686,86 @@ export function renderCalculadora() {
       .infra-preco.gratis {
         color: #10b981;
       }
+
+      /* Card de Consultoria */
+      .consultoria-card {
+        display: block;
+        padding: 16px 20px;
+        border: 2px solid var(--border);
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+        background: linear-gradient(135deg, rgba(245, 158, 11, 0.03), rgba(139, 92, 246, 0.03));
+      }
+      .consultoria-card:hover {
+        border-color: #f59e0b;
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);
+      }
+      .consultoria-card input { display: none; }
+      .consultoria-card:has(input:checked) {
+        border-color: #f59e0b;
+        background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(139, 92, 246, 0.05));
+        box-shadow: 0 4px 16px rgba(245, 158, 11, 0.2);
+      }
+      .consultoria-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .consultoria-left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .consultoria-icon {
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 20px;
+      }
+      .consultoria-title {
+        font-weight: 700;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 2px;
+      }
+      .consultoria-desc {
+        font-size: 12px;
+        color: var(--text-secondary);
+      }
+      .consultoria-right {
+        text-align: right;
+      }
+      .consultoria-preco {
+        font-size: 18px;
+        font-weight: 700;
+        color: #f59e0b;
+      }
+      .consultoria-desconto {
+        font-size: 10px;
+        color: #10b981;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        justify-content: flex-end;
+        margin-top: 2px;
+      }
     </style>
 
     <script>
       const PLANOS = {
-        essential: { nome: 'Essential', valor: 487, usuarios: 3, implantacao: 1090, usuarioAdicional: 107, canais: ['whatsapp'] },
-        pro: { nome: 'Pro', valor: 687, usuarios: 5, implantacao: 1490, usuarioAdicional: 87, canais: ['whatsapp', 'instagram', 'messenger'] },
-        plus: { nome: 'Plus+', valor: 987, usuarios: 10, implantacao: 1990, usuarioAdicional: 57, canais: ['whatsapp', 'instagram', 'messenger'] },
-        advanced: { nome: 'Advanced', valor: 1487, usuarios: 20, implantacao: 2499, usuarioAdicional: 47, canais: ['whatsapp', 'instagram', 'messenger'] }
+        essential: { nome: 'Essential', valor: 487, usuarios: 3, implantacao: 1090, usuarioAdicional: 107, canais: ['whatsapp'], consultoria: 365 },
+        pro: { nome: 'Pro', valor: 687, usuarios: 5, implantacao: 1490, usuarioAdicional: 87, canais: ['whatsapp', 'instagram', 'messenger'], consultoria: 495 },
+        plus: { nome: 'Plus+', valor: 987, usuarios: 10, implantacao: 1990, usuarioAdicional: 57, canais: ['whatsapp', 'instagram', 'messenger'], consultoria: 665 },
+        advanced: { nome: 'Advanced', valor: 1487, usuarios: 20, implantacao: 2499, usuarioAdicional: 47, canais: ['whatsapp', 'instagram', 'messenger'], consultoria: 900 }
       };
 
       function getPlanoSelecionado() {
@@ -699,6 +798,9 @@ export function renderCalculadora() {
           const infraRadios = document.getElementsByName('infraestrutura');
           infraRadios[0].checked = true;
         }
+
+        // Atualizar preco da consultoria baseado no plano
+        document.getElementById('consultoria_preco').textContent = 'R$ ' + plano.consultoria + '/mes';
 
         // Calcular mensalidade
         let mensalidadeBase = plano.valor;
@@ -751,6 +853,13 @@ export function renderCalculadora() {
           itensResumo.push('Modulo Pagamentos: R$ 99,00');
         }
 
+        // Consultoria Paper Vines
+        const temConsultoria = document.getElementById('consultoria').checked;
+        if (temConsultoria) {
+          adicionais += plano.consultoria;
+          itensResumo.push('Consultoria Paper Vines: R$ ' + plano.consultoria.toFixed(2));
+        }
+
         const transcricaoUsuarios = parseInt(document.getElementById('transcricao_audio').value) || 0;
         if (transcricaoUsuarios > 0) {
           const custoTranscricao = transcricaoUsuarios * 6.99;
@@ -781,6 +890,12 @@ export function renderCalculadora() {
         // Calcular implantacao
         let implantacaoPlano = plano.implantacao;
         let servicosExtras = 0;
+        let descontoConsultoria = 0;
+
+        // Desconto da consultoria na implantacao
+        if (temConsultoria) {
+          descontoConsultoria = plano.consultoria;
+        }
 
         // Verificacao BM Meta
         if (document.getElementById('verificacao_bm').checked) {
@@ -805,18 +920,29 @@ export function renderCalculadora() {
           }
         }
 
-        const implantacaoTotal = implantacaoPlano + servicosExtras;
+        // Implantacao com desconto da consultoria
+        const implantacaoComDesconto = Math.max(0, implantacaoPlano - descontoConsultoria);
+        const implantacaoTotal = implantacaoComDesconto + servicosExtras;
 
         // Parcelamento
         const parcelas = parseInt(document.getElementById('parcelas_implantacao').value);
         const valorParcela = implantacaoTotal / parcelas;
 
         // Atualizar UI
-        document.getElementById('taxa_implantacao_plano').textContent = formatCurrency(implantacaoPlano);
+        if (temConsultoria) {
+          document.getElementById('taxa_implantacao_plano').innerHTML =
+            '<span style="text-decoration: line-through; color: var(--text-secondary); font-size: 14px;">R$ ' + plano.implantacao.toLocaleString('pt-BR', {minimumFractionDigits: 2}) + '</span> ' +
+            '<span style="color: #10b981;">' + formatCurrency(implantacaoComDesconto) + '</span>' +
+            '<span style="font-size: 10px; color: #10b981; display: block;">(-R$ ' + descontoConsultoria + ' consultoria)</span>';
+        } else {
+          document.getElementById('taxa_implantacao_plano').textContent = formatCurrency(implantacaoPlano);
+        }
         document.getElementById('resumoPlanoBase').textContent = formatCurrency(mensalidadeBase);
         document.getElementById('resumoAdicionais').textContent = formatCurrency(adicionais);
         document.getElementById('valorMensalidade').textContent = formatCurrency(mensalidadeTotal);
-        document.getElementById('resumoImplantacaoPlano').textContent = formatCurrency(implantacaoPlano);
+        document.getElementById('resumoImplantacaoPlano').innerHTML = temConsultoria ?
+          '<span style="text-decoration: line-through; color: var(--text-secondary); font-size: 11px;">R$ ' + plano.implantacao.toLocaleString('pt-BR', {minimumFractionDigits: 2}) + '</span> ' + formatCurrency(implantacaoComDesconto) :
+          formatCurrency(implantacaoPlano);
         document.getElementById('resumoServicosExtras').textContent = formatCurrency(servicosExtras);
         document.getElementById('valorImplantacao').textContent = formatCurrency(implantacaoTotal);
         document.getElementById('valorTotal').textContent = formatCurrency(mensalidadeTotal + implantacaoTotal);
