@@ -125,7 +125,7 @@ export async function getAllCards(env) {
 }
 
 // Buscar múltiplos contatos por ID (em lotes para performance)
-async function getContactsById(env, contactIds, debugInfo = null) {
+async function getContactsById(env, contactIds) {
   const contacts = {};
 
   // Buscar contatos em paralelo (máximo 10 por vez para não sobrecarregar)
@@ -136,12 +136,10 @@ async function getContactsById(env, contactIds, debugInfo = null) {
       try {
         // Endpoint correto: /core/v1/contact/{id} conforme documentação
         const contact = await fetchCRM(`/core/v1/contact/${id}`, env);
-        return { id, contact, error: null };
+        return { id, contact };
       } catch (error) {
-        if (debugInfo && debugInfo.contactErrors.length < 5) {
-          debugInfo.contactErrors.push({ id, error: error.message });
-        }
-        return { id, contact: null, error: error.message };
+        // Alguns contatos podem não existir mais - ignorar silenciosamente
+        return { id, contact: null };
       }
     });
 
@@ -170,25 +168,14 @@ export async function getSourceMetrics(env) {
 
     // Coletar todos os contactIds únicos
     const allContactIds = new Set();
-    let cardsWithContactIds = 0;
     cards.forEach(card => {
       if (card.contactIds && Array.isArray(card.contactIds) && card.contactIds.length > 0) {
-        cardsWithContactIds++;
         card.contactIds.forEach(id => allContactIds.add(id));
       }
     });
 
-    // Debug: guardar informações sobre contatos encontrados
-    const debugInfo = {
-      totalCards: cards.length,
-      cardsWithContactIds: cardsWithContactIds,
-      uniqueContactIds: allContactIds.size,
-      sampleContactIds: Array.from(allContactIds).slice(0, 5),
-      contactErrors: []
-    };
-
     // Buscar detalhes de todos os contatos
-    const contactsMap = await getContactsById(env, Array.from(allContactIds), debugInfo);
+    const contactsMap = await getContactsById(env, Array.from(allContactIds));
 
     // Mapear origens
     const sourceStats = {};
@@ -308,7 +295,6 @@ export async function getSourceMetrics(env) {
         totalCampaigns: Object.keys(campaignStats).length,
         totalContacts: Object.keys(contactsMap).length
       },
-      debug: debugInfo, // Informações de debug temporárias
       sources: sortedSources,
       channels: sortedChannels,
       campaigns: sortedCampaigns,
