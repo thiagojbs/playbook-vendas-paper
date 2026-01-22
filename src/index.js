@@ -5,6 +5,7 @@ import { renderClientes } from './pages/clientes.js';
 import { renderPropostas } from './pages/propostas.js';
 import { renderContratos } from './pages/contratos.js';
 import { renderDesempenho } from './pages/desempenho.js';
+import { renderDocumentacao } from './pages/documentacao.js';
 import { handleAPI } from './api/index.js';
 import { handleRAGRoutes } from './api/rag/index.js';
 
@@ -85,6 +86,9 @@ export default {
           break;
         case path === '/desempenho' || path.startsWith('/desempenho/'):
           html = await renderDesempenho(env, path);
+          break;
+        case path === '/documentacao' || path.startsWith('/documentacao/'):
+          html = renderDocumentacao(path);
           break;
         default:
           html = renderHome();
