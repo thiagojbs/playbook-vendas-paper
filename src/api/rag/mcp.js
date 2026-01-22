@@ -202,7 +202,10 @@ function getMCPTools() {
  */
 async function executeMCPTool(request, env) {
   try {
-    const { tool, parameters = {} } = await request.json();
+    const body = await request.json();
+    const tool = body.tool;
+    // Aceita tanto 'parameters' quanto 'input' para compatibilidade
+    const parameters = body.parameters || body.input || {};
 
     if (!tool) {
       return new Response(JSON.stringify({
