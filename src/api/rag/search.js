@@ -49,15 +49,23 @@ export async function searchSimilar(query, tenantId, env, options = {}) {
     return [];
   }
 
+  // Debug: mostrar primeiro resultado para entender estrutura
+  if (results.matches[0]) {
+    console.log(`[RAG] Primeiro resultado - ID: ${results.matches[0].id}, Score: ${results.matches[0].score}`);
+    console.log(`[RAG] Metadata:`, JSON.stringify(results.matches[0].metadata || {}));
+  }
+
   // Filtra por tenant e categoria manualmente
   let filtered = results.matches;
 
   // Filtra por tenant
   if (tenantId) {
+    const beforeFilter = filtered.length;
     filtered = filtered.filter(m =>
       m.metadata?.tenant === tenantId ||
       m.id?.startsWith(tenantId + '-')
     );
+    console.log(`[RAG] Filtro tenant "${tenantId}": ${beforeFilter} -> ${filtered.length}`);
   }
 
   // Filtra por categoria se especificado
