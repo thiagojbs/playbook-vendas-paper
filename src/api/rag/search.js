@@ -14,8 +14,7 @@ import { generateEmbedding, prepareText } from './embeddings.js';
 export async function searchSimilar(query, tenantId, env, options = {}) {
   const {
     topK = 5,
-    minScore = 0.7,
-    filter = {},
+    minScore = 0.5, // Reduzido para capturar mais resultados
     category = null
   } = options;
 
@@ -31,28 +30,45 @@ export async function searchSimilar(query, tenantId, env, options = {}) {
     env
   );
 
-  // Monta filtro com tenant
-  const searchFilter = {
-    tenant: tenantId,
-    ...filter
-  };
-
-  // Adiciona filtro de categoria se especificado
-  if (category) {
-    searchFilter.category = category;
+  if (!queryEmbedding || queryEmbedding.length === 0) {
+    console.error('[RAG] Falha ao gerar embedding para query:', query);
+    return [];
   }
 
-  // Busca no Vectorize
+  console.log(`[RAG] Buscando: "${query}" (embedding size: ${queryEmbedding.length})`);
+
+  // Busca no Vectorize sem filtros (mais compativel)
   const results = await env.VECTORIZE_INDEX.query(queryEmbedding, {
-    topK,
-    filter: searchFilter,
-    returnMetadata: true,
-    returnValues: false // Nao precisamos dos vetores de volta
+    topK: topK * 2, // Busca mais para filtrar depois
+    returnMetadata: 'all'
   });
 
-  // Filtra por score minimo e formata resultados
-  return results.matches
+  console.log(`[RAG] Resultados brutos: ${results.matches?.length || 0}`);
+
+  if (!results.matches || results.matches.length === 0) {
+    return [];
+  }
+
+  // Filtra por tenant e categoria manualmente
+  let filtered = results.matches;
+
+  // Filtra por tenant
+  if (tenantId) {
+    filtered = filtered.filter(m =>
+      m.metadata?.tenant === tenantId ||
+      m.id?.startsWith(tenantId + '-')
+    );
+  }
+
+  // Filtra por categoria se especificado
+  if (category) {
+    filtered = filtered.filter(m => m.metadata?.category === category);
+  }
+
+  // Filtra por score minimo e limita resultados
+  return filtered
     .filter(match => match.score >= minScore)
+    .slice(0, topK)
     .map(match => ({
       id: match.id,
       score: match.score,
