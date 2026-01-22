@@ -1892,7 +1892,7 @@ for script in data['result']['scripts']:
 }
 
 function renderAPIPlayground() {
-  return \`
+  return `
     <div class="page-header">
       <h1 class="page-title"><i class="fas fa-play-circle"></i> Playground MCP</h1>
       <p class="page-subtitle">Teste as ferramentas do MCP diretamente no navegador</p>
@@ -2149,11 +2149,11 @@ function renderAPIPlayground() {
 
       updateParams();
     </script>
-  \`;
+  `;
 }
 
 function renderAPIScriptsExemplos() {
-  return \`
+  return `
     <div class="page-header">
       <h1 class="page-title"><i class="fas fa-copy"></i> Scripts Prontos</h1>
       <p class="page-subtitle">Copie e cole esses exemplos nos seus projetos</p>
@@ -2177,7 +2177,7 @@ class PlaybookMCP {
   }
 
   async execute(tool, parameters = {}) {
-    const response = await fetch(\\\`\\\${this.baseUrl}/mcp/execute\\\`, {
+    const response = await fetch(\`\${this.baseUrl}/mcp/execute\`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -2308,11 +2308,11 @@ async function getPlaybookContext(query) {
 async function respondWithPlaybook(userMessage) {
   const context = await getPlaybookContext(userMessage);
 
-  const systemPrompt = \\\`Voce e um assistente de vendas da Paper Vines.
+  const systemPrompt = \`Voce e um assistente de vendas da Paper Vines.
 Use APENAS as informacoes do contexto abaixo para responder.
 
 CONTEXTO DO PLAYBOOK:
-\\\${context}\\\`;
+\${context}\`;
 
   const message = await anthropic.messages.create({
     model: 'claude-3-sonnet-20240229',
@@ -2332,11 +2332,11 @@ CONTEXTO DO PLAYBOOK:
         showToast('Script copiado!', 'success');
       }
     </script>
-  \`;
+  `;
 }
 
 function renderAPIWebhooks() {
-  return \`
+  return `
     <div class="page-header">
       <h1 class="page-title"><i class="fas fa-sync"></i> Configuracao de Webhooks</h1>
       <p class="page-subtitle">Mantenha o conteudo indexado sempre atualizado</p>
@@ -2479,5 +2479,5 @@ function renderAPIWebhooks() {
         }
       }
     </script>
-  \`;
+  `;
 }
