@@ -1,5 +1,6 @@
 // Configuracao do tenant Paper Vines
 // Este arquivo define as configuracoes especificas deste tenant
+// Ultima atualizacao: 2026-01-22
 
 export const TENANT_CONFIG = {
   // Identificacao
