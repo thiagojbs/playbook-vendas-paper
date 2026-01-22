@@ -468,19 +468,23 @@ function mapFileToCategory(fileName) {
 async function deleteVectorsByTenant(tenant, env) {
   if (!env.VECTORIZE_INDEX) return 0;
 
-  // Vectorize nao suporta delete por filtro diretamente
-  // Estrategia: buscar IDs e deletar em batch
+  // Vectorize v2 nao suporta filter na query
+  // Estrategia: buscar todos os vetores e filtrar por tenant no ID (formato: tenant-id)
   const dummyVector = new Array(1536).fill(0);
 
   try {
     const results = await env.VECTORIZE_INDEX.query(dummyVector, {
       topK: 10000,
-      filter: { tenant },
-      returnMetadata: false,
+      returnMetadata: 'all',
       returnValues: false
     });
 
-    const ids = results.matches.map(m => m.id);
+    // Filtra manualmente pelo tenant no metadata ou no prefixo do ID
+    const ids = results.matches
+      .filter(m => m.metadata?.tenant === tenant || m.id.startsWith(`${tenant}-`))
+      .map(m => m.id);
+
+    console.log(`[Indexer] Encontrados ${ids.length} vetores para deletar do tenant ${tenant}`);
 
     if (ids.length > 0) {
       // Vectorize delete em batches
