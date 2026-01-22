@@ -55,7 +55,14 @@ export async function generateEmbeddingsBatch(texts, env) {
   const allEmbeddings = [];
 
   for (let i = 0; i < texts.length; i += batchSize) {
-    const batch = texts.slice(i, i + batchSize).map(prepareText);
+    const batch = texts.slice(i, i + batchSize)
+      .map(prepareText)
+      .filter(t => t && t.length > 0); // Remove textos vazios
+
+    if (batch.length === 0) {
+      console.warn(`[Embeddings] Batch ${i} vazio apos filtragem`);
+      continue;
+    }
 
     const response = await fetch('https://api.openai.com/v1/embeddings', {
       method: 'POST',
@@ -71,7 +78,10 @@ export async function generateEmbeddingsBatch(texts, env) {
     });
 
     if (!response.ok) {
-      throw new Error(`OpenAI batch error at index ${i}: ${response.status}`);
+      const errorText = await response.text();
+      console.error(`[Embeddings] OpenAI batch error:`, errorText);
+      console.error(`[Embeddings] Batch texts:`, batch.map(t => t.substring(0, 100)));
+      throw new Error(`OpenAI batch error at index ${i}: ${response.status} - ${errorText}`);
     }
 
     const data = await response.json();
