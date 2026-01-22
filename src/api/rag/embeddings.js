@@ -42,27 +42,37 @@ export async function generateEmbedding(text, env) {
 
 /**
  * Gera embeddings em batch (mais eficiente para indexacao)
- * @param {string[]} texts - Array de textos
+ * IMPORTANTE: Os textos devem ser pre-filtrados (sem vazios) antes de chamar esta funcao
+ * @param {string[]} texts - Array de textos (ja preparados/limpos)
  * @param {object} env - Environment variables
- * @returns {Promise<number[][]>} - Array de vetores
+ * @returns {Promise<number[][]>} - Array de vetores (mesmo tamanho que texts)
  */
 export async function generateEmbeddingsBatch(texts, env) {
   if (!env.OPENAI_API_KEY) {
     throw new Error('OPENAI_API_KEY nao configurada');
   }
 
+  if (!texts || texts.length === 0) {
+    console.warn('[Embeddings] Nenhum texto para processar');
+    return [];
+  }
+
   const batchSize = 100; // OpenAI permite ate 2048, mas usamos 100 para seguranca
   const allEmbeddings = [];
 
-  for (let i = 0; i < texts.length; i += batchSize) {
-    const batch = texts.slice(i, i + batchSize)
-      .map(prepareText)
-      .filter(t => t && t.length > 0); // Remove textos vazios
+  console.log(`[Embeddings] Processando ${texts.length} textos em batches de ${batchSize}`);
 
-    if (batch.length === 0) {
-      console.warn(`[Embeddings] Batch ${i} vazio apos filtragem`);
-      continue;
+  for (let i = 0; i < texts.length; i += batchSize) {
+    const batch = texts.slice(i, i + batchSize);
+
+    // Valida que nenhum texto esta vazio
+    const emptyIndex = batch.findIndex(t => !t || t.length === 0);
+    if (emptyIndex >= 0) {
+      console.error(`[Embeddings] Texto vazio encontrado no indice ${i + emptyIndex}`);
+      throw new Error(`Texto vazio no batch - filtre antes de chamar generateEmbeddingsBatch`);
     }
+
+    console.log(`[Embeddings] Batch ${Math.floor(i/batchSize) + 1}: ${batch.length} textos`);
 
     const response = await fetch('https://api.openai.com/v1/embeddings', {
       method: 'POST',
@@ -80,12 +90,23 @@ export async function generateEmbeddingsBatch(texts, env) {
     if (!response.ok) {
       const errorText = await response.text();
       console.error(`[Embeddings] OpenAI batch error:`, errorText);
-      console.error(`[Embeddings] Batch texts:`, batch.map(t => t.substring(0, 100)));
+      console.error(`[Embeddings] Primeiro texto do batch:`, batch[0]?.substring(0, 200));
       throw new Error(`OpenAI batch error at index ${i}: ${response.status} - ${errorText}`);
     }
 
     const data = await response.json();
-    allEmbeddings.push(...data.data.map(d => d.embedding));
+
+    // Verifica que recebemos o mesmo numero de embeddings
+    if (data.data.length !== batch.length) {
+      throw new Error(`OpenAI retornou ${data.data.length} embeddings para ${batch.length} textos`);
+    }
+
+    // Ordena por index para garantir ordem correta
+    const sortedEmbeddings = data.data
+      .sort((a, b) => a.index - b.index)
+      .map(d => d.embedding);
+
+    allEmbeddings.push(...sortedEmbeddings);
 
     // Rate limiting: pausa entre batches
     if (i + batchSize < texts.length) {
@@ -93,6 +114,7 @@ export async function generateEmbeddingsBatch(texts, env) {
     }
   }
 
+  console.log(`[Embeddings] Total: ${allEmbeddings.length} embeddings gerados`);
   return allEmbeddings;
 }
 

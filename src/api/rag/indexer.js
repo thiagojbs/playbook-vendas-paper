@@ -226,16 +226,31 @@ async function processIndexing(files, env, tenantOverride = null) {
       }
 
       // Carrega e processa conteudo
-      const chunks = await loadAndChunkContent(file, tenant, env);
+      const rawChunks = await loadAndChunkContent(file, tenant, env);
+
+      // Filtra chunks com texto vazio ou muito curto ANTES de gerar embeddings
+      const chunks = rawChunks.filter(c => {
+        const text = prepareText(c.text);
+        return text && text.length >= 10; // Minimo 10 caracteres
+      });
 
       if (chunks.length === 0) {
-        results.push({ file, status: 'skipped', reason: 'Sem conteudo para indexar' });
+        results.push({ file, status: 'skipped', reason: 'Sem conteudo valido para indexar' });
         continue;
       }
 
-      // Gera embeddings em batch
-      const texts = chunks.map(c => c.text);
+      console.log(`[Indexer] ${file}: ${rawChunks.length} chunks brutos, ${chunks.length} validos`);
+
+      // Gera embeddings em batch (agora todos os chunks tem texto valido)
+      const texts = chunks.map(c => prepareText(c.text));
       const embeddings = await generateEmbeddingsBatch(texts, env);
+
+      // Verifica se recebemos embeddings para todos os chunks
+      if (!embeddings || embeddings.length !== chunks.length) {
+        console.error(`[Indexer] Mismatch: ${chunks.length} chunks, ${embeddings?.length || 0} embeddings`);
+        results.push({ file, status: 'error', error: 'Embeddings mismatch' });
+        continue;
+      }
 
       // Prepara vetores para upsert
       const vectors = chunks.map((chunk, i) => ({
