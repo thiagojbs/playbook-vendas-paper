@@ -6,6 +6,7 @@ import { renderPropostas } from './pages/propostas.js';
 import { renderContratos } from './pages/contratos.js';
 import { renderDesempenho } from './pages/desempenho.js';
 import { handleAPI } from './api/index.js';
+import { handleRAGRoutes } from './api/rag/index.js';
 
 export default {
   async fetch(request, env, ctx) {
@@ -15,7 +16,7 @@ export default {
     const corsHeaders = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Headers': 'Content-Type, X-Tenant-ID',
     };
 
     if (request.method === 'OPTIONS') {
@@ -23,6 +24,34 @@ export default {
     }
 
     try {
+      // Rotas RAG e MCP (nova funcionalidade)
+      if (path.startsWith('/api/rag/') || path.startsWith('/mcp') || path.startsWith('/index/')) {
+        const ragResponse = await handleRAGRoutes(request, env, path);
+        if (ragResponse) {
+          // Adiciona CORS headers
+          const newResponse = new Response(ragResponse.body, ragResponse);
+          Object.entries(corsHeaders).forEach(([key, value]) => {
+            newResponse.headers.set(key, value);
+          });
+          return newResponse;
+        }
+      }
+
+      // Health check
+      if (path === '/health') {
+        return new Response(JSON.stringify({
+          status: 'ok',
+          service: 'playbook-vendas',
+          timestamp: new Date().toISOString(),
+          features: {
+            rag: !!env.VECTORIZE_INDEX,
+            crm: !!env.WTS_API_KEY
+          }
+        }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
       if (path.startsWith('/api/')) {
         const response = await handleAPI(request, env, path);
         // Se já for uma Response (do CRM), retorna diretamente

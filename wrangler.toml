@@ -7,7 +7,34 @@ routes = [
   { pattern = "vendas.papervines.digital", custom_domain = true }
 ]
 
+# Variaveis de ambiente
+[vars]
+DEFAULT_TENANT = "papervines"
+ENVIRONMENT = "production"
+
+# D1 Database (existente)
 [[d1_databases]]
 binding = "DB"
 database_name = "papervines-playbook"
 database_id = "a73b2208-94cd-481c-acfb-516e3e7c0e29"
+
+# ===========================================
+# CONFIGURACOES RAG
+# ===========================================
+
+# KV Namespace - Cache de webhooks e resultados
+[[kv_namespaces]]
+binding = "CACHE"
+id = "9f148151fd734ff38412bf460b7c7180"
+
+# Vectorize - Indice para embeddings
+[[vectorize]]
+binding = "VECTORIZE_INDEX"
+index_name = "playbook-embeddings"
+
+# ===========================================
+# SECRETS (configurar via CLI)
+# ===========================================
+# wrangler secret put OPENAI_API_KEY
+# wrangler secret put GITHUB_WEBHOOK_SECRET
+# wrangler secret put WTS_API_KEY (ja configurado)

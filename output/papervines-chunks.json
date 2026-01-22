@@ -1,0 +1,474 @@
+[
+  {
+    "id": "objecao-preco-esta-muito-caro",
+    "category": "objecoes",
+    "title": "Esta muito caro",
+    "subcategory": "Preco e Investimento",
+    "text": "Objecao: \"Esta muito caro\"\nCategoria: Preco e Investimento\n\nContexto: Cliente acha o valor alto sem entender o retorno",
+    "tenant": "papervines"
+  },
+  {
+    "id": "objecao-tempo-nao-tenho-tempo-agora",
+    "category": "objecoes",
+    "title": "Nao tenho tempo agora",
+    "subcategory": "Tempo e Prioridade",
+    "text": "Objecao: \"Nao tenho tempo agora\"\nCategoria: Tempo e Prioridade\n\nContexto: Cliente sobrecarregado com outras prioridades",
+    "tenant": "papervines"
+  },
+  {
+    "id": "objecao-confianca-ja-tenho-um-sistema-uso-outra-plataforma",
+    "category": "objecoes",
+    "title": "Ja tenho um sistema / Uso outra plataforma",
+    "subcategory": "Confianca e Credibilidade",
+    "text": "Objecao: \"Ja tenho um sistema / Uso outra plataforma\"\nCategoria: Confianca e Credibilidade\n\nContexto: Cliente ja usa concorrente ou solucao propria",
+    "tenant": "papervines"
+  },
+  {
+    "id": "objecao-tecnica-minha-equipe-nao-vai-se-adaptar",
+    "category": "objecoes",
+    "title": "Minha equipe nao vai se adaptar",
+    "subcategory": "Tecnica e Implementacao",
+    "text": "Objecao: \"Minha equipe nao vai se adaptar\"\nCategoria: Tecnica e Implementacao\n\nContexto: Medo de resistencia da equipe ou complexidade",
+    "tenant": "papervines"
+  },
+  {
+    "id": "objecao-decisao-preciso-falar-com-meu-socio-diretor-chefe",
+    "category": "objecoes",
+    "title": "Preciso falar com meu socio / diretor / chefe",
+    "subcategory": "Decisao e Autoridade",
+    "text": "Objecao: \"Preciso falar com meu socio / diretor / chefe\"\nCategoria: Decisao e Autoridade\n\nContexto: Cliente nao tem autoridade final de decisao",
+    "tenant": "papervines"
+  },
+  {
+    "id": "objecao-especificas-ja-tentei-chatbot-antes-e-nao-funcionou",
+    "category": "objecoes",
+    "title": "Ja tentei chatbot antes e nao funcionou",
+    "subcategory": "Objecoes Especificas",
+    "text": "Objecao: \"Ja tentei chatbot antes e nao funcionou\"\nCategoria: Objecoes Especificas\n\nContexto: Experiencia negativa anterior com automacao",
+    "tenant": "papervines"
+  },
+  {
+    "id": "tecnica-0",
+    "category": "objecoes",
+    "title": "Tecnica: LAER - Ouvir, Reconhecer, Explorar, Responder",
+    "subcategory": "tecnicas",
+    "text": "Tecnica de Negociacao: LAER - Ouvir, Reconhecer, Explorar, Responder\nFramework classico para tratamento de objecoes\n\nPassos:\n1. Listen (Ouvir): Deixe o cliente falar sem interromper\n2. Acknowledge (Reconhecer): Valide a preocupacao dele\n3. Explore (Explorar): Faca perguntas para entender a raiz\n4. Respond (Responder): Ofereca solucao especifica",
+    "tenant": "papervines"
+  },
+  {
+    "id": "tecnica-1",
+    "category": "objecoes",
+    "title": "Tecnica: Feel, Felt, Found",
+    "subcategory": "tecnicas",
+    "text": "Tecnica de Negociacao: Feel, Felt, Found\nTecnica de empatia e prova social\n\nPassos:\n1. Feel: Entendo como voce se sente...\n2. Felt: Outros clientes tambem sentiram isso...\n3. Found: O que eles descobriram foi que...",
+    "tenant": "papervines"
+  },
+  {
+    "id": "tecnica-2",
+    "category": "objecoes",
+    "title": "Tecnica: Boomerang",
+    "subcategory": "tecnicas",
+    "text": "Tecnica de Negociacao: Boomerang\nTransformar objecao em motivo para comprar\n\nPassos:\n1. Pegue a objecao do cliente\n2. Transforme em beneficio\n3. Exemplo: Justamente por nao ter tempo que voce precisa de automacao",
+    "tenant": "papervines"
+  },
+  {
+    "id": "tecnica-3",
+    "category": "objecoes",
+    "title": "Tecnica: Isolamento",
+    "subcategory": "tecnicas",
+    "text": "Tecnica de Negociacao: Isolamento\nDescobrir se e a unica objecao\n\nPassos:\n1. Pergunte: Alem disso\n2. tem mais alguma preocupacao?\n3. Isole a objecao principal\n4. Resolva e feche",
+    "tenant": "papervines"
+  },
+  {
+    "id": "gatilhos-mentais",
+    "category": "objecoes",
+    "title": "Gatilhos Mentais para Vendas",
+    "subcategory": "gatilhos",
+    "text": "Gatilhos Mentais para usar em vendas:\n\nEscassez: Proposta valida por 7 dias / Agenda limitada. Exemplo: \"Essa condicao especial e valida ate sexta-feira.\"\n\nUrgencia: Custo de esperar / Concorrentes. Exemplo: \"Enquanto voce avalia, seus concorrentes ja estao automatizando.\"\n\nProva Social: Cases, numeros, depoimentos. Exemplo: \"95% dos clientes se adaptam na primeira semana.\"\n\nAutoridade: API Oficial, parceria Meta, desde 2020. Exemplo: \"Somos parceiros oficiais do Meta com API certificada.\"\n\nReciprocidade: Teste gratuito, demo, material. Exemplo: \"Teste 14 dias gratis, sem compromisso.\"\n\nCompromisso: Micro-compromissos, agendamentos. Exemplo: \"Posso agendar a demo para terca ou quarta?\"",
+    "tenant": "papervines"
+  },
+  {
+    "id": "diferenciais-papervines",
+    "category": "playbook",
+    "title": "Diferenciais Paper Vines",
+    "subcategory": "diferenciais",
+    "text": "Diferenciais da Paper Vines:\n\n- API Oficial do Meta: Sem risco de bloqueio do numero. Conexao estavel e segura.\n- IA com 98% de Precisao: Agentes inteligentes que entendem contexto e respondem naturalmente.\n- Atendimento 24/7: Chatbots e IA funcionando mesmo fora do horario comercial.\n- Omnichannel: WhatsApp, Instagram e Messenger em uma unica plataforma.\n- CRM Integrado: Gestao completa de leads e clientes sem sair da plataforma.\n- Automacao de 80%: Reduza drasticamente o trabalho manual da equipe.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "estatisticas-papervines",
+    "category": "playbook",
+    "title": "Estatisticas e Numeros",
+    "subcategory": "estatisticas",
+    "text": "Estatisticas Paper Vines:\n- Precisao da IA: 98%\n- Automacao de conversas: 80%\n- Mensagens por dia: 2.847+\n- Tempo de adaptacao: 1 semana\n- Taxa de adaptacao: 95%\n- Aumento de produtividade: 3x\n- ROI medio: 2-3 meses\n- Suporte 24h: Sim\n- Canais: WhatsApp, Instagram, Messenger, Facebook\n- API Oficial do Meta: Sim",
+    "tenant": "papervines"
+  },
+  {
+    "id": "script-qualificacao-qual-1",
+    "category": "scripts",
+    "title": "Perguntas de Qualificacao",
+    "subcategory": "Qualificacao",
+    "text": "Script: Perguntas de Qualificacao\nEtapa do funil: Qualificacao\nTipo: principal\n\nContexto: Inicio da conversa de qualificacao\n\nMensagem:\nPara montar sua proposta, me conta:\n- Quantas pessoas atendem hoje?\n- Volume de mensagens/dia?\n- Maior dor no atendimento?\n\nVariacoes disponiveis:\n- undefined: undefined\n- undefined: undefined\n- undefined: undefined\n\nDica: Faca perguntas abertas para entender melhor o cenario",
+    "tenant": "papervines"
+  },
+  {
+    "id": "script-negociacao-neg-1",
+    "category": "scripts",
+    "title": "Coleta de Dados para Contrato",
+    "subcategory": "Negociacao",
+    "text": "Script: Coleta de Dados para Contrato\nEtapa do funil: Negociacao\nTipo: principal\n\nContexto: Cliente confirmou interesse em fechar\n\nMensagem:\nQue otimo, [Nome]! 🎉\nVamos dar inicio ao processo!\n\nPara preparar o contrato, preciso dos seguintes dados:\n\n📋 CNPJ:\n👤 Nome do Responsavel:\n🆔 CPF do Responsavel:\n📧 Email:\n📅 Melhor data para vencimento:\n💳 Implantacao: a vista ou parcelado?\n🗓️ Data desejada para inicio:\n\nNa sequencia te envio o contrato e links de pagamento!\n\nVariacoes disponiveis:\n- undefined: undefined\n\nDica: Seja objetivo e facilite o processo",
+    "tenant": "papervines"
+  },
+  {
+    "id": "script-fechamento-fech-1",
+    "category": "scripts",
+    "title": "Boas-vindas Pos-Assinatura",
+    "subcategory": "Fechamento",
+    "text": "Script: Boas-vindas Pos-Assinatura\nEtapa do funil: Fechamento\nTipo: principal\n\nContexto: Imediatamente apos assinatura do contrato\n\nMensagem:\n🎉 Parabens pela escolha, [Nome]!\n\nBem-vindo a Paper Vines! Estamos muito felizes em ter a [Empresa] como cliente.\n\n*Proximos passos:*\n\n1️⃣ *Acesso ao Gerenciador de Negocios*\n   Conceda acesso de controle total para: thiago@papervines.digital\n   Tutorial: https://www.youtube.com/watch?v=C15vD7rvE28\n\n2️⃣ *Grupo de WhatsApp*\n   Criaremos em ate 24h para suporte direto\n\n3️⃣ *Reuniao de Kick-Off*\n   Dia [DATA] as [HORA] (a confirmar)\n\nEstamos ansiosos para comecar! 🚀\n\nVariacoes disponiveis:\n- undefined: undefined\n\nDica: Celebre a decisao e alinhe expectativas",
+    "tenant": "papervines"
+  },
+  {
+    "id": "sequencia-0",
+    "category": "scripts",
+    "title": "Sequencia: Sequencia de Prospeccao",
+    "subcategory": "sequencias",
+    "text": "Sequencia de Follow-up: Sequencia de Prospeccao\nSequencia completa para leads frios\n\nEtapas:\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined",
+    "tenant": "papervines"
+  },
+  {
+    "id": "sequencia-1",
+    "category": "scripts",
+    "title": "Sequencia: Sequencia Pos-Demo",
+    "subcategory": "sequencias",
+    "text": "Sequencia de Follow-up: Sequencia Pos-Demo\nAcompanhamento apos demonstracao\n\nEtapas:\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined",
+    "tenant": "papervines"
+  },
+  {
+    "id": "sequencia-2",
+    "category": "scripts",
+    "title": "Sequencia: Sequencia de Fechamento",
+    "subcategory": "sequencias",
+    "text": "Sequencia de Follow-up: Sequencia de Fechamento\nFluxo apos confirmacao de interesse\n\nEtapas:\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined",
+    "tenant": "papervines"
+  },
+  {
+    "id": "dicas-comunicacao",
+    "category": "scripts",
+    "title": "Dicas de Comunicacao",
+    "subcategory": "dicas",
+    "text": "Dicas de Comunicacao para Vendas:\n\nMelhores Horarios:\n  - Segunda a sexta: 9h-11h e 14h-17h\n  - Evite segunda de manha e sexta a tarde\n  - Responda em ate 2h durante negociacao\n  - Sabados: apenas emergencias\n\nTom de Voz:\n  - Seja profissional mas amigavel\n  - Use emojis com moderacao (1-2 por mensagem)\n  - Evite gírias excessivas\n  - Personalize sempre que possível\n\nFormatacao WhatsApp:\n  - *texto* = negrito\n  - _texto_ = italico\n  - ~texto~ = riscado\n  - Use bullet points para listas\n\nO que Evitar:\n  - Mensagens muito longas (max 4 paragrafos)\n  - Audios longos sem permissao\n  - Pressao excessiva\n  - Promessas que nao pode cumprir",
+    "tenant": "papervines"
+  },
+  {
+    "id": "template-ecommerce",
+    "category": "scripts",
+    "title": "Template: E-commerce",
+    "subcategory": "templates",
+    "text": "Template para segmento E-commerce:\n\nDores principais: Carrinho abandonado, Demora no atendimento, Falta de rastreio\n\nScript personalizado:\nOi [Nome]! Vi que voce tem uma loja online.\n\nOs e-commerces que usam Paper Vines conseguem:\n🛒 Recuperar carrinhos abandonados automaticamente\n📦 Enviar rastreio por WhatsApp\n💬 Atender clientes 24h\n\nQuer ver como funciona pra lojas como a sua?",
+    "tenant": "papervines"
+  },
+  {
+    "id": "template-educacao",
+    "category": "scripts",
+    "title": "Template: Escolas e Cursos",
+    "subcategory": "templates",
+    "text": "Template para segmento Escolas e Cursos:\n\nDores principais: Captacao de alunos, Matriculas manuais, Comunicacao com pais\n\nScript personalizado:\nOi [Nome]! Vi que voce trabalha com educacao.\n\nEscolas que usam Paper Vines conseguem:\n📚 Captacao automatica de leads\n✍️ Processo de matricula simplificado\n👨‍👩‍👧 Comunicacao automatica com pais\n\nQuer ver como funciona pra instituicoes de ensino?",
+    "tenant": "papervines"
+  },
+  {
+    "id": "template-servicos",
+    "category": "scripts",
+    "title": "Template: Prestadores de Servicos",
+    "subcategory": "templates",
+    "text": "Template para segmento Prestadores de Servicos:\n\nDores principais: Orcamentos manuais, Agendamento de servicos, Follow-up\n\nScript personalizado:\nOi [Nome]! Vi que voce presta servicos.\n\nEmpresas de servicos que usam Paper Vines conseguem:\n💰 Orcamentos automaticos\n📅 Agendamento de servicos 24h\n⭐ Coleta de avaliacoes pos-servico\n\nQuer ver como funciona pro seu segmento?",
+    "tenant": "papervines"
+  },
+  {
+    "id": "precos-base",
+    "category": "precos",
+    "title": "Tabela de Precos Base",
+    "subcategory": "mensalidade",
+    "text": "Precos Base Paper Vines:\n\nMensalidade Base: R$ 249\nUsuarios inclusos: 3\nUsuario adicional: R$ 49 (4-10 usuarios), R$ 39 (11-20), R$ 29 (21+)\n\nWhatsApp:\n- 1 numero incluso\n- Numero adicional: R$ 99/mes\n\nOutros canais:\n- Instagram: R$ 99/mes\n- Messenger: R$ 99/mes\n\nIntegracoes:\n- Hotmart: R$ 199/mes\n- RD Station: R$ 99/mes\n- Webhook: R$ 99/mes",
+    "tenant": "papervines"
+  },
+  {
+    "id": "plano-chatbot-basic",
+    "category": "precos",
+    "title": "Plano Chatbot Basic",
+    "subcategory": "chatbots",
+    "text": "Plano Chatbot Basic:\nValor: R$ 1497 (ou 3x de R$ 499)\n\nEste plano inclui implantacao completa do chatbot com automacao de atendimento.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "plano-chatbot-master",
+    "category": "precos",
+    "title": "Plano Chatbot Master",
+    "subcategory": "chatbots",
+    "text": "Plano Chatbot Master:\nValor: R$ 2997 (ou 3x de R$ 999)\n\nEste plano inclui implantacao completa do chatbot com automacao de atendimento.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "plano-chatbot-fusion",
+    "category": "precos",
+    "title": "Plano Chatbot Fusion",
+    "subcategory": "chatbots",
+    "text": "Plano Chatbot Fusion:\nValor: R$ 4497 (ou 3x de R$ 1499)\n\nEste plano inclui implantacao completa do chatbot com automacao de atendimento.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "planos-telecom",
+    "category": "precos",
+    "title": "Planos Telecom",
+    "subcategory": "telecom",
+    "text": "Planos Telecom Paper Vines:\n\nTelecom Basic: R$ 2.997 (ou 3x R$ 999)\n- Implantacao de telefonia digital\n- Funcionalidades basicas de PABX\n\nTelecom Pro: R$ 4.497 (ou 3x R$ 1.499)\n- Implantacao completa\n- Funcionalidades avancadas\n- Integracao com CRM",
+    "tenant": "papervines"
+  },
+  {
+    "id": "planos-ia",
+    "category": "precos",
+    "title": "Planos de IA",
+    "subcategory": "ia",
+    "text": "Planos de IA Paper Vines:\n\nIA Simples: R$ 3.997\n- Agente de IA para atendimento basico\n- Integracao com WhatsApp\n\nIA Completa: R$ 5.997\n- Multiplos agentes de IA\n- Supervisor inteligente\n- Integracao completa\n\nIA Enterprise: R$ 9.997\n- Solucao customizada\n- Agentes especializados\n- Suporte dedicado",
+    "tenant": "papervines"
+  },
+  {
+    "id": "agente-supervisor",
+    "category": "agentes",
+    "title": "Supervisor de Atendimento",
+    "subcategory": "supervisor",
+    "text": "Agente: Supervisor de Atendimento\nTipo: supervisor\nFuncao: Triagem e distribuicao inteligente de atendimentos\n\nDescricao:\nAgente central que analisa a demanda do cliente e direciona para o especialista correto.\n\nEste agente pode ser utilizado para automatizar atendimentos relacionados a triagem e distribuicao inteligente de atendimentos.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "agente-agendamento",
+    "category": "agentes",
+    "title": "Agente de Agendamento",
+    "subcategory": "executor",
+    "text": "Agente: Agente de Agendamento\nTipo: executor\nFuncao: Gestao completa de agenda e compromissos\n\nDescricao:\nEspecialista em agendar, remarcar e cancelar compromissos no calendario.\n\nEste agente pode ser utilizado para automatizar atendimentos relacionados a gestao completa de agenda e compromissos.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "agente-sdr",
+    "category": "agentes",
+    "title": "Agente SDR (Pre-Vendas)",
+    "subcategory": "executor",
+    "text": "Agente: Agente SDR (Pre-Vendas)\nTipo: executor\nFuncao: Qualificacao de leads e discovery de necessidades\n\nDescricao:\nQualifica leads, entende necessidades e prepara oportunidades para o time comercial.\n\nEste agente pode ser utilizado para automatizar atendimentos relacionados a qualificacao de leads e discovery de necessidades.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "agente-tecnico",
+    "category": "agentes",
+    "title": "Agente Tecnico",
+    "subcategory": "executor",
+    "text": "Agente: Agente Tecnico\nTipo: executor\nFuncao: Suporte tecnico de nivel 1 e 2 automatizado\n\nDescricao:\nResolve problemas tecnicos consultando documentacao e bases de conhecimento.\n\nEste agente pode ser utilizado para automatizar atendimentos relacionados a suporte tecnico de nivel 1 e 2 automatizado.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "agente-cobranca",
+    "category": "agentes",
+    "title": "Agente de Cobranca",
+    "subcategory": "executor",
+    "text": "Agente: Agente de Cobranca\nTipo: executor\nFuncao: Cobranca inteligente e negociacao de dividas\n\nDescricao:\nExecuta regua de cobranca automatizada com abordagem humanizada.\n\nEste agente pode ser utilizado para automatizar atendimentos relacionados a cobranca inteligente e negociacao de dividas.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "agente-resgate",
+    "category": "agentes",
+    "title": "Agente de Resgate",
+    "subcategory": "executor",
+    "text": "Agente: Agente de Resgate\nTipo: executor\nFuncao: Reativacao de clientes e recuperacao de vendas\n\nDescricao:\nReativa clientes inativos e recupera oportunidades perdidas.\n\nEste agente pode ser utilizado para automatizar atendimentos relacionados a reativacao de clientes e recuperacao de vendas.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "agente-pesquisa",
+    "category": "agentes",
+    "title": "Agente de Pesquisa",
+    "subcategory": "executor",
+    "text": "Agente: Agente de Pesquisa\nTipo: executor\nFuncao: Pesquisas automatizadas e coleta de feedback\n\nDescricao:\nColeta feedback, realiza pesquisas de satisfacao e NPS.\n\nEste agente pode ser utilizado para automatizar atendimentos relacionados a pesquisas automatizadas e coleta de feedback.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "agente-onboarding",
+    "category": "agentes",
+    "title": "Agente de Onboarding",
+    "subcategory": "executor",
+    "text": "Agente: Agente de Onboarding\nTipo: executor\nFuncao: Onboarding automatizado e educacao do cliente\n\nDescricao:\nGuia novos clientes no processo de ativacao e primeiros passos.\n\nEste agente pode ser utilizado para automatizar atendimentos relacionados a onboarding automatizado e educacao do cliente.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "agente-vendas",
+    "category": "agentes",
+    "title": "Agente de Vendas",
+    "subcategory": "executor",
+    "text": "Agente: Agente de Vendas\nTipo: executor\nFuncao: Vendas consultivas e fechamento automatizado\n\nDescricao:\nApresenta produtos, tira duvidas e conduz o cliente ate a compra.\n\nEste agente pode ser utilizado para automatizar atendimentos relacionados a vendas consultivas e fechamento automatizado.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "agente-faq",
+    "category": "agentes",
+    "title": "Agente FAQ",
+    "subcategory": "executor",
+    "text": "Agente: Agente FAQ\nTipo: executor\nFuncao: Atendimento de duvidas comuns 24/7\n\nDescricao:\nResponde perguntas frequentes de forma rapida e precisa.\n\nEste agente pode ser utilizado para automatizar atendimentos relacionados a atendimento de duvidas comuns 24/7.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "vertical-saude",
+    "category": "agentes",
+    "title": "Agentes para Saude",
+    "subcategory": "verticais",
+    "text": "Agentes para Saude:\n\nCasos de uso:\n- Agendamento de consultas e exames\n- Confirmacao e lembretes automaticos\n- Cobranca de mensalidades\n- Duvidas sobre convenios\n\nEconomia estimada:\n- Funcionarios substituidos: 3-5\n- Horas economizadas/mes: 400+\n- Reducao de custos: 60%",
+    "tenant": "papervines"
+  },
+  {
+    "id": "vertical-imobiliario",
+    "category": "agentes",
+    "title": "Agentes para Imobiliario",
+    "subcategory": "verticais",
+    "text": "Agentes para Imobiliario:\n\nCasos de uso:\n- Qualificacao de leads interessados\n- Agendamento de visitas\n- Follow-up de propostas\n- Resgate de leads frios\n\nEconomia estimada:\n- Funcionarios substituidos: 3-5\n- Horas economizadas/mes: 400+\n- Reducao de custos: 60%",
+    "tenant": "papervines"
+  },
+  {
+    "id": "vertical-e-commerce",
+    "category": "agentes",
+    "title": "Agentes para E-commerce",
+    "subcategory": "verticais",
+    "text": "Agentes para E-commerce:\n\nCasos de uso:\n- Duvidas sobre produtos e entregas\n- Recuperacao de carrinho abandonado\n- Pos-venda e tracking\n- Pesquisa de satisfacao\n\nEconomia estimada:\n- Funcionarios substituidos: 3-5\n- Horas economizadas/mes: 400+\n- Reducao de custos: 60%",
+    "tenant": "papervines"
+  },
+  {
+    "id": "vertical-educacao",
+    "category": "agentes",
+    "title": "Agentes para Educacao",
+    "subcategory": "verticais",
+    "text": "Agentes para Educacao:\n\nCasos de uso:\n- Captacao de novos alunos\n- Onboarding de matriculados\n- Cobranca de mensalidades\n- Suporte academico\n\nEconomia estimada:\n- Funcionarios substituidos: 3-5\n- Horas economizadas/mes: 400+\n- Reducao de custos: 60%",
+    "tenant": "papervines"
+  },
+  {
+    "id": "vertical-financeiro",
+    "category": "agentes",
+    "title": "Agentes para Financeiro",
+    "subcategory": "verticais",
+    "text": "Agentes para Financeiro:\n\nCasos de uso:\n- Suporte a transacoes\n- Onboarding de contas\n- Renegociacao de dividas\n- Duvidas sobre produtos\n\nEconomia estimada:\n- Funcionarios substituidos: 3-5\n- Horas economizadas/mes: 400+\n- Reducao de custos: 60%",
+    "tenant": "papervines"
+  },
+  {
+    "id": "vertical-varejo",
+    "category": "agentes",
+    "title": "Agentes para Varejo",
+    "subcategory": "verticais",
+    "text": "Agentes para Varejo:\n\nCasos de uso:\n- Atendimento pre-venda\n- Duvidas sobre produtos\n- Programa de fidelidade\n- Pos-venda e trocas\n\nEconomia estimada:\n- Funcionarios substituidos: 3-5\n- Horas economizadas/mes: 400+\n- Reducao de custos: 60%",
+    "tenant": "papervines"
+  },
+  {
+    "id": "comparativo-ia-humano",
+    "category": "agentes",
+    "title": "Comparativo IA vs Humano",
+    "subcategory": "comparativo",
+    "text": "Comparativo Agente IA vs Atendente Humano:\n\n| Metrica | Humano | IA | Vantagem |\n|---------|--------|-----|----------|\n| Disponibilidade | 8-12h/dia | 24h/dia | +200% |\n| Atendimentos/hora | 8-15 | 100+ | +700% |\n| Custo mensal | R$ 3.000-5.000 | R$ 300-800 | -85% |\n| Tempo de resposta | 2-5 min | < 3 seg | -98% |\n| Consistencia | Variavel | 100% | Padrao |\n| Escalabilidade | Linear | Instantanea | Infinita |",
+    "tenant": "papervines"
+  },
+  {
+    "id": "processo-vendas",
+    "category": "playbook",
+    "title": "Processo de Vendas",
+    "subcategory": "processo",
+    "text": "Processo de Vendas Paper Vines:\n\n1. QUALIFICACAO (30 min)\n   - Identificar necessidade do cliente\n   - Entender porte da empresa\n   - Mapear canais de atendimento atuais\n\n2. DEMONSTRACAO (45 min)\n   - Apresentar a plataforma\n   - Mostrar casos de uso relevantes\n   - Demonstrar IA e automacao\n\n3. PROPOSTA (15 min)\n   - Enviar proposta personalizada\n   - Explicar planos e valores\n   - Definir proximo passo\n\n4. NEGOCIACAO (variavel)\n   - Tratar objecoes\n   - Ajustar proposta se necessario\n   - Definir condicoes\n\n5. FECHAMENTO (30 min)\n   - Formalizar contrato\n   - Coletar documentos\n   - Agendar kick-off",
+    "tenant": "papervines"
+  },
+  {
+    "id": "checklist-comercial",
+    "category": "playbook",
+    "title": "Checklist Comercial",
+    "subcategory": "checklist",
+    "text": "Checklist Comercial Paper Vines:\n\n- Verificar condicoes para usar a plataforma (BM, cartao, site, faturamento)\n- Explicar requisitos da API Oficial do Meta\n- Enviar teste gratuito de 14 dias\n- Apresentar a plataforma (slides Figma)\n- Montar e enviar proposta personalizada\n- Coletar dados para contrato\n- Passar informacoes para Fernanda (contrato)\n- Enviar contrato e links de pagamento\n- Acompanhar assinatura do contrato\n- Confirmar pagamento\n- Comunicar proximos passos ao cliente\n- Mover card para Venda Realizada no CRM",
+    "tenant": "papervines"
+  },
+  {
+    "id": "politicas-whatsapp",
+    "category": "playbook",
+    "title": "Politicas WhatsApp Business",
+    "subcategory": "politicas",
+    "text": "Politicas do WhatsApp Business:\n\nPermitido:\n- Mensagens transacionais (confirmacoes, alertas)\n- Atendimento ao cliente\n- Respostas a solicitacoes\n\nProibido:\n- Spam e mensagens em massa nao solicitadas\n- Conteudo adulto ou ilegal\n- Venda de produtos proibidos\n- Compartilhamento de dados sem consentimento\n\nConsequencias de violacao:\n- Aviso inicial\n- Restricao de funcionalidades\n- Bloqueio temporario\n- Banimento permanente",
+    "tenant": "papervines"
+  },
+  {
+    "id": "precos-whatsapp-meta",
+    "category": "precos",
+    "title": "Precos Conversas WhatsApp",
+    "subcategory": "whatsapp",
+    "text": "Precos de Conversas WhatsApp (Meta):\n\nCategorias de conversa:\n1. Utility (transacional): $0.0500 USD\n2. Authentication: $0.0315 USD\n3. Marketing: $0.0625 USD\n4. Service (atendimento): $0.0300 USD\n\nBeneficios:\n- 1.000 conversas de servico gratis/mes\n- Conversas iniciadas pelo usuario mais baratas\n- Janela de 24h para responder sem custo adicional",
+    "tenant": "papervines"
+  },
+  {
+    "id": "fluxo-implantacao",
+    "category": "playbook",
+    "title": "Fluxo de Implantacao",
+    "subcategory": "implantacao",
+    "text": "Fluxo de Implantacao Paper Vines:\n\nEtapa 1: Kick-off (Dia 1)\n- Reuniao inicial\n- Coleta de acessos\n- Definicao de escopo\n\nEtapa 2: Configuracao (Dias 2-5)\n- Setup da plataforma\n- Integracao WhatsApp\n- Configuracao de chatbots\n\nEtapa 3: Treinamento (Dia 6-7)\n- Treinamento da equipe\n- Ajustes finais\n- Testes\n\nEtapa 4: Go-Live (Dia 7-14)\n- Lancamento\n- Acompanhamento inicial\n- Suporte intensivo",
+    "tenant": "papervines"
+  },
+  {
+    "id": "faq-0",
+    "category": "playbook",
+    "title": "O numero vai parar de funcionar no celular?",
+    "subcategory": "faq",
+    "text": "Pergunta: O numero vai parar de funcionar no celular?\n\nResposta: Nao necessariamente. Se for WhatsApp Business, funciona nos dois. Se for pessoal, perdera acesso no celular.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "faq-1",
+    "category": "playbook",
+    "title": "Quantas mensagens posso enviar por dia?",
+    "subcategory": "faq",
+    "text": "Pergunta: Quantas mensagens posso enviar por dia?\n\nResposta: Depende do nivel da BM. Comeca com 250/dia e pode chegar a ilimitado apos verificacao e bom historico.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "faq-2",
+    "category": "playbook",
+    "title": "Posso enviar mensagens em massa?",
+    "subcategory": "faq",
+    "text": "Pergunta: Posso enviar mensagens em massa?\n\nResposta: Sim, mas apenas para contatos que deram consentimento. Spam resulta em bloqueio da conta.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "faq-3",
+    "category": "playbook",
+    "title": "Quanto custa cada mensagem?",
+    "subcategory": "faq",
+    "text": "Pergunta: Quanto custa cada mensagem?\n\nResposta: Marketing: ~$0,06 | Utilidade/Servico/Auth: ~$0,007. Conversas de servico tem 1000 gratis/mes.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "faq-4",
+    "category": "playbook",
+    "title": "O que acontece se minha conta for bloqueada?",
+    "subcategory": "faq",
+    "text": "Pergunta: O que acontece se minha conta for bloqueada?\n\nResposta: Voce pode recorrer pelo processo da Meta. Paper Vines auxilia no recurso, mas a decisao e do Meta.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "faq-5",
+    "category": "playbook",
+    "title": "Posso usar a IA para tudo?",
+    "subcategory": "faq",
+    "text": "Pergunta: Posso usar a IA para tudo?\n\nResposta: A IA resolve 80% das conversas, mas casos complexos precisam de humano. Sempre tenha equipe de backup.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "faq-6",
+    "category": "playbook",
+    "title": "Quanto tempo leva a implantacao?",
+    "subcategory": "faq",
+    "text": "Pergunta: Quanto tempo leva a implantacao?\n\nResposta: Em media 7-14 dias, dependendo da complexidade dos chatbots e disponibilidade do cliente.",
+    "tenant": "papervines"
+  },
+  {
+    "id": "faq-7",
+    "category": "playbook",
+    "title": "Preciso de site para usar?",
+    "subcategory": "faq",
+    "text": "Pergunta: Preciso de site para usar?\n\nResposta: Sim, o Meta exige site com CNPJ para verificar a empresa. Pode ser um site simples.",
+    "tenant": "papervines"
+  }
+]
