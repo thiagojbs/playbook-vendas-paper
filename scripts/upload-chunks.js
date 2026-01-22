@@ -20,6 +20,7 @@
 import { readFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { createHash } from 'crypto';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUTPUT_DIR = join(__dirname, '..', 'output');
@@ -29,6 +30,23 @@ const OPENAI_EMBEDDING_MODEL = 'text-embedding-3-small';
 const EMBEDDING_DIMENSIONS = 1536;
 const BATCH_SIZE = 50; // Embeddings por batch
 const VECTORIZE_BATCH_SIZE = 100; // Vetores por upsert
+const MAX_ID_LENGTH = 64; // Limite do Vectorize
+
+/**
+ * Gera um ID seguro com no máximo 64 bytes
+ */
+function generateSafeId(tenant, chunkId) {
+  const fullId = `${tenant}-${chunkId}`;
+
+  if (fullId.length <= MAX_ID_LENGTH) {
+    return fullId;
+  }
+
+  // Se muito longo, usa hash do ID original
+  const hash = createHash('md5').update(fullId).digest('hex').substring(0, 12);
+  const truncatedId = fullId.substring(0, MAX_ID_LENGTH - 13); // 13 = 1 hífen + 12 hash
+  return `${truncatedId}-${hash}`;
+}
 
 /**
  * Gera embeddings via OpenAI API
@@ -195,7 +213,7 @@ async function main() {
     // Preparar vetores para upsert
     batch.forEach((chunk, idx) => {
       allVectors.push({
-        id: `${tenant}-${chunk.id}`,
+        id: generateSafeId(tenant, chunk.id),
         values: embeddings[idx],
         metadata: {
           tenant: chunk.tenant,
