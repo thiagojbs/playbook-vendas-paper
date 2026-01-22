@@ -289,8 +289,8 @@ async function loadAndChunkContent(file, tenant, env = {}) {
   console.log(`[Indexer] Processando ${fileName} para tenant ${tenant}`);
 
   // Configuracao do repositorio (pode vir do env ou usar padrao)
-  const repoOwner = env.GITHUB_REPO_OWNER || 'papervines';
-  const repoName = env.GITHUB_REPO_NAME || 'playbook-vendas';
+  const repoOwner = env.GITHUB_REPO_OWNER || 'thiagojbs';
+  const repoName = env.GITHUB_REPO_NAME || 'playbook-vendas-paper';
   const branch = env.GITHUB_BRANCH || 'main';
 
   // URL raw do GitHub
