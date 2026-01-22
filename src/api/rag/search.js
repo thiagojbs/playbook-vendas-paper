@@ -14,7 +14,7 @@ import { generateEmbedding, prepareText } from './embeddings.js';
 export async function searchSimilar(query, tenantId, env, options = {}) {
   const {
     topK = 5,
-    minScore = 0.5, // Reduzido para capturar mais resultados
+    minScore = 0.3, // Reduzido para capturar resultados com score baixo
     category = null
   } = options;
 
