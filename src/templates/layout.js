@@ -893,6 +893,9 @@ export function layout(title, content, activeMenu = '') {
       <a href="/playbook/agentes" class="nav-tab ${activeMenu === 'planos' ? 'active' : ''}">
         <i class="fas fa-robot"></i> Agentes IA
       </a>
+      <a href="/playbook/api" class="nav-tab ${activeMenu === 'api' ? 'active' : ''}" style="background: ${activeMenu === 'api' ? 'rgba(99, 102, 241, 0.15)' : 'rgba(99, 102, 241, 0.05)'}; border: 1px solid rgba(99, 102, 241, 0.3);">
+        <i class="fas fa-code" style="color: #6366f1;"></i> <span style="color: #6366f1; font-weight: 600;">API & MCP</span>
+      </a>
       <!-- Link Clientes oculto ate implementar autenticacao
       <a href="/clientes" class="nav-tab ${activeMenu === 'clientes' ? 'active' : ''}">
         <i class="fas fa-users"></i> Clientes
@@ -900,9 +903,6 @@ export function layout(title, content, activeMenu = '') {
       -->
       <a href="/desempenho" class="nav-tab ${activeMenu === 'desempenho' ? 'active' : ''}">
         <i class="fas fa-chart-line"></i> Desempenho
-      </a>
-      <a href="/documentacao" class="nav-tab ${activeMenu === 'documentacao' ? 'active' : ''}" style="background: ${activeMenu === 'documentacao' ? 'rgba(99, 102, 241, 0.15)' : 'rgba(99, 102, 241, 0.05)'}; border: 1px solid rgba(99, 102, 241, 0.3);">
-        <i class="fas fa-code" style="color: #6366f1;"></i> <span style="color: #6366f1; font-weight: 600;">API & MCP</span>
       </a>
       <a href="/desempenho/crm" class="nav-tab ${activeMenu === 'crm' ? 'active' : ''}" style="background: ${activeMenu === 'crm' ? 'rgba(16, 185, 129, 0.15)' : 'rgba(16, 185, 129, 0.05)'}; border: 1px solid rgba(16, 185, 129, 0.3);">
         <i class="fas fa-broadcast-tower" style="color: #10b981;"></i> <span style="color: #10b981; font-weight: 600;">CRM Live</span>
