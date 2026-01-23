@@ -682,23 +682,23 @@ function renderPlaybookCabeloeSaude() {
 function renderScriptsCabeloeSaude() {
   var tenantQuery = '?tenant=cabeloesaude';
 
-  // Stats da Clinica
+  // Stats da Clinica - com melhor legibilidade
   var statsHtml = '<div class="stats-grid" style="margin-bottom: 24px;">' +
-    '<div class="stat-card" style="background: linear-gradient(135deg, #1a5f52 0%, #2d8a7a 100%); color: white;">' +
-      '<div class="stat-value">40+</div>' +
-      '<div class="stat-label" style="color: rgba(255,255,255,0.9);">Scripts Prontos</div>' +
+    '<div class="stat-card" style="background: linear-gradient(135deg, #1a5f52 0%, #2d8a7a 100%); color: white; box-shadow: 0 4px 6px rgba(26, 95, 82, 0.3);">' +
+      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">44+</div>' +
+      '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px; letter-spacing: 0.3px;">Scripts Prontos</div>' +
     '</div>' +
-    '<div class="stat-card" style="background: linear-gradient(135deg, #2d8a7a 0%, #4fb3a3 100%); color: white;">' +
-      '<div class="stat-value">7</div>' +
-      '<div class="stat-label" style="color: rgba(255,255,255,0.9);">Etapas do Funil</div>' +
+    '<div class="stat-card" style="background: linear-gradient(135deg, #2d8a7a 0%, #4fb3a3 100%); color: white; box-shadow: 0 4px 6px rgba(45, 138, 122, 0.3);">' +
+      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">7</div>' +
+      '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px; letter-spacing: 0.3px;">Etapas do Funil</div>' +
     '</div>' +
-    '<div class="stat-card" style="background: linear-gradient(135deg, #4fb3a3 0%, #6dd5c7 100%); color: white;">' +
-      '<div class="stat-value">4</div>' +
-      '<div class="stat-label" style="color: rgba(255,255,255,0.9);">Sequencias Automaticas</div>' +
+    '<div class="stat-card" style="background: linear-gradient(135deg, #4fb3a3 0%, #6dd5c7 100%); color: white; box-shadow: 0 4px 6px rgba(79, 179, 163, 0.3);">' +
+      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">4</div>' +
+      '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px; letter-spacing: 0.3px;">Sequencias Automaticas</div>' +
     '</div>' +
-    '<div class="stat-card" style="background: linear-gradient(135deg, #1a5f52 0%, #4fb3a3 100%); color: white;">' +
-      '<div class="stat-value">72%</div>' +
-      '<div class="stat-label" style="color: rgba(255,255,255,0.9);">Taxa Media de Resposta</div>' +
+    '<div class="stat-card" style="background: linear-gradient(135deg, #1a5f52 0%, #4fb3a3 100%); color: white; box-shadow: 0 4px 6px rgba(26, 95, 82, 0.3);">' +
+      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">72%</div>' +
+      '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px; letter-spacing: 0.3px;">Taxa Media de Resposta</div>' +
     '</div>' +
   '</div>';
 
