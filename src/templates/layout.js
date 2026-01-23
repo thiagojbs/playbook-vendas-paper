@@ -1,24 +1,115 @@
-// Template base para todas as páginas - Paper Vines Playbook
+// Template base para todas as páginas - Playbook Multi-tenant
 // Design baseado no SGP MCP Server
 
-export function layout(title, content, activeMenu = '') {
+// Funcao auxiliar para ajustar luminosidade de cores hex
+function adjustColor(hex, percent) {
+  // Remove # se presente
+  hex = hex.replace(/^#/, '');
+
+  // Parse RGB
+  let r = parseInt(hex.substr(0, 2), 16);
+  let g = parseInt(hex.substr(2, 2), 16);
+  let b = parseInt(hex.substr(4, 2), 16);
+
+  // Ajusta luminosidade
+  r = Math.min(255, Math.max(0, r + (percent * 255 / 100)));
+  g = Math.min(255, Math.max(0, g + (percent * 255 / 100)));
+  b = Math.min(255, Math.max(0, b + (percent * 255 / 100)));
+
+  // Converte de volta para hex
+  return '#' + [r, g, b].map(x => {
+    const hex = Math.round(x).toString(16);
+    return hex.length === 1 ? '0' + hex : hex;
+  }).join('');
+}
+
+// Configuracao padrao (Paper Vines) para retrocompatibilidade
+const DEFAULT_TENANT_CONFIG = {
+  id: 'papervines',
+  nome: 'Paper Vines',
+  nomeCompleto: 'Paper Vines Digital',
+  tema: {
+    corPrimaria: '#8b5cf6',
+    corSecundaria: '#10b981',
+    corAcento: '#f97316'
+  },
+  empresa: {
+    site: 'https://papervines.digital'
+  },
+  links: {
+    site: 'https://papervines.digital',
+    teste_gratuito: 'https://chat.papervines.digital/trial/sign-up',
+    propostas: 'https://www.figma.com/files/team/1082649090502569616/project/412083277/Vendas'
+  },
+  modulos: {
+    desempenho: true,
+    agentes: true
+  }
+};
+
+export function layout(title, content, activeMenu = '', tenantConfig = null) {
+  // Usar config do tenant ou padrao
+  const config = tenantConfig || DEFAULT_TENANT_CONFIG;
+  const tema = config.tema || DEFAULT_TENANT_CONFIG.tema;
+  const modulos = config.modulos || DEFAULT_TENANT_CONFIG.modulos;
+  const links = config.links || DEFAULT_TENANT_CONFIG.links;
+
+  // Extrair cores do tema
+  const corPrimaria = tema.corPrimaria || '#8b5cf6';
+  const corSecundaria = tema.corSecundaria || '#10b981';
+  const corAcento = tema.corAcento || '#f97316';
+
+  // Gerar cores derivadas (dark e light) baseadas na primaria
+  const corPrimariaDark = adjustColor(corPrimaria, -20);
+  const corPrimariaLight = adjustColor(corPrimaria, 30);
+
+  // Determinar logo e nome baseado no tenant
+  const empresaNome = config.nome || 'Paper Vines';
+  const empresaNomeCompleto = config.nomeCompleto || config.nome || 'Paper Vines Digital';
+
+  // Logo SVG dinamico ou URL externa
+  let logoUrl;
+  if (config.id === 'cabeloesaude') {
+    logoUrl = 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 50">
+      <defs>
+        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:${corPrimaria};stop-opacity:1" />
+          <stop offset="100%" style="stop-color:${corSecundaria};stop-opacity:1" />
+        </linearGradient>
+      </defs>
+      <circle cx="20" cy="25" r="18" fill="url(#grad1)"/>
+      <path d="M12 20 Q20 8 28 20 Q20 15 12 20" fill="white" opacity="0.9"/>
+      <path d="M14 25 Q20 18 26 25" stroke="white" stroke-width="2" fill="none"/>
+      <path d="M16 30 Q20 25 24 30" stroke="white" stroke-width="1.5" fill="none"/>
+      <text x="45" y="22" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="${corPrimaria}">Cabelo</text>
+      <text x="45" y="38" font-family="Inter, sans-serif" font-size="14" font-weight="400" fill="${corSecundaria}">&amp; Saúde</text>
+    </svg>`);
+  } else {
+    logoUrl = 'https://doc.papervines.digital/images/logo-paper.png';
+  }
+
+  // Links do footer baseados no tenant
+  const siteUrl = links.site || config.empresa?.site || '#';
+  const testeUrl = links.teste_gratuito || '#';
+  const propostasUrl = links.propostas || '#';
+
   return `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${title} - Playbook de Vendas</title>
+  <title>${title} - Playbook de Vendas | ${empresaNome}</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --primary: #8b5cf6;
-      --primary-dark: #7c3aed;
-      --primary-light: #a78bfa;
-      --secondary: #10b981;
-      --accent: #f97316;
+      --primary: ${corPrimaria};
+      --primary-dark: ${corPrimariaDark};
+      --primary-light: ${corPrimariaLight};
+      --secondary: ${corSecundaria};
+      --accent: ${corAcento};
       --bg-page: #f8fafc;
       --bg-card: #ffffff;
       --bg-dark: #1e293b;
@@ -865,7 +956,7 @@ export function layout(title, content, activeMenu = '') {
     <div class="header-content">
       <div class="logo">
         <a href="/" class="logo-link">
-          <img src="https://doc.papervines.digital/images/logo-paper.png" alt="Paper Vines" class="logo-img">
+          <img src="${logoUrl}" alt="${empresaNome}" class="logo-img">
           <div class="logo-subtitle">Playbook de Vendas</div>
         </a>
       </div>
@@ -890,20 +981,15 @@ export function layout(title, content, activeMenu = '') {
       <a href="/calculadora" class="nav-tab ${activeMenu === 'calculadora' ? 'active' : ''}">
         <i class="fas fa-calculator"></i> Calculadora
       </a>
-      <a href="/playbook/agentes" class="nav-tab ${activeMenu === 'planos' ? 'active' : ''}">
+      ${modulos.agentes !== false ? `<a href="/playbook/agentes" class="nav-tab ${activeMenu === 'planos' ? 'active' : ''}">
         <i class="fas fa-robot"></i> Agentes IA
-      </a>
+      </a>` : ''}
       <a href="/playbook/api" class="nav-tab ${activeMenu === 'api' ? 'active' : ''}" style="background: ${activeMenu === 'api' ? 'rgba(99, 102, 241, 0.15)' : 'rgba(99, 102, 241, 0.05)'}; border: 1px solid rgba(99, 102, 241, 0.3);">
         <i class="fas fa-code" style="color: #6366f1;"></i> <span style="color: #6366f1; font-weight: 600;">API & MCP</span>
       </a>
-      <!-- Link Clientes oculto ate implementar autenticacao
-      <a href="/clientes" class="nav-tab ${activeMenu === 'clientes' ? 'active' : ''}">
-        <i class="fas fa-users"></i> Clientes
-      </a>
-      -->
-      <a href="/desempenho" class="nav-tab ${activeMenu === 'desempenho' ? 'active' : ''}">
+      ${modulos.desempenho !== false ? `<a href="/desempenho" class="nav-tab ${activeMenu === 'desempenho' ? 'active' : ''}">
         <i class="fas fa-chart-line"></i> Desempenho
-      </a>
+      </a>` : ''}
       <a href="/desempenho/crm" class="nav-tab ${activeMenu === 'crm' ? 'active' : ''}" style="background: ${activeMenu === 'crm' ? 'rgba(16, 185, 129, 0.15)' : 'rgba(16, 185, 129, 0.05)'}; border: 1px solid rgba(16, 185, 129, 0.3);">
         <i class="fas fa-broadcast-tower" style="color: #10b981;"></i> <span style="color: #10b981; font-weight: 600;">CRM Live</span>
       </a>
@@ -915,12 +1001,12 @@ export function layout(title, content, activeMenu = '') {
   </main>
 
   <footer class="footer">
-    <div>Playbook de Vendas v1.0.0 | Desenvolvido para Paper Vines Digital</div>
-    <div>Powered by <a href="https://papervines.digital" target="_blank" style="color: var(--primary); text-decoration: none;">Paper Vines Digital</a></div>
+    <div>Playbook de Vendas v1.0.0 | Desenvolvido para ${empresaNomeCompleto}</div>
+    <div>Powered by <a href="${siteUrl}" target="_blank" style="color: var(--primary); text-decoration: none;">${empresaNome}</a></div>
     <div class="footer-links">
-      <a href="https://papervines.digital" target="_blank"><i class="fas fa-globe"></i> Site</a>
-      <a href="https://chat.papervines.digital/trial/sign-up" target="_blank"><i class="fas fa-vial"></i> Teste Gratuito</a>
-      <a href="https://www.figma.com/files/team/1082649090502569616/project/412083277/Vendas" target="_blank"><i class="fas fa-file-invoice"></i> Propostas</a>
+      <a href="${siteUrl}" target="_blank"><i class="fas fa-globe"></i> Site</a>
+      ${testeUrl !== '#' ? `<a href="${testeUrl}" target="_blank"><i class="fas fa-vial"></i> Teste Gratuito</a>` : ''}
+      ${propostasUrl !== '#' ? `<a href="${propostasUrl}" target="_blank"><i class="fas fa-file-invoice"></i> Propostas</a>` : ''}
     </div>
   </footer>
 

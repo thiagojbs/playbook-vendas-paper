@@ -1,9 +1,19 @@
 import { layout } from '../templates/layout.js';
 
-export function renderHome() {
+export function renderHome(tenantData = {}) {
+  // Extrair config do tenant
+  const config = tenantData.config || {};
+  const empresaNome = config.nome || 'Paper Vines';
+  const empresaNomeCompleto = config.nomeCompleto || config.nome || 'Paper Vines Digital';
+  const links = config.links || {};
+  const modulos = config.modulos || {};
+
+  // Verificar se tem conteudo especifico do tenant (ex: planos, dicas)
+  const playbook = tenantData.playbook || {};
+
   const content = `
     <!-- Hero Section -->
-    <div style="background: linear-gradient(135deg, var(--primary) 0%, #6366f1 50%, var(--accent) 100%); border-radius: 20px; padding: 40px; margin-bottom: 32px; position: relative; overflow: hidden;">
+    <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%); border-radius: 20px; padding: 40px; margin-bottom: 32px; position: relative; overflow: hidden;">
       <div style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
       <div style="position: absolute; bottom: -30px; left: 30%; width: 100px; height: 100px; background: rgba(255,255,255,0.08); border-radius: 50%;"></div>
       <div style="position: relative; z-index: 1;">
@@ -13,7 +23,7 @@ export function renderHome() {
           </div>
           <div>
             <h1 style="color: white; font-size: 32px; font-weight: 700; margin: 0;">Playbook de Vendas</h1>
-            <p style="color: rgba(255,255,255,0.8); margin: 4px 0 0 0; font-size: 16px;">Paper Vines - Sistema Comercial Completo</p>
+            <p style="color: rgba(255,255,255,0.8); margin: 4px 0 0 0; font-size: 16px;">${empresaNome} - Sistema Comercial Completo</p>
           </div>
         </div>
         <p style="color: rgba(255,255,255,0.9); font-size: 15px; max-width: 600px; line-height: 1.6; margin-bottom: 24px;">
@@ -306,5 +316,5 @@ export function renderHome() {
       </div>
     </div>
   `;
-  return layout('Visao Geral', content, 'home');
+  return layout('Visao Geral', content, 'home', config);
 }

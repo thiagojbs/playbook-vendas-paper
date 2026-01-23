@@ -1,6 +1,15 @@
 import { layout } from '../templates/layout.js';
 
-export function renderCalculadora() {
+export function renderCalculadora(tenantData = {}) {
+  const config = tenantData.config || {};
+  const tenantId = config.id || 'papervines';
+
+  // Se for cabeloesaude, renderizar calculadora especifica
+  if (tenantId === 'cabeloesaude') {
+    return renderCalculadoraCabeloeSaude(tenantData);
+  }
+
+  // Calculadora padrao (Paper Vines)
   const content = `
     <div class="page-header">
       <h1 class="page-title"><i class="fas fa-calculator"></i> Calculadora de Propostas</h1>
@@ -1107,5 +1116,528 @@ export function renderCalculadora() {
     </script>
   `;
 
-  return layout('Calculadora', content, 'calculadora');
+  return layout('Calculadora', content, 'calculadora', config);
+}
+
+// Calculadora especifica para Cabelo & Saude (Clinica de Tricologia)
+function renderCalculadoraCabeloeSaude(tenantData) {
+  const config = tenantData.config || {};
+  const precos = tenantData.precos || {};
+  const PRECOS = precos.PRECOS || {};
+  const FORMAS_PAGAMENTO = precos.FORMAS_PAGAMENTO || {};
+
+  const content = `
+    <div class="page-header">
+      <h1 class="page-title"><i class="fas fa-calculator"></i> Calculadora de Propostas</h1>
+      <p class="page-subtitle">Monte propostas personalizadas para tratamentos capilares</p>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="card" style="grid-column: span 2;">
+        <div class="card-header">
+          <h3 class="card-title"><i class="fas fa-sliders-h"></i> Configuracao do Tratamento</h3>
+        </div>
+
+        <form id="calculadoraForm">
+          <!-- AVALIACAO INICIAL -->
+          <div style="margin-bottom: 24px;">
+            <h4 style="color: var(--primary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-stethoscope"></i> Avaliacao Inicial
+            </h4>
+            <label class="checkbox-card" style="max-width: 400px;">
+              <input type="checkbox" id="avaliacao" onchange="calcularProposta()" checked>
+              <div class="checkbox-content">
+                <i class="fas fa-microscope"></i>
+                <div>
+                  <div class="checkbox-title">Avaliacao Tricologica Completa</div>
+                  <div class="checkbox-preco">R$ 350,00</div>
+                  <div style="font-size: 11px; color: var(--text-secondary);">Anamnese + tricoscopia + diagnostico</div>
+                </div>
+              </div>
+            </label>
+          </div>
+
+          <!-- PACOTE DE TRATAMENTO -->
+          <div style="margin-bottom: 24px;">
+            <h4 style="color: var(--secondary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-box"></i> Protocolo de Tratamento
+            </h4>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
+              <label class="plano-card" id="pacote_basico">
+                <input type="radio" name="pacote" value="basico" onchange="calcularProposta()">
+                <div class="plano-content">
+                  <div class="plano-nome">Basico</div>
+                  <div class="plano-preco">R$ 1.800<span>/3 meses</span></div>
+                  <div class="plano-canais">
+                    <span><i class="fas fa-calendar"></i> 6 sessoes</span>
+                    <span><i class="fas fa-bolt"></i> Laser</span>
+                  </div>
+                </div>
+              </label>
+              <label class="plano-card" id="pacote_intermediario">
+                <input type="radio" name="pacote" value="intermediario" onchange="calcularProposta()" checked>
+                <div class="plano-content">
+                  <div class="plano-nome">Intermediario</div>
+                  <div class="plano-preco">R$ 3.500<span>/6 meses</span></div>
+                  <div class="plano-canais">
+                    <span><i class="fas fa-calendar"></i> 12 sessoes</span>
+                    <span><i class="fas fa-bolt"></i> Laser</span>
+                    <span><i class="fas fa-syringe"></i> Micro</span>
+                  </div>
+                </div>
+              </label>
+              <label class="plano-card popular" id="pacote_avancado">
+                <input type="radio" name="pacote" value="avancado" onchange="calcularProposta()">
+                <div class="plano-content">
+                  <span class="badge badge-success" style="position: absolute; top: -10px; right: 10px; font-size: 10px;">RECOMENDADO</span>
+                  <div class="plano-nome">Avancado</div>
+                  <div class="plano-preco">R$ 5.500<span>/9 meses</span></div>
+                  <div class="plano-canais">
+                    <span><i class="fas fa-calendar"></i> 18 sessoes</span>
+                    <span><i class="fas fa-bolt"></i> Laser</span>
+                    <span><i class="fas fa-syringe"></i> Micro</span>
+                    <span><i class="fas fa-tint"></i> Intra</span>
+                  </div>
+                </div>
+              </label>
+              <label class="plano-card" id="pacote_premium">
+                <input type="radio" name="pacote" value="premium" onchange="calcularProposta()">
+                <div class="plano-content">
+                  <div class="plano-nome">Premium</div>
+                  <div class="plano-preco">R$ 8.000<span>/12 meses</span></div>
+                  <div class="plano-canais">
+                    <span><i class="fas fa-calendar"></i> 24 sessoes</span>
+                    <span><i class="fas fa-star"></i> Completo</span>
+                    <span><i class="fas fa-pills"></i> Suplementos</span>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- SESSOES EXTRAS -->
+          <div style="margin-bottom: 24px;">
+            <h4 style="color: var(--accent); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-plus-circle"></i> Sessoes Extras (opcional)
+            </h4>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label" style="font-size: 12px;">Laserterapia (R$ 180/sessao)</label>
+                <input type="number" class="form-input" id="extra_laser" value="0" min="0" max="10" onchange="calcularProposta()">
+              </div>
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label" style="font-size: 12px;">Microagulhamento (R$ 280/sessao)</label>
+                <input type="number" class="form-input" id="extra_micro" value="0" min="0" max="10" onchange="calcularProposta()">
+              </div>
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label" style="font-size: 12px;">Intradermoterapia (R$ 350/sessao)</label>
+                <input type="number" class="form-input" id="extra_intra" value="0" min="0" max="10" onchange="calcularProposta()">
+              </div>
+            </div>
+          </div>
+
+          <!-- HOME CARE -->
+          <div style="margin-bottom: 24px;">
+            <h4 style="color: #6366f1; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-home"></i> Kit Home Care
+            </h4>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+              <label class="checkbox-card">
+                <input type="radio" name="homecare" value="nenhum" onchange="calcularProposta()" checked>
+                <div class="checkbox-content">
+                  <i class="fas fa-times-circle" style="color: var(--text-secondary);"></i>
+                  <div>
+                    <div class="checkbox-title">Sem kit</div>
+                    <div class="checkbox-preco" style="color: var(--text-secondary);">R$ 0,00</div>
+                  </div>
+                </div>
+              </label>
+              <label class="checkbox-card">
+                <input type="radio" name="homecare" value="basico" onchange="calcularProposta()">
+                <div class="checkbox-content">
+                  <i class="fas fa-box"></i>
+                  <div>
+                    <div class="checkbox-title">Kit Basico</div>
+                    <div class="checkbox-preco">R$ 250,00</div>
+                    <div style="font-size: 10px; color: var(--text-secondary);">Shampoo + Tonico</div>
+                  </div>
+                </div>
+              </label>
+              <label class="checkbox-card">
+                <input type="radio" name="homecare" value="completo" onchange="calcularProposta()">
+                <div class="checkbox-content">
+                  <i class="fas fa-gift"></i>
+                  <div>
+                    <div class="checkbox-title">Kit Completo</div>
+                    <div class="checkbox-preco">R$ 380,00</div>
+                    <div style="font-size: 10px; color: var(--text-secondary);">Shampoo + Tonico + Suplemento</div>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- FORMA DE PAGAMENTO -->
+          <div style="margin-bottom: 24px;">
+            <h4 style="color: #10b981; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-credit-card"></i> Forma de Pagamento
+            </h4>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+              <label class="checkbox-card">
+                <input type="radio" name="pagamento" value="pix" onchange="calcularProposta()">
+                <div class="checkbox-content">
+                  <i class="fas fa-qrcode" style="color: #10b981;"></i>
+                  <div>
+                    <div class="checkbox-title">Pix</div>
+                    <div class="checkbox-preco" style="color: #10b981;">10% desconto</div>
+                  </div>
+                </div>
+              </label>
+              <label class="checkbox-card">
+                <input type="radio" name="pagamento" value="debito" onchange="calcularProposta()">
+                <div class="checkbox-content">
+                  <i class="fas fa-credit-card" style="color: #3b82f6;"></i>
+                  <div>
+                    <div class="checkbox-title">Debito</div>
+                    <div class="checkbox-preco" style="color: #3b82f6;">5% desconto</div>
+                  </div>
+                </div>
+              </label>
+              <label class="checkbox-card">
+                <input type="radio" name="pagamento" value="parcelado" onchange="calcularProposta()" checked>
+                <div class="checkbox-content">
+                  <i class="fas fa-calendar-alt" style="color: var(--accent);"></i>
+                  <div>
+                    <div class="checkbox-title">Parcelado</div>
+                    <div class="checkbox-preco" style="color: var(--accent);">ate 12x</div>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- RESUMO -->
+      <div class="card" style="position: sticky; top: 100px; height: fit-content;">
+        <div class="card-header">
+          <h3 class="card-title"><i class="fas fa-receipt"></i> Resumo</h3>
+        </div>
+
+        <div id="resumoItens"></div>
+
+        <div style="margin-bottom: 16px; padding: 16px; background: rgba(26, 95, 82, 0.1); border-radius: 8px; border-left: 4px solid var(--primary);">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="color: var(--text-secondary);">Avaliacao:</span>
+            <span id="resumoAvaliacao" style="font-weight: 600;">R$ 350,00</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="color: var(--text-secondary);">Protocolo:</span>
+            <span id="resumoProtocolo" style="font-weight: 600;">R$ 3.500,00</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="color: var(--text-secondary);">Sessoes extras:</span>
+            <span id="resumoExtras" style="font-weight: 600;">R$ 0,00</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="color: var(--text-secondary);">Home Care:</span>
+            <span id="resumoHomecare" style="font-weight: 600;">R$ 0,00</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 16px; padding: 16px; background: rgba(16, 185, 129, 0.1); border-radius: 8px; border-left: 4px solid #10b981;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="color: var(--text-secondary);">Subtotal:</span>
+            <span id="valorSubtotal" style="font-weight: 600;">R$ 3.850,00</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="color: var(--text-secondary);">Desconto:</span>
+            <span id="valorDesconto" style="font-weight: 600; color: #10b981;">- R$ 0,00</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px dashed var(--border);">
+            <span style="font-weight: 600;">TOTAL:</span>
+            <span id="valorTotal" style="font-weight: 700; color: var(--primary); font-size: 18px;">R$ 3.850,00</span>
+          </div>
+          <div id="parcelamentoInfo" style="font-size: 12px; color: var(--text-secondary); margin-top: 8px; text-align: center;"></div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="gerarProposta()">
+            <i class="fas fa-file-export"></i> Gerar Proposta
+          </button>
+          <button class="btn btn-secondary" style="width: 100%; justify-content: center;" onclick="copiarResumo()">
+            <i class="fas fa-copy"></i> Copiar Resumo
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="propostaModal">
+      <div class="modal" style="max-width: 700px;">
+        <div class="modal-header">
+          <h3 class="modal-title">Proposta de Tratamento</h3>
+          <button class="modal-close" onclick="closeModal('propostaModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div id="propostaContent" style="white-space: pre-wrap; font-family: 'Segoe UI', system-ui, sans-serif; background: linear-gradient(135deg, #1a5f52, #2d8a7a); color: #ffffff; padding: 24px; border-radius: 12px; max-height: 450px; overflow-y: auto; line-height: 1.6; font-size: 14px;"></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" onclick="closeModal('propostaModal')">Fechar</button>
+          <button class="btn btn-primary" onclick="copiarProposta()"><i class="fas fa-copy"></i> Copiar</button>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .plano-card {
+        display: block;
+        padding: 16px;
+        border: 2px solid var(--border);
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+      }
+      .plano-card:hover {
+        border-color: var(--primary);
+        transform: translateY(-2px);
+      }
+      .plano-card input { display: none; }
+      .plano-card input:checked + .plano-content { color: var(--primary); }
+      .plano-card:has(input:checked) {
+        border-color: var(--primary);
+        background: rgba(26, 95, 82, 0.05);
+        box-shadow: 0 4px 12px rgba(26, 95, 82, 0.15);
+      }
+      .plano-card.popular { border-color: var(--secondary); }
+      .plano-card.popular:has(input:checked) {
+        border-color: var(--secondary);
+        background: rgba(45, 138, 122, 0.05);
+      }
+      .plano-nome { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+      .plano-preco { font-size: 22px; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+      .plano-preco span { font-size: 12px; font-weight: 400; color: var(--text-secondary); }
+      .plano-canais { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+      .plano-canais span {
+        display: inline-flex; align-items: center; gap: 4px;
+        font-size: 10px; color: var(--text-secondary);
+        background: var(--bg-page); padding: 3px 6px; border-radius: 4px;
+      }
+      .checkbox-card {
+        display: flex; align-items: center; padding: 16px;
+        border: 1px solid var(--border); border-radius: 8px;
+        cursor: pointer; transition: all 0.2s;
+      }
+      .checkbox-card:hover { border-color: var(--primary); }
+      .checkbox-card input { display: none; }
+      .checkbox-card:has(input:checked) {
+        border-color: var(--secondary);
+        background: rgba(45, 138, 122, 0.05);
+      }
+      .checkbox-content { display: flex; align-items: center; gap: 12px; }
+      .checkbox-content i { font-size: 20px; color: var(--primary); }
+      .checkbox-title { font-weight: 600; font-size: 13px; }
+      .checkbox-preco { font-size: 12px; color: var(--secondary); font-weight: 600; }
+    </style>
+
+    <script>
+      const PACOTES = {
+        basico: { nome: 'Protocolo Basico', valor: 1800, duracao: '3 meses', sessoes: 6 },
+        intermediario: { nome: 'Protocolo Intermediario', valor: 3500, duracao: '6 meses', sessoes: 12 },
+        avancado: { nome: 'Protocolo Avancado', valor: 5500, duracao: '9 meses', sessoes: 18 },
+        premium: { nome: 'Protocolo Premium', valor: 8000, duracao: '12 meses', sessoes: 24 }
+      };
+
+      const SESSOES = {
+        laser: 180,
+        micro: 280,
+        intra: 350
+      };
+
+      const HOMECARE = {
+        nenhum: 0,
+        basico: 250,
+        completo: 380
+      };
+
+      function getPacoteSelecionado() {
+        const radios = document.getElementsByName('pacote');
+        for (let radio of radios) {
+          if (radio.checked) return radio.value;
+        }
+        return 'intermediario';
+      }
+
+      function getHomecareSelecionado() {
+        const radios = document.getElementsByName('homecare');
+        for (let radio of radios) {
+          if (radio.checked) return radio.value;
+        }
+        return 'nenhum';
+      }
+
+      function getPagamentoSelecionado() {
+        const radios = document.getElementsByName('pagamento');
+        for (let radio of radios) {
+          if (radio.checked) return radio.value;
+        }
+        return 'parcelado';
+      }
+
+      function calcularProposta() {
+        const pacoteKey = getPacoteSelecionado();
+        const pacote = PACOTES[pacoteKey];
+        const homecareKey = getHomecareSelecionado();
+        const pagamento = getPagamentoSelecionado();
+
+        // Avaliacao
+        const temAvaliacao = document.getElementById('avaliacao').checked;
+        const valorAvaliacao = temAvaliacao ? 350 : 0;
+
+        // Protocolo
+        const valorProtocolo = pacote.valor;
+
+        // Sessoes extras
+        const extraLaser = parseInt(document.getElementById('extra_laser').value) || 0;
+        const extraMicro = parseInt(document.getElementById('extra_micro').value) || 0;
+        const extraIntra = parseInt(document.getElementById('extra_intra').value) || 0;
+        const valorExtras = (extraLaser * SESSOES.laser) + (extraMicro * SESSOES.micro) + (extraIntra * SESSOES.intra);
+
+        // Home care
+        const valorHomecare = HOMECARE[homecareKey];
+
+        // Subtotal
+        const subtotal = valorAvaliacao + valorProtocolo + valorExtras + valorHomecare;
+
+        // Desconto
+        let desconto = 0;
+        if (pagamento === 'pix') {
+          desconto = subtotal * 0.10;
+        } else if (pagamento === 'debito') {
+          desconto = subtotal * 0.05;
+        }
+
+        const total = subtotal - desconto;
+
+        // Atualizar UI
+        document.getElementById('resumoAvaliacao').textContent = formatCurrency(valorAvaliacao);
+        document.getElementById('resumoProtocolo').textContent = formatCurrency(valorProtocolo);
+        document.getElementById('resumoExtras').textContent = formatCurrency(valorExtras);
+        document.getElementById('resumoHomecare').textContent = formatCurrency(valorHomecare);
+        document.getElementById('valorSubtotal').textContent = formatCurrency(subtotal);
+        document.getElementById('valorDesconto').textContent = '- ' + formatCurrency(desconto);
+        document.getElementById('valorTotal').textContent = formatCurrency(total);
+
+        // Parcelamento
+        if (pagamento === 'parcelado') {
+          const parcela12x = total / 12;
+          document.getElementById('parcelamentoInfo').textContent = 'ou 12x de ' + formatCurrency(parcela12x);
+        } else {
+          document.getElementById('parcelamentoInfo').textContent = pagamento === 'pix' ? '10% de desconto aplicado' : '5% de desconto aplicado';
+        }
+
+        // Itens resumo
+        let itens = [];
+        if (extraLaser > 0) itens.push(extraLaser + 'x Laserterapia: ' + formatCurrency(extraLaser * SESSOES.laser));
+        if (extraMicro > 0) itens.push(extraMicro + 'x Microagulhamento: ' + formatCurrency(extraMicro * SESSOES.micro));
+        if (extraIntra > 0) itens.push(extraIntra + 'x Intradermoterapia: ' + formatCurrency(extraIntra * SESSOES.intra));
+
+        document.getElementById('resumoItens').innerHTML = itens.length > 0 ?
+          '<div style="padding: 12px; background: var(--bg-page); border-radius: 8px; margin-bottom: 8px;">' +
+          itens.map(i => '<div style="padding: 4px 0; font-size: 12px; color: var(--text-secondary);">' + i + '</div>').join('') +
+          '</div>' : '';
+      }
+
+      function gerarProposta() {
+        const pacoteKey = getPacoteSelecionado();
+        const pacote = PACOTES[pacoteKey];
+        const temAvaliacao = document.getElementById('avaliacao').checked;
+        const homecareKey = getHomecareSelecionado();
+        const pagamento = getPagamentoSelecionado();
+        const total = document.getElementById('valorTotal').textContent;
+
+        let proposta = '💆 *PROPOSTA DE TRATAMENTO CAPILAR*\\n';
+        proposta += '━━━━━━━━━━━━━━━━━━━━━━━\\n\\n';
+
+        proposta += '🏥 *CABELO & SAUDE*\\n';
+        proposta += 'Clinica de Tricologia\\n\\n';
+
+        if (temAvaliacao) {
+          proposta += '🔬 *AVALIACAO TRICOLOGICA*\\n';
+          proposta += '▸ Anamnese completa\\n';
+          proposta += '▸ Tricoscopia digital\\n';
+          proposta += '▸ Diagnostico e proposta\\n\\n';
+        }
+
+        proposta += '📦 *PROTOCOLO SELECIONADO*\\n';
+        proposta += '▸ ' + pacote.nome.toUpperCase() + '\\n';
+        proposta += '▸ Duracao: ' + pacote.duracao + '\\n';
+        proposta += '▸ Total de sessoes: ' + pacote.sessoes + '\\n\\n';
+
+        // Extras
+        const extraLaser = parseInt(document.getElementById('extra_laser').value) || 0;
+        const extraMicro = parseInt(document.getElementById('extra_micro').value) || 0;
+        const extraIntra = parseInt(document.getElementById('extra_intra').value) || 0;
+
+        if (extraLaser > 0 || extraMicro > 0 || extraIntra > 0) {
+          proposta += '✨ *SESSOES ADICIONAIS*\\n';
+          if (extraLaser > 0) proposta += '▸ ' + extraLaser + 'x Laserterapia\\n';
+          if (extraMicro > 0) proposta += '▸ ' + extraMicro + 'x Microagulhamento\\n';
+          if (extraIntra > 0) proposta += '▸ ' + extraIntra + 'x Intradermoterapia\\n';
+          proposta += '\\n';
+        }
+
+        if (homecareKey !== 'nenhum') {
+          proposta += '🏠 *KIT HOME CARE*\\n';
+          proposta += '▸ Kit ' + (homecareKey === 'completo' ? 'Completo' : 'Basico') + ' incluso\\n\\n';
+        }
+
+        proposta += '━━━━━━━━━━━━━━━━━━━━━━━\\n\\n';
+
+        proposta += '💰 *INVESTIMENTO*\\n\\n';
+        proposta += '▸ Total: *' + total + '*\\n';
+
+        if (pagamento === 'pix') {
+          proposta += '▸ 🎁 10% desconto no Pix\\n';
+        } else if (pagamento === 'debito') {
+          proposta += '▸ 🎁 5% desconto no debito\\n';
+        } else {
+          const parcela = parseFloat(total.replace(/[^0-9,]/g, '').replace(',', '.')) / 12;
+          proposta += '▸ ou 12x de R$ ' + parcela.toFixed(2).replace('.', ',') + '\\n';
+        }
+
+        proposta += '\\n━━━━━━━━━━━━━━━━━━━━━━━\\n\\n';
+
+        proposta += '🌿 Cuidar dos seus cabelos e\\n';
+        proposta += '   investir na sua autoestima!\\n\\n';
+
+        proposta += '⏰ *Validade: 7 dias*\\n\\n';
+
+        proposta += '━━━━━━━━━━━━━━━━━━━━━━━\\n';
+        proposta += '💚 Cabelo & Saude | cabeloesaude.com.br';
+
+        document.getElementById('propostaContent').textContent = proposta.replace(/\\\\n/g, '\\n');
+        openModal('propostaModal');
+      }
+
+      function copiarProposta() {
+        const proposta = document.getElementById('propostaContent').textContent;
+        navigator.clipboard.writeText(proposta).then(() => { showToast('Proposta copiada!'); });
+      }
+
+      function copiarResumo() {
+        const pacoteKey = getPacoteSelecionado();
+        const pacote = PACOTES[pacoteKey];
+        const total = document.getElementById('valorTotal').textContent;
+        const resumo = 'Protocolo: ' + pacote.nome + '\\nTotal: ' + total;
+        navigator.clipboard.writeText(resumo).then(() => { showToast('Resumo copiado!'); });
+      }
+
+      // Inicializar
+      calcularProposta();
+    </script>
+  `;
+
+  return layout('Calculadora', content, 'calculadora', config);
 }

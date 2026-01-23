@@ -1,12 +1,45 @@
 import { layout } from '../templates/layout.js';
-import { PROCESSO_VENDAS, SCRIPTS, OBJECOES, CHECKLIST_COMERCIAL, CHECKLIST_CONTRATO, LINKS_UTEIS } from '../data/playbook.js';
+// Imports padrao (Paper Vines) - fallback
+import { PROCESSO_VENDAS as PV_PROCESSO, SCRIPTS as PV_SCRIPTS, OBJECOES as PV_OBJECOES, CHECKLIST_COMERCIAL as PV_CHECKLIST_COMERCIAL, CHECKLIST_CONTRATO as PV_CHECKLIST_CONTRATO, LINKS_UTEIS as PV_LINKS } from '../data/playbook.js';
 import { PLANOS_CHATBOTS, PLANOS_TELECOM, PLANOS_IA } from '../data/precos.js';
-import { OBJECOES_EXPANDIDAS, TECNICAS_GERAIS, GATILHOS_MENTAIS, DIFERENCIAIS, ESTATISTICAS_PAPERVINES } from '../data/objecoes.js';
-import { ETAPAS_FUNIL, SCRIPTS_STATS, SEQUENCIAS_COMPLETAS, DICAS_COMUNICACAO, TEMPLATES_SEGMENTO } from '../data/scripts.js';
+import { OBJECOES_EXPANDIDAS as PV_OBJECOES_EXPANDIDAS, TECNICAS_GERAIS as PV_TECNICAS, GATILHOS_MENTAIS as PV_GATILHOS, DIFERENCIAIS as PV_DIFERENCIAIS, ESTATISTICAS_PAPERVINES } from '../data/objecoes.js';
+import { ETAPAS_FUNIL as PV_ETAPAS, SCRIPTS_STATS as PV_SCRIPTS_STATS, SEQUENCIAS_COMPLETAS as PV_SEQUENCIAS, DICAS_COMUNICACAO as PV_DICAS, TEMPLATES_SEGMENTO as PV_TEMPLATES } from '../data/scripts.js';
 import { POLITICAS_WHATSAPP, POLITICAS_META_ANUNCIOS, PRECOS_WHATSAPP, REQUISITOS_API_EXPANDIDOS, FLUXO_IMPLANTACAO, PERGUNTAS_FREQUENTES, DIFERENCIAIS_PAPERVINES, LINKS_IMPORTANTES } from '../data/playbook-expandido.js';
 import { AGENTES_INFO, TIPOS_AGENTES, AGENTES_EXEMPLOS, VERTICAIS, METRICAS_GERAIS, COMPARATIVO_HUMANO, FERRAMENTAS_DISPONIVEIS } from '../data/agentes.js';
 
-export function renderPlaybook(path) {
+// Variaveis globais para o tenant atual
+let PROCESSO_VENDAS, SCRIPTS, OBJECOES, CHECKLIST_COMERCIAL, CHECKLIST_CONTRATO, LINKS_UTEIS;
+let OBJECOES_EXPANDIDAS, TECNICAS_GERAIS, GATILHOS_MENTAIS, DIFERENCIAIS;
+let ETAPAS_FUNIL, SCRIPTS_STATS, SEQUENCIAS_COMPLETAS, DICAS_COMUNICACAO, TEMPLATES_SEGMENTO;
+let tenantConfig = null;
+
+export function renderPlaybook(path, tenantData = {}) {
+  // Configurar dados do tenant
+  tenantConfig = tenantData.config || {};
+
+  // Usar dados do tenant se disponiveis, senao fallback para Paper Vines
+  const playbook = tenantData.playbook || {};
+  const objecoes = tenantData.objecoes || {};
+  const scripts = tenantData.scripts || {};
+
+  PROCESSO_VENDAS = playbook.PROCESSO_VENDAS || PV_PROCESSO;
+  SCRIPTS = playbook.SCRIPTS || PV_SCRIPTS;
+  OBJECOES = playbook.OBJECOES || PV_OBJECOES;
+  CHECKLIST_COMERCIAL = playbook.CHECKLIST_COMERCIAL || PV_CHECKLIST_COMERCIAL;
+  CHECKLIST_CONTRATO = playbook.CHECKLIST_CONTRATO || PV_CHECKLIST_CONTRATO;
+  LINKS_UTEIS = playbook.LINKS_UTEIS || PV_LINKS;
+
+  OBJECOES_EXPANDIDAS = objecoes.OBJECOES_EXPANDIDAS || PV_OBJECOES_EXPANDIDAS;
+  TECNICAS_GERAIS = objecoes.TECNICAS_GERAIS || PV_TECNICAS;
+  GATILHOS_MENTAIS = objecoes.GATILHOS_MENTAIS || PV_GATILHOS;
+  DIFERENCIAIS = objecoes.DIFERENCIAIS || PV_DIFERENCIAIS;
+
+  ETAPAS_FUNIL = scripts.ETAPAS_FUNIL || PV_ETAPAS;
+  SCRIPTS_STATS = scripts.SCRIPTS_STATS || PV_SCRIPTS_STATS;
+  SEQUENCIAS_COMPLETAS = scripts.SEQUENCIAS_COMPLETAS || PV_SEQUENCIAS;
+  DICAS_COMUNICACAO = scripts.DICAS_COMUNICACAO || PV_DICAS;
+  TEMPLATES_SEGMENTO = scripts.TEMPLATES_SEGMENTO || PV_TEMPLATES;
+
   let content = '';
   let activeMenu = 'playbook';
   if (path.includes('/scripts')) { content = renderScripts(); activeMenu = 'scripts'; }
@@ -14,7 +47,7 @@ export function renderPlaybook(path) {
   else if (path.includes('/agentes') || path.includes('/planos')) { content = renderAgentes(); activeMenu = 'planos'; }
   else if (path.includes('/api') || path.includes('/mcp')) { content = renderAPIDocumentacao(path); activeMenu = 'api'; }
   else { content = renderPlaybookMain(); }
-  return layout('Playbook', content, activeMenu);
+  return layout('Playbook', content, activeMenu, tenantConfig);
 }
 
 function renderPlaybookMain() {

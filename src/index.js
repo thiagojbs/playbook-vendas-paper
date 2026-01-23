@@ -7,11 +7,15 @@ import { renderContratos } from './pages/contratos.js';
 import { renderDesempenho } from './pages/desempenho.js';
 import { handleAPI } from './api/index.js';
 import { handleRAGRoutes } from './api/rag/index.js';
+import { getTenantFromRequest, loadTenantConfig, loadAllTenantModules } from './data/tenant-loader.js';
 
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const path = url.pathname;
+
+    // Detectar tenant da request
+    const tenantId = getTenantFromRequest(request);
 
     const corsHeaders = {
       'Access-Control-Allow-Origin': '*',
@@ -24,6 +28,9 @@ export default {
     }
 
     try {
+      // Carregar dados do tenant
+      const tenantData = await loadAllTenantModules(tenantId);
+      const tenantConfig = tenantData.config;
       // Rotas RAG e MCP (nova funcionalidade)
       if (path.startsWith('/api/rag/') || path.startsWith('/mcp') || path.startsWith('/index/')) {
         const ragResponse = await handleRAGRoutes(request, env, path);
@@ -66,28 +73,28 @@ export default {
       let html;
       switch (true) {
         case path === '/' || path === '/home':
-          html = renderHome();
+          html = renderHome(tenantData);
           break;
         case path === '/playbook' || path.startsWith('/playbook/'):
-          html = renderPlaybook(path);
+          html = renderPlaybook(path, tenantData);
           break;
         case path === '/calculadora':
-          html = renderCalculadora();
+          html = renderCalculadora(tenantData);
           break;
         case path === '/clientes' || path.startsWith('/clientes/'):
-          html = await renderClientes(env);
+          html = await renderClientes(env, tenantData);
           break;
         case path === '/propostas' || path.startsWith('/propostas/'):
-          html = await renderPropostas(env);
+          html = await renderPropostas(env, tenantData);
           break;
         case path === '/contratos' || path.startsWith('/contratos/'):
-          html = await renderContratos(env);
+          html = await renderContratos(env, tenantData);
           break;
         case path === '/desempenho' || path.startsWith('/desempenho/'):
-          html = await renderDesempenho(env, path);
+          html = await renderDesempenho(env, path, tenantData);
           break;
         default:
-          html = renderHome();
+          html = renderHome(tenantData);
       }
 
       return new Response(html, {
