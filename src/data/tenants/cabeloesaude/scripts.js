@@ -711,3 +711,180 @@ Trabalhamos com:
 Quer conhecer as opcoes?`
   }
 };
+
+// ========================================
+// SCRIPTS - Formato compativel com Paper Vines
+// Para compatibilidade com a pagina de scripts
+// ========================================
+
+export const SCRIPTS = {
+  prospeccao: [
+    {
+      titulo: 'Resposta Inicial - Instagram/WhatsApp',
+      mensagem: `Ola! Tudo bem? 💚
+
+Que bom que voce nos procurou!
+
+Aqui na Cabelo & Saude, a Franciele - biomedica especialista em tricologia - trata a *causa* do problema capilar, nao apenas os sintomas.
+
+Me conta um pouquinho: ha quanto tempo voce percebeu a queda ou afinamento dos fios?`
+    },
+    {
+      titulo: 'Resposta para Lead de Anuncio',
+      mensagem: `Ola! Que bom que voce se interessou! 💚
+
+Aqui na Cabelo & Saude fazemos diferente:
+❌ Nao dependemos so de Minoxidil e Finasterida
+✅ Investigamos a raiz do problema
+✅ Protocolo personalizado pro seu caso
+
+Posso te fazer algumas perguntas para entender melhor sua situacao?`
+    },
+    {
+      titulo: 'Resposta para Indicacao',
+      mensagem: `Ola [Nome]! Que bom falar com voce! 💚
+
+Fico feliz que alguem de confianca tenha indicado a Cabelo & Saude!
+
+Me conta: como esta a situacao hoje com seus cabelos?`
+    }
+  ],
+
+  teste_gratuito: {
+    titulo: 'Convite para Avaliacao',
+    mensagem: `Quer entender de verdade o que esta causando sua queda capilar?
+
+A avaliacao tricologica inclui:
+✅ Anamnese completa
+✅ Tricoscopia digital (exame do couro cabeludo)
+✅ Diagnostico personalizado
+✅ Proposta de tratamento
+
+💚 Agende sua avaliacao
+📱 Responda essa mensagem ou clique no link:
+[LINK_AGENDAMENTO]
+
+Cabelo & Saude - Clinica de Tricologia
+www.cabeloesaude.com.br`
+  },
+
+  followup: [
+    {
+      titulo: 'Follow-up 24h',
+      mensagem: `Ola [Nome]! Tudo bem? 💚
+
+Conversamos ontem sobre sua situacao capilar.
+
+Conseguiu pensar sobre a avaliacao tricologica?
+
+Lembre-se: quanto antes investigarmos, mais opcoes de tratamento teremos.
+
+Posso agendar um horario pra voce?`
+    },
+    {
+      titulo: 'Follow-up 3 dias',
+      mensagem: `Oi [Nome], tudo bem?
+
+Queria saber como voce esta.
+
+Sei que decidir sobre tratamento capilar nao e facil. Se tiver alguma duvida, pode me perguntar!
+
+Estou aqui pra ajudar 💚`
+    },
+    {
+      titulo: 'Follow-up 7 dias',
+      mensagem: `[Nome], como vai? 💚
+
+Faz uma semana que conversamos. Queria saber se posso ajudar com mais alguma informacao.
+
+Se o momento nao for agora, tudo bem! Mas saiba que estamos aqui quando precisar.
+
+Cuide-se! 🌿`
+    }
+  ],
+
+  demonstracao: [
+    {
+      titulo: 'Apresentacao dos Tratamentos',
+      mensagem: `[Nome], baseado na sua avaliacao, vou explicar as opcoes de tratamento:
+
+📋 *Seu diagnostico:*
+[DIAGNOSTICO]
+
+💊 *Protocolo recomendado:*
+[PROTOCOLO]
+
+📅 *Frequencia:*
+[FREQUENCIA]
+
+💰 *Investimento:*
+[VALOR]
+
+Posso explicar cada etapa em detalhes?`
+    }
+  ],
+
+  objecao_preco: [
+    {
+      titulo: 'Contornar - Parcelamento',
+      mensagem: `Entendo sua preocupacao com o investimento, [Nome].
+
+Pensando nisso, oferecemos:
+💳 Parcelamento em ate 12x no cartao
+💵 Desconto de 10% no Pix a vista
+📦 Pacotes com valores reduzidos
+
+O importante e comecar o quanto antes - os foliculos tem prazo de validade.
+
+Qual opcao se encaixa melhor pra voce?`
+    },
+    {
+      titulo: 'Contornar - Valor vs Custo',
+      mensagem: `[Nome], entendo que e um investimento.
+
+Mas me deixa fazer uma reflexao:
+
+Quanto voce ja gastou com:
+❌ Shampoos "milagrosos"
+❌ Vitaminas que nao funcionaram
+❌ Remedios sem acompanhamento
+
+Aqui voce investe uma vez, com protocolo PERSONALIZADO pra sua causa especifica.
+
+Faz sentido pra voce?`
+    }
+  ],
+
+  fechamento: [
+    {
+      titulo: 'Confirmacao de Inicio',
+      mensagem: `Que otimo, [Nome]! 🎉💚
+
+Estou muito feliz que voce decidiu cuidar da saude dos seus cabelos!
+
+Para agendar sua primeira sessao, preciso confirmar:
+
+📅 Melhor dia: [OPCOES]
+⏰ Melhor horario: [OPCOES]
+💳 Forma de pagamento: Pix ou cartao?
+
+Assim que confirmar, ja reservo sua agenda!`
+    },
+    {
+      titulo: 'Boas-vindas',
+      mensagem: `Seja muito bem-vindo(a) a Cabelo & Saude, [Nome]! 💚🌿
+
+Sua primeira sessao esta confirmada:
+📅 Data: [DATA]
+⏰ Horario: [HORA]
+📍 Local: [ENDERECO]
+
+*Orientacoes:*
+[ORIENTACOES]
+
+Qualquer duvida, estou por aqui!
+
+Vamos juntos recuperar a saude dos seus cabelos! 🌱`
+    }
+  ]
+};
