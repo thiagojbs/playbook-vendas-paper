@@ -1,0 +1,170 @@
+[
+  {
+    "id": "objecao-preco-esta-muito-caro",
+    "category": "objecoes",
+    "title": "Esta muito caro",
+    "subcategory": "Preco e Investimento",
+    "text": "Objecao: \"Esta muito caro\"\nCategoria: Preco e Investimento\n\nContexto: Paciente acha o valor do tratamento alto",
+    "tenant": "cabeloesaude"
+  },
+  {
+    "id": "objecao-confianca-ja-tentei-tudo-e-nada-funcionou",
+    "category": "objecoes",
+    "title": "Ja tentei tudo e nada funcionou",
+    "subcategory": "Confianca e Credibilidade",
+    "text": "Objecao: \"Ja tentei tudo e nada funcionou\"\nCategoria: Confianca e Credibilidade\n\nContexto: Paciente frustrado com tratamentos anteriores",
+    "tenant": "cabeloesaude"
+  },
+  {
+    "id": "objecao-tempo-nao-tenho-tempo-para-fazer-tratamento",
+    "category": "objecoes",
+    "title": "Nao tenho tempo para fazer tratamento",
+    "subcategory": "Tempo e Comprometimento",
+    "text": "Objecao: \"Nao tenho tempo para fazer tratamento\"\nCategoria: Tempo e Comprometimento\n\nContexto: Paciente com agenda apertada",
+    "tenant": "cabeloesaude"
+  },
+  {
+    "id": "objecao-tratamento-minoxidil-finasterida-ja-resolvem-nao-preciso-diss",
+    "category": "objecoes",
+    "title": "Minoxidil/Finasterida ja resolvem, nao preciso disso",
+    "subcategory": "Duvidas sobre Tratamento",
+    "text": "Objecao: \"Minoxidil/Finasterida ja resolvem, nao preciso disso\"\nCategoria: Duvidas sobre Tratamento\n\nContexto: Paciente acredita que medicamentos bastam",
+    "tenant": "cabeloesaude"
+  },
+  {
+    "id": "objecao-decisao-preciso-falar-com-meu-marido-esposa",
+    "category": "objecoes",
+    "title": "Preciso falar com meu marido/esposa",
+    "subcategory": "Decisao e Autoridade",
+    "text": "Objecao: \"Preciso falar com meu marido/esposa\"\nCategoria: Decisao e Autoridade\n\nContexto: Paciente quer consultar parceiro(a)",
+    "tenant": "cabeloesaude"
+  },
+  {
+    "id": "tecnica-0",
+    "category": "objecoes",
+    "title": "Tecnica: LAER - Ouvir, Reconhecer, Explorar, Responder",
+    "subcategory": "tecnicas",
+    "text": "Tecnica de Negociacao: LAER - Ouvir, Reconhecer, Explorar, Responder\nFramework classico para tratamento de objecoes\n\nPassos:\n1. Listen (Ouvir): Deixe o paciente falar sem interromper\n2. Acknowledge (Reconhecer): Valide a preocupacao dele\n3. Explore (Explorar): Faca perguntas para entender a raiz\n4. Respond (Responder): Ofereca solucao especifica",
+    "tenant": "cabeloesaude"
+  },
+  {
+    "id": "tecnica-1",
+    "category": "objecoes",
+    "title": "Tecnica: Feel, Felt, Found",
+    "subcategory": "tecnicas",
+    "text": "Tecnica de Negociacao: Feel, Felt, Found\nTecnica de empatia e prova social\n\nPassos:\n1. Feel: Entendo como voce se sente...\n2. Felt: Outros pacientes tambem sentiram isso...\n3. Found: O que eles descobriram foi que...",
+    "tenant": "cabeloesaude"
+  },
+  {
+    "id": "tecnica-2",
+    "category": "objecoes",
+    "title": "Tecnica: Validacao + Educacao",
+    "subcategory": "tecnicas",
+    "text": "Tecnica de Negociacao: Validacao + Educacao\nEspecifica para saude - valida e ensina\n\nPassos:\n1. Valide a preocupacao do paciente\n2. Eduque com informacao clinica\n3. Mostre como isso se aplica ao caso dele\n4. Ofereca proximo passo claro",
+    "tenant": "cabeloesaude"
+  },
+  {
+    "id": "gatilhos-mentais",
+    "category": "objecoes",
+    "title": "Gatilhos Mentais para Vendas",
+    "subcategory": "gatilhos",
+    "text": "Gatilhos Mentais para usar em vendas:\n\nProgressao Natural: Queda capilar e progressiva - tratar cedo e melhor. Exemplo: \"Foliculos que hoje estao adormecidos podem se fechar definitivamente.\"\n\nAutoridade: Biomedica especialista com 7 anos de experiencia. Exemplo: \"Franciele ja tratou mais de 2.000 pacientes com 92% de satisfacao.\"\n\nProva Social: Resultados de outros pacientes (com autorizacao). Exemplo: \"Posso te mostrar fotos de antes/depois de pacientes com caso similar.\"\n\nDiferenciacao: Tratamos a causa, nao o sintoma. Exemplo: \"Diferente de quem so passa Minoxidil, nos investigamos POR QUE voce esta perdendo cabelo.\"\n\nHonestidade: Nem sempre prometemos resultados milagrosos. Exemplo: \"Se apos a avaliacao eu ver que nao ha o que fazer, serei honesta contigo.\"\n\nReciprocidade: Oferecer valor antes de pedir decisao. Exemplo: \"Posso te enviar alguns conteudos sobre cuidados capilares enquanto decide.\"",
+    "tenant": "cabeloesaude"
+  },
+  {
+    "id": "diferenciais-papervines",
+    "category": "playbook",
+    "title": "Diferenciais Paper Vines",
+    "subcategory": "diferenciais",
+    "text": "Diferenciais da Paper Vines:\n\n- Tratamos a Causa: Investigamos por que voce esta perdendo cabelo, nao apenas tratamos o sintoma.\n- Biomedica Especialista: Franciele e biomedica com especializacao em tricologia e 7 anos de experiencia.\n- Sem Paliativos: Nao dependemos apenas de Minoxidil e Finasterida - vamos alem.\n- Diagnostico Preciso: Usamos tricoscopia e exames complementares para entender seu caso.\n- Protocolo Personalizado: Cada paciente recebe tratamento especifico para sua condicao.\n- Resultados Reais: Mais de 2.000 pacientes tratados com 92% de satisfacao.",
+    "tenant": "cabeloesaude"
+  },
+  {
+    "id": "script-captacao-capt-1",
+    "category": "scripts",
+    "title": "Resposta Inicial - Instagram/WhatsApp",
+    "subcategory": "Captacao",
+    "text": "Script: Resposta Inicial - Instagram/WhatsApp\nEtapa do funil: Captacao\nTipo: principal\n\nContexto: Lead entra em contato pela primeira vez\n\nMensagem:\nOla! Sou da equipe da Cabelo & Saude 💚\n\nAqui a Franciele, biomedica tricologista, trata queda capilar de forma diferente - investigando a causa, nao so tratando sintoma.\n\nComo posso te ajudar?\n\nVariacoes disponiveis:\n- undefined: undefined\n- undefined: undefined\n- undefined: undefined\n- undefined: undefined\n- undefined: undefined\n- undefined: undefined\n- undefined: undefined\n- undefined: undefined\n\nDica: Seja acolhedor - muitos pacientes sofrem emocionalmente com queda capilar",
+    "tenant": "cabeloesaude"
+  },
+  {
+    "id": "script-qualificacao-qual-1",
+    "category": "scripts",
+    "title": "Perguntas de Qualificacao Completas",
+    "subcategory": "Qualificacao",
+    "text": "Script: Perguntas de Qualificacao Completas\nEtapa do funil: Qualificacao\nTipo: principal\n\nContexto: Apos primeiro contato, coletar informacoes\n\nMensagem:\nMe conta rapidinho:\n- Ha quanto tempo percebeu a queda?\n- Ja tentou algum tratamento?\n- Qual sua maior preocupacao hoje?\n\nVariacoes disponiveis:\n- undefined: undefined\n- undefined: undefined\n\nDica: Faca perguntas com empatia, nao como interrogatorio",
+    "tenant": "cabeloesaude"
+  },
+  {
+    "id": "script-negociacao-neg-1",
+    "category": "scripts",
+    "title": "Tratamento de Objecao - Preco",
+    "subcategory": "Negociacao",
+    "text": "Script: Tratamento de Objecao - Preco\nEtapa do funil: Negociacao\nTipo: objecao\n\nContexto: Paciente acha o tratamento caro\n\nMensagem:\nEntendo sua preocupacao com o investimento, [Nome].\n\nMas deixa eu te fazer uma pergunta:\n\n*Quanto voce ja gastou em tratamentos que nao resolveram?*\n- Minoxidil: R$ 80-150/mes\n- Shampoos antiqueda: R$ 50-100/mes\n- Vitaminas: R$ 100-200/mes\n\nEm 1-2 anos, muita gente gasta R$ 3.000-6.000... e continua perdendo cabelo.\n\n*Nosso diferencial:*\n- Tratamento com duracao definida (nao eterno)\n- Trata a causa, nao apenas sintoma\n- Resultados duradouros\n\nTemos parcelamento em ate 12x. Quer que eu monte uma proposta que caiba no seu orcamento?\n\nVariacoes disponiveis:\n- undefined: undefined\n\nDica: Foque no valor e custo acumulado de alternativas",
+    "tenant": "cabeloesaude"
+  },
+  {
+    "id": "script-fechamento-fech-1",
+    "category": "scripts",
+    "title": "Coleta de Dados",
+    "subcategory": "Fechamento",
+    "text": "Script: Coleta de Dados\nEtapa do funil: Fechamento\nTipo: principal\n\nContexto: Paciente confirmou que quer comecar\n\nMensagem:\nQue otimo, [Nome]! 🎉💚\n\nEstou muito feliz que voce decidiu cuidar da saude dos seus cabelos!\n\nPara dar inicio ao seu tratamento, preciso de alguns dados:\n\n👤 Nome completo:\n📅 Data de nascimento:\n🆔 CPF:\n📧 Email:\n📱 Telefone:\n🏠 Endereco completo:\n\n*Forma de pagamento:* Pix ou cartao em [X]x?\n\n*Primeira sessao disponivel:* [DATA] as [HORA]\n\nAssim que confirmar os dados, ja agendo sua sessao!\n\nVariacoes disponiveis:\n- undefined: undefined\n\nDica: Seja objetivo e celebre a decisao",
+    "tenant": "cabeloesaude"
+  },
+  {
+    "id": "sequencia-0",
+    "category": "scripts",
+    "title": "Sequencia: Sequencia de Captacao",
+    "subcategory": "sequencias",
+    "text": "Sequencia de Follow-up: Sequencia de Captacao\nDo primeiro contato ate avaliacao agendada\n\nEtapas:\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined",
+    "tenant": "cabeloesaude"
+  },
+  {
+    "id": "sequencia-1",
+    "category": "scripts",
+    "title": "Sequencia: Sequencia Pos-Avaliacao",
+    "subcategory": "sequencias",
+    "text": "Sequencia de Follow-up: Sequencia Pos-Avaliacao\nDa avaliacao ate fechamento\n\nEtapas:\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined",
+    "tenant": "cabeloesaude"
+  },
+  {
+    "id": "sequencia-2",
+    "category": "scripts",
+    "title": "Sequencia: Sequencia de Tratamento",
+    "subcategory": "sequencias",
+    "text": "Sequencia de Follow-up: Sequencia de Tratamento\nAcompanhamento durante tratamento\n\nEtapas:\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined\nDia undefined: undefined",
+    "tenant": "cabeloesaude"
+  },
+  {
+    "id": "dicas-comunicacao",
+    "category": "scripts",
+    "title": "Dicas de Comunicacao",
+    "subcategory": "dicas",
+    "text": "Dicas de Comunicacao para Vendas:\n\nEmpatia em Primeiro Lugar:\n  - Queda capilar afeta autoestima - acolha antes de vender\n  - Valide sentimentos do paciente\n  - Nao minimize o problema (e so cabelo)\n  - Muitos pacientes sofrem em silencio - seja um espaco seguro\n\nLinguagem de Saude:\n  - Use paciente\n  - nao cliente\n  - Fale em tratamento\n  - nao servico\n  - Use investimento em saude\n  - nao preco\n  - Evite promessas milagrosas - seja honesta\n\nTempo de Resposta:\n  - Responda em ate 5 minutos (leads esfriam rapido)\n  - Leads de saude sao urgentes - a pessoa esta preocupada\n  - Se nao puder responder completo\n  - ao menos de sinal de vida\n  - Horario comercial: resposta imediata | Fora: ate 2h\n\nO que Evitar:\n  - Prometer resultados sem avaliar\n  - Pressionar demais - saude nao se vende assim\n  - Desqualificar outros profissionais\n  - Usar medo excessivo como argumento",
+    "tenant": "cabeloesaude"
+  },
+  {
+    "id": "precos-base",
+    "category": "precos",
+    "title": "Tabela de Precos Base",
+    "subcategory": "mensalidade",
+    "text": "Precos Base Paper Vines:\n\nMensalidade Base: R$ 249\nUsuarios inclusos: 3\nUsuario adicional: R$ 49 (4-10 usuarios), R$ 39 (11-20), R$ 29 (21+)\n\nWhatsApp:\n- 1 numero incluso\n- Numero adicional: R$ 99/mes\n\nOutros canais:\n- Instagram: R$ 99/mes\n- Messenger: R$ 99/mes\n\nIntegracoes:\n- Hotmart: R$ 199/mes\n- RD Station: R$ 99/mes\n- Webhook: R$ 99/mes",
+    "tenant": "cabeloesaude"
+  },
+  {
+    "id": "processo-vendas",
+    "category": "playbook",
+    "title": "Processo de Vendas",
+    "subcategory": "processo",
+    "text": "Processo de Vendas Paper Vines:\n\n1. QUALIFICACAO (30 min)\n   - Identificar necessidade do cliente\n   - Entender porte da empresa\n   - Mapear canais de atendimento atuais\n\n2. DEMONSTRACAO (45 min)\n   - Apresentar a plataforma\n   - Mostrar casos de uso relevantes\n   - Demonstrar IA e automacao\n\n3. PROPOSTA (15 min)\n   - Enviar proposta personalizada\n   - Explicar planos e valores\n   - Definir proximo passo\n\n4. NEGOCIACAO (variavel)\n   - Tratar objecoes\n   - Ajustar proposta se necessario\n   - Definir condicoes\n\n5. FECHAMENTO (30 min)\n   - Formalizar contrato\n   - Coletar documentos\n   - Agendar kick-off",
+    "tenant": "cabeloesaude"
+  },
+  {
+    "id": "checklist-comercial",
+    "category": "playbook",
+    "title": "Checklist Comercial",
+    "subcategory": "checklist",
+    "text": "Checklist Comercial Paper Vines:\n\n- Responder lead em ate 5 minutos\n- Fazer perguntas de qualificacao\n- Identificar tratamentos ja tentados\n- Agendar avaliacao tricologica\n- Enviar confirmacao 24h antes\n- Realizar avaliacao completa\n- Apresentar diagnostico e protocolo\n- Explicar valores e parcelamento\n- Tratar objecoes com empatia\n- Coletar dados do paciente\n- Agendar primeira sessao\n- Enviar boas-vindas ao tratamento",
+    "tenant": "cabeloesaude"
+  }
+]

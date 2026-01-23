@@ -1,0 +1,32 @@
+{
+  "tenant": "cabeloesaude",
+  "processedAt": "2026-01-23T21:27:45.013Z",
+  "files": {
+    "objecoes.js": {
+      "chunks": 10,
+      "characters": 2927,
+      "estimatedTokens": 732
+    },
+    "scripts.js": {
+      "chunks": 8,
+      "characters": 4389,
+      "estimatedTokens": 1098
+    },
+    "precos.js": {
+      "chunks": 1,
+      "characters": 343,
+      "estimatedTokens": 86
+    },
+    "playbook.js": {
+      "chunks": 2,
+      "characters": 1030,
+      "estimatedTokens": 258
+    }
+  },
+  "totals": {
+    "chunks": 21,
+    "characters": 8689,
+    "estimatedTokens": 2173,
+    "estimatedCostUSD": 0.00004346
+  }
+}

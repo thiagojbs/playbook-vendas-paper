@@ -11,14 +11,15 @@ const TENANTS_REGISTRY = {
     nome: 'Paper Vines',
     status: 'ativo',
     path: './tenants/papervines'
+  },
+  cabeloesaude: {
+    id: 'cabeloesaude',
+    nome: 'Cabelo & Saude',
+    nomeCompleto: 'Clinica de Tricologia Cabelo & Saude',
+    status: 'ativo',
+    path: './tenants/cabeloesaude',
+    dominio: 'vendas.cabeloesaude.com.br'
   }
-  // Adicione novos tenants aqui conforme necessario
-  // exemplo: {
-  //   id: 'cliente-telecom',
-  //   nome: 'Telecom Cliente',
-  //   status: 'desenvolvimento',
-  //   path: './tenants/cliente-telecom'
-  // }
 };
 
 // Tenant padrao
@@ -43,8 +44,11 @@ export function getTenantFromRequest(request) {
   if (hostParts.length >= 3) {
     const subdomain = hostParts[0];
     // Mapear subdominios para tenants
-    if (subdomain === 'vendas' || subdomain === 'papervines') {
+    if (subdomain === 'vendas' && url.hostname.includes('papervines')) {
       return 'papervines';
+    }
+    if (subdomain === 'vendas' && url.hostname.includes('cabeloesaude')) {
+      return 'cabeloesaude';
     }
     if (TENANTS_REGISTRY[subdomain]) {
       return subdomain;
