@@ -28,8 +28,8 @@ export default {
     }
 
     try {
-      // Carregar dados do tenant
-      const tenantData = await loadAllTenantModules(tenantId);
+      // Carregar dados do tenant (sincrono - imports estaticos)
+      const tenantData = loadAllTenantModules(tenantId);
       const tenantConfig = tenantData.config;
       // Rotas RAG e MCP (nova funcionalidade)
       if (path.startsWith('/api/rag/') || path.startsWith('/mcp') || path.startsWith('/index/')) {

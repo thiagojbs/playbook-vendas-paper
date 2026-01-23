@@ -1,8 +1,47 @@
 // Sistema de carregamento de tenants
-// Permite carregar dados de diferentes tenants de forma dinamica
+// Usa imports estaticos pois Cloudflare Workers nao suporta import() dinamico
 
-// Cache de tenants carregados
-const tenantCache = new Map();
+// ========================================
+// IMPORTS ESTATICOS DE TODOS OS TENANTS
+// ========================================
+
+// Paper Vines (tenant padrao)
+import { TENANT_CONFIG as PV_CONFIG } from './tenants/papervines/config.js';
+import * as PV_PLAYBOOK from './tenants/papervines/playbook.js';
+import * as PV_OBJECOES from './tenants/papervines/objecoes.js';
+import * as PV_SCRIPTS from './tenants/papervines/scripts.js';
+import * as PV_PRECOS from './tenants/papervines/precos.js';
+import * as PV_AGENTES from './tenants/papervines/agentes.js';
+
+// Cabelo e Saude
+import { TENANT_CONFIG as CS_CONFIG } from './tenants/cabeloesaude/config.js';
+import * as CS_PLAYBOOK from './tenants/cabeloesaude/playbook.js';
+import * as CS_OBJECOES from './tenants/cabeloesaude/objecoes.js';
+import * as CS_SCRIPTS from './tenants/cabeloesaude/scripts.js';
+import * as CS_PRECOS from './tenants/cabeloesaude/precos.js';
+
+// ========================================
+// REGISTRO DE TENANTS
+// ========================================
+
+const TENANTS_DATA = {
+  papervines: {
+    config: PV_CONFIG,
+    playbook: PV_PLAYBOOK,
+    objecoes: PV_OBJECOES,
+    scripts: PV_SCRIPTS,
+    precos: PV_PRECOS,
+    agentes: PV_AGENTES
+  },
+  cabeloesaude: {
+    config: CS_CONFIG,
+    playbook: CS_PLAYBOOK,
+    objecoes: CS_OBJECOES,
+    scripts: CS_SCRIPTS,
+    precos: CS_PRECOS,
+    agentes: null
+  }
+};
 
 // Lista de tenants disponiveis
 const TENANTS_REGISTRY = {
@@ -45,7 +84,7 @@ export function getTenantFromRequest(request) {
     const subdomain = hostParts[0];
     // Mapear subdominios para tenants
     if (subdomain === 'vendas' && url.hostname.includes('papervines')) {
-      return 'papervines';
+      // Continua para verificar query param
     }
     if (subdomain === 'vendas' && url.hostname.includes('cabeloesaude')) {
       return 'cabeloesaude';
@@ -74,92 +113,53 @@ export function getTenantFromRequest(request) {
 /**
  * Carrega configuracao de um tenant
  * @param {string} tenantId - ID do tenant
- * @returns {Promise<Object|null>} - Configuracao do tenant
+ * @returns {Object|null} - Configuracao do tenant
  */
-export async function loadTenantConfig(tenantId) {
-  const cacheKey = `config-${tenantId}`;
-
-  // Verifica cache
-  if (tenantCache.has(cacheKey)) {
-    return tenantCache.get(cacheKey);
-  }
-
-  // Verifica se tenant existe
-  if (!TENANTS_REGISTRY[tenantId]) {
+export function loadTenantConfig(tenantId) {
+  const tenant = TENANTS_DATA[tenantId];
+  if (!tenant) {
     console.error(`Tenant nao encontrado: ${tenantId}`);
-    return null;
+    return TENANTS_DATA[DEFAULT_TENANT].config;
   }
-
-  try {
-    // Import dinamico da configuracao
-    const configModule = await import(`./tenants/${tenantId}/config.js`);
-    const config = configModule.TENANT_CONFIG;
-
-    // Valida configuracao minima
-    if (!config || !config.id || !config.nome) {
-      throw new Error(`Configuracao invalida para tenant: ${tenantId}`);
-    }
-
-    // Adiciona ao cache
-    tenantCache.set(cacheKey, config);
-
-    return config;
-  } catch (error) {
-    console.error(`Erro ao carregar config do tenant ${tenantId}:`, error);
-    return null;
-  }
+  return tenant.config;
 }
 
 /**
  * Carrega um modulo de dados especifico do tenant
  * @param {string} tenantId - ID do tenant
  * @param {string} moduleName - Nome do modulo (playbook, objecoes, etc)
- * @returns {Promise<Object|null>} - Modulo carregado
+ * @returns {Object|null} - Modulo carregado
  */
-export async function loadTenantModule(tenantId, moduleName) {
-  const cacheKey = `${moduleName}-${tenantId}`;
-
-  // Verifica cache
-  if (tenantCache.has(cacheKey)) {
-    return tenantCache.get(cacheKey);
-  }
-
-  // Verifica se tenant existe
-  if (!TENANTS_REGISTRY[tenantId]) {
+export function loadTenantModule(tenantId, moduleName) {
+  const tenant = TENANTS_DATA[tenantId];
+  if (!tenant) {
     console.error(`Tenant nao encontrado: ${tenantId}`);
-    return null;
+    return TENANTS_DATA[DEFAULT_TENANT][moduleName] || null;
   }
-
-  try {
-    // Import dinamico do modulo
-    const module = await import(`./tenants/${tenantId}/${moduleName}.js`);
-
-    // Adiciona ao cache
-    tenantCache.set(cacheKey, module);
-
-    return module;
-  } catch (error) {
-    console.error(`Erro ao carregar ${moduleName} do tenant ${tenantId}:`, error);
-    return null;
-  }
+  return tenant[moduleName] || TENANTS_DATA[DEFAULT_TENANT][moduleName] || null;
 }
 
 /**
  * Carrega todos os modulos de um tenant
  * @param {string} tenantId - ID do tenant
- * @returns {Promise<Object>} - Objeto com todos os modulos
+ * @returns {Object} - Objeto com todos os modulos
  */
-export async function loadAllTenantModules(tenantId) {
-  const modules = {
-    config: await loadTenantConfig(tenantId),
-    playbook: await loadTenantModule(tenantId, 'playbook'),
-    objecoes: await loadTenantModule(tenantId, 'objecoes'),
-    scripts: await loadTenantModule(tenantId, 'scripts'),
-    precos: await loadTenantModule(tenantId, 'precos'),
-    agentes: await loadTenantModule(tenantId, 'agentes')
-  };
+export function loadAllTenantModules(tenantId) {
+  const tenant = TENANTS_DATA[tenantId];
 
-  return modules;
+  if (!tenant) {
+    console.error(`Tenant nao encontrado: ${tenantId}, usando padrao`);
+    return TENANTS_DATA[DEFAULT_TENANT];
+  }
+
+  return {
+    config: tenant.config,
+    playbook: tenant.playbook,
+    objecoes: tenant.objecoes,
+    scripts: tenant.scripts,
+    precos: tenant.precos,
+    agentes: tenant.agentes
+  };
 }
 
 /**
@@ -177,13 +177,6 @@ export function listTenants() {
  */
 export function tenantExists(tenantId) {
   return tenantId in TENANTS_REGISTRY;
-}
-
-/**
- * Limpa o cache de tenants
- */
-export function clearTenantCache() {
-  tenantCache.clear();
 }
 
 /**
