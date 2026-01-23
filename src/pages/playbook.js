@@ -463,42 +463,56 @@ function renderScripts() {
 
   // Conteudo de cada etapa
   const tabContentsHtml = etapas.map(([key, etapa], index) => {
+    // Verificacao de seguranca para scripts
+    if (!etapa.scripts || !Array.isArray(etapa.scripts)) {
+      return `<div class="tab-content ${index === 0 ? 'active' : ''}" id="tab-${key}"><p>Sem scripts disponíveis</p></div>`;
+    }
+
     const scriptsHtml = etapa.scripts.map(script => {
-      const variacoesHtml = script.variacoes.length > 0 ? `
+      // Verificacao de seguranca para propriedades obrigatorias
+      const mensagem = script.mensagem || '';
+      const variacoes = script.variacoes || [];
+      const gatilhos = script.gatilhos || [];
+      const contexto = script.contexto || '';
+      const dica = script.dica || '';
+      const tipo = script.tipo || 'variacao';
+      const titulo = script.titulo || 'Script';
+
+      const variacoesHtml = variacoes.length > 0 ? `
         <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
           <div style="font-weight: 500; margin-bottom: 12px; font-size: 13px; color: var(--text-secondary);">
             <i class="fas fa-random"></i> Variacoes disponiveis:
           </div>
-          ${script.variacoes.map(v => `
+          ${variacoes.filter(v => v && v.mensagem).map(v => `
             <div style="margin-bottom: 12px;">
-              <div style="font-size: 12px; font-weight: 500; color: var(--primary); margin-bottom: 6px;">${v.nome}</div>
+              <div style="font-size: 12px; font-weight: 500; color: var(--primary); margin-bottom: 6px;">${v.nome || 'Variação'}</div>
               <div class="message-box" style="font-size: 12px;">
-                <button class="copy-btn" onclick="copyToClipboard(\`${v.mensagem.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`, this)">
+                <button class="copy-btn" onclick="copyToClipboard(\`${(v.mensagem || '').replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`, this)">
                   <i class="fas fa-copy"></i> Copiar
                 </button>
-                ${v.mensagem}
+                ${v.mensagem || ''}
               </div>
             </div>
           `).join('')}
         </div>
       ` : '';
 
-      const gatilhosHtml = script.gatilhos.map(g => `<span class="badge badge-purple" style="font-size: 11px; margin-right: 4px;">${g}</span>`).join('');
+      const gatilhosHtml = gatilhos.map(g => `<span class="badge badge-purple" style="font-size: 11px; margin-right: 4px;">${g}</span>`).join('');
 
-      const tipoBadge = script.tipo === 'principal' ? 'badge-success' :
-                        script.tipo === 'followup' ? 'badge-warning' :
-                        script.tipo === 'objecao' ? 'badge-danger' : 'badge-info';
-      const tipoLabel = script.tipo === 'principal' ? 'PRINCIPAL' :
-                        script.tipo === 'followup' ? 'FOLLOW-UP' :
-                        script.tipo === 'objecao' ? 'OBJECAO' :
-                        script.tipo === 'informativo' ? 'INFO' : 'VARIACAO';
+      const tipoBadge = tipo === 'principal' ? 'badge-success' :
+                        tipo === 'followup' ? 'badge-warning' :
+                        tipo === 'objecao' ? 'badge-danger' : 'badge-info';
+      const tipoLabel = tipo === 'principal' ? 'PRINCIPAL' :
+                        tipo === 'followup' ? 'FOLLOW-UP' :
+                        tipo === 'objecao' ? 'OBJECAO' :
+                        tipo === 'informativo' ? 'INFO' : 'VARIACAO';
 
       return `
         <div class="accordion" style="margin-bottom: 16px;">
           <div class="accordion-header" style="border-left: 4px solid ${etapa.cor};">
             <div class="accordion-title">
               <span class="badge ${tipoBadge}" style="margin-right: 8px; font-size: 10px;">${tipoLabel}</span>
-              ${script.titulo}
+              ${titulo}
             </div>
             <i class="fas fa-chevron-down"></i>
           </div>
@@ -507,11 +521,11 @@ function renderScripts() {
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 13px;">
                 <div>
                   <i class="fas fa-info-circle" style="color: var(--primary);"></i>
-                  <strong>Contexto:</strong> ${script.contexto}
+                  <strong>Contexto:</strong> ${contexto}
                 </div>
                 <div>
                   <i class="fas fa-lightbulb" style="color: #f59e0b;"></i>
-                  <strong>Dica:</strong> ${script.dica}
+                  <strong>Dica:</strong> ${dica}
                 </div>
               </div>
             </div>
@@ -527,10 +541,10 @@ function renderScripts() {
                 </div>
 
                 <div class="message-box" style="font-size: 13px; white-space: pre-wrap;">
-                  <button class="copy-btn" onclick="copyToClipboard(\`${script.mensagem.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`, this)">
+                  <button class="copy-btn" onclick="copyToClipboard(\`${mensagem.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`, this)">
                     <i class="fas fa-copy"></i> Copiar
                   </button>
-                  ${script.mensagem}
+                  ${mensagem}
                 </div>
 
                 ${variacoesHtml}
