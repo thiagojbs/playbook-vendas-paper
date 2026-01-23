@@ -25,13 +25,28 @@ export const TENANT_CONFIG = {
   empresa: {
     razaoSocial: 'Clinica de Tricologia Cabelo e Saude',
     cnpj: '', // A ser preenchido
-    fundadora: 'Franciele',
+    fundadora: 'Dra. Franciele Madeira',
     cargo: 'Biomedica e Tricologista',
+    anosExperiencia: '7+',
+    pacientesAtendidos: '2.000+',
+    metodo: 'Método Manifesto',
+    reconhecimento: 'Clínica Mais Recomendada de São José e Florianópolis',
+    endereco: {
+      rua: 'Avenida Marechal Castelo Branco',
+      numero: '65',
+      complemento: 'Sala 109 - Bloco B',
+      bairro: 'Campinas',
+      cidade: 'São José',
+      estado: 'SC',
+      cep: '',
+      completo: 'Av. Marechal Castelo Branco, 65 - Sala 109, Bloco B, Campinas, São José/SC'
+    },
     site: 'https://www.cabeloesaude.com.br/',
     instagram: '@cabeloesaude',
     suporte: {
       email: 'contato@cabeloesaude.com.br',
-      whatsapp: '' // A ser preenchido
+      whatsapp: '+5548999548407', // Do site
+      telefone: '(48) 99954-8407'
     }
   },
 
@@ -58,13 +73,25 @@ export const TENANT_CONFIG = {
       'Pessoas insatisfeitas com tratamentos convencionais'
     ],
     diferenciais: [
-      'Abordagem investigativa - trata a causa, nao o sintoma',
-      'Biomedica especialista em tricologia',
-      '7 anos de experiencia',
-      'Sem paliativos - sem Minoxidil/Finasterida como unica solucao',
-      'Tecnologia avancada para diagnostico',
-      'Protocolos personalizados'
-    ]
+      'Tratamos a RAIZ, não apenas os sintomas',
+      'Método Manifesto - 2.000+ pacientes transformados',
+      'Dra. Franciele Madeira - Biomédica Tricologista com 7+ anos',
+      'Clínica Mais Recomendada de São José e Florianópolis',
+      'Sem paliativos - investigação completa da causa',
+      'Tricoscopia digital - você vê seus folículos',
+      'Protocolos 100% personalizados',
+      'É ciência aplicada. É saúde restaurada.',
+      'Não vendemos esperança vazia - tratamos de verdade'
+    ],
+    manifesto: [
+      'O seu cabelo não caiu porque "é normal"',
+      'Pare de culpar a genética',
+      'Vitaminas de farmácia, finasterida e minoxidil não resolvem a raiz do problema',
+      'Chega de "pacotes de tratamentos" prontos de Instagram',
+      'Nós não vendemos esperança vazia. Nós tratamos a raiz.'
+    ],
+    tagline: 'QUEM SENTE, ENTENDE. QUEM ENTENDE, AGE.',
+    posicionamento: 'Somos o lado oposto da medicina rasa. Somos o Manifesto.'
   },
 
   // Integracao CRM
@@ -105,7 +132,8 @@ export const TENANT_CONFIG = {
   links: {
     site: 'https://www.cabeloesaude.com.br/',
     instagram: 'https://www.instagram.com/cabeloesaude/',
-    agendamento: '', // Link para agendamento online
+    whatsapp: 'https://api.whatsapp.com/send?phone=5548999548407',
+    agendamento: 'https://api.whatsapp.com/send?phone=5548999548407&text=Olá!%20Gostaria%20de%20agendar%20uma%20avaliação%20tricológica',
     avaliacaoOnline: '' // Link para avaliacao online se houver
   },
 

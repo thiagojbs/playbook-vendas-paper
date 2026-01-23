@@ -2,7 +2,7 @@
 // Organizados por etapa do funil com variacoes e dicas
 
 export const SCRIPTS_STATS = {
-  total_scripts: '40+',
+  total_scripts: '44+',
   categorias: '7',
   sequencias: '4',
   taxa_resposta: '72%',
@@ -54,6 +54,57 @@ Como posso te ajudar?`
           }
         ],
         gatilhos: ['Acolhimento', 'Diferenciacao', 'Pergunta aberta']
+      },
+      {
+        id: 'capt-manifesto',
+        titulo: 'Apresentacao do Manifesto',
+        tipo: 'principal',
+        contexto: 'Lead que demonstra frustração com tratamentos convencionais',
+        dica: 'Use para leads que já tentaram dermatologistas e produtos comuns',
+        mensagem: `Olá! Bem-vindo(a) ao Manifesto 💚
+
+Somos o lado oposto da medicina rasa.
+
+Aqui você NÃO vai ouvir:
+❌ "É genético, não tem jeito"
+❌ "Toma Minoxidil pro resto da vida"
+❌ "É normal perder cabelo"
+
+Aqui você VAI ter:
+✅ Investigação da CAUSA real
+✅ Protocolo personalizado (não pacote pronto)
+✅ Acompanhamento com ajustes
+✅ Método Manifesto - 2.000+ pacientes transformados
+
+Pare de culpar a genética.
+Pare de aceitar paliativos.
+
+Tempo é cabelo. Coragem é agora.
+
+Pronto(a) para dar um basta? 💚`,
+        variacoes: [],
+        gatilhos: ['Diferenciacao', 'Movimento', 'Urgência Natural']
+      },
+      {
+        id: 'capt-5verdades',
+        titulo: 'As 5 Verdades do Manifesto',
+        tipo: 'principal',
+        contexto: 'Lead frustrado com tratamentos anteriores',
+        dica: 'Use quando perceber que o paciente já tentou vários tratamentos',
+        mensagem: `Posso te contar 5 verdades que ninguém teve coragem de te falar?
+
+1. Seu cabelo NÃO caiu porque "é normal"
+2. Pare de culpar só a genética
+3. Vitaminas de farmácia e Minoxidil não resolvem a raiz
+4. Chega de "pacotes prontos" de Instagram
+5. Você merece investigação de verdade
+
+Aqui na Cabelo & Saude, não vendemos esperança vazia.
+Tratamos a RAIZ com o Método Manifesto.
+
+Pronto(a) para dar um basta? 💚`,
+        variacoes: [],
+        gatilhos: ['Diferenciacao', 'Verdade', 'Confrontação']
       },
       {
         id: 'capt-2',
@@ -168,6 +219,40 @@ A boa noticia e que existe tratamento. E voce ja deu o primeiro passo ao nos pro
 Quer me contar mais sobre como isso tem te afetado?`,
         variacoes: [],
         gatilhos: ['Empatia', 'Validacao', 'Acolhimento']
+      },
+      {
+        id: 'qual-identidade',
+        titulo: 'Resgate da Identidade',
+        tipo: 'principal',
+        contexto: 'Lead demonstra abalo emocional/autoestima baixa',
+        dica: 'Use quando perceber que o impacto é emocional, não apenas estético',
+        mensagem: `[Nome], deixa eu te perguntar algo importante:
+
+O que a queda de cabelo está tirando de VOCÊ?
+
+Não estou falando só de fios.
+
+Estou falando de:
+😔 Evitar fotos
+😔 Pensar nisso todo dia
+😔 Se sentir mais velha(o)
+😔 Perder espontaneidade
+
+Cabelo é identidade.
+E você não precisa aceitar isso.
+
+Aqui na Cabelo & Saude:
+💚 Investigamos a RAIZ do problema
+💚 Tratamos com ciência, não promessa vazia
+💚 2.000+ pessoas recuperaram controle da própria história
+
+Cada fio perdido é uma escolha que você não fez.
+
+Você vai agir agora ou vai esperar desaparecer ainda mais?
+
+EU ESCOLHO CUIDAR DE MIM 💚`,
+        variacoes: [],
+        gatilhos: ['Emocional', 'Identidade', 'Empoderamento']
       }
     ]
   },
@@ -190,18 +275,23 @@ Quer me contar mais sobre como isso tem te afetado?`,
 
 Aqui na Cabelo & Saude fazemos uma *Avaliacao Tricologica Completa* que inclui:
 
-🔬 Exame com tricoscopio - voce VE seu couro cabeludo ampliado
-📋 Anamnese detalhada do seu historico
-🔍 Identificacao da causa real da queda
-🧪 Indicacao de exames complementares se necessario
-📝 Proposta de tratamento personalizado
+✅ Anamnese completa (entrevista detalhada sobre seu histórico)
+✅ Tricoscopia digital (vemos seus folículos ao vivo - você acompanha tudo)
+✅ Diagnóstico personalizado
+✅ Proposta de tratamento com o Método Manifesto
+
+É ciência aplicada. É saúde restaurada.
 
 *Duracao:* aproximadamente 40-60 minutos
 *Investimento:* R$ [VALOR] (ou cortesia se mencionar)
 
+Tempo é cabelo. Coragem é agora.
+
 Tenho horarios disponiveis [DATA]. Qual melhor pra voce:
 - [OPCAO 1] as [HORA]
-- [OPCAO 2] as [HORA]`,
+- [OPCAO 2] as [HORA]
+
+Agenda sua avaliação? 💚`,
         variacoes: [
           {
             nome: 'Versao Urgencia',
@@ -213,6 +303,36 @@ Consegue?`
           }
         ],
         gatilhos: ['Valor da avaliacao', 'Opcoes de horario', 'Baixo atrito']
+      },
+      {
+        id: 'conv-manifesto',
+        titulo: 'Convite ao Movimento',
+        tipo: 'principal',
+        contexto: 'Ao convidar para avaliação/fechamento',
+        dica: 'Script final de conversão com linguagem de movimento',
+        mensagem: `[Nome], você está pronto(a) para fazer parte do Manifesto?
+
+Somos a geração que escolheu:
+✊ Tratar a raiz, não o sintoma
+✊ Exigir ciência, não paliativos
+✊ Não aceitar "é genético e pronto"
+✊ Recuperar identidade, não só fios
+
+Você não está aqui só pra recuperar cabelo.
+Você está aqui pra recuperar o controle da sua história.
+
+💚 Avaliação Tricológica Completa:
+• Tricoscopia digital (vemos seus folículos)
+• Diagnóstico personalizado
+• Proposta do Método Manifesto
+• É ciência aplicada. É saúde restaurada.
+
+QUEM SENTE, ENTENDE.
+QUEM ENTENDE, AGE.
+
+Agenda sua avaliação? 💚`,
+        variacoes: [],
+        gatilhos: ['Movimento', 'Empoderamento', 'Ciência', 'CTA Forte']
       },
       {
         id: 'agend-2',
@@ -639,7 +759,8 @@ export const DICAS_COMUNICACAO = [
       'Queda capilar afeta autoestima - acolha antes de vender',
       'Valide sentimentos do paciente',
       'Nao minimize o problema ("e so cabelo")',
-      'Muitos pacientes sofrem em silencio - seja um espaco seguro'
+      'Muitos pacientes sofrem em silencio - seja um espaco seguro',
+      'Cabelo é identidade - trate com a importância que merece'
     ]
   },
   {
@@ -649,7 +770,10 @@ export const DICAS_COMUNICACAO = [
       'Use "paciente", nao "cliente"',
       'Fale em "tratamento", nao "servico"',
       'Use "investimento em saude", nao "preco"',
-      'Evite promessas milagrosas - seja honesta'
+      'Evite promessas milagrosas - seja honesta',
+      'Sempre mencione "Método Manifesto" ao falar de tratamento',
+      'Use frases de impacto: "Tempo é cabelo. Coragem é agora."',
+      'Reforce: "Tratamos a RAIZ, não o sintoma"'
     ]
   },
   {
@@ -659,7 +783,8 @@ export const DICAS_COMUNICACAO = [
       'Responda em ate 5 minutos (leads esfriam rapido)',
       'Leads de saude sao urgentes - a pessoa esta preocupada',
       'Se nao puder responder completo, ao menos de sinal de vida',
-      'Horario comercial: resposta imediata | Fora: ate 2h'
+      'Horario comercial: resposta imediata | Fora: ate 2h',
+      'Cada fio perdido é uma escolha que você não fez - aja rápido'
     ]
   },
   {
@@ -669,7 +794,10 @@ export const DICAS_COMUNICACAO = [
       'Prometer resultados sem avaliar',
       'Pressionar demais - saude nao se vende assim',
       'Desqualificar outros profissionais',
-      'Usar medo excessivo como argumento'
+      'Usar medo excessivo como argumento',
+      'NUNCA usar "cliente" - sempre "paciente"',
+      'NUNCA prometer crescimento garantido sem avaliar',
+      'NUNCA falar mal de dermatologistas - diferencie sem atacar'
     ]
   }
 ];
@@ -736,7 +864,7 @@ Me conta um pouquinho: ha quanto tempo voce percebeu a queda ou afinamento dos f
 Aqui na Cabelo & Saude fazemos diferente:
 ❌ Nao dependemos so de Minoxidil e Finasterida
 ✅ Investigamos a raiz do problema
-✅ Protocolo personalizado pro seu caso
+✅ Protocolo personalizado pro seu caso com Método Manifesto
 
 Posso te fazer algumas perguntas para entender melhor sua situacao?`
     },
@@ -747,6 +875,45 @@ Posso te fazer algumas perguntas para entender melhor sua situacao?`
 Fico feliz que alguem de confianca tenha indicado a Cabelo & Saude!
 
 Me conta: como esta a situacao hoje com seus cabelos?`
+    },
+    {
+      titulo: 'O Manifesto',
+      mensagem: `Olá! Bem-vindo(a) ao Manifesto 💚
+
+Somos o lado oposto da medicina rasa.
+
+Aqui você NÃO vai ouvir:
+❌ "É genético, não tem jeito"
+❌ "Toma Minoxidil pro resto da vida"
+❌ "É normal perder cabelo"
+
+Aqui você VAI ter:
+✅ Investigação da CAUSA real
+✅ Protocolo personalizado (não pacote pronto)
+✅ Acompanhamento com ajustes
+✅ Método Manifesto - 2.000+ pacientes transformados
+
+Pare de culpar a genética.
+Pare de aceitar paliativos.
+
+Tempo é cabelo. Coragem é agora.
+
+Pronto(a) para dar um basta? 💚`
+    },
+    {
+      titulo: 'As 5 Verdades',
+      mensagem: `Posso te contar 5 verdades que ninguém teve coragem de te falar?
+
+1. Seu cabelo NÃO caiu porque "é normal"
+2. Pare de culpar só a genética
+3. Vitaminas de farmácia e Minoxidil não resolvem a raiz
+4. Chega de "pacotes prontos" de Instagram
+5. Você merece investigação de verdade
+
+Aqui na Cabelo & Saude, não vendemos esperança vazia.
+Tratamos a RAIZ com o Método Manifesto.
+
+Pronto(a) para dar um basta? 💚`
     }
   ],
 
@@ -755,10 +922,14 @@ Me conta: como esta a situacao hoje com seus cabelos?`
     mensagem: `Quer entender de verdade o que esta causando sua queda capilar?
 
 A avaliacao tricologica inclui:
-✅ Anamnese completa
-✅ Tricoscopia digital (exame do couro cabeludo)
+✅ Anamnese completa (entrevista detalhada)
+✅ Tricoscopia digital (vemos seus folículos ao vivo)
 ✅ Diagnostico personalizado
-✅ Proposta de tratamento
+✅ Proposta de tratamento com Método Manifesto
+
+É ciência aplicada. É saúde restaurada.
+
+Tempo é cabelo. Coragem é agora.
 
 💚 Agende sua avaliacao
 📱 Responda essa mensagem ou clique no link:
@@ -874,6 +1045,8 @@ Assim que confirmar, ja reservo sua agenda!`
       titulo: 'Boas-vindas',
       mensagem: `Seja muito bem-vindo(a) a Cabelo & Saude, [Nome]! 💚🌿
 
+Você acabou de fazer parte do Manifesto!
+
 Sua primeira sessao esta confirmada:
 📅 Data: [DATA]
 ⏰ Horario: [HORA]
@@ -884,7 +1057,25 @@ Sua primeira sessao esta confirmada:
 
 Qualquer duvida, estou por aqui!
 
-Vamos juntos recuperar a saude dos seus cabelos! 🌱`
+Vamos juntos recuperar o controle da sua história! 🌱`
+    },
+    {
+      titulo: 'Você é o Manifesto',
+      mensagem: `[Nome], você está pronto(a) para fazer parte do Manifesto?
+
+Somos a geração que escolheu:
+✊ Tratar a raiz, não o sintoma
+✊ Exigir ciência, não paliativos
+✊ Não aceitar "é genético e pronto"
+✊ Recuperar identidade, não só fios
+
+Você não está aqui só pra recuperar cabelo.
+Você está aqui pra recuperar o controle da sua história.
+
+QUEM SENTE, ENTENDE.
+QUEM ENTENDE, AGE.
+
+Agenda sua primeira sessão? 💚`
     }
   ]
 };
