@@ -563,12 +563,12 @@ function renderScripts() {
                   <i class="fas fa-check-circle" style="color: var(--secondary);"></i> Por que funciona
                 </div>
                 <ul style="list-style: none; padding: 0; font-size: 12px; color: var(--text-secondary);">
-                  ${script.gatilhos.map(g => `<li style="padding: 4px 0;">• ${g}</li>`).join('')}
+                  ${gatilhos.map(g => `<li style="padding: 4px 0;">• ${g}</li>`).join('')}
                 </ul>
 
                 <div style="margin-top: 16px; padding: 12px; background: rgba(139, 92, 246, 0.1); border-radius: 8px;">
                   <div style="font-size: 11px; color: var(--primary); font-weight: 500;">
-                    <i class="fas fa-hashtag"></i> ID: ${script.id}
+                    <i class="fas fa-hashtag"></i> ID: ${script.id || 'N/A'}
                   </div>
                 </div>
               </div>
