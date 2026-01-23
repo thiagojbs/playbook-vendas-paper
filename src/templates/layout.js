@@ -93,6 +93,10 @@ export function layout(title, content, activeMenu = '', tenantConfig = null) {
   const testeUrl = links.teste_gratuito || '#';
   const propostasUrl = links.propostas || '#';
 
+  // Query string para manter o tenant nos links internos
+  const tenantId = config.id || 'papervines';
+  const tenantQuery = tenantId !== 'papervines' ? `?tenant=${tenantId}` : '';
+
   return `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -955,7 +959,7 @@ export function layout(title, content, activeMenu = '', tenantConfig = null) {
   <header class="header">
     <div class="header-content">
       <div class="logo">
-        <a href="/" class="logo-link">
+        <a href="/${tenantQuery}" class="logo-link">
           <img src="${logoUrl}" alt="${empresaNome}" class="logo-img">
           <div class="logo-subtitle">Playbook de Vendas</div>
         </a>
@@ -966,31 +970,31 @@ export function layout(title, content, activeMenu = '', tenantConfig = null) {
 
   <nav class="nav-tabs">
     <div class="nav-tabs-content">
-      <a href="/" class="nav-tab ${activeMenu === 'home' ? 'active' : ''}">
+      <a href="/${tenantQuery}" class="nav-tab ${activeMenu === 'home' ? 'active' : ''}">
         <i class="fas fa-chart-bar"></i> Visao Geral
       </a>
-      <a href="/playbook" class="nav-tab ${activeMenu === 'playbook' ? 'active' : ''}">
+      <a href="/playbook${tenantQuery}" class="nav-tab ${activeMenu === 'playbook' ? 'active' : ''}">
         <i class="fas fa-book"></i> Playbook
       </a>
-      <a href="/playbook/scripts" class="nav-tab ${activeMenu === 'scripts' ? 'active' : ''}">
+      <a href="/playbook/scripts${tenantQuery}" class="nav-tab ${activeMenu === 'scripts' ? 'active' : ''}">
         <i class="fas fa-comment-dots"></i> Scripts
       </a>
-      <a href="/playbook/objecoes" class="nav-tab ${activeMenu === 'objecoes' ? 'active' : ''}">
+      <a href="/playbook/objecoes${tenantQuery}" class="nav-tab ${activeMenu === 'objecoes' ? 'active' : ''}">
         <i class="fas fa-shield-alt"></i> Objecoes
       </a>
-      <a href="/calculadora" class="nav-tab ${activeMenu === 'calculadora' ? 'active' : ''}">
+      <a href="/calculadora${tenantQuery}" class="nav-tab ${activeMenu === 'calculadora' ? 'active' : ''}">
         <i class="fas fa-calculator"></i> Calculadora
       </a>
-      ${modulos.agentes !== false ? `<a href="/playbook/agentes" class="nav-tab ${activeMenu === 'planos' ? 'active' : ''}">
+      ${modulos.agentes !== false ? `<a href="/playbook/agentes${tenantQuery}" class="nav-tab ${activeMenu === 'planos' ? 'active' : ''}">
         <i class="fas fa-robot"></i> Agentes IA
       </a>` : ''}
-      <a href="/playbook/api" class="nav-tab ${activeMenu === 'api' ? 'active' : ''}" style="background: ${activeMenu === 'api' ? 'rgba(99, 102, 241, 0.15)' : 'rgba(99, 102, 241, 0.05)'}; border: 1px solid rgba(99, 102, 241, 0.3);">
+      <a href="/playbook/api${tenantQuery}" class="nav-tab ${activeMenu === 'api' ? 'active' : ''}" style="background: ${activeMenu === 'api' ? 'rgba(99, 102, 241, 0.15)' : 'rgba(99, 102, 241, 0.05)'}; border: 1px solid rgba(99, 102, 241, 0.3);">
         <i class="fas fa-code" style="color: #6366f1;"></i> <span style="color: #6366f1; font-weight: 600;">API & MCP</span>
       </a>
-      ${modulos.desempenho !== false ? `<a href="/desempenho" class="nav-tab ${activeMenu === 'desempenho' ? 'active' : ''}">
+      ${modulos.desempenho !== false ? `<a href="/desempenho${tenantQuery}" class="nav-tab ${activeMenu === 'desempenho' ? 'active' : ''}">
         <i class="fas fa-chart-line"></i> Desempenho
       </a>` : ''}
-      <a href="/desempenho/crm" class="nav-tab ${activeMenu === 'crm' ? 'active' : ''}" style="background: ${activeMenu === 'crm' ? 'rgba(16, 185, 129, 0.15)' : 'rgba(16, 185, 129, 0.05)'}; border: 1px solid rgba(16, 185, 129, 0.3);">
+      <a href="/desempenho/crm${tenantQuery}" class="nav-tab ${activeMenu === 'crm' ? 'active' : ''}" style="background: ${activeMenu === 'crm' ? 'rgba(16, 185, 129, 0.15)' : 'rgba(16, 185, 129, 0.05)'}; border: 1px solid rgba(16, 185, 129, 0.3);">
         <i class="fas fa-broadcast-tower" style="color: #10b981;"></i> <span style="color: #10b981; font-weight: 600;">CRM Live</span>
       </a>
     </div>
