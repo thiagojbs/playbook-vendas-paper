@@ -431,258 +431,241 @@ function renderPlaybookCabeloeSaude() {
   const tenantQuery = '?tenant=cabeloesaude';
 
   // Diferenciais da Clinica
-  const diferenciaisHtml = DIFERENCIAIS.map((d, index) => `
-    <div style="display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: ${index === 0 ? 'linear-gradient(135deg, rgba(26, 95, 82, 0.1), rgba(45, 138, 122, 0.1))' : 'white'}; border: 1px solid ${index === 0 ? 'var(--primary)' : 'var(--border)'}; border-radius: 12px; ${index === 0 ? 'box-shadow: 0 4px 12px rgba(26, 95, 82, 0.15);' : ''}">
-      <div style="width: 44px; height: 44px; background: ${index === 0 ? 'var(--primary)' : 'var(--bg-page)'}; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-        <i class="fas fa-${d.icone}" style="color: ${index === 0 ? 'white' : 'var(--primary)'}; font-size: 18px;"></i>
-      </div>
-      <div>
-        <div style="font-weight: 600; margin-bottom: 4px;">${d.titulo}</div>
-        <div style="font-size: 13px; color: var(--text-secondary);">${d.descricao}</div>
-      </div>
-    </div>
-  `).join('');
+  const diferenciaisHtml = DIFERENCIAIS.map((d, index) => {
+    const bgStyle = index === 0 ? 'linear-gradient(135deg, rgba(26, 95, 82, 0.1), rgba(45, 138, 122, 0.1))' : 'white';
+    const borderStyle = index === 0 ? 'var(--primary)' : 'var(--border)';
+    const shadowStyle = index === 0 ? 'box-shadow: 0 4px 12px rgba(26, 95, 82, 0.15);' : '';
+    const iconBg = index === 0 ? 'var(--primary)' : 'var(--bg-page)';
+    const iconColor = index === 0 ? 'white' : 'var(--primary)';
+    return '<div style="display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: ' + bgStyle + '; border: 1px solid ' + borderStyle + '; border-radius: 12px; ' + shadowStyle + '">' +
+      '<div style="width: 44px; height: 44px; background: ' + iconBg + '; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">' +
+        '<i class="fas fa-' + d.icone + '" style="color: ' + iconColor + '; font-size: 18px;"></i>' +
+      '</div>' +
+      '<div>' +
+        '<div style="font-weight: 600; margin-bottom: 4px;">' + d.titulo + '</div>' +
+        '<div style="font-size: 13px; color: var(--text-secondary);">' + d.descricao + '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
 
   // Tipos de Tratamento
-  const tiposTratamentoHtml = (PROCESSO_VENDAS.tipos_tratamento || [
+  const tiposTratamento = [
     { nome: 'Queda Capilar', descricao: 'Tratamento para queda acentuada de cabelos', sinais: ['Cabelos no travesseiro', 'Cabelos no ralo', 'Volume reduzido'], cor: '#ef4444' },
     { nome: 'Alopecia Androgenica', descricao: 'Calvicie de padrao masculino ou feminino', sinais: ['Entradas aumentando', 'Coroa rareando', 'Fios afinando'], cor: '#f59e0b' },
     { nome: 'Alopecia Areata', descricao: 'Queda em areas circulares especificas', sinais: ['Falhas redondas', 'Queda subita', 'Areas sem cabelo'], cor: '#8b5cf6' },
     { nome: 'Efluvio Telogeno', descricao: 'Queda difusa pos-estresse ou doenca', sinais: ['Queda intensa', 'Pos-COVID/parto', 'Pos-cirurgia'], cor: '#3b82f6' },
     { nome: 'Dermatite Seborreica', descricao: 'Inflamacao do couro cabeludo', sinais: ['Coceira', 'Descamacao', 'Oleosidade'], cor: '#ec4899' }
-  ]).map(tipo => `
-    <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px; border-top: 4px solid ${tipo.cor};">
-      <div style="font-weight: 600; font-size: 16px; margin-bottom: 8px; color: ${tipo.cor};">${tipo.nome}</div>
-      <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">${tipo.descricao}</div>
-      <div style="font-size: 12px; font-weight: 500; margin-bottom: 8px;">Sinais:</div>
-      <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-        ${tipo.sinais.map(s => \`<span style="font-size: 11px; padding: 4px 8px; background: \${tipo.cor}15; color: \${tipo.cor}; border-radius: 4px;">\${s}</span>\`).join('')}
-      </div>
-    </div>
-  `).join('');
+  ];
+  const tiposTratamentoHtml = tiposTratamento.map(function(tipo) {
+    const sinaisHtml = tipo.sinais.map(function(s) {
+      return '<span style="font-size: 11px; padding: 4px 8px; background: ' + tipo.cor + '15; color: ' + tipo.cor + '; border-radius: 4px;">' + s + '</span>';
+    }).join('');
+    return '<div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px; border-top: 4px solid ' + tipo.cor + ';">' +
+      '<div style="font-weight: 600; font-size: 16px; margin-bottom: 8px; color: ' + tipo.cor + ';">' + tipo.nome + '</div>' +
+      '<div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">' + tipo.descricao + '</div>' +
+      '<div style="font-size: 12px; font-weight: 500; margin-bottom: 8px;">Sinais:</div>' +
+      '<div style="display: flex; flex-wrap: wrap; gap: 6px;">' + sinaisHtml + '</div>' +
+    '</div>';
+  }).join('');
 
   // Processo de Vendas
-  const etapasVendaHtml = PROCESSO_VENDAS.etapas.map(etapa => {
-    const acoesHtml = etapa.acoes.map(acao => \`
-      <li style="display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--border);">
-        <i class="fas fa-check-circle" style="color: var(--primary);"></i>
-        \${acao}
-      </li>
-    \`).join('');
-    const dicasHtml = (etapa.dicas || []).map(dica => \`
-      <div style="display: flex; align-items: flex-start; gap: 8px; padding: 8px; background: rgba(245, 158, 11, 0.08); border-radius: 6px; margin-bottom: 6px;">
-        <i class="fas fa-lightbulb" style="color: #f59e0b; margin-top: 2px;"></i>
-        <span style="font-size: 12px;">\${dica}</span>
-      </div>
-    \`).join('');
-    return \`
-      <div class="accordion">
-        <div class="accordion-header" style="border-left: 4px solid var(--primary);">
-          <div class="accordion-title">
-            <span style="width: 28px; height: 28px; background: var(--primary); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; margin-right: 8px; color: white;">\${etapa.numero}</span>
-            \${etapa.titulo}
-            <span class="badge badge-info" style="margin-left: 12px;">\${etapa.tempo_estimado}</span>
-          </div>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="accordion-content">
-          <p style="margin-bottom: 16px; color: var(--text-secondary);">\${etapa.descricao}</p>
-          <div style="font-weight: 500; margin-bottom: 8px;">Acoes:</div>
-          <ul style="list-style: none; padding: 0; margin-bottom: 16px;">\${acoesHtml}</ul>
-          \${dicasHtml ? \`<div style="font-weight: 500; margin-bottom: 8px;">Dicas:</div>\${dicasHtml}\` : ''}
-        </div>
-      </div>
-    \`;
+  const etapasVendaHtml = PROCESSO_VENDAS.etapas.map(function(etapa) {
+    const acoesHtml = etapa.acoes.map(function(acao) {
+      return '<li style="display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--border);">' +
+        '<i class="fas fa-check-circle" style="color: var(--primary);"></i>' + acao + '</li>';
+    }).join('');
+    const dicasHtml = (etapa.dicas || []).map(function(dica) {
+      return '<div style="display: flex; align-items: flex-start; gap: 8px; padding: 8px; background: rgba(245, 158, 11, 0.08); border-radius: 6px; margin-bottom: 6px;">' +
+        '<i class="fas fa-lightbulb" style="color: #f59e0b; margin-top: 2px;"></i>' +
+        '<span style="font-size: 12px;">' + dica + '</span></div>';
+    }).join('');
+    const dicasSection = dicasHtml ? '<div style="font-weight: 500; margin-bottom: 8px;">Dicas:</div>' + dicasHtml : '';
+    return '<div class="accordion">' +
+      '<div class="accordion-header" style="border-left: 4px solid var(--primary);">' +
+        '<div class="accordion-title">' +
+          '<span style="width: 28px; height: 28px; background: var(--primary); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; margin-right: 8px; color: white;">' + etapa.numero + '</span>' +
+          etapa.titulo +
+          '<span class="badge badge-info" style="margin-left: 12px;">' + etapa.tempo_estimado + '</span>' +
+        '</div>' +
+        '<i class="fas fa-chevron-down"></i>' +
+      '</div>' +
+      '<div class="accordion-content">' +
+        '<p style="margin-bottom: 16px; color: var(--text-secondary);">' + etapa.descricao + '</p>' +
+        '<div style="font-weight: 500; margin-bottom: 8px;">Acoes:</div>' +
+        '<ul style="list-style: none; padding: 0; margin-bottom: 16px;">' + acoesHtml + '</ul>' +
+        dicasSection +
+      '</div>' +
+    '</div>';
   }).join('');
 
   // Objecoes
-  const objecoesHtml = OBJECOES.slice(0, 6).map(obj => \`
-    <div class="accordion">
-      <div class="accordion-header" style="border-left: 4px solid #ef4444;">
-        <div class="accordion-title">
-          <i class="fas fa-comment-slash" style="color: #ef4444; margin-right: 8px;"></i>
-          "\${obj.objecao}"
-        </div>
-        <i class="fas fa-chevron-down"></i>
-      </div>
-      <div class="accordion-content">
-        <div class="message-box" style="white-space: pre-wrap; font-size: 13px;">
-          <button class="copy-btn" onclick="copyToClipboard(\\\`\${obj.resposta.replace(/\`/g, '\\\\\\`').replace(/\\$/g, '\\\\\\$')}\\\`, this)">
-            <i class="fas fa-copy"></i> Copiar
-          </button>
-          \${obj.resposta}
-        </div>
-      </div>
-    </div>
-  \`).join('');
+  const objecoesHtml = OBJECOES.slice(0, 6).map(function(obj) {
+    return '<div class="accordion">' +
+      '<div class="accordion-header" style="border-left: 4px solid #ef4444;">' +
+        '<div class="accordion-title">' +
+          '<i class="fas fa-comment-slash" style="color: #ef4444; margin-right: 8px;"></i>' +
+          '"' + obj.objecao + '"' +
+        '</div>' +
+        '<i class="fas fa-chevron-down"></i>' +
+      '</div>' +
+      '<div class="accordion-content">' +
+        '<div class="message-box" style="white-space: pre-wrap; font-size: 13px;">' +
+          obj.resposta +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
 
   // Checklist Comercial
-  const checklistHtml = CHECKLIST_COMERCIAL.map(item => \`
-    <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border);">
-      <input type="checkbox" style="width: 18px; height: 18px; accent-color: var(--primary);">
-      <span style="font-size: 13px;">\${item.item}</span>
-    </div>
-  \`).join('');
+  const checklistHtml = CHECKLIST_COMERCIAL.map(function(item) {
+    return '<div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border);">' +
+      '<input type="checkbox" style="width: 18px; height: 18px; accent-color: var(--primary);">' +
+      '<span style="font-size: 13px;">' + item.item + '</span>' +
+    '</div>';
+  }).join('');
 
   // Scripts Rapidos
-  const scriptsRapidosHtml = Object.entries(SCRIPTS).slice(0, 4).map(([key, script]) => {
-    if (Array.isArray(script)) {
+  const scriptsRapidosHtml = Object.entries(SCRIPTS).slice(0, 4).map(function(entry) {
+    const key = entry[0];
+    const script = entry[1];
+    if (Array.isArray(script) && script[0]) {
       const primeiro = script[0];
-      return \`
-        <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 16px;">
-          <div style="font-weight: 600; font-size: 14px; margin-bottom: 8px; color: var(--primary);">
-            <i class="fas fa-comment-dots" style="margin-right: 6px;"></i>\${primeiro.titulo}
-          </div>
-          <div class="message-box" style="font-size: 12px; white-space: pre-wrap; max-height: 120px; overflow: hidden;">
-            \${primeiro.mensagem.substring(0, 200)}...
-          </div>
-          <a href="/playbook/scripts\${tenantQuery}" style="display: inline-flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 12px; color: var(--primary); text-decoration: none;">
-            Ver script completo <i class="fas fa-arrow-right"></i>
-          </a>
-        </div>
-      \`;
-    } else if (script.mensagem) {
-      return \`
-        <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 16px;">
-          <div style="font-weight: 600; font-size: 14px; margin-bottom: 8px; color: var(--primary);">
-            <i class="fas fa-comment-dots" style="margin-right: 6px;"></i>\${script.titulo}
-          </div>
-          <div class="message-box" style="font-size: 12px; white-space: pre-wrap; max-height: 120px; overflow: hidden;">
-            \${script.mensagem.substring(0, 200)}...
-          </div>
-          <a href="/playbook/scripts\${tenantQuery}" style="display: inline-flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 12px; color: var(--primary); text-decoration: none;">
-            Ver script completo <i class="fas fa-arrow-right"></i>
-          </a>
-        </div>
-      \`;
+      const preview = primeiro.mensagem ? primeiro.mensagem.substring(0, 200) + '...' : '';
+      return '<div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 16px;">' +
+        '<div style="font-weight: 600; font-size: 14px; margin-bottom: 8px; color: var(--primary);">' +
+          '<i class="fas fa-comment-dots" style="margin-right: 6px;"></i>' + (primeiro.titulo || 'Script') +
+        '</div>' +
+        '<div class="message-box" style="font-size: 12px; white-space: pre-wrap; max-height: 120px; overflow: hidden;">' + preview + '</div>' +
+        '<a href="/playbook/scripts' + tenantQuery + '" style="display: inline-flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 12px; color: var(--primary); text-decoration: none;">' +
+          'Ver script completo <i class="fas fa-arrow-right"></i>' +
+        '</a>' +
+      '</div>';
+    } else if (script && script.mensagem) {
+      const preview = script.mensagem.substring(0, 200) + '...';
+      return '<div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 16px;">' +
+        '<div style="font-weight: 600; font-size: 14px; margin-bottom: 8px; color: var(--primary);">' +
+          '<i class="fas fa-comment-dots" style="margin-right: 6px;"></i>' + (script.titulo || 'Script') +
+        '</div>' +
+        '<div class="message-box" style="font-size: 12px; white-space: pre-wrap; max-height: 120px; overflow: hidden;">' + preview + '</div>' +
+        '<a href="/playbook/scripts' + tenantQuery + '" style="display: inline-flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 12px; color: var(--primary); text-decoration: none;">' +
+          'Ver script completo <i class="fas fa-arrow-right"></i>' +
+        '</a>' +
+      '</div>';
     }
     return '';
   }).filter(Boolean).join('');
 
   // Links Uteis
-  const linksHtml = \`
-    <div style="display: flex; flex-direction: column; gap: 8px;">
-      <a href="\${LINKS_UTEIS.site || '#'}" target="_blank" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: white; border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: inherit;">
-        <i class="fas fa-globe" style="color: var(--primary);"></i>
-        <div style="flex: 1;">
-          <div style="font-weight: 500; font-size: 14px;">Site Oficial</div>
-          <div style="font-size: 12px; color: var(--text-secondary);">cabeloesaude.com.br</div>
-        </div>
-        <i class="fas fa-external-link-alt" style="color: var(--text-secondary);"></i>
-      </a>
-      <a href="\${LINKS_UTEIS.instagram || '#'}" target="_blank" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: white; border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: inherit;">
-        <i class="fab fa-instagram" style="color: #E4405F;"></i>
-        <div style="flex: 1;">
-          <div style="font-weight: 500; font-size: 14px;">Instagram</div>
-          <div style="font-size: 12px; color: var(--text-secondary);">@cabeloesaude</div>
-        </div>
-        <i class="fas fa-external-link-alt" style="color: var(--text-secondary);"></i>
-      </a>
-      <a href="/calculadora\${tenantQuery}" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: linear-gradient(135deg, rgba(26, 95, 82, 0.1), rgba(45, 138, 122, 0.1)); border: 1px solid var(--primary); border-radius: 8px; text-decoration: none; color: inherit;">
-        <i class="fas fa-calculator" style="color: var(--primary);"></i>
-        <div style="flex: 1;">
-          <div style="font-weight: 500; font-size: 14px;">Calculadora de Protocolos</div>
-          <div style="font-size: 12px; color: var(--text-secondary);">Montar proposta personalizada</div>
-        </div>
-        <i class="fas fa-arrow-right" style="color: var(--primary);"></i>
-      </a>
-    </div>
-  \`;
+  const siteUrl = LINKS_UTEIS.site || '#';
+  const instaUrl = LINKS_UTEIS.instagram || '#';
+  const linksHtml = '<div style="display: flex; flex-direction: column; gap: 8px;">' +
+    '<a href="' + siteUrl + '" target="_blank" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: white; border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: inherit;">' +
+      '<i class="fas fa-globe" style="color: var(--primary);"></i>' +
+      '<div style="flex: 1;">' +
+        '<div style="font-weight: 500; font-size: 14px;">Site Oficial</div>' +
+        '<div style="font-size: 12px; color: var(--text-secondary);">cabeloesaude.com.br</div>' +
+      '</div>' +
+      '<i class="fas fa-external-link-alt" style="color: var(--text-secondary);"></i>' +
+    '</a>' +
+    '<a href="' + instaUrl + '" target="_blank" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: white; border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: inherit;">' +
+      '<i class="fab fa-instagram" style="color: #E4405F;"></i>' +
+      '<div style="flex: 1;">' +
+        '<div style="font-weight: 500; font-size: 14px;">Instagram</div>' +
+        '<div style="font-size: 12px; color: var(--text-secondary);">@cabeloesaude</div>' +
+      '</div>' +
+      '<i class="fas fa-external-link-alt" style="color: var(--text-secondary);"></i>' +
+    '</a>' +
+    '<a href="/calculadora' + tenantQuery + '" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: linear-gradient(135deg, rgba(26, 95, 82, 0.1), rgba(45, 138, 122, 0.1)); border: 1px solid var(--primary); border-radius: 8px; text-decoration: none; color: inherit;">' +
+      '<i class="fas fa-calculator" style="color: var(--primary);"></i>' +
+      '<div style="flex: 1;">' +
+        '<div style="font-weight: 500; font-size: 14px;">Calculadora de Protocolos</div>' +
+        '<div style="font-size: 12px; color: var(--text-secondary);">Montar proposta personalizada</div>' +
+      '</div>' +
+      '<i class="fas fa-arrow-right" style="color: var(--primary);"></i>' +
+    '</a>' +
+  '</div>';
 
-  return \`
-    <div class="page-header">
-      <h1 class="page-title"><i class="fas fa-book-open"></i> Playbook de Vendas</h1>
-      <p class="page-subtitle">Guia completo do processo comercial Cabelo & Saude - Tricologia</p>
-    </div>
+  return '<div class="page-header">' +
+    '<h1 class="page-title"><i class="fas fa-book-open"></i> Playbook de Vendas</h1>' +
+    '<p class="page-subtitle">Guia completo do processo comercial Cabelo & Saude - Tricologia</p>' +
+  '</div>' +
 
-    <!-- Diferenciais -->
-    <div class="card fade-in" style="margin-bottom: 24px; background: linear-gradient(135deg, #f0f7f6, white);">
-      <div class="card-header">
-        <h3 class="card-title"><i class="fas fa-trophy" style="color: var(--primary);"></i> Por que Cabelo & Saude?</h3>
-      </div>
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
-        \${diferenciaisHtml}
-      </div>
-    </div>
+  '<!-- Diferenciais -->' +
+  '<div class="card fade-in" style="margin-bottom: 24px; background: linear-gradient(135deg, #f0f7f6, white);">' +
+    '<div class="card-header">' +
+      '<h3 class="card-title"><i class="fas fa-trophy" style="color: var(--primary);"></i> Por que Cabelo & Saude?</h3>' +
+    '</div>' +
+    '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">' + diferenciaisHtml + '</div>' +
+  '</div>' +
 
-    <!-- Tipos de Tratamento -->
-    <div class="card fade-in" style="margin-bottom: 24px;">
-      <div class="card-header">
-        <h3 class="card-title"><i class="fas fa-stethoscope" style="color: var(--primary);"></i> Tipos de Tratamento</h3>
-        <span class="badge badge-info">Conheca os casos que atendemos</span>
-      </div>
-      <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;">
-        \${tiposTratamentoHtml}
-      </div>
-    </div>
+  '<!-- Tipos de Tratamento -->' +
+  '<div class="card fade-in" style="margin-bottom: 24px;">' +
+    '<div class="card-header">' +
+      '<h3 class="card-title"><i class="fas fa-stethoscope" style="color: var(--primary);"></i> Tipos de Tratamento</h3>' +
+      '<span class="badge badge-info">Conheca os casos que atendemos</span>' +
+    '</div>' +
+    '<div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;">' + tiposTratamentoHtml + '</div>' +
+  '</div>' +
 
-    <!-- Scripts Rapidos -->
-    <div class="card fade-in" style="margin-bottom: 24px;">
-      <div class="card-header">
-        <h3 class="card-title"><i class="fas fa-comment-dots" style="color: #25D366;"></i> Scripts de Atendimento</h3>
-        <a href="/playbook/scripts\${tenantQuery}" class="badge badge-success" style="text-decoration: none;">
-          <i class="fas fa-list"></i> Ver todos os scripts
-        </a>
-      </div>
-      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
-        \${scriptsRapidosHtml}
-      </div>
-    </div>
+  '<!-- Scripts Rapidos -->' +
+  '<div class="card fade-in" style="margin-bottom: 24px;">' +
+    '<div class="card-header">' +
+      '<h3 class="card-title"><i class="fas fa-comment-dots" style="color: #25D366;"></i> Scripts de Atendimento</h3>' +
+      '<a href="/playbook/scripts' + tenantQuery + '" class="badge badge-success" style="text-decoration: none;">' +
+        '<i class="fas fa-list"></i> Ver todos os scripts</a>' +
+    '</div>' +
+    '<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">' + scriptsRapidosHtml + '</div>' +
+  '</div>' +
 
-    <!-- Processo de Vendas -->
-    <div class="card fade-in" style="margin-bottom: 24px;">
-      <div class="card-header">
-        <h3 class="card-title"><i class="fas fa-route" style="color: var(--primary);"></i> Jornada do Paciente</h3>
-        <span class="badge badge-info">6 etapas do atendimento</span>
-      </div>
-      \${etapasVendaHtml}
-    </div>
+  '<!-- Processo de Vendas -->' +
+  '<div class="card fade-in" style="margin-bottom: 24px;">' +
+    '<div class="card-header">' +
+      '<h3 class="card-title"><i class="fas fa-route" style="color: var(--primary);"></i> Jornada do Paciente</h3>' +
+      '<span class="badge badge-info">6 etapas do atendimento</span>' +
+    '</div>' +
+    etapasVendaHtml +
+  '</div>' +
 
-    <div class="grid grid-2" style="margin-bottom: 24px;">
-      <!-- Objecoes -->
-      <div class="card fade-in">
-        <div class="card-header">
-          <h3 class="card-title"><i class="fas fa-shield-alt" style="color: #ef4444;"></i> Tratando Objecoes</h3>
-          <a href="/playbook/objecoes\${tenantQuery}" class="badge badge-danger" style="text-decoration: none;">
-            Ver todas
-          </a>
-        </div>
-        \${objecoesHtml}
-      </div>
+  '<div class="grid grid-2" style="margin-bottom: 24px;">' +
+    '<!-- Objecoes -->' +
+    '<div class="card fade-in">' +
+      '<div class="card-header">' +
+        '<h3 class="card-title"><i class="fas fa-shield-alt" style="color: #ef4444;"></i> Tratando Objecoes</h3>' +
+        '<a href="/playbook/objecoes' + tenantQuery + '" class="badge badge-danger" style="text-decoration: none;">Ver todas</a>' +
+      '</div>' +
+      objecoesHtml +
+    '</div>' +
 
-      <!-- Checklist e Links -->
-      <div style="display: flex; flex-direction: column; gap: 24px;">
-        <!-- Checklist -->
-        <div class="card fade-in">
-          <div class="card-header">
-            <h3 class="card-title"><i class="fas fa-clipboard-list"></i> Checklist do Atendimento</h3>
-          </div>
-          <div style="max-height: 300px; overflow-y: auto;">
-            \${checklistHtml}
-          </div>
-        </div>
+    '<!-- Checklist e Links -->' +
+    '<div style="display: flex; flex-direction: column; gap: 24px;">' +
+      '<!-- Checklist -->' +
+      '<div class="card fade-in">' +
+        '<div class="card-header">' +
+          '<h3 class="card-title"><i class="fas fa-clipboard-list"></i> Checklist do Atendimento</h3>' +
+        '</div>' +
+        '<div style="max-height: 300px; overflow-y: auto;">' + checklistHtml + '</div>' +
+      '</div>' +
 
-        <!-- Links -->
-        <div class="card fade-in">
-          <div class="card-header">
-            <h3 class="card-title"><i class="fas fa-link"></i> Links Importantes</h3>
-          </div>
-          \${linksHtml}
-        </div>
-      </div>
-    </div>
+      '<!-- Links -->' +
+      '<div class="card fade-in">' +
+        '<div class="card-header">' +
+          '<h3 class="card-title"><i class="fas fa-link"></i> Links Importantes</h3>' +
+        '</div>' +
+        linksHtml +
+      '</div>' +
+    '</div>' +
+  '</div>' +
 
-    <!-- Dica Final -->
-    <div style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); border: 1px solid var(--secondary); border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 16px;">
-      <div style="width: 48px; height: 48px; background: var(--secondary); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-        <i class="fas fa-heart" style="color: white; font-size: 22px;"></i>
-      </div>
-      <div>
-        <div style="font-weight: 600; margin-bottom: 4px; color: #065f46;">Lembre-se</div>
-        <div style="font-size: 14px; color: #047857;">Cada paciente que chega ate nos esta sofrendo com um problema que afeta sua autoestima. Trate com empatia, ouça de verdade, e mostre que aqui ele encontra solucao real - nao paliativo.</div>
-      </div>
-    </div>
-  \`;
+  '<!-- Dica Final -->' +
+  '<div style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); border: 1px solid var(--secondary); border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 16px;">' +
+    '<div style="width: 48px; height: 48px; background: var(--secondary); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">' +
+      '<i class="fas fa-heart" style="color: white; font-size: 22px;"></i>' +
+    '</div>' +
+    '<div>' +
+      '<div style="font-weight: 600; margin-bottom: 4px; color: #065f46;">Lembre-se</div>' +
+      '<div style="font-size: 14px; color: #047857;">Cada paciente que chega ate nos esta sofrendo com um problema que afeta sua autoestima. Trate com empatia, ouca de verdade, e mostre que aqui ele encontra solucao real - nao paliativo.</div>' +
+    '</div>' +
+  '</div>';
 }
 
 function renderScripts() {
