@@ -70,12 +70,6 @@ export async function getCardById(env, cardId) {
   return fetchCRM(`/crm/v1/panel/card/${cardId}?IncludeDetails=contact,tags,annotations`, env);
 }
 
-// Buscar todos os steps (etapas) do painel - obtidos do próprio painel
-export async function getSteps(env) {
-  const panel = await getPanel(env);
-  return { items: panel.steps || [], panel };
-}
-
 // Buscar detalhes do painel com steps incluídos
 export async function getPanel(env, request = null) {
   return fetchCRM(`/crm/v1/panel/${getPanelId(env, request)}?IncludeDetails=steps,tags`, env);
