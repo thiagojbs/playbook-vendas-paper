@@ -7,38 +7,46 @@ export const ESTATISTICAS_CLINICA = {
   pacientes_atendidos: '2.000+',
   especializacao: 'Tricologia',
   abordagem: 'Investigativa - trata a causa',
-  diferenciais: ['Sem paliativos', 'Protocolo personalizado', 'Acompanhamento continuo']
+  diferenciais: ['Sem paliativos', 'Protocolo personalizado', 'Acompanhamento continuo'],
+  metodo: 'Método Manifesto',
+  tagline: 'QUEM SENTE, ENTENDE. QUEM ENTENDE, AGE.',
+  posicionamento: 'Somos o lado oposto da medicina rasa'
 };
 
 export const DIFERENCIAIS = [
   {
-    titulo: 'Tratamos a Causa',
-    descricao: 'Investigamos por que voce esta perdendo cabelo, nao apenas tratamos o sintoma.',
+    titulo: 'Tratamos a RAIZ',
+    descricao: 'Nao vendemos esperanca vazia. Investigamos a causa real da sua queda, nao apenas o sintoma.',
     icone: 'search'
   },
   {
+    titulo: 'Metodo Manifesto',
+    descricao: '2.000+ pacientes transformados com nosso protocolo investigativo exclusivo.',
+    icone: 'award'
+  },
+  {
     titulo: 'Biomedica Especialista',
-    descricao: 'Franciele e biomedica com especializacao em tricologia e 7 anos de experiencia.',
+    descricao: 'Dra. Franciele Madeira - 7+ anos em tricologia, reconhecida regionalmente.',
     icone: 'user-md'
   },
   {
-    titulo: 'Sem Paliativos',
-    descricao: 'Nao dependemos apenas de Minoxidil e Finasterida - vamos alem.',
+    titulo: 'Chega de Paliativos Eternos',
+    descricao: 'Somos o lado oposto da medicina rasa. Nao dependemos apenas de Minoxidil e Finasterida.',
     icone: 'ban'
   },
   {
-    titulo: 'Diagnostico Preciso',
-    descricao: 'Usamos tricoscopia e exames complementares para entender seu caso.',
+    titulo: 'Diagnostico Sem Massagem',
+    descricao: 'Tricoscopia + exames complementares. Mostramos a verdade sobre seus foliculos.',
     icone: 'microscope'
   },
   {
     titulo: 'Protocolo Personalizado',
-    descricao: 'Cada paciente recebe tratamento especifico para sua condicao.',
+    descricao: 'Cada paciente e unico. Tratamento exclusivo baseado na SUA causa.',
     icone: 'clipboard-list'
   },
   {
-    titulo: 'Resultados Reais',
-    descricao: 'Mais de 2.000 pacientes tratados com 92% de satisfacao.',
+    titulo: 'Resultados Comprovados',
+    descricao: '2.000+ vidas transformadas | 92% de satisfacao | 7+ anos de experiencia real.',
     icone: 'chart-line'
   }
 ];
@@ -68,7 +76,9 @@ export const OBJECOES_EXPANDIDAS = {
 
 Mas me permite uma reflexao?
 
-*Quanto voce ja gastou em tratamentos que nao resolveram?*
+*Tempo e cabelo. Investir agora ou gastar o dobro depois?*
+
+*Quanto voce ja gastou em paliativos eternos?*
 - Minoxidil: R$ 80-150/mes = R$ 1.000-1.800/ano
 - Shampoos "antiqueda": R$ 50-100/mes = R$ 600-1.200/ano
 - Vitaminas: R$ 100-200/mes = R$ 1.200-2.400/ano
@@ -76,10 +86,12 @@ Mas me permite uma reflexao?
 
 Em 2-3 anos, muitos pacientes ja gastaram R$ 5.000-10.000... e continuam perdendo cabelo.
 
-*Nosso tratamento:*
+*Metodo Manifesto - 2.000+ pacientes transformados:*
 - Investimento definido (nao eterno)
-- Trata a causa, nao o sintoma
+- Tratamos a RAIZ, nao o sintoma
 - Resultados duradouros
+
+Nao vendemos esperanca vazia. Vendemos investigacao real.
 
 Temos parcelamento em ate 12x. Quer que eu monte uma proposta que caiba no seu orcamento?`,
         argumentos: [
@@ -115,14 +127,15 @@ Temos parcelamento em ate 12x. Quer que eu monte uma proposta que caiba no seu o
 ❓ Ha acompanhamento da evolucao ou so vende sessoes?
 ❓ A profissional e especialista em tricologia?
 
-*Aqui na Cabelo & Saude:*
-✅ Investigamos a causa com tricoscopia + exames
-✅ Protocolo 100% personalizado
-✅ Nao dependemos so de paliativos
+*Aqui na Cabelo & Saude - Metodo Manifesto:*
+✅ Somos o lado oposto da medicina rasa
+✅ Investigamos a RAIZ com tricoscopia + exames
+✅ Protocolo 100% personalizado - chega de paliativos eternos
 ✅ Acompanhamento continuo com ajustes
-✅ Franciele e biomedica tricologista com 7 anos de experiencia
+✅ Dra. Franciele Madeira - 7+ anos, 2.000+ pacientes transformados
 
 O mais barato nem sempre e o mais economico se nao resolver.
+*Tempo e cabelo. Coragem e agora.*
 
 Quer levar o orcamento para comparar com calma?`,
         argumentos: [
@@ -156,8 +169,10 @@ Quer levar o orcamento para comparar com calma?`,
 2. *Tratamento inicial:* Comecar com protocolo basico e evoluir
 3. *Agenda futura:* Reservar para mes que vem com valores de hoje
 
-*Uma informacao importante (sem pressao):*
+*Uma verdade clinica (sem pressao):*
 A queda capilar tende a progredir. O que tratamos hoje em 6 meses pode precisar de 1 ano daqui a alguns meses.
+
+*Tempo e cabelo.*
 
 Nao e para te pressionar - e apenas um fato clinico que voce merece saber.
 
@@ -194,31 +209,37 @@ Qual opcao faz mais sentido pra voce?`,
         },
         script_whatsapp: `[Nome], essa frustracao e completamente compreensivel.
 
-Muitos dos nossos pacientes chegam assim - ja tentaram de tudo e estao desacreditados.
+Muitos dos nossos 2.000+ pacientes chegaram assim - desacreditados, frustrados.
 
-*Posso te contar o que provavelmente aconteceu?*
+*Vou te falar a verdade que ninguem te contou:*
 
-A maioria dos tratamentos disponiveis trata o *sintoma* (a queda), nao a *causa*.
+Pare de culpar a genetica. Pare de aceitar "e assim mesmo".
+
+A maioria dos tratamentos trata o *sintoma* (a queda), nao a *causa*.
 
 - Minoxidil = vasodilata mas nao resolve a causa
 - Finasterida = bloqueia DHT mas nao investiga por que
 - Shampoos = cuidam do fio, nao do foliculo
-- Vitaminas genericas = podem nao ser o que voce precisa
+- Vitaminas genericas = tiro no escuro
 
-*Aqui fazemos diferente:*
-Investigamos POR QUE voce esta perdendo cabelo.
+*Somos o lado oposto da medicina rasa:*
+
+Investigamos POR QUE voce esta perdendo cabelo com o Metodo Manifesto.
 - E hormonal? Nutricional? Inflamatorio? Estresse?
 - Seus foliculos estao ativos ou ja fecharam?
-- O que seus exames mostram?
+- O que seus exames mostram DE VERDADE?
 
-So tratamos depois de entender.
+Nao vendemos esperanca vazia. Tratamos a RAIZ.
 
-Que tal fazer a avaliacao e ver no tricoscopio a situacao real do seu couro cabeludo?`,
+*QUEM SENTE, ENTENDE. QUEM ENTENDE, AGE.*
+
+Que tal fazer a avaliacao e ver no tricoscopio a verdade sobre seu couro cabeludo?`,
         argumentos: [
           'Validar frustracao - e real',
-          'Explicar por que outros falharam',
-          'Mostrar diferenca da abordagem',
-          'Convidar para ver na pratica'
+          'Confrontar: "Pare de culpar a genetica"',
+          'Explicar por que outros falharam (tratavam sintoma)',
+          'Mostrar diferenca: Metodo Manifesto vs medicina rasa',
+          'Convidar para ver a verdade na pratica'
         ],
         dados_suporte: '85% dos pacientes que chegam frustrados tiveram apenas tratamentos paliativos'
       },
@@ -251,18 +272,25 @@ E como a diferenca entre clinico geral e cardiologista - ambos sao medicos, mas 
 - E genetico irreversivel? (existem niveis diferentes)
 - Ou e que nao conhecem tratamentos alem de Minoxidil?
 
-*Proposta honesta:*
-Vamos fazer a avaliacao tricologica. Vou te mostrar exatamente a situacao dos seus foliculos.
+*Nao vendemos esperanca vazia:*
 
 Se realmente nao houver o que fazer, serei honesta contigo.
-Mas na minha experiencia, muitos casos "sem jeito" tinham sim solucao - so precisavam de investigacao adequada.
+
+Mas em 7+ anos e 2.000+ pacientes transformados pelo Metodo Manifesto, muitos casos "sem jeito" tinham sim solucao.
+
+O problema? *Medicina rasa que nao investiga a fundo.*
+
+Somos o lado oposto disso.
+
+Vamos fazer a avaliacao tricologica e ver a VERDADE no tricoscopio?
 
 O que acha?`,
         argumentos: [
           'Respeitar profissional anterior',
           'Diferenciar dermatologia de tricologia',
           'Questionar o que significa "sem jeito"',
-          'Propor avaliacao com honestidade'
+          'Reforcar: 2.000+ pacientes, muitos "sem jeito" melhoraram',
+          'Propor avaliacao com honestidade: nao vendemos esperanca vazia'
         ],
         dados_suporte: '7 em 10 pacientes com "prognostico negativo" tinham opcoes de tratamento'
       },
@@ -288,13 +316,15 @@ O que acha?`,
 Nao posso te prometer resultado sem te avaliar primeiro.
 Quem promete resultado sem ver seu caso esta mentindo.
 
-*O que posso te garantir:*
+*Nao vendemos esperanca vazia.*
+
+*O que posso te garantir com o Metodo Manifesto:*
 - Avaliacao tricologica completa (tricoscopia + anamnese)
-- Diagnostico honesto do seu caso
+- Diagnostico honesto e sem massagem
 - Explicacao clara do potencial de melhora
 - Protocolo personalizado SE houver indicacao
 
-*Na avaliacao voce vai saber:*
+*Na avaliacao voce vai saber a VERDADE:*
 - Estado atual dos seus foliculos
 - Se estao ativos ou inativos
 - Quais sao as causas provaveis
@@ -302,6 +332,8 @@ Quem promete resultado sem ver seu caso esta mentindo.
 - Quanto tempo de tratamento
 
 Depois de ver tudo isso, VOCE decide se quer prosseguir.
+
+*QUEM SENTE, ENTENDE. QUEM ENTENDE, AGE.*
 
 Que tal agendar a avaliacao e ter clareza sobre seu caso?`,
         argumentos: [
@@ -349,12 +381,14 @@ As sessoes sao:
 - Indo em farmacias comprar produtos
 - Frustrado porque nada funciona
 
+*Tempo e cabelo.*
+
 *Nos temos:*
 - Horarios flexiveis (manha, tarde, noite)
 - Alguns dias de sabado
 - Agendamento com antecedencia
 
-Considerando que e um tratamento com fim definido (nao e eterno), vale o investimento de tempo?
+Considerando que e um tratamento com fim definido (nao e eterno como paliativos), vale o investimento de tempo?
 
 Qual periodo do dia seria melhor pra voce?`,
         argumentos: [
@@ -382,29 +416,35 @@ Qual periodo do dia seria melhor pra voce?`,
         },
         script_whatsapp: `Entendo, [Nome]. E uma decisao importante mesmo.
 
-*Posso te passar uma informacao clinica?*
+*Posso te passar uma verdade clinica?*
 
 A queda capilar nao e como gripe - nao passa sozinha.
 E progressiva na maioria dos casos.
 
-*O que isso significa:*
-- Foliculos que hoje estao "adormecidos" podem se fechar
+*Tempo e cabelo. Coragem e agora.*
+
+- Foliculos que hoje estao "adormecidos" podem se fechar definitivamente
 - O que tratamos hoje em 6 meses, pode precisar de 1 ano depois
 - Quanto mais cedo = menos sessoes = menos investimento
+- *Cada fio perdido e uma escolha que voce nao fez*
 
 Nao estou te pressionando - cada um tem seu tempo.
 
-Mas como profissional, seria irresponsavel nao te contar isso.
+Mas como profissional, seria irresponsavel nao te contar a verdade.
+
+*QUEM SENTE, ENTENDE. QUEM ENTENDE, AGE.*
 
 *Proposta:*
 Se quiser, posso te manter informado sobre cuidados preventivos que voce pode fazer em casa enquanto decide.
 
-E quando estiver pronto, e so me chamar. Combinado?`,
+E quando estiver pronto para agir de verdade, e so me chamar. Combinado?`,
         argumentos: [
           'Queda capilar e progressiva',
-          'Foliculos podem se fechar',
+          'Usar frase: "Tempo e cabelo. Coragem e agora."',
+          'Confrontar: "Cada fio perdido e uma escolha que voce nao fez"',
+          'Foliculos podem se fechar definitivamente',
           'Tratamento precoce = melhores resultados',
-          'Respeitar tempo do paciente'
+          'Respeitar tempo do paciente mas informar a verdade'
         ],
         dados_suporte: 'Foliculos inativos por mais de 3 anos tem chance reduzida de recuperacao'
       }
@@ -432,7 +472,9 @@ E quando estiver pronto, e so me chamar. Combinado?`,
         },
         script_whatsapp: `Esses medicamentos tem sim seu papel, [Nome].
 
-*Mas deixa eu te explicar uma coisa:*
+*Mas deixa eu te falar a verdade:*
+
+*Chega de paliativos eternos.*
 
 Minoxidil = vasodilatador (aumenta fluxo sanguineo)
 Finasterida = bloqueia DHT (hormonio que afina fios)
@@ -443,6 +485,7 @@ Finasterida = bloqueia DHT (hormonio que afina fios)
 ❌ Nao resolvem inflamacoes do couro cabeludo
 ❌ Nao reequilibram outros hormonios
 ❌ Nao estimulam foliculos de forma completa
+❌ Voce usa PARA SEMPRE ou perde tudo
 
 *Pergunta honesta:*
 Voce ja usa esses medicamentos? Ha quanto tempo?
@@ -450,14 +493,20 @@ Os resultados estao satisfatorios?
 
 Se estivessem, voce provavelmente nao teria me procurado.
 
-Aqui usamos esses medicamentos QUANDO indicados - como parte de um protocolo completo, nao como unica solucao.
+*Somos o lado oposto da medicina rasa:*
+
+Aqui usamos esses medicamentos QUANDO indicados - como parte do Metodo Manifesto, nao como unica solucao.
+
+Tratamos a RAIZ, nao o sintoma.
 
 Quer entender melhor na avaliacao?`,
         argumentos: [
-          'Medicamentos tratam sintoma',
-          'Nao investigam causa',
-          'Podem fazer parte do protocolo',
-          'Questionar resultados atuais'
+          'Usar frase: "Chega de paliativos eternos"',
+          'Medicamentos tratam sintoma, nao investigam causa',
+          'Alertar: voce usa PARA SEMPRE ou perde tudo',
+          'Reforcar: Somos o lado oposto da medicina rasa',
+          'Podem fazer parte do Metodo Manifesto quando indicados',
+          'Questionar resultados atuais com honestidade'
         ],
         dados_suporte: '70% dos usuarios de Minoxidil/Finasterida nao tem resultados satisfatorios apos 2 anos'
       },
@@ -478,7 +527,9 @@ Quer entender melhor na avaliacao?`,
         },
         script_whatsapp: `Voce tem razao que genetica e um fator importante, [Nome].
 
-*Mas deixa eu te contar o outro lado:*
+*Mas vou te falar uma verdade:*
+
+*Pare de culpar a genetica.*
 
 Genetica determina a TENDENCIA, nao o destino.
 
@@ -500,14 +551,20 @@ Nem toda queda e genetica pura - muitas vezes tem fatores SOMADOS:
 - Inflamacao do couro cabeludo
 - Estresse
 
-Tratando esses fatores, mesmo a genetica progride mais devagar.
+*Com o Metodo Manifesto, tratamos esses fatores.*
+Resultado? Mesmo a genetica progride MUITO mais devagar.
+
+Nao vendemos esperanca vazia. Vendemos investigacao real.
 
 Quer saber o que e possivel no SEU caso especificamente?`,
         argumentos: [
+          'Confrontar: "Pare de culpar a genetica"',
           'Genetica e tendencia, nao destino',
-          'Podemos retardar e melhorar',
-          'Muitas quedas tem fatores adicionais',
-          'Avaliacao mostra o possivel'
+          'Podemos retardar e melhorar significativamente',
+          'Muitas quedas tem fatores adicionais tratáveis',
+          'Metodo Manifesto trata esses fatores',
+          'Reforcar honestidade: nao vendemos esperanca vazia',
+          'Avaliacao mostra o possivel no caso especifico'
         ],
         dados_suporte: 'Tratamento adequado pode retardar progressao genetica em 5-10 anos'
       },
@@ -629,6 +686,11 @@ Me conta: qual e a principal duvida ou preocupacao que voce quer avaliar?
 
 Se eu souber, posso te mandar informacoes especificas pra sua reflexao.
 
+*So uma reflexao:*
+QUEM SENTE, ENTENDE. QUEM ENTENDE, AGE.
+
+Voce ja sente que algo precisa ser feito. A questao e: quando?
+
 *Combinado?*
 Posso te ligar na [quinta/sexta] para saber como esta sua reflexao? Sem pressao - so pra tirar duvidas que surgirem.
 
@@ -687,7 +749,7 @@ export const GATILHOS_MENTAIS = [
   {
     nome: 'Autoridade',
     uso: 'Biomedica especialista com 7 anos de experiencia',
-    exemplo: 'Franciele ja tratou mais de 2.000 pacientes com 92% de satisfacao.',
+    exemplo: 'Dra. Franciele Madeira ja transformou mais de 2.000 pacientes com 92% de satisfacao.',
     cuidado: 'Credencial importa em saude'
   },
   {
@@ -699,13 +761,19 @@ export const GATILHOS_MENTAIS = [
   {
     nome: 'Diferenciacao',
     uso: 'Tratamos a causa, nao o sintoma',
-    exemplo: 'Diferente de quem so passa Minoxidil, nos investigamos POR QUE voce esta perdendo cabelo.',
+    exemplo: 'Somos o lado oposto da medicina rasa. Investigamos POR QUE voce esta perdendo cabelo.',
     cuidado: 'Nao desqualificar outros profissionais'
+  },
+  {
+    nome: 'Metodo Manifesto',
+    uso: 'Abordagem exclusiva da clinica',
+    exemplo: 'Com o Metodo Manifesto, 2.000+ pacientes transformaram suas vidas.',
+    cuidado: 'Reforcar diferenciacao sem exageros'
   },
   {
     nome: 'Honestidade',
     uso: 'Nem sempre prometemos resultados milagrosos',
-    exemplo: 'Se apos a avaliacao eu ver que nao ha o que fazer, serei honesta contigo.',
+    exemplo: 'Nao vendemos esperanca vazia. Se nao houver o que fazer, serei honesta contigo.',
     cuidado: 'Constroi confianca'
   },
   {
@@ -713,5 +781,57 @@ export const GATILHOS_MENTAIS = [
     uso: 'Oferecer valor antes de pedir decisao',
     exemplo: 'Posso te enviar alguns conteudos sobre cuidados capilares enquanto decide.',
     cuidado: 'Valor genuino, nao manipulacao'
+  }
+];
+
+// Frases do Manifesto para uso estrategico em objecoes
+export const FRASES_MANIFESTO_OBJECOES = [
+  {
+    situacao: 'Paciente hesitante ou indeciso',
+    frase: 'QUEM SENTE, ENTENDE. QUEM ENTENDE, AGE.',
+    quando_usar: 'Ao final da conversa para motivar decisao',
+    contexto: 'Use quando o paciente demonstra entender o problema mas esta travado na acao'
+  },
+  {
+    situacao: 'Paciente procrastinando',
+    frase: 'Tempo e cabelo. Coragem e agora.',
+    quando_usar: 'Objecao de tempo ou "vou pensar", "vou esperar"',
+    contexto: 'Cria urgencia natural sem pressionar - e uma verdade clinica'
+  },
+  {
+    situacao: 'Paciente frustrado com tratamentos anteriores',
+    frase: 'Somos o lado oposto da medicina rasa.',
+    quando_usar: 'Quando menciona dermatologistas, Minoxidil ou tratamentos que falharam',
+    contexto: 'Diferenciacao forte sem desqualificar outros profissionais'
+  },
+  {
+    situacao: 'Paciente com duvidas sobre eficacia',
+    frase: 'Nao vendemos esperanca vazia. Tratamos a RAIZ.',
+    quando_usar: 'Quando questiona se vai funcionar ou pede garantias',
+    contexto: 'Reforcar honestidade e abordagem investigativa'
+  },
+  {
+    situacao: 'Paciente culpando genetica',
+    frase: 'Pare de culpar a genetica.',
+    quando_usar: 'Quando usa genetica como desculpa para nao agir',
+    contexto: 'Tom confrontador mas educativo - quebra a narrativa de impotencia'
+  },
+  {
+    situacao: 'Paciente comparando com paliativos',
+    frase: 'Chega de paliativos eternos.',
+    quando_usar: 'Quando compara com Minoxidil, Finasterida ou shampoos',
+    contexto: 'Reforcar diferenca entre tratar sintoma vs causa'
+  },
+  {
+    situacao: 'Paciente procrastinando a decisao',
+    frase: 'Cada fio perdido e uma escolha que voce nao fez.',
+    quando_usar: 'Objecao "vou esperar mais um pouco"',
+    contexto: 'Urgencia forte mas factual - responsabiliza sem culpar'
+  },
+  {
+    situacao: 'Qualquer momento de reforco da marca',
+    frase: 'Metodo Manifesto - 2.000+ pacientes transformados',
+    quando_usar: 'Ao apresentar diferenciais ou responder sobre credibilidade',
+    contexto: 'Prova social + diferenciacao'
   }
 ];
