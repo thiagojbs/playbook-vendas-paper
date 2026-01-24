@@ -53,16 +53,9 @@ export function renderPlaybook(path, tenantData = {}) {
     }
     activeMenu = 'scripts';
   }
-  else if (path.includes('/objecoes')) {
-    // Renderizar objecoes especifico do tenant
-    if (tenantId === 'cabeloesaude') {
-      content = renderObjecoesCabeloeSaude();
-    } else {
-      content = renderObjecoes();
-    }
-    activeMenu = 'objecoes';
-  }
+  else if (path.includes('/objecoes')) { content = renderObjecoes(); activeMenu = 'objecoes'; }
   else if (path.includes('/agentes') || path.includes('/planos')) { content = renderAgentes(); activeMenu = 'planos'; }
+  else if (path.includes('/api') || path.includes('/mcp')) { content = renderAPIDocumentacao(path); activeMenu = 'api'; }
   else {
     // Renderizar playbook especifico do tenant
     if (tenantId === 'cabeloesaude') {
@@ -689,23 +682,23 @@ function renderPlaybookCabeloeSaude() {
 function renderScriptsCabeloeSaude() {
   var tenantQuery = '?tenant=cabeloesaude';
 
-  // Stats da Clinica - com melhor legibilidade
+  // Stats da Clinica
   var statsHtml = '<div class="stats-grid" style="margin-bottom: 24px;">' +
-    '<div class="stat-card" style="background: linear-gradient(135deg, #1a5f52 0%, #2d8a7a 100%); color: white; box-shadow: 0 4px 6px rgba(26, 95, 82, 0.3);">' +
-      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">44+</div>' +
-      '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px; letter-spacing: 0.3px;">Scripts Prontos</div>' +
+    '<div class="stat-card" style="background: linear-gradient(135deg, #1a5f52 0%, #2d8a7a 100%); color: white;">' +
+      '<div class="stat-value">40+</div>' +
+      '<div class="stat-label" style="color: rgba(255,255,255,0.9);">Scripts Prontos</div>' +
     '</div>' +
-    '<div class="stat-card" style="background: linear-gradient(135deg, #2d8a7a 0%, #4fb3a3 100%); color: white; box-shadow: 0 4px 6px rgba(45, 138, 122, 0.3);">' +
-      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">7</div>' +
-      '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px; letter-spacing: 0.3px;">Etapas do Funil</div>' +
+    '<div class="stat-card" style="background: linear-gradient(135deg, #2d8a7a 0%, #4fb3a3 100%); color: white;">' +
+      '<div class="stat-value">7</div>' +
+      '<div class="stat-label" style="color: rgba(255,255,255,0.9);">Etapas do Funil</div>' +
     '</div>' +
-    '<div class="stat-card" style="background: linear-gradient(135deg, #4fb3a3 0%, #6dd5c7 100%); color: white; box-shadow: 0 4px 6px rgba(79, 179, 163, 0.3);">' +
-      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">4</div>' +
-      '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px; letter-spacing: 0.3px;">Sequencias Automaticas</div>' +
+    '<div class="stat-card" style="background: linear-gradient(135deg, #4fb3a3 0%, #6dd5c7 100%); color: white;">' +
+      '<div class="stat-value">4</div>' +
+      '<div class="stat-label" style="color: rgba(255,255,255,0.9);">Sequencias Automaticas</div>' +
     '</div>' +
-    '<div class="stat-card" style="background: linear-gradient(135deg, #1a5f52 0%, #4fb3a3 100%); color: white; box-shadow: 0 4px 6px rgba(26, 95, 82, 0.3);">' +
-      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">72%</div>' +
-      '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px; letter-spacing: 0.3px;">Taxa Media de Resposta</div>' +
+    '<div class="stat-card" style="background: linear-gradient(135deg, #1a5f52 0%, #4fb3a3 100%); color: white;">' +
+      '<div class="stat-value">72%</div>' +
+      '<div class="stat-label" style="color: rgba(255,255,255,0.9);">Taxa Media de Resposta</div>' +
     '</div>' +
   '</div>';
 
@@ -1401,206 +1394,6 @@ function renderScriptsCabeloeSaude() {
       '<div style="flex: 1;">' +
         '<div style="font-weight: 600; margin-bottom: 4px; color: white;">Lembre-se</div>' +
         '<div style="font-size: 14px; color: rgba(255,255,255,0.9);">Cada paciente que chega ate nos esta sofrendo com um problema que afeta sua autoestima. Trate com empatia, ouca de verdade, e mostre que aqui ele encontra solucao real - nao paliativo.</div>' +
-      '</div>' +
-    '</div>' +
-  '</div>';
-}
-
-function renderObjecoesCabeloeSaude() {
-  // Stats cards
-  var statsHtml = '<div class="stats-grid" style="margin-bottom: 24px;">' +
-    '<div class="stat-card" style="background: linear-gradient(135deg, #1a5f52 0%, #2d8a7a 100%); color: white; box-shadow: 0 4px 6px rgba(26, 95, 82, 0.3);">' +
-      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">7+</div>' +
-      '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px;">Anos de Experiência</div>' +
-    '</div>' +
-    '<div class="stat-card" style="background: linear-gradient(135deg, #2d8a7a 0%, #4fb3a3 100%); color: white; box-shadow: 0 4px 6px rgba(45, 138, 122, 0.3);">' +
-      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">2.000+</div>' +
-      '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px;">Pacientes Atendidos</div>' +
-    '</div>' +
-    '<div class="stat-card" style="background: linear-gradient(135deg, #4fb3a3 0%, #6dd5c7 100%); color: white; box-shadow: 0 4px 6px rgba(79, 179, 163, 0.3);">' +
-      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">13</div>' +
-      '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px;">Objeções Mapeadas</div>' +
-    '</div>' +
-    '<div class="stat-card" style="background: linear-gradient(135deg, #1a5f52 0%, #4fb3a3 100%); color: white; box-shadow: 0 4px 6px rgba(26, 95, 82, 0.3);">' +
-      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">92%</div>' +
-      '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px;">Taxa de Satisfação</div>' +
-    '</div>' +
-  '</div>';
-
-  // Diferenciais para argumentacao
-  var diferenciaisHtml = DIFERENCIAIS.map(function(d) {
-    return '<div style="display: flex; align-items: flex-start; gap: 12px; padding: 12px; background: rgba(139, 92, 246, 0.05); border-radius: 8px;">' +
-      '<div style="width: 40px; height: 40px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">' +
-        '<i class="fas fa-' + d.icone + '" style="color: white;"></i>' +
-      '</div>' +
-      '<div>' +
-        '<div style="font-weight: 600; margin-bottom: 4px;">' + d.titulo + '</div>' +
-        '<div style="font-size: 13px; color: var(--text-secondary);">' + d.descricao + '</div>' +
-      '</div>' +
-    '</div>';
-  }).join('');
-
-  // Tabs de categorias
-  var categorias = Object.entries(OBJECOES_EXPANDIDAS);
-  var tabsHtml = categorias.map(function(entry, index) {
-    var key = entry[0];
-    var cat = entry[1];
-    return '<div class="tab ' + (index === 0 ? 'active' : '') + '" data-tab="' + key + '">' +
-      '<i class="fas fa-' + cat.icone + '" style="color: ' + cat.cor + ';"></i> ' + cat.categoria.split(' ')[0] +
-    '</div>';
-  }).join('');
-
-  // Conteudo de cada categoria
-  var tabContentsHtml = categorias.map(function(entry, index) {
-    var key = entry[0];
-    var cat = entry[1];
-    var objecoesItems = cat.objecoes.map(function(obj) {
-      var passosHtml = obj.tecnica_call.passos.map(function(p) {
-        return '<li style="padding: 6px 0; border-bottom: 1px solid var(--border);">' + p + '</li>';
-      }).join('');
-      var gatilhosHtml = obj.tecnica_call.gatilhos.map(function(g) {
-        return '<span class="badge badge-purple" style="margin-right: 4px;">' + g + '</span>';
-      }).join('');
-      var argumentosHtml = obj.argumentos.map(function(a) {
-        return '<li style="display: flex; align-items: flex-start; gap: 8px; padding: 6px 0;"><i class="fas fa-check-circle" style="color: var(--secondary);"></i>' + a + '</li>';
-      }).join('');
-
-      return '<div class="accordion" style="margin-bottom: 16px;">' +
-        '<div class="accordion-header" style="border-left: 4px solid ' + cat.cor + ';">' +
-          '<div class="accordion-title">' +
-            '<span class="badge" style="background: ' + cat.cor + '20; color: ' + cat.cor + '; margin-right: 8px;">' +
-              (obj.nivel === 'muito_comum' ? 'MUITO COMUM' : obj.nivel === 'comum' ? 'COMUM' : 'RARO') +
-            '</span>' +
-            '"' + obj.titulo + '"' +
-          '</div>' +
-          '<i class="fas fa-chevron-down"></i>' +
-        '</div>' +
-        '<div class="accordion-content" style="padding: 0;">' +
-          '<div style="padding: 20px; background: #fafafa; border-bottom: 1px solid var(--border);">' +
-            '<div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;">' +
-              '<i class="fas fa-info-circle"></i> <strong>Contexto:</strong> ' + obj.contexto +
-            '</div>' +
-          '</div>' +
-          '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0;">' +
-            '<!-- Coluna Esquerda: Tecnica para Call -->' +
-            '<div style="padding: 20px; border-right: 1px solid var(--border);">' +
-              '<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">' +
-                '<div style="width: 32px; height: 32px; background: var(--primary); border-radius: 6px; display: flex; align-items: center; justify-content: center;">' +
-                  '<i class="fas fa-phone-alt" style="color: white; font-size: 14px;"></i>' +
-                '</div>' +
-                '<div>' +
-                  '<div style="font-weight: 600; font-size: 14px;">Para Call ao Vivo</div>' +
-                  '<div style="font-size: 12px; color: var(--text-secondary);">' + obj.tecnica_call.nome + '</div>' +
-                '</div>' +
-              '</div>' +
-              '<div style="font-weight: 500; margin-bottom: 8px; font-size: 13px;">Passos:</div>' +
-              '<ol style="list-style: decimal; padding-left: 20px; margin-bottom: 16px; font-size: 13px;">' +
-                passosHtml +
-              '</ol>' +
-              '<div style="font-weight: 500; margin-bottom: 8px; font-size: 13px;">Gatilhos Mentais:</div>' +
-              '<div style="margin-bottom: 16px;">' + gatilhosHtml + '</div>' +
-              '<div style="font-weight: 500; margin-bottom: 8px; font-size: 13px;">Argumentos de Apoio:</div>' +
-              '<ul style="list-style: none; padding: 0; font-size: 13px;">' +
-                argumentosHtml +
-              '</ul>' +
-              '<div style="margin-top: 16px; padding: 12px; background: rgba(16, 185, 129, 0.1); border-radius: 8px; font-size: 12px;">' +
-                '<i class="fas fa-chart-line" style="color: var(--secondary);"></i>' +
-                ' <strong>Dado de suporte:</strong> ' + obj.dados_suporte +
-              '</div>' +
-            '</div>' +
-            '<!-- Coluna Direita: Script WhatsApp -->' +
-            '<div style="padding: 20px;">' +
-              '<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">' +
-                '<div style="width: 32px; height: 32px; background: #25D366; border-radius: 6px; display: flex; align-items: center; justify-content: center;">' +
-                  '<i class="fab fa-whatsapp" style="color: white; font-size: 16px;"></i>' +
-                '</div>' +
-                '<div>' +
-                  '<div style="font-weight: 600; font-size: 14px;">Para WhatsApp</div>' +
-                  '<div style="font-size: 12px; color: var(--text-secondary);">Copie e envie</div>' +
-                '</div>' +
-              '</div>' +
-              '<div class="message-box" style="font-size: 13px; white-space: pre-wrap; max-height: 400px; overflow-y: auto;">' +
-                '<button class="copy-btn" onclick="copyToClipboard(`' + obj.script_whatsapp.replace(/`/g, '\\`').replace(/\$/g, '\\$') + '`, this)">' +
-                  '<i class="fas fa-copy"></i> Copiar' +
-                '</button>' +
-                obj.script_whatsapp +
-              '</div>' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
-      '</div>';
-    }).join('');
-
-    return '<div id="' + key + '" class="tab-content ' + (index === 0 ? 'active' : '') + '">' +
-      objecoesItems +
-    '</div>';
-  }).join('');
-
-  // Tecnicas Gerais
-  var tecnicasHtml = TECNICAS_GERAIS.map(function(t) {
-    var passosHtml = t.passos.map(function(p) {
-      return '<li style="padding: 8px 0; border-bottom: 1px solid var(--border);">' + p + '</li>';
-    }).join('');
-    return '<div class="card" style="margin-bottom: 0;">' +
-      '<div style="font-weight: 600; margin-bottom: 4px;">' + t.nome + '</div>' +
-      '<div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">' + t.descricao + '</div>' +
-      '<ul style="list-style: none; padding: 0; font-size: 13px;">' +
-        passosHtml +
-      '</ul>' +
-    '</div>';
-  }).join('');
-
-  // Gatilhos Mentais
-  var gatilhosCards = GATILHOS_MENTAIS.map(function(g) {
-    return '<div style="padding: 16px; background: white; border: 1px solid var(--border); border-radius: 8px;">' +
-      '<div style="font-weight: 600; color: var(--primary); margin-bottom: 4px;">' + g.nome + '</div>' +
-      '<div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">' + g.uso + '</div>' +
-      '<div style="font-size: 13px; font-style: italic; padding: 8px; background: var(--bg-page); border-radius: 4px;">' +
-        '"' + g.exemplo + '"' +
-      '</div>' +
-    '</div>';
-  }).join('');
-
-  return '<div class="page-header">' +
-    '<h1 class="page-title"><i class="fas fa-shield-alt"></i> Arsenal de Vendas</h1>' +
-    '<p class="page-subtitle">Ferramentas completas para quebrar objecoes em calls e WhatsApp</p>' +
-  '</div>' +
-  statsHtml +
-  '<div class="card fade-in" style="margin-bottom: 24px;">' +
-    '<div class="card-header">' +
-      '<h3 class="card-title"><i class="fas fa-star"></i> Diferenciais Cabelo & Saúde - Método Manifesto</h3>' +
-    '</div>' +
-    '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">' +
-      diferenciaisHtml +
-    '</div>' +
-  '</div>' +
-  '<div class="card fade-in" style="margin-bottom: 24px;">' +
-    '<div class="card-header">' +
-      '<h3 class="card-title"><i class="fas fa-exclamation-circle"></i> Tratativas de Objecoes por Categoria</h3>' +
-      '<span class="badge badge-info">' + Object.values(OBJECOES_EXPANDIDAS).reduce(function(acc, cat) { return acc + cat.objecoes.length; }, 0) + ' objecoes</span>' +
-    '</div>' +
-    '<div class="tabs" style="margin-bottom: 20px;">' +
-      tabsHtml +
-    '</div>' +
-    '<div class="tab-contents">' +
-      tabContentsHtml +
-    '</div>' +
-  '</div>' +
-  '<div class="grid grid-2">' +
-    '<div class="card fade-in">' +
-      '<div class="card-header">' +
-        '<h3 class="card-title"><i class="fas fa-lightbulb"></i> Tecnicas de Negociacao</h3>' +
-      '</div>' +
-      '<div style="display: flex; flex-direction: column; gap: 16px;">' +
-        tecnicasHtml +
-      '</div>' +
-    '</div>' +
-    '<div class="card fade-in">' +
-      '<div class="card-header">' +
-        '<h3 class="card-title"><i class="fas fa-brain"></i> Gatilhos Mentais</h3>' +
-      '</div>' +
-      '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">' +
-        gatilhosCards +
       '</div>' +
     '</div>' +
   '</div>';

@@ -988,9 +988,6 @@ export function layout(title, content, activeMenu = '', tenantConfig = null) {
       ${modulos.agentes !== false ? `<a href="/playbook/agentes${tenantQuery}" class="nav-tab ${activeMenu === 'planos' ? 'active' : ''}">
         <i class="fas fa-robot"></i> Agentes IA
       </a>` : ''}
-      <a href="/playbook/api${tenantQuery}" class="nav-tab ${activeMenu === 'api' ? 'active' : ''}" style="background: ${activeMenu === 'api' ? 'rgba(99, 102, 241, 0.15)' : 'rgba(99, 102, 241, 0.05)'}; border: 1px solid rgba(99, 102, 241, 0.3);">
-        <i class="fas fa-code" style="color: #6366f1;"></i> <span style="color: #6366f1; font-weight: 600;">API & MCP</span>
-      </a>
       ${modulos.desempenho !== false ? `<a href="/desempenho${tenantQuery}" class="nav-tab ${activeMenu === 'desempenho' ? 'active' : ''}">
         <i class="fas fa-chart-line"></i> Desempenho
       </a>` : ''}
