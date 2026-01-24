@@ -185,6 +185,9 @@ function renderCRM(env) {
           <span id="statusText" style="font-size: 13px; color: var(--text-secondary);">Conectando...</span>
         </div>
         <span class="badge badge-info" id="ultimaAtualizacao" style="font-size: 11px;">--:--</span>
+        <span class="badge" id="panelIdBadge" style="font-size: 10px; background: rgba(139, 92, 246, 0.1); color: #8b5cf6; cursor: pointer;" onclick="abrirConfigCRM()" title="Clique para configurar">
+          <i class="fas fa-database"></i> Panel ID
+        </span>
       </div>
       <div style="display: flex; gap: 8px;">
         <button class="btn btn-sm tab-btn active" id="tabPipeline" onclick="showTab('pipeline')" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6; border: 1px solid rgba(139, 92, 246, 0.3);">
@@ -196,6 +199,53 @@ function renderCRM(env) {
         <button class="btn btn-sm" onclick="carregarDadosCRM()" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3);">
           <i class="fas fa-sync-alt"></i>
         </button>
+        <button class="btn btn-sm" onclick="abrirConfigCRM()" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6; border: 1px solid rgba(139, 92, 246, 0.3);" title="Configurar CRM">
+          <i class="fas fa-cog"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal de Configuração CRM -->
+    <div id="modalConfigCRM" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center;">
+      <div style="background: white; border-radius: 16px; padding: 24px; max-width: 500px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <h3 style="margin: 0; font-size: 18px; font-weight: 600;">
+            <i class="fas fa-cog" style="color: #8b5cf6; margin-right: 8px;"></i>
+            Configuração do CRM
+          </h3>
+          <button onclick="fecharConfigCRM()" style="background: none; border: none; font-size: 24px; color: var(--text-secondary); cursor: pointer; padding: 0; width: 32px; height: 32px;">&times;</button>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">
+            Panel ID do CRM
+          </label>
+          <input type="text" id="inputPanelId" placeholder="Ex: 5369fc64-cc15-41d3-a780-664878183b8b"
+            style="width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-family: 'Courier New', monospace;">
+          <div style="font-size: 11px; color: var(--text-secondary); margin-top: 6px;">
+            <i class="fas fa-info-circle"></i> Cole o Panel ID do painel WTS Chat que você deseja monitorar
+          </div>
+        </div>
+
+        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 16px;">
+          <div style="font-size: 12px; font-weight: 600; color: #8b5cf6; margin-bottom: 6px;">
+            <i class="fas fa-lightbulb"></i> Como descobrir o Panel ID?
+          </div>
+          <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.6;">
+            1. Acesse o WTS Chat: <a href="https://app.wts.chat/" target="_blank" style="color: #8b5cf6;">app.wts.chat</a><br>
+            2. Abra o painel desejado<br>
+            3. Copie o ID da URL: <code style="background: rgba(0,0,0,0.05); padding: 2px 6px; border-radius: 4px;">crm/panel/SEU-ID-AQUI</code>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px; justify-content: flex-end;">
+          <button onclick="fecharConfigCRM()" class="btn btn-sm" style="background: var(--bg-page); color: var(--text-secondary);">
+            Cancelar
+          </button>
+          <button onclick="salvarConfigCRM()" class="btn btn-sm" style="background: #8b5cf6; color: white;">
+            <i class="fas fa-save"></i> Salvar e Recarregar
+          </button>
+        </div>
       </div>
     </div>
 
@@ -486,7 +536,11 @@ function renderCRM(env) {
         statusText.textContent = 'Sincronizando...';
 
         try {
-          const response = await fetch('/api/crm/metrics');
+          // Obter Panel ID do localStorage (se configurado)
+          const panelId = localStorage.getItem('crm_panel_id');
+          const url = panelId ? '/api/crm/metrics?panel_id=' + encodeURIComponent(panelId) : '/api/crm/metrics';
+
+          const response = await fetch(url);
           const data = await response.json();
 
           if (data.success) {
@@ -652,7 +706,11 @@ function renderCRM(env) {
         statusText.textContent = 'Carregando origens...';
 
         try {
-          const response = await fetch('/api/crm/sources');
+          // Obter Panel ID do localStorage (se configurado)
+          const panelId = localStorage.getItem('crm_panel_id');
+          const url = panelId ? '/api/crm/sources?panel_id=' + encodeURIComponent(panelId) : '/api/crm/sources';
+
+          const response = await fetch(url);
           const data = await response.json();
 
           if (data.success) {
@@ -803,7 +861,73 @@ function renderCRM(env) {
         document.getElementById('tabelaCardsOrigem').innerHTML = html;
       }
 
+      // ========== CONFIGURAÇÃO DO CRM ==========
+
+      function abrirConfigCRM() {
+        const modal = document.getElementById('modalConfigCRM');
+        const input = document.getElementById('inputPanelId');
+
+        // Carregar Panel ID atual do localStorage
+        const panelIdAtual = localStorage.getItem('crm_panel_id') || '';
+        input.value = panelIdAtual;
+
+        modal.style.display = 'flex';
+      }
+
+      function fecharConfigCRM() {
+        const modal = document.getElementById('modalConfigCRM');
+        modal.style.display = 'none';
+      }
+
+      function salvarConfigCRM() {
+        const input = document.getElementById('inputPanelId');
+        const panelId = input.value.trim();
+
+        if (!panelId) {
+          alert('Por favor, insira um Panel ID válido');
+          return;
+        }
+
+        // Salvar no localStorage
+        localStorage.setItem('crm_panel_id', panelId);
+
+        // Fechar modal
+        fecharConfigCRM();
+
+        // Atualizar badge
+        atualizarPanelIdBadge();
+
+        // Recarregar dados do CRM
+        carregarDadosCRM();
+      }
+
+      function atualizarPanelIdBadge() {
+        const badge = document.getElementById('panelIdBadge');
+        const panelId = localStorage.getItem('crm_panel_id');
+
+        if (panelId) {
+          const shortId = panelId.substring(0, 8) + '...';
+          badge.innerHTML = '<i class="fas fa-database"></i> ' + shortId;
+          badge.style.background = 'rgba(16, 185, 129, 0.1)';
+          badge.style.color = '#10b981';
+          badge.title = 'Panel ID: ' + panelId + ' (clique para editar)';
+        } else {
+          badge.innerHTML = '<i class="fas fa-database"></i> Panel ID';
+          badge.style.background = 'rgba(245, 158, 11, 0.1)';
+          badge.style.color = '#f59e0b';
+          badge.title = 'Nenhum Panel ID configurado (clique para configurar)';
+        }
+      }
+
+      // Fechar modal ao clicar fora
+      document.getElementById('modalConfigCRM')?.addEventListener('click', function(e) {
+        if (e.target === this) {
+          fecharConfigCRM();
+        }
+      });
+
       document.addEventListener('DOMContentLoaded', () => {
+        atualizarPanelIdBadge();
         carregarDadosCRM();
         setInterval(carregarDadosCRM, 3 * 60 * 1000); // Refresh a cada 3 min
       });

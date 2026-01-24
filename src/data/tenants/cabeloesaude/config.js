@@ -50,6 +50,14 @@ export const TENANT_CONFIG = {
     }
   },
 
+  // Integrações
+  integracoes: {
+    crm: {
+      panelId: 'INSERIR_PANEL_ID_AQUI', // Panel ID do CRM Cabelo & Saúde
+      apiKeyVar: 'CRMCABELO_API_KEY'
+    }
+  },
+
   // Segmento e Especializacao
   segmento: {
     area: 'Saude Capilar',

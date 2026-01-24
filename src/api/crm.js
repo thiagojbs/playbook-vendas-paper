@@ -2,7 +2,25 @@
 // Documentação: https://flwchat.readme.io/reference
 
 const CRM_BASE_URL = 'https://api.wts.chat';
-const PANEL_ID = '5369fc64-cc15-41d3-a780-664878183b8b';
+const PANEL_ID_PAPERVINES = '5369fc64-cc15-41d3-a780-664878183b8b'; // Paper Vines (default)
+
+// Função helper para obter Panel ID do tenant
+function getPanelId(env, request = null) {
+  // Prioridade:
+  // 1. Query parameter ?panel_id=xxx (configurado pelo usuário na interface)
+  // 2. Variável de ambiente CRM_PANEL_ID (Cloudflare)
+  // 3. Default do Paper Vines
+
+  if (request) {
+    const url = new URL(request.url);
+    const panelIdFromQuery = url.searchParams.get('panel_id');
+    if (panelIdFromQuery) {
+      return panelIdFromQuery;
+    }
+  }
+
+  return env.CRM_PANEL_ID || PANEL_ID_PAPERVINES;
+}
 
 // Função helper para fazer requisições ao CRM
 async function fetchCRM(endpoint, env, options = {}) {
@@ -36,9 +54,9 @@ async function fetchCRM(endpoint, env, options = {}) {
 }
 
 // Buscar todos os cards do painel (com paginação)
-export async function getCards(env, filters = {}) {
+export async function getCards(env, filters = {}, request = null) {
   const params = new URLSearchParams({
-    PanelId: PANEL_ID,
+    PanelId: getPanelId(env, request),
     PageSize: '100',
     IncludeArchived: 'false',
     ...filters
@@ -59,14 +77,25 @@ export async function getSteps(env) {
 }
 
 // Buscar detalhes do painel com steps incluídos
-export async function getPanel(env) {
-  return fetchCRM(`/crm/v1/panel/${PANEL_ID}?IncludeDetails=steps,tags`, env);
+export async function getPanel(env, request = null) {
+  return fetchCRM(`/crm/v1/panel/${getPanelId(env, request)}?IncludeDetails=steps,tags`, env);
+}
+
+// Listar todos os painéis disponíveis (útil para descobrir Panel ID)
+export async function listPanels(env) {
+  return fetchCRM('/crm/v1/panel', env);
+}
+
+// Buscar todos os steps (etapas) do painel - obtidos do próprio painel
+export async function getSteps(env, request = null) {
+  const panel = await getPanel(env, request);
+  return { items: panel.steps || [], panel };
 }
 
 // Buscar cards por etapa específica
-export async function getCardsByStep(env, stepId) {
+export async function getCardsByStep(env, stepId, request = null) {
   const params = new URLSearchParams({
-    PanelId: PANEL_ID,
+    PanelId: getPanelId(env, request),
     StepId: stepId,
     PageSize: '100',
     IncludeArchived: 'false'
@@ -76,9 +105,9 @@ export async function getCardsByStep(env, stepId) {
 }
 
 // Buscar cards criados em um período
-export async function getCardsByPeriod(env, startDate, endDate) {
+export async function getCardsByPeriod(env, startDate, endDate, request = null) {
   const params = new URLSearchParams({
-    PanelId: PANEL_ID,
+    PanelId: getPanelId(env, request),
     PageSize: '500',
     IncludeArchived: 'false',
     'CreatedAt.After': startDate,
@@ -89,14 +118,14 @@ export async function getCardsByPeriod(env, startDate, endDate) {
 }
 
 // Buscar todos os cards com todas as páginas
-export async function getAllCards(env) {
+export async function getAllCards(env, request = null) {
   let allItems = [];
   let pageNumber = 1;
   let hasMore = true;
 
   while (hasMore) {
     const params = new URLSearchParams({
-      PanelId: PANEL_ID,
+      PanelId: getPanelId(env, request),
       PageSize: '100',
       PageNumber: pageNumber.toString(),
       IncludeArchived: 'false'
@@ -233,10 +262,10 @@ function normalizeChannelName(value) {
 }
 
 // Buscar métricas de origem dos contatos
-export async function getSourceMetrics(env) {
+export async function getSourceMetrics(env, request = null) {
   try {
     // Buscar todos os cards
-    const cardsResponse = await getAllCards(env);
+    const cardsResponse = await getAllCards(env, request);
     const cards = cardsResponse.items || [];
 
     // Coletar todos os contactIds únicos
@@ -444,14 +473,14 @@ export async function getSourceMetrics(env) {
 }
 
 // Calcular métricas do funil
-export async function getFunnelMetrics(env) {
+export async function getFunnelMetrics(env, request = null) {
   try {
     // Buscar steps (etapas do funil)
-    const stepsResponse = await getSteps(env);
+    const stepsResponse = await getSteps(env, request);
     const steps = stepsResponse.items || [];
 
     // Buscar todos os cards
-    const cardsResponse = await getAllCards(env);
+    const cardsResponse = await getAllCards(env, request);
     const cards = cardsResponse.items || [];
 
     // Organizar cards por step
@@ -568,24 +597,29 @@ export async function handleCRMAPI(request, env, path) {
 
     switch (path) {
       case '/api/crm/cards':
-        data = await getAllCards(env);
+        data = await getAllCards(env, request);
         break;
 
       case '/api/crm/steps':
-        data = await getSteps(env);
+        data = await getSteps(env, request);
         break;
 
       case '/api/crm/panel':
-        data = await getPanel(env);
+        data = await getPanel(env, request);
         break;
 
       case '/api/crm/metrics':
       case '/api/crm/funnel':
-        data = await getFunnelMetrics(env);
+        data = await getFunnelMetrics(env, request);
         break;
 
       case '/api/crm/sources':
-        data = await getSourceMetrics(env);
+        data = await getSourceMetrics(env, request);
+        break;
+
+      case '/api/crm/panels':
+      case '/api/crm/list-panels':
+        data = await listPanels(env);
         break;
 
       default:
