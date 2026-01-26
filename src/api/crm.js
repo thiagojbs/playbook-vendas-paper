@@ -4,6 +4,15 @@
 const CRM_BASE_URL = 'https://api.wts.chat';
 const PANEL_ID_PAPERVINES = '5369fc64-cc15-41d3-a780-664878183b8b'; // Paper Vines (default)
 
+// Cache TTL (Time To Live) em segundos
+const CACHE_TTL = {
+  panel: 3600,      // 1 hora - dados do painel mudam pouco
+  steps: 3600,      // 1 hora - etapas mudam pouco
+  cards: 180,       // 3 minutos - cards mudam frequentemente
+  metrics: 180,     // 3 minutos - métricas em tempo real
+  sources: 300      // 5 minutos - origens mudam moderadamente
+};
+
 // Função helper para obter Panel ID do tenant
 function getPanelId(env, request = null) {
   // Prioridade:
@@ -22,7 +31,49 @@ function getPanelId(env, request = null) {
   return env.CRM_PANEL_ID || PANEL_ID_PAPERVINES;
 }
 
-// Função helper para fazer requisições ao CRM
+// Função helper para criar chave de cache
+function getCacheKey(endpoint, panelId) {
+  return `crm-cache:${panelId}:${endpoint}`;
+}
+
+// Função helper para obter dados do cache ou da API
+async function fetchCRMWithCache(endpoint, env, ttl = 300, request = null) {
+  const panelId = getPanelId(env, request);
+  const cacheKey = getCacheKey(endpoint, panelId);
+
+  // Tentar buscar do cache primeiro
+  if (env.CRM_CACHE) {
+    try {
+      const cached = await env.CRM_CACHE.get(cacheKey, { type: 'json' });
+      if (cached) {
+        console.log(`Cache HIT: ${cacheKey}`);
+        return cached;
+      }
+    } catch (e) {
+      console.log(`Cache erro: ${e.message}`);
+    }
+  }
+
+  // Se não tiver no cache, buscar da API
+  console.log(`Cache MISS: ${cacheKey} - Buscando da API`);
+  const data = await fetchCRM(endpoint, env);
+
+  // Salvar no cache
+  if (env.CRM_CACHE && data) {
+    try {
+      await env.CRM_CACHE.put(cacheKey, JSON.stringify(data), {
+        expirationTtl: ttl
+      });
+      console.log(`Cache SAVED: ${cacheKey} (TTL: ${ttl}s)`);
+    } catch (e) {
+      console.log(`Cache save erro: ${e.message}`);
+    }
+  }
+
+  return data;
+}
+
+// Função helper para fazer requisições ao CRM (SEM cache)
 async function fetchCRM(endpoint, env, options = {}) {
   // Tentar usar chave específica do tenant primeiro, depois fallback para chave geral
   const apiKey = env.CRMCABELO_API_KEY || env.CRM_API_KEY;
@@ -72,11 +123,13 @@ export async function getCardById(env, cardId) {
 
 // Buscar detalhes do painel com steps incluídos
 export async function getPanel(env, request = null) {
-  return fetchCRM(`/crm/v1/panel/${getPanelId(env, request)}?IncludeDetails=steps,tags`, env);
+  const panelId = getPanelId(env, request);
+  return fetchCRMWithCache(`/crm/v1/panel/${panelId}?IncludeDetails=steps,tags`, env, CACHE_TTL.panel, request);
 }
 
 // Listar todos os painéis disponíveis (útil para descobrir Panel ID)
 export async function listPanels(env) {
+  // Lista de painéis não usa cache (raro de ser chamado)
   return fetchCRM('/crm/v1/panel', env);
 }
 
@@ -604,11 +657,59 @@ export async function handleCRMAPI(request, env, path) {
 
       case '/api/crm/metrics':
       case '/api/crm/funnel':
+        // Tentar cache primeiro
+        const panelId = getPanelId(env, request);
+        const metricsCacheKey = getCacheKey('metrics', panelId);
+
+        if (env.CRM_CACHE) {
+          try {
+            const cached = await env.CRM_CACHE.get(metricsCacheKey, { type: 'json' });
+            if (cached) {
+              data = cached;
+              break;
+            }
+          } catch (e) {}
+        }
+
+        // Se não tiver cache, buscar
         data = await getFunnelMetrics(env, request);
+
+        // Salvar no cache
+        if (env.CRM_CACHE && data) {
+          try {
+            await env.CRM_CACHE.put(metricsCacheKey, JSON.stringify(data), {
+              expirationTtl: CACHE_TTL.metrics
+            });
+          } catch (e) {}
+        }
         break;
 
       case '/api/crm/sources':
+        // Tentar cache primeiro
+        const panelIdSources = getPanelId(env, request);
+        const sourcesCacheKey = getCacheKey('sources', panelIdSources);
+
+        if (env.CRM_CACHE) {
+          try {
+            const cached = await env.CRM_CACHE.get(sourcesCacheKey, { type: 'json' });
+            if (cached) {
+              data = cached;
+              break;
+            }
+          } catch (e) {}
+        }
+
+        // Se não tiver cache, buscar
         data = await getSourceMetrics(env, request);
+
+        // Salvar no cache
+        if (env.CRM_CACHE && data) {
+          try {
+            await env.CRM_CACHE.put(sourcesCacheKey, JSON.stringify(data), {
+              expirationTtl: CACHE_TTL.sources
+            });
+          } catch (e) {}
+        }
         break;
 
       case '/api/crm/panels':
