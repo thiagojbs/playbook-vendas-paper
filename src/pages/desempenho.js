@@ -14,17 +14,17 @@ const FUNIL_PADRAO = {
 
 const DIAS_SEMANA = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
 
-export async function renderDesempenho(env, path) {
+export async function renderDesempenho(env, path, tenantData = {}) {
   if (path === '/desempenho/planejamento') {
-    return renderPlanejamento(env);
+    return renderPlanejamento(env, tenantData);
   } else if (path === '/desempenho/acompanhamento') {
-    return renderAcompanhamento(env);
+    return renderAcompanhamento(env, tenantData);
   } else if (path === '/desempenho/relatorio') {
-    return renderRelatorio(env);
+    return renderRelatorio(env, tenantData);
   } else if (path === '/desempenho/crm') {
-    return renderCRM(env);
+    return renderCRM(env, tenantData);
   }
-  return renderDesempenhoHome(env);
+  return renderDesempenhoHome(env, tenantData);
 }
 
 function renderDesempenhoHome(env) {
@@ -172,10 +172,10 @@ function renderDesempenhoHome(env) {
     </div>
   `;
 
-  return layout('Desempenho', content, 'desempenho');
+  return layout('Desempenho', content, 'desempenho', tenantData?.config);
 }
 
-function renderCRM(env) {
+function renderCRM(env, tenantData = {}) {
   const content = `
     <!-- Header Compacto com Status -->
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
@@ -934,10 +934,10 @@ function renderCRM(env) {
     </script>
   `;
 
-  return layout('CRM Live', content, 'crm');
+  return layout('CRM Live', content, 'crm', tenantData?.config);
 }
 
-function renderPlanejamento(env) {
+function renderPlanejamento(env, tenantData = {}) {
   const content = `
     <div class="page-header">
       <h1 class="page-title"><i class="fas fa-bullseye"></i> Planejamento de Metas</h1>
@@ -1173,10 +1173,10 @@ function renderPlanejamento(env) {
     </script>
   `;
 
-  return layout('Planejamento de Metas', content, 'desempenho');
+  return layout('Planejamento de Metas', content, 'desempenho', tenantData?.config);
 }
 
-function renderAcompanhamento(env) {
+function renderAcompanhamento(env, tenantData = {}) {
   const content = `
     <div class="page-header">
       <h1 class="page-title"><i class="fas fa-calendar-check"></i> Acompanhamento Diário</h1>
@@ -1403,10 +1403,10 @@ function renderAcompanhamento(env) {
     </script>
   `;
 
-  return layout('Acompanhamento Diário', content, 'desempenho');
+  return layout('Acompanhamento Diário', content, 'desempenho', tenantData?.config);
 }
 
-function renderRelatorio(env) {
+function renderRelatorio(env, tenantData = {}) {
   const content = `
     <div class="page-header">
       <h1 class="page-title"><i class="fas fa-chart-bar"></i> Relatório de Desempenho</h1>
@@ -1697,5 +1697,5 @@ function renderRelatorio(env) {
     </style>
   `;
 
-  return layout('Relatório de Desempenho', content, 'desempenho');
+  return layout('Relatório de Desempenho', content, 'desempenho', tenantData?.config);
 }
