@@ -30,7 +30,7 @@ id = "9f148151fd734ff38412bf460b7c7180"
 # KV Namespace - Cache CRM (evitar limite de requisições)
 [[kv_namespaces]]
 binding = "CRM_CACHE"
-id = "CRIAR_NOVO_KV"
+id = "d3be52d459074cc987160708935be2a9"
 
 # Vectorize - Indice para embeddings
 [[vectorize]]
