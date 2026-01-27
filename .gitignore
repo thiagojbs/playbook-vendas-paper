@@ -2,3 +2,12 @@ node_modules/
 .wrangler/
 .dev.vars
 *.log
+.DS_Store
+*.swp
+*.swo
+*~
+output/
+*.patch
+*-OTIMIZADO.js
+*-CORRIGIDO.js
+*-FINAL-*.js
