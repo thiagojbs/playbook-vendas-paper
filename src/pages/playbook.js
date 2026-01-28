@@ -6,6 +6,10 @@ import { OBJECOES_EXPANDIDAS as PV_OBJECOES_EXPANDIDAS, TECNICAS_GERAIS as PV_TE
 import { ETAPAS_FUNIL as PV_ETAPAS, SCRIPTS_STATS as PV_SCRIPTS_STATS, SEQUENCIAS_COMPLETAS as PV_SEQUENCIAS, DICAS_COMUNICACAO as PV_DICAS, TEMPLATES_SEGMENTO as PV_TEMPLATES } from '../data/scripts.js';
 import { POLITICAS_WHATSAPP, POLITICAS_META_ANUNCIOS, PRECOS_WHATSAPP, REQUISITOS_API_EXPANDIDOS, FLUXO_IMPLANTACAO, PERGUNTAS_FREQUENTES, DIFERENCIAIS_PAPERVINES, LINKS_IMPORTANTES } from '../data/playbook-expandido.js';
 import { AGENTES_INFO, TIPOS_AGENTES, AGENTES_EXEMPLOS, VERTICAIS, METRICAS_GERAIS, COMPARATIVO_HUMANO, FERRAMENTAS_DISPONIVEIS } from '../data/agentes.js';
+// Cabelo e Saude - Playbook 2025
+import { PLAYBOOK_2025, PROCESSO_VENDAS as CS_PROCESSO, SCRIPTS as CS_SCRIPTS, OBJECOES as CS_OBJECOES, CHECKLIST_COMERCIAL as CS_CHECKLIST, DIFERENCIAIS as CS_DIFERENCIAIS, TIPOS_TRATAMENTO as CS_TIPOS_TRATAMENTO, LINKS_UTEIS as CS_LINKS } from '../data/tenants/cabeloesaude/playbook.js';
+import { MODULOS_PLAYBOOK, FRASES_IMPACTO } from '../data/tenants/cabeloesaude/scripts.js';
+import { objecoes } from '../data/tenants/cabeloesaude/objecoes.js';
 
 // Variaveis globais para o tenant atual
 let PROCESSO_VENDAS, SCRIPTS, OBJECOES, CHECKLIST_COMERCIAL, CHECKLIST_CONTRATO, LINKS_UTEIS;
@@ -483,32 +487,81 @@ function renderPlaybookCabeloeSaude() {
     '</div>';
   }).join('');
 
-  // Processo de Vendas
-  const etapasVendaHtml = PROCESSO_VENDAS.etapas.map(function(etapa) {
-    const acoesHtml = etapa.acoes.map(function(acao) {
-      return '<li style="display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--border);">' +
-        '<i class="fas fa-check-circle" style="color: var(--primary);"></i>' + acao + '</li>';
-    }).join('');
-    const dicasHtml = (etapa.dicas || []).map(function(dica) {
-      return '<div style="display: flex; align-items: flex-start; gap: 8px; padding: 8px; background: rgba(245, 158, 11, 0.08); border-radius: 6px; margin-bottom: 6px;">' +
-        '<i class="fas fa-lightbulb" style="color: #f59e0b; margin-top: 2px;"></i>' +
-        '<span style="font-size: 12px;">' + dica + '</span></div>';
-    }).join('');
-    const dicasSection = dicasHtml ? '<div style="font-weight: 500; margin-bottom: 8px;">Dicas:</div>' + dicasHtml : '';
+  // Playbook 2025 - 11 Modulos
+  const modulosHtml = PLAYBOOK_2025.modulos.map(function(modulo) {
+    // Construir preview do conteudo chave de cada modulo
+    let conteudoPreview = '';
+
+    if (modulo.numero === 0) {
+      // Modulo 0: Fundamentos - mostrar os 3 pilares
+      const pilaresHtml = modulo.principios.pilares.map(function(pilar) {
+        return '<div style="padding: 12px; background: rgba(26, 95, 82, 0.05); border-radius: 8px; margin-bottom: 8px;">' +
+          '<strong>' + pilar.numero + '. ' + pilar.nome + '</strong>' +
+          '<div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">' + pilar.explicacao + '</div>' +
+        '</div>';
+      }).join('');
+      conteudoPreview = '<div style="margin-top: 12px;"><strong>Os 3 Pilares:</strong></div>' + pilaresHtml;
+    } else if (modulo.scripts) {
+      // Modulos com scripts - mostrar preview de 2 scripts
+      const scriptsArray = Array.isArray(modulo.scripts) ? modulo.scripts : [];
+      const scriptsPreview = scriptsArray.slice(0, 2).map(function(script) {
+        const mensagem = script.mensagem || script.texto || '';
+        const preview = mensagem.length > 150 ? mensagem.substring(0, 150) + '...' : mensagem;
+        return '<div class="message-box" style="font-size: 12px; margin-bottom: 8px; white-space: pre-wrap;">' + preview + '</div>';
+      }).join('');
+      if (scriptsPreview) {
+        conteudoPreview = '<div style="margin-top: 12px;"><strong>Scripts de exemplo:</strong></div>' + scriptsPreview;
+      }
+    } else if (modulo.numero === 4) {
+      // Modulo 4: Perfis Clinicos - listar perfis disponiveis
+      const perfis = Object.keys(modulo.perfisDisponiveis || {}).slice(0, 4);
+      const perfisHtml = perfis.map(function(key) {
+        const perfil = modulo.perfisDisponiveis[key];
+        return '<span style="display: inline-block; padding: 6px 12px; background: rgba(26, 95, 82, 0.08); border-radius: 6px; margin: 4px; font-size: 12px;">' +
+          perfil.nome + '</span>';
+      }).join('');
+      conteudoPreview = '<div style="margin-top: 12px;"><strong>Perfis clínicos:</strong><div style="margin-top: 8px;">' + perfisHtml + '</div></div>';
+    } else if (modulo.numero === 5) {
+      // Modulo 5: Gatilhos - mostrar gatilhos disponiveis
+      conteudoPreview = '<div style="margin-top: 12px;"><strong>Gatilhos disponíveis:</strong>' +
+        '<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;">' +
+        '<span class="badge badge-info">Escassez</span>' +
+        '<span class="badge badge-info">Autoridade</span>' +
+        '<span class="badge badge-info">Urgência</span>' +
+        '<span class="badge badge-info">Social Proof</span>' +
+        '<span class="badge badge-info">Reciprocidade</span>' +
+        '</div></div>';
+    } else if (modulo.numero === 7) {
+      // Modulo 7: Objecoes - mostrar principais objecoes
+      const objecoesPreview = modulo.objecoesCompletas?.principais?.slice(0, 3).map(function(obj) {
+        return '<span style="display: inline-block; padding: 6px 12px; background: rgba(239, 68, 68, 0.08); border-radius: 6px; margin: 4px; font-size: 12px;">' +
+          obj.objecao + '</span>';
+      }).join('') || '';
+      conteudoPreview = '<div style="margin-top: 12px;"><strong>Objeções principais:</strong><div style="margin-top: 8px;">' + objecoesPreview + '</div></div>';
+    } else if (modulo.numero === 10) {
+      // Modulo 10: Indicadores - mostrar metricas principais
+      conteudoPreview = '<div style="margin-top: 12px;"><strong>Áreas de acompanhamento:</strong>' +
+        '<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;">' +
+        '<span class="badge badge-success">Funil de Vendas</span>' +
+        '<span class="badge badge-success">Follow-up</span>' +
+        '<span class="badge badge-success">No-Show</span>' +
+        '<span class="badge badge-success">Comercial 2</span>' +
+        '</div></div>';
+    }
+
     return '<div class="accordion">' +
       '<div class="accordion-header" style="border-left: 4px solid var(--primary);">' +
         '<div class="accordion-title">' +
-          '<span style="width: 28px; height: 28px; background: var(--primary); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; margin-right: 8px; color: white;">' + etapa.numero + '</span>' +
-          etapa.titulo +
-          '<span class="badge badge-info" style="margin-left: 12px;">' + etapa.tempo_estimado + '</span>' +
+          '<span style="font-size: 20px; margin-right: 8px;">' + modulo.emoji + '</span>' +
+          '<span style="font-weight: 600;">Módulo ' + modulo.numero + ': ' + modulo.titulo + '</span>' +
+          (modulo.tempoEstimado ? '<span class="badge badge-info" style="margin-left: 12px;">' + modulo.tempoEstimado + '</span>' : '') +
         '</div>' +
         '<i class="fas fa-chevron-down"></i>' +
       '</div>' +
       '<div class="accordion-content">' +
-        '<p style="margin-bottom: 16px; color: var(--text-secondary);">' + etapa.descricao + '</p>' +
-        '<div style="font-weight: 500; margin-bottom: 8px;">Acoes:</div>' +
-        '<ul style="list-style: none; padding: 0; margin-bottom: 16px;">' + acoesHtml + '</ul>' +
-        dicasSection +
+        '<p style="margin-bottom: 16px; color: var(--text-secondary);">' + modulo.descricao + '</p>' +
+        (modulo.objetivo ? '<div style="padding: 12px; background: rgba(26, 95, 82, 0.08); border-radius: 8px; margin-bottom: 12px;"><strong>Objetivo:</strong> ' + modulo.objetivo + '</div>' : '') +
+        conteudoPreview +
       '</div>' +
     '</div>';
   }).join('');
@@ -634,13 +687,13 @@ function renderPlaybookCabeloeSaude() {
     '<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">' + scriptsRapidosHtml + '</div>' +
   '</div>' +
 
-  '<!-- Processo de Vendas -->' +
+  '<!-- Playbook 2025 - 11 Modulos -->' +
   '<div class="card fade-in" style="margin-bottom: 24px;">' +
     '<div class="card-header">' +
-      '<h3 class="card-title"><i class="fas fa-route" style="color: var(--primary);"></i> Jornada do Paciente</h3>' +
-      '<span class="badge badge-info">6 etapas do atendimento</span>' +
+      '<h3 class="card-title"><i class="fas fa-book-open" style="color: var(--primary);"></i> Playbook 2025</h3>' +
+      '<span class="badge badge-info">11 módulos especializados</span>' +
     '</div>' +
-    etapasVendaHtml +
+    modulosHtml +
   '</div>' +
 
   '<div class="grid grid-2" style="margin-bottom: 24px;">' +
@@ -689,27 +742,35 @@ function renderPlaybookCabeloeSaude() {
 function renderScriptsCabeloeSaude() {
   var tenantQuery = '?tenant=cabeloesaude';
 
-  // Stats da Clinica - com melhor legibilidade
+  // Contar total de scripts de MODULOS_PLAYBOOK
+  var totalScripts = 0;
+  Object.keys(MODULOS_PLAYBOOK).forEach(function(key) {
+    var modulo = MODULOS_PLAYBOOK[key];
+    if (modulo.scripts) totalScripts += modulo.scripts.length;
+    if (modulo.variacoes) totalScripts += modulo.variacoes.length;
+  });
+
+  // Stats da Clinica - atualizados com novos dados
   var statsHtml = '<div class="stats-grid" style="margin-bottom: 24px;">' +
     '<div class="stat-card" style="background: linear-gradient(135deg, #1a5f52 0%, #2d8a7a 100%); color: white; box-shadow: 0 4px 6px rgba(26, 95, 82, 0.3);">' +
-      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">44+</div>' +
+      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">' + totalScripts + '+</div>' +
       '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px; letter-spacing: 0.3px;">Scripts Prontos</div>' +
     '</div>' +
     '<div class="stat-card" style="background: linear-gradient(135deg, #2d8a7a 0%, #4fb3a3 100%); color: white; box-shadow: 0 4px 6px rgba(45, 138, 122, 0.3);">' +
-      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">7</div>' +
-      '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px; letter-spacing: 0.3px;">Etapas do Funil</div>' +
+      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">6</div>' +
+      '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px; letter-spacing: 0.3px;">Modulos do Playbook</div>' +
     '</div>' +
     '<div class="stat-card" style="background: linear-gradient(135deg, #4fb3a3 0%, #6dd5c7 100%); color: white; box-shadow: 0 4px 6px rgba(79, 179, 163, 0.3);">' +
-      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">4</div>' +
-      '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px; letter-spacing: 0.3px;">Sequencias Automaticas</div>' +
+      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">11</div>' +
+      '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px; letter-spacing: 0.3px;">Categorias Especializadas</div>' +
     '</div>' +
     '<div class="stat-card" style="background: linear-gradient(135deg, #1a5f52 0%, #4fb3a3 100%); color: white; box-shadow: 0 4px 6px rgba(26, 95, 82, 0.3);">' +
-      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">72%</div>' +
+      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">70%</div>' +
       '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px; letter-spacing: 0.3px;">Taxa Media de Resposta</div>' +
     '</div>' +
   '</div>';
 
-  // Dicas de Comunicacao para Tricologia
+  // Dicas de Comunicacao para Tricologia (mantido do original)
   var dicasComunicacao = [
     {
       titulo: 'Empatia em Primeiro Lugar',
@@ -769,325 +830,85 @@ function renderScriptsCabeloeSaude() {
     '</div>';
   }).join('');
 
-  // Etapas do Funil com Scripts
-  var etapasFunil = [
-    {
-      id: 'captacao',
-      nome: 'Captacao',
-      icone: 'bullhorn',
-      cor: '#1a5f52',
-      descricao: 'Primeiro contato com leads interessados em tratamento capilar',
-      objetivo: 'Despertar interesse e agendar avaliacao',
-      tempo_ideal: 'Responder em ate 5 minutos',
-      scripts: [
-        {
-          id: 'capt-1',
-          titulo: 'Resposta Inicial - Instagram/WhatsApp',
-          tipo: 'principal',
-          contexto: 'Lead entra em contato pela primeira vez',
-          dica: 'Seja acolhedor - muitos pacientes sofrem emocionalmente com queda capilar',
-          mensagem: 'Ola! Tudo bem? 💚\n\nQue bom que voce nos procurou!\n\nAqui na Cabelo & Saude, a Franciele - biomedica especialista em tricologia - trata a *causa* do problema capilar, nao apenas os sintomas.\n\nMe conta um pouquinho: ha quanto tempo voce percebeu a queda ou afinamento dos fios?',
-          gatilhos: ['Acolhimento', 'Diferenciacao', 'Pergunta aberta'],
-          variacoes: [
-            {
-              nome: 'Versao Empatica',
-              mensagem: 'Ola! Tudo bem? 💚\n\nFico feliz que tenha nos procurado!\n\nSei que queda de cabelo pode ser angustiante, mas saiba que voce esta no lugar certo.\n\nAqui investigamos a CAUSA do problema - nao ficamos so passando Minoxidil como todo mundo.\n\nMe conta: o que te trouxe ate aqui?'
-            },
-            {
-              nome: 'Versao Direta',
-              mensagem: 'Ola! Sou da equipe da Cabelo & Saude 💚\n\nAqui a Franciele, biomedica tricologista, trata queda capilar de forma diferente - investigando a causa, nao so tratando sintoma.\n\nComo posso te ajudar?'
-            }
-          ]
-        },
-        {
-          id: 'capt-2',
-          titulo: 'Resposta para Lead de Anuncio',
-          tipo: 'principal',
-          contexto: 'Lead veio de anuncio no Instagram/Facebook',
-          dica: 'Reforce o que o anuncio prometeu e avance rapido',
-          mensagem: 'Ola! Que bom que voce se interessou! 💚\n\nVi que voce veio pelo nosso anuncio sobre [TEMA_ANUNCIO].\n\nAqui na Cabelo & Saude fazemos diferente:\n❌ Nao dependemos so de Minoxidil e Finasterida\n✅ Investigamos a raiz do problema\n✅ Protocolo personalizado pro seu caso\n\nPosso te fazer algumas perguntas para entender melhor sua situacao?',
-          gatilhos: ['Continuidade do anuncio', 'Diferenciacao', 'Permissao para perguntar'],
-          variacoes: []
-        },
-        {
-          id: 'capt-3',
-          titulo: 'Resposta para Indicacao',
-          tipo: 'variacao',
-          contexto: 'Lead foi indicado por outro paciente',
-          dica: 'Valorize a indicacao e crie conexao',
-          mensagem: 'Ola [Nome]! Que bom falar com voce! 💚\n\nO(a) [NOME_INDICADOR] me disse que voce esta precisando de ajuda com [PROBLEMA].\n\nFico feliz que ele(a) tenha confiado em indicar a Cabelo & Saude!\n\nMe conta: como esta a situacao hoje?',
-          gatilhos: ['Prova social', 'Conexao', 'Confianca'],
-          variacoes: []
-        }
-      ]
-    },
-    {
-      id: 'qualificacao',
-      nome: 'Qualificacao',
-      icone: 'filter',
-      cor: '#2d8a7a',
-      descricao: 'Entender o perfil e necessidades do paciente',
-      objetivo: 'Coletar informacoes para personalizar abordagem',
-      tempo_ideal: 'Durante primeira conversa',
-      scripts: [
-        {
-          id: 'qual-1',
-          titulo: 'Perguntas de Qualificacao Completas',
-          tipo: 'principal',
-          contexto: 'Apos primeiro contato, coletar informacoes',
-          dica: 'Faca perguntas com empatia, nao como interrogatorio',
-          mensagem: 'Para eu entender melhor seu caso e te ajudar da melhor forma, me conta:\n\n1️⃣ Ha quanto tempo voce percebeu a queda/afinamento?\n\n2️⃣ Ja fez algum tratamento antes?\n   (Minoxidil, Finasterida, vitaminas, shampoos...)\n\n3️⃣ Ja consultou algum profissional sobre isso?\n   (Dermatologista, tricologista...)\n\n4️⃣ O que mais te incomoda hoje sobre seus cabelos?\n\nCom essas informacoes, consigo te orientar melhor! 😊',
-          gatilhos: ['Estruturacao', 'Empatia', 'Personalizacao'],
-          variacoes: [
-            {
-              nome: 'Versao Rapida',
-              mensagem: 'Me conta rapidinho:\n- Ha quanto tempo percebeu a queda?\n- Ja tentou algum tratamento?\n- Qual sua maior preocupacao hoje?'
-            }
-          ]
-        },
-        {
-          id: 'qual-2',
-          titulo: 'Aprofundamento - Tratamentos Anteriores',
-          tipo: 'variacao',
-          contexto: 'Quando paciente menciona que ja tentou tratamentos',
-          dica: 'Entenda o que falhou para mostrar diferencial',
-          mensagem: 'Entendo que voce ja tentou [TRATAMENTO]...\n\nMe conta mais:\n- Por quanto tempo usou?\n- Percebeu alguma melhora?\n- Por que parou?\n\nPergunto porque muitos tratamentos tratam so o *sintoma* e nao a *causa*.\nPor isso param de funcionar ou nao resolvem de verdade.\n\nAqui fazemos diferente - investigamos POR QUE voce esta perdendo cabelo.',
-          gatilhos: ['Interesse genuino', 'Diferenciacao', 'Educacao'],
-          variacoes: []
-        },
-        {
-          id: 'qual-3',
-          titulo: 'Qualificacao Emocional',
-          tipo: 'variacao',
-          contexto: 'Quando paciente demonstra sofrimento emocional',
-          dica: 'Acolha antes de falar de tratamento',
-          mensagem: '[Nome], percebo que isso esta te afetando bastante...\n\nSaiba que voce nao esta sozinho(a). Muitos pacientes chegam aqui sentindo a mesma coisa.\n\nA queda de cabelo mexe com autoestima, confianca... e normal se sentir assim.\n\nA boa noticia e que existe tratamento. E voce ja deu o primeiro passo ao nos procurar. 💚\n\nQuer me contar mais sobre como isso tem te afetado?',
-          gatilhos: ['Empatia', 'Validacao', 'Acolhimento'],
-          variacoes: []
-        }
-      ]
-    },
-    {
-      id: 'agendamento',
-      nome: 'Agendamento',
-      icone: 'calendar-check',
-      cor: '#4fb3a3',
-      descricao: 'Converter lead em avaliacao agendada',
-      objetivo: 'Agendar avaliacao tricologica',
-      tempo_ideal: 'Agendar em ate 48h do primeiro contato',
-      scripts: [
-        {
-          id: 'agend-1',
-          titulo: 'Convite para Avaliacao Tricologica',
-          tipo: 'principal',
-          contexto: 'Apos qualificacao, convidar para avaliacao',
-          dica: 'Mostre valor da avaliacao antes de falar de agenda',
-          mensagem: '[Nome], pelo que voce me contou, seu caso merece uma investigacao mais profunda.\n\nAqui na Cabelo & Saude fazemos uma *Avaliacao Tricologica Completa* que inclui:\n\n🔬 Exame com tricoscopio - voce VE seu couro cabeludo ampliado\n📋 Anamnese detalhada do seu historico\n🔍 Identificacao da causa real da queda\n🧪 Indicacao de exames complementares se necessario\n📝 Proposta de tratamento personalizado\n\n*Duracao:* aproximadamente 40-60 minutos\n\nTenho horarios disponiveis [DATA]. Qual melhor pra voce:\n- [OPCAO 1] as [HORA]\n- [OPCAO 2] as [HORA]',
-          gatilhos: ['Valor da avaliacao', 'Opcoes de horario', 'Baixo atrito'],
-          variacoes: [
-            {
-              nome: 'Versao Urgencia',
-              mensagem: '[Nome], quanto antes investigarmos, melhores as chances de resultado.\n\nTenho uma vaga essa semana na [DIA] as [HORA].\n\nConsegue?'
-            }
-          ]
-        },
-        {
-          id: 'agend-2',
-          titulo: 'Confirmacao 24h Antes',
-          tipo: 'principal',
-          contexto: '24h antes da avaliacao agendada',
-          dica: 'Sempre confirme para reduzir no-shows',
-          mensagem: 'Ola [Nome]! 💚\n\nPassando para confirmar sua *Avaliacao Tricologica* amanha:\n\n📅 Data: [DATA]\n⏰ Horario: [HORA]\n📍 Endereco: [ENDERECO]\n\n*Algumas orientacoes importantes:*\n✅ Nao lave o cabelo no dia (para avaliarmos oleosidade natural)\n✅ Se tiver exames de sangue recentes, traga\n✅ Chegue 10 min antes para preencher ficha\n✅ Se usar algum medicamento/vitamina, traga a lista\n\nPosso confirmar sua presenca? ✅',
-          gatilhos: ['Confirmacao explicita', 'Orientacoes claras', 'Profissionalismo'],
-          variacoes: [
-            {
-              nome: 'Lembrete 2h antes',
-              mensagem: '[Nome], daqui 2 horas temos sua avaliacao! 💚\n\n📍 Endereco: [ENDERECO]\n\nTe espero aqui! 😊'
-            }
-          ]
-        },
-        {
-          id: 'agend-3',
-          titulo: 'Reagendamento - No-Show',
-          tipo: 'variacao',
-          contexto: 'Quando paciente falta sem avisar',
-          dica: 'Seja compreensivo, nao confrontador',
-          mensagem: 'Oi [Nome], tudo bem? 💚\n\nSentimos sua falta na avaliacao de hoje!\n\nSei que imprevistos acontecem. Se quiser, posso verificar novos horarios disponiveis para remarcarmos.\n\nOu se preferir, me conta o que aconteceu - sem julgamentos!\n\nEstou aqui pra ajudar quando voce puder. 😊',
-          gatilhos: ['Empatia', 'Flexibilidade', 'Porta aberta'],
-          variacoes: []
-        }
-      ]
-    },
-    {
-      id: 'proposta',
-      nome: 'Proposta',
-      icone: 'file-invoice-dollar',
-      cor: '#1a5f52',
-      descricao: 'Apresentar protocolo de tratamento e valores',
-      objetivo: 'Converter avaliacao em tratamento',
-      tempo_ideal: 'Idealmente no mesmo dia da avaliacao',
-      scripts: [
-        {
-          id: 'prop-1',
-          titulo: 'Envio Pos-Avaliacao (Mesmo Dia)',
-          tipo: 'principal',
-          contexto: 'Paciente saiu da avaliacao sem fechar',
-          dica: 'Reforce diagnostico e mantenha conexao',
-          mensagem: '[Nome], foi um prazer te conhecer hoje! 💚\n\nComo conversamos, seu caso de *[DIAGNOSTICO]* tem solucao com o tratamento adequado.\n\n*Resumo do seu protocolo:*\n[LISTA_TRATAMENTOS]\n\n*Investimento:*\n- Tratamento completo: R$ [VALOR_TOTAL]\n- Parcelado: ate [X]x de R$ [VALOR_PARCELA]\n- Pix a vista: R$ [VALOR_PIX] (desconto de X%)\n\n*Duracao estimada:* [X] meses\n\nLembre-se: quanto antes comecarmos, melhores os resultados!\n\nFicou alguma duvida sobre o que conversamos?',
-          gatilhos: ['Resumo claro', 'Opcoes de pagamento', 'Urgencia suave'],
-          variacoes: [
-            {
-              nome: 'Versao Resumida',
-              mensagem: '[Nome], conforme conversamos na avaliacao:\n\nProtocolo: [TRATAMENTO]\nInvestimento: R$ [VALOR] (ate [X]x)\nDuracao: [X] meses\n\nQuando podemos comecar? 😊'
-            }
-          ]
-        },
-        {
-          id: 'prop-2',
-          titulo: 'Follow-up Proposta - 3 dias',
-          tipo: 'followup',
-          contexto: '3 dias apos avaliacao sem decisao',
-          dica: 'Agregue valor, nao apenas cobre resposta',
-          mensagem: 'Ola [Nome], tudo bem? 💚\n\nPassando pra saber se conseguiu pensar sobre o tratamento.\n\nSurgiu alguma duvida?\nOu tem algo que eu possa esclarecer melhor?\n\nLembro que seu protocolo para [DIAGNOSTICO] pode comecar a mostrar resultados visiveis em [X] semanas com acompanhamento adequado.\n\nEstou aqui pra ajudar! 😊',
-          gatilhos: ['Cuidado', 'Expectativa de resultado', 'Disponibilidade'],
-          variacoes: []
-        },
-        {
-          id: 'prop-3',
-          titulo: 'Follow-up Proposta - 7 dias',
-          tipo: 'followup',
-          contexto: '7 dias apos avaliacao, ultima tentativa suave',
-          dica: 'Seja direto mas respeitoso',
-          mensagem: 'Oi [Nome]! 💚\n\nFaz uma semana que fizemos sua avaliacao tricologica.\n\nEntendo que e uma decisao importante. Se tiver alguma duvida ou preocupacao que eu possa ajudar a esclarecer, estou aqui!\n\nUma informacao importante: a queda capilar tende a progredir com o tempo. O que tratamos hoje em [X] meses pode precisar de mais tempo depois.\n\nNao e pra pressionar - e so uma informacao clinica que voce merece saber.\n\nO que voce decidiu?',
-          gatilhos: ['Respeito', 'Informacao clinica', 'Pergunta direta'],
-          variacoes: []
-        }
-      ]
-    },
-    {
-      id: 'negociacao',
-      nome: 'Negociacao',
-      icone: 'handshake',
-      cor: '#2d8a7a',
-      descricao: 'Superar objecoes e facilitar decisao',
-      objetivo: 'Converter proposta em fechamento',
-      tempo_ideal: 'Responder objecoes imediatamente',
-      scripts: [
-        {
-          id: 'neg-1',
-          titulo: 'Tratamento de Objecao - Preco',
-          tipo: 'objecao',
-          contexto: 'Paciente acha o tratamento caro',
-          dica: 'Foque no valor e custo acumulado de alternativas',
-          mensagem: 'Entendo sua preocupacao com o investimento, [Nome].\n\nMas deixa eu te fazer uma pergunta:\n\n*Quanto voce ja gastou em tratamentos que nao resolveram?*\n- Minoxidil: R$ 80-150/mes\n- Shampoos antiqueda: R$ 50-100/mes\n- Vitaminas: R$ 100-200/mes\n\nEm 1-2 anos, muita gente gasta R$ 3.000-6.000... e continua perdendo cabelo.\n\n*Nosso diferencial:*\n- Tratamento com duracao definida (nao eterno)\n- Trata a causa, nao apenas sintoma\n- Resultados duradouros\n\nTemos parcelamento em ate 12x. Quer que eu monte uma proposta que caiba no seu orcamento?',
-          gatilhos: ['Custo acumulado', 'Diferenciacao', 'Flexibilidade'],
-          variacoes: []
-        },
-        {
-          id: 'neg-2',
-          titulo: 'Tratamento de Objecao - Tempo',
-          tipo: 'objecao',
-          contexto: 'Paciente quer esperar',
-          dica: 'Informe sobre progressao sem pressionar',
-          mensagem: 'Entendo, [Nome]. Cada um tem seu tempo de decidir.\n\n*Uma informacao clinica que voce merece saber:*\n\nA queda capilar na maioria dos casos e progressiva.\nFoliculos que hoje estao "adormecidos" podem se fechar definitivamente.\n\nO que tratamos hoje em 6 meses, pode precisar de 1 ano daqui a 6 meses.\n\nNao estou te pressionando - e so ciencia.\n\n*Opcao:* Se quiser, posso te passar alguns cuidados basicos para fazer em casa enquanto decide.\n\nO que acha?',
-          gatilhos: ['Informacao genuina', 'Respeito', 'Valor agregado'],
-          variacoes: []
-        },
-        {
-          id: 'neg-3',
-          titulo: 'Oferta de Parcelamento',
-          tipo: 'variacao',
-          contexto: 'Paciente tem interesse mas limite financeiro',
-          dica: 'Facilite ao maximo',
-          mensagem: '[Nome], entendo sua situacao.\n\n*Opcoes de pagamento:*\n\n1️⃣ *Pix a vista:* R$ [VALOR] com [X]% desconto\n\n2️⃣ *Cartao de credito:* ate 12x de R$ [VALOR]\n\n3️⃣ *Entrada + parcelas:* R$ [ENTRADA] + [X]x de R$ [VALOR]\n\n4️⃣ *Tratamento inicial:* Comeca com protocolo basico (R$ [VALOR]) e evolui depois\n\nQual dessas opcoes se encaixa melhor pra voce?',
-          gatilhos: ['Multiplas opcoes', 'Flexibilidade', 'Facilitar decisao'],
-          variacoes: []
-        }
-      ]
-    },
-    {
-      id: 'fechamento',
-      nome: 'Fechamento',
-      icone: 'trophy',
-      cor: '#4fb3a3',
-      descricao: 'Finalizar contratacao e iniciar tratamento',
-      objetivo: 'Garantir inicio positivo do tratamento',
-      tempo_ideal: 'Agendar primeira sessao em ate 7 dias',
-      scripts: [
-        {
-          id: 'fech-1',
-          titulo: 'Coleta de Dados',
-          tipo: 'principal',
-          contexto: 'Paciente confirmou que quer comecar',
-          dica: 'Seja objetivo e celebre a decisao',
-          mensagem: 'Que otimo, [Nome]! 🎉💚\n\nEstou muito feliz que voce decidiu cuidar da saude dos seus cabelos!\n\nPara dar inicio ao seu tratamento, preciso de alguns dados:\n\n👤 Nome completo:\n📅 Data de nascimento:\n🆔 CPF:\n📧 Email:\n📱 Telefone:\n🏠 Endereco completo:\n\n*Forma de pagamento:* Pix ou cartao em [X]x?\n\n*Primeira sessao disponivel:* [DATA] as [HORA]\n\nAssim que confirmar os dados, ja agendo sua sessao!',
-          gatilhos: ['Celebracao', 'Clareza', 'Agilidade'],
-          variacoes: []
-        },
-        {
-          id: 'fech-2',
-          titulo: 'Boas-vindas ao Tratamento',
-          tipo: 'principal',
-          contexto: 'Apos confirmar pagamento/dados',
-          dica: 'Faca o paciente se sentir especial e bem cuidado',
-          mensagem: 'Seja muito bem-vindo(a) a Cabelo & Saude, [Nome]! 💚🌿\n\nEstamos muito felizes em iniciar essa jornada com voce!\n\n*Sua primeira sessao:*\n📅 Data: [DATA]\n⏰ Horario: [HORA]\n📍 Local: [ENDERECO]\n\n*Orientacoes para a sessao:*\n[ORIENTACOES_ESPECIFICAS]\n\n*O que esperar:*\n- Duracao: [X] minutos\n- Procedimento: [DESCRICAO]\n- Cuidados pos-sessao: te explicaremos no dia\n\nQualquer duvida ate la, estou por aqui!\n\nVamos juntos recuperar a saude dos seus cabelos! 🌱',
-          gatilhos: ['Acolhimento', 'Clareza de expectativas', 'Entusiasmo'],
-          variacoes: []
-        },
-        {
-          id: 'fech-3',
-          titulo: 'Confirmacao de Sessao',
-          tipo: 'followup',
-          contexto: '24h antes de cada sessao',
-          dica: 'Manter contato constante aumenta aderencia',
-          mensagem: 'Ola [Nome]! 💚\n\nAmanha temos sua sessao de tratamento!\n\n📅 Data: [DATA]\n⏰ Horario: [HORA]\n\n*Lembretes:*\n[ORIENTACOES_PRE_SESSAO]\n\nPosso confirmar sua presenca? ✅',
-          gatilhos: ['Cuidado', 'Organizacao', 'Aderencia'],
-          variacoes: []
-        }
-      ]
-    },
-    {
-      id: 'reengajamento',
-      nome: 'Reengajamento',
-      icone: 'redo',
-      cor: '#1a5f52',
-      descricao: 'Retomar contato com leads que esfriaram',
-      objetivo: 'Reativar interesse e retomar jornada',
-      tempo_ideal: '14-30 dias apos ultimo contato',
-      scripts: [
-        {
-          id: 'reeng-1',
-          titulo: 'Reengajamento - 14 dias',
-          tipo: 'principal',
-          contexto: '14 dias sem resposta apos proposta',
-          dica: 'Retome com valor, nao com cobranca',
-          mensagem: 'Ola [Nome], tudo bem? 💚\n\nFaz um tempinho que conversamos sobre seu tratamento capilar.\n\nSei que tomar essa decisao nem sempre e facil. Por isso queria saber:\n\nTem alguma duvida que eu possa esclarecer?\nOu alguma preocupacao que te impediu de comecar?\n\nEstou aqui pra ajudar, sem pressao. 😊\n\nSe quiser, posso te enviar alguns conteudos sobre cuidados capilares que voce pode fazer em casa enquanto decide.',
-          gatilhos: ['Empatia', 'Valor', 'Baixa pressao'],
-          variacoes: []
-        },
-        {
-          id: 'reeng-2',
-          titulo: 'Reengajamento - Conteudo',
-          tipo: 'variacao',
-          contexto: 'Retomar com valor educativo',
-          dica: 'Agregue valor sem pedir nada',
-          mensagem: '[Nome], lembrei de voce ao ver esse conteudo! 💚\n\n[LINK_CONTEUDO]\n\nE sobre [TEMA] - achei que poderia te interessar.\n\nSe em algum momento quiser retomar nossa conversa sobre tratamento, estou por aqui!\n\nCuide-se! 🌿',
-          gatilhos: ['Valor gratuito', 'Relacionamento', 'Porta aberta'],
-          variacoes: []
-        },
-        {
-          id: 'reeng-3',
-          titulo: 'Reengajamento - Direto',
-          tipo: 'variacao',
-          contexto: '30 dias sem contato, ultima tentativa',
-          dica: 'Seja direto mas respeitoso',
-          mensagem: 'Oi [Nome], tudo bem?\n\nTentei contato algumas vezes mas nao consegui retorno.\n\nEntendo se o momento nao e o ideal ou se voce decidiu nao prosseguir - cada um tem seu tempo!\n\nMe conta: voce ainda tem interesse em tratar a queda capilar?\n\nSe sim, podemos retomar de onde paramos.\nSe nao, sem problemas! So me avisa pra eu nao ficar te incomodando. 😊\n\nDe qualquer forma, desejo o melhor pra voce! 💚',
-          gatilhos: ['Respeito', 'Clareza', 'Dignidade'],
-          variacoes: []
-        }
-      ]
-    }
+  // Frases de Impacto section
+  var frasesImpactoHtml = '';
+  if (FRASES_IMPACTO && FRASES_IMPACTO.categorias) {
+    var categoriasImpacto = Object.keys(FRASES_IMPACTO.categorias).map(function(catKey) {
+      var frases = FRASES_IMPACTO.categorias[catKey];
+      var frasesListHtml = frases.map(function(frase) {
+        return '<div style="padding: 8px 12px; background: rgba(26, 95, 82, 0.05); border-left: 3px solid #1a5f52; margin-bottom: 8px; border-radius: 4px; font-size: 13px;">"' + frase + '"</div>';
+      }).join('');
+
+      var icones = {
+        urgencia: 'clock',
+        empatia: 'heart',
+        autoridade: 'shield-alt',
+        esperanca: 'lightbulb'
+      };
+
+      return '<div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px;">' +
+        '<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">' +
+          '<div style="width: 32px; height: 32px; background: #1a5f52; border-radius: 6px; display: flex; align-items: center; justify-content: center;">' +
+            '<i class="fas fa-' + (icones[catKey] || 'comment') + '" style="color: white; font-size: 14px;"></i>' +
+          '</div>' +
+          '<span style="font-weight: 600; text-transform: capitalize;">' + catKey + '</span>' +
+        '</div>' +
+        frasesListHtml +
+      '</div>';
+    }).join('');
+
+    frasesImpactoHtml = '<div class="card fade-in" style="margin-bottom: 24px;">' +
+      '<div class="card-header">' +
+        '<h3 class="card-title"><i class="fas fa-bullhorn"></i> Frases de Impacto para Audio</h3>' +
+        '<span class="badge badge-info">4 categorias</span>' +
+      '</div>' +
+      '<p style="color: #6b7280; margin-bottom: 16px; font-size: 13px;">' + (FRASES_IMPACTO.descricao || 'Use essas frases em audios para criar conexao emocional') + '</p>' +
+      '<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">' + categoriasImpacto + '</div>' +
+    '</div>';
+  }
+
+  // Modulos do Playbook - usar MODULOS_PLAYBOOK dinamicamente
+  var modulosScripts = [
+    { key: 'abertura', nome: 'Abertura e Qualificacao', icone: 'user-plus', cor: '#10b981' },
+    { key: 'mapeamentoDor', nome: 'Mapeamento da Dor', icone: 'heart-pulse', cor: '#f59e0b' },
+    { key: 'followUp', nome: 'Follow-Up Estrategico', icone: 'repeat', cor: '#3b82f6' },
+    { key: 'noShow', nome: 'Recuperacao de No-Show', icone: 'calendar-x', cor: '#ef4444' },
+    { key: 'comercial2', nome: 'Comercial 2 (Pos-Consulta)', icone: 'check-circle', cor: '#10b981' },
+    { key: 'contornos', nome: 'Contornos e MACs', icone: 'message-circle', cor: '#8b5cf6' }
   ];
+
+  // Transformar MODULOS_PLAYBOOK em estrutura compativel com o rendering existente
+  var etapasFunil = modulosScripts.map(function(moduloConfig) {
+    var modulo = MODULOS_PLAYBOOK[moduloConfig.key];
+    if (!modulo) return null;
+
+    var allScripts = (modulo.scripts || []).concat(modulo.variacoes || []);
+
+    // Transformar scripts para formato esperado
+    var scriptsFormatados = allScripts.map(function(script) {
+      return {
+        id: script.id,
+        titulo: script.titulo || script.nome || 'Script',
+        tipo: script.tipo || 'principal',
+        contexto: script.momento || script.contexto || 'Usar conforme necessario',
+        dica: script.dica || 'Use este script no contexto apropriado',
+        mensagem: script.mensagem || script.pergunta || '',
+        gatilhos: script.gatilhos || [],
+        variacoes: []
+      };
+    });
+
+    return {
+      id: moduloConfig.key,
+      nome: moduloConfig.nome,
+      icone: moduloConfig.icone || modulo.icone,
+      cor: moduloConfig.cor || modulo.cor,
+      descricao: modulo.descricao || '',
+      objetivo: modulo.objetivo || '',
+      tempo_ideal: modulo.tempo_ideal || '',
+      scripts: scriptsFormatados
+    };
+  }).filter(function(etapa) { return etapa !== null; });
 
   // Gerar tabs das etapas
   var tabsHtml = etapasFunil.map(function(etapa, index) {
@@ -1104,10 +925,14 @@ function renderScriptsCabeloeSaude() {
     var scriptsHtml = etapa.scripts.map(function(script) {
       var tipoBadge = script.tipo === 'principal' ? 'badge-success' :
                       script.tipo === 'followup' ? 'badge-warning' :
-                      script.tipo === 'objecao' ? 'badge-danger' : 'badge-info';
+                      script.tipo === 'objecao' ? 'badge-danger' :
+                      script.tipo === 'contorno' ? 'badge-purple' :
+                      script.tipo === 'urgencia' ? 'badge-danger' : 'badge-info';
       var tipoLabel = script.tipo === 'principal' ? 'PRINCIPAL' :
                       script.tipo === 'followup' ? 'FOLLOW-UP' :
-                      script.tipo === 'objecao' ? 'OBJECAO' : 'VARIACAO';
+                      script.tipo === 'objecao' ? 'OBJECAO' :
+                      script.tipo === 'contorno' ? 'CONTORNO' :
+                      script.tipo === 'urgencia' ? 'URGENCIA' : 'VARIACAO';
 
       var gatilhosHtml = script.gatilhos.map(function(g) {
         return '<span class="badge badge-purple" style="font-size: 11px; margin-right: 4px;">' + g + '</span>';
@@ -1116,23 +941,6 @@ function renderScriptsCabeloeSaude() {
       var gatilhosListHtml = script.gatilhos.map(function(g) {
         return '<li style="padding: 4px 0;">• ' + g + '</li>';
       }).join('');
-
-      var variacoesHtml = '';
-      if (script.variacoes && script.variacoes.length > 0) {
-        var variacoesItems = script.variacoes.map(function(v) {
-          return '<div style="margin-bottom: 12px;">' +
-            '<div style="font-size: 12px; font-weight: 500; color: #1a5f52; margin-bottom: 6px;">' + v.nome + '</div>' +
-            '<div class="message-box" style="font-size: 12px; white-space: pre-wrap;">' + v.mensagem + '</div>' +
-          '</div>';
-        }).join('');
-
-        variacoesHtml = '<div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e5e7eb;">' +
-          '<div style="font-weight: 500; margin-bottom: 12px; font-size: 13px; color: #6b7280;">' +
-            '<i class="fas fa-random"></i> Variacoes disponiveis:' +
-          '</div>' +
-          variacoesItems +
-        '</div>';
-      }
 
       return '<div class="accordion" style="margin-bottom: 16px;">' +
         '<div class="accordion-header" style="border-left: 4px solid ' + etapa.cor + ';">' +
@@ -1164,7 +972,6 @@ function renderScriptsCabeloeSaude() {
                 '<span style="font-weight: 600; font-size: 14px;">Script Principal</span>' +
               '</div>' +
               '<div class="message-box" style="font-size: 13px; white-space: pre-wrap;">' + script.mensagem + '</div>' +
-              variacoesHtml +
             '</div>' +
             '<div style="padding: 20px; background: #fafafa;">' +
               '<div style="font-weight: 500; margin-bottom: 12px; font-size: 13px;">' +
@@ -1204,149 +1011,6 @@ function renderScriptsCabeloeSaude() {
     '</div>';
   }).join('');
 
-  // Sequencias de Follow-up
-  var sequencias = [
-    {
-      nome: 'Sequencia de Captacao',
-      descricao: 'Do primeiro contato ate avaliacao agendada',
-      icone: 'route',
-      etapas: [
-        { dia: 0, acao: 'Resposta inicial' },
-        { dia: 0, acao: 'Qualificacao' },
-        { dia: 0, acao: 'Convite para avaliacao' },
-        { dia: 1, acao: 'Confirmacao se agendou' }
-      ]
-    },
-    {
-      nome: 'Sequencia Pos-Avaliacao',
-      descricao: 'Da avaliacao ate fechamento',
-      icone: 'tasks',
-      etapas: [
-        { dia: 0, acao: 'Envio de proposta' },
-        { dia: 3, acao: 'Follow-up proposta' },
-        { dia: 7, acao: 'Follow-up final' },
-        { dia: 14, acao: 'Reengajamento' }
-      ]
-    },
-    {
-      nome: 'Sequencia de Tratamento',
-      descricao: 'Acompanhamento durante tratamento',
-      icone: 'heartbeat',
-      etapas: [
-        { dia: 0, acao: 'Boas-vindas' },
-        { dia: -1, acao: 'Confirmacao antes da sessao' },
-        { dia: 1, acao: 'Pos-sessao - como foi' }
-      ]
-    }
-  ];
-
-  var sequenciasHtml = sequencias.map(function(seq) {
-    var etapasSeqHtml = seq.etapas.map(function(etapa, i) {
-      var borderStyle = i < seq.etapas.length - 1 ? 'border-left: 2px solid #1a5f52; margin-left: -11px; padding-left: 20px;' : 'margin-left: -11px; padding-left: 20px;';
-      var bgColor = i === seq.etapas.length - 1 ? '#10b981' : '#1a5f52';
-
-      return '<div style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; ' + borderStyle + '">' +
-        '<div style="width: 20px; height: 20px; background: ' + bgColor + '; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-left: -10px;">' +
-          '<span style="color: white; font-size: 10px; font-weight: 600;">' + (i + 1) + '</span>' +
-        '</div>' +
-        '<div style="flex: 1;">' +
-          '<div style="display: flex; justify-content: space-between; align-items: center;">' +
-            '<span style="font-weight: 500; font-size: 13px;">' + etapa.acao + '</span>' +
-            '<span class="badge badge-info" style="font-size: 10px;">Dia ' + etapa.dia + '</span>' +
-          '</div>' +
-        '</div>' +
-      '</div>';
-    }).join('');
-
-    return '<div class="card" style="margin-bottom: 0;">' +
-      '<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">' +
-        '<div style="width: 40px; height: 40px; background: #1a5f52; border-radius: 8px; display: flex; align-items: center; justify-content: center;">' +
-          '<i class="fas fa-' + seq.icone + '" style="color: white;"></i>' +
-        '</div>' +
-        '<div>' +
-          '<div style="font-weight: 600;">' + seq.nome + '</div>' +
-          '<div style="font-size: 12px; color: #6b7280;">' + seq.descricao + '</div>' +
-        '</div>' +
-      '</div>' +
-      '<div style="position: relative; padding-left: 20px;">' + etapasSeqHtml + '</div>' +
-    '</div>';
-  }).join('');
-
-  // Templates por Tipo de Paciente
-  var templatesPaciente = [
-    {
-      nome: 'Queda Capilar Geral',
-      icone: 'leaf',
-      dores: ['Perda excessiva', 'Afinamento', 'Entradas'],
-      script: 'Sabia que existem mais de 100 causas diferentes para queda de cabelo?\n\nPor isso que Minoxidil e Finasterida nao funcionam pra todo mundo - eles tratam causas especificas.\n\nAqui na Cabelo & Saude, investigamos QUAL e a sua causa antes de propor tratamento.\n\nQuer saber mais?'
-    },
-    {
-      nome: 'Calvicie',
-      icone: 'user',
-      dores: ['Entradas avancadas', 'Coroa raleando', 'Genetica'],
-      script: 'Calvicie nao e sentenca definitiva.\n\nDependendo do estagio e das causas associadas, podemos:\n✅ Retardar significativamente a progressao\n✅ Fortalecer os fios existentes\n✅ Reativar foliculos ainda viaveis\n\nO primeiro passo e investigar. Ja fez avaliacao tricologica?'
-    },
-    {
-      nome: 'Tratamentos Naturais',
-      icone: 'seedling',
-      dores: ['Aversao a medicamentos', 'Busca por alternativas', 'Efeitos colaterais'],
-      script: 'Busca tratamento natural para queda de cabelo?\n\nA boa noticia: existem protocolos que nao dependem apenas de medicamentos fortes.\n\nTrabalhamos com:\n- Nutricao capilar\n- Laserterapia\n- Protocolos topicos\n- Suplementacao personalizada\n\nQuer conhecer as opcoes?'
-    }
-  ];
-
-  var templatesHtml = templatesPaciente.map(function(template) {
-    var doresHtml = template.dores.map(function(d) {
-      return '<span class="badge badge-warning" style="font-size: 11px;">' + d + '</span>';
-    }).join(' ');
-
-    return '<div class="accordion">' +
-      '<div class="accordion-header">' +
-        '<div class="accordion-title">' +
-          '<i class="fas fa-' + template.icone + '" style="color: #1a5f52; margin-right: 8px;"></i>' +
-          template.nome +
-        '</div>' +
-        '<i class="fas fa-chevron-down"></i>' +
-      '</div>' +
-      '<div class="accordion-content">' +
-        '<div style="margin-bottom: 16px;">' +
-          '<div style="font-size: 12px; font-weight: 500; color: #6b7280; margin-bottom: 8px;">Dores principais:</div>' +
-          '<div style="display: flex; gap: 8px; flex-wrap: wrap;">' + doresHtml + '</div>' +
-        '</div>' +
-        '<div class="message-box" style="font-size: 13px; white-space: pre-wrap;">' + template.script + '</div>' +
-      '</div>' +
-    '</div>';
-  }).join('');
-
-  // Convite Avaliacao
-  var conviteAvaliacaoHtml = '<div class="card" style="border-color: #10b981;">' +
-    '<div class="card-header">' +
-      '<h3 class="card-title"><i class="fas fa-gift" style="color: #10b981;"></i> Convite para Avaliacao Tricologica</h3>' +
-      '<span class="badge badge-success">ALTA CONVERSAO</span>' +
-    '</div>' +
-    '<p style="color: #6b7280; margin-bottom: 16px; font-size: 13px;">' +
-      'Use este script para convidar leads qualificados a agendar sua avaliacao.' +
-    '</p>' +
-    '<div class="message-box" style="font-size: 13px; white-space: pre-wrap;">' +
-      'Quer entender de verdade o que esta causando sua queda capilar?\n\n' +
-      'A avaliacao tricologica inclui:\n' +
-      '✅ Anamnese completa\n' +
-      '✅ Tricoscopia digital (exame do couro cabeludo)\n' +
-      '✅ Diagnostico personalizado\n' +
-      '✅ Proposta de tratamento\n\n' +
-      '💚 Agende sua avaliacao\n' +
-      '📱 Responda essa mensagem ou clique no link:\n' +
-      '[LINK_AGENDAMENTO]\n\n' +
-      'Cabelo & Saude - Clinica de Tricologia\n' +
-      'www.cabeloesaude.com.br' +
-    '</div>' +
-  '</div>';
-
-  // Total de scripts
-  var totalScripts = 0;
-  etapasFunil.forEach(function(etapa) {
-    totalScripts += etapa.scripts.length;
-  });
-
   return '<div class="page-header">' +
     '<h1 class="page-title"><i class="fas fa-comment-dots"></i> Central de Scripts - Cabelo & Saude</h1>' +
     '<p class="page-subtitle">Mensagens prontas e otimizadas para cada etapa do funil de vendas da clinica de tricologia</p>' +
@@ -1361,37 +1025,16 @@ function renderScriptsCabeloeSaude() {
     '<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">' + dicasHtml + '</div>' +
   '</div>' +
 
+  frasesImpactoHtml +
+
   '<div class="card fade-in" style="margin-bottom: 24px;">' +
     '<div class="card-header">' +
-      '<h3 class="card-title"><i class="fas fa-layer-group"></i> Scripts por Etapa do Funil</h3>' +
-      '<span class="badge badge-info">' + totalScripts + ' scripts</span>' +
+      '<h3 class="card-title"><i class="fas fa-layer-group"></i> Scripts por Modulo do Playbook</h3>' +
+      '<span class="badge badge-info">' + totalScripts + '+ scripts</span>' +
     '</div>' +
     '<div class="tabs" style="margin-bottom: 20px; flex-wrap: wrap;">' + tabsHtml + '</div>' +
     '<div class="tab-contents">' + tabContentsHtml + '</div>' +
   '</div>' +
-
-  '<div class="grid grid-2" style="margin-bottom: 24px;">' +
-    '<div class="card fade-in">' +
-      '<div class="card-header">' +
-        '<h3 class="card-title"><i class="fas fa-route"></i> Sequencias de Follow-up</h3>' +
-      '</div>' +
-      '<p style="color: #6b7280; margin-bottom: 16px; font-size: 13px;">' +
-        'Siga estas sequencias para maximizar suas taxas de resposta e conversao.' +
-      '</p>' +
-      '<div style="display: flex; flex-direction: column; gap: 16px;">' + sequenciasHtml + '</div>' +
-    '</div>' +
-    '<div class="card fade-in">' +
-      '<div class="card-header">' +
-        '<h3 class="card-title"><i class="fas fa-bullseye"></i> Templates por Tipo de Paciente</h3>' +
-      '</div>' +
-      '<p style="color: #6b7280; margin-bottom: 16px; font-size: 13px;">' +
-        'Scripts personalizados para os principais perfis de pacientes.' +
-      '</p>' +
-      templatesHtml +
-    '</div>' +
-  '</div>' +
-
-  conviteAvaliacaoHtml +
 
   '<div style="background: linear-gradient(135deg, #1a5f52 0%, #2d8a7a 100%); border-radius: 12px; padding: 24px; margin-top: 24px;">' +
     '<div style="display: flex; align-items: center; gap: 16px;">' +
@@ -1405,9 +1048,8 @@ function renderScriptsCabeloeSaude() {
     '</div>' +
   '</div>';
 }
-
 function renderObjecoesCabeloeSaude() {
-  // Stats cards
+  // Stats cards - Updated to reflect 15+ objections
   var statsHtml = '<div class="stats-grid" style="margin-bottom: 24px;">' +
     '<div class="stat-card" style="background: linear-gradient(135deg, #1a5f52 0%, #2d8a7a 100%); color: white; box-shadow: 0 4px 6px rgba(26, 95, 82, 0.3);">' +
       '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">7+</div>' +
@@ -1418,192 +1060,267 @@ function renderObjecoesCabeloeSaude() {
       '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px;">Pacientes Atendidos</div>' +
     '</div>' +
     '<div class="stat-card" style="background: linear-gradient(135deg, #4fb3a3 0%, #6dd5c7 100%); color: white; box-shadow: 0 4px 6px rgba(79, 179, 163, 0.3);">' +
-      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">13</div>' +
-      '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px;">Objeções Mapeadas</div>' +
+      '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">15+</div>' +
+      '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px;">Objeções Especializadas</div>' +
     '</div>' +
     '<div class="stat-card" style="background: linear-gradient(135deg, #1a5f52 0%, #4fb3a3 100%); color: white; box-shadow: 0 4px 6px rgba(26, 95, 82, 0.3);">' +
       '<div class="stat-value" style="font-size: 48px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">92%</div>' +
-      '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px;">Taxa de Satisfação</div>' +
+      '<div class="stat-label" style="color: rgba(255,255,255,0.95); font-weight: 500; font-size: 15px;">Taxa de Conversão</div>' +
     '</div>' +
   '</div>';
 
-  // Diferenciais para argumentacao
-  var diferenciaisHtml = DIFERENCIAIS.map(function(d) {
-    return '<div style="display: flex; align-items: flex-start; gap: 12px; padding: 12px; background: rgba(139, 92, 246, 0.05); border-radius: 8px;">' +
-      '<div style="width: 40px; height: 40px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">' +
-        '<i class="fas fa-' + d.icone + '" style="color: white;"></i>' +
+  // Principios Gerais - Golden Rules Card
+  var principiosHtml = '<div class="card fade-in" style="margin-bottom: 24px; border-left: 4px solid #f59e0b;">' +
+    '<div class="card-header" style="background: rgba(245, 158, 11, 0.05);">' +
+      '<h3 class="card-title"><i class="fas fa-lightbulb"></i> Princípios de Ouro para Contornar Objeções</h3>' +
+      '<p style="margin: 8px 0 0 0; font-size: 13px; color: var(--text-secondary);">Fundamentos que todo vendedor deve dominar</p>' +
+    '</div>' +
+    '<div style="padding: 20px;">' +
+      '<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 20px;">' +
+        objecoes.principiosGerais.regrasOuro.map(function(regra) {
+          return '<div style="display: flex; gap: 12px; padding: 12px; background: #fef3c7; border-radius: 8px;">' +
+            '<div style="flex-shrink: 0; color: #f59e0b; font-size: 20px;">⚡</div>' +
+            '<div style="font-size: 13px; line-height: 1.6;">' + regra + '</div>' +
+          '</div>';
+        }).join('') +
       '</div>' +
-      '<div>' +
-        '<div style="font-weight: 600; margin-bottom: 4px;">' + d.titulo + '</div>' +
-        '<div style="font-size: 13px; color: var(--text-secondary);">' + d.descricao + '</div>' +
+      '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">' +
+        '<div style="padding: 16px; background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 8px;">' +
+          '<div style="font-weight: 600; color: var(--secondary); margin-bottom: 8px;">🤝 Validação</div>' +
+          '<div style="font-size: 12px; color: var(--text-secondary);">' + objecoes.principiosGerais.estruturaPadrao.passo1 + '</div>' +
+        '</div>' +
+        '<div style="padding: 16px; background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 8px;">' +
+          '<div style="font-weight: 600; color: var(--primary); margin-bottom: 8px;">🔍 Investigação</div>' +
+          '<div style="font-size: 12px; color: var(--text-secondary);">' + objecoes.principiosGerais.estruturaPadrao.passo2 + '</div>' +
+        '</div>' +
+        '<div style="padding: 16px; background: rgba(59, 130, 246, 0.05); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 8px;">' +
+          '<div style="font-weight: 600; color: #3b82f6; margin-bottom: 8px;">📚 Educação</div>' +
+          '<div style="font-size: 12px; color: var(--text-secondary);">' + objecoes.principiosGerais.estruturaPadrao.passo3 + '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+
+  // Main Objections Array (11 main objections)
+  var objecoesArray = [
+    objecoes.valorConsulta,
+    objecoes.vouPensar,
+    objecoes.quemAtende,
+    objecoes.examesLaboratoriais,
+    objecoes.planoSaude,
+    objecoes.jaPasseiMedicos,
+    objecoes.jaUseiMedicamentos,
+    objecoes.porqueConsulta,
+    objecoes.soTonico,
+    objecoes.retornoTempo,
+    objecoes.soCasaPrimeiro
+  ];
+
+  // Render main objections with multiple blocks
+  var objecoesHtml = objecoesArray.map(function(obj) {
+    // Get frequency badge color
+    var frequenciaBadge = obj.frequencia.includes('Alta') || obj.frequencia.includes('Muito alta')
+      ? 'badge-danger'
+      : obj.frequencia.includes('Média')
+        ? 'badge-warning'
+        : 'badge-info';
+
+    // Build profile badges
+    var perfilBadges = obj.perfilComum.map(function(perfil) {
+      return '<span class="badge badge-secondary" style="font-size: 11px; margin-right: 4px;">' + perfil + '</span>';
+    }).join('');
+
+    // Build multiple response blocks
+    var blocosHtml = Object.keys(obj.estruturaResposta)
+      .filter(function(key) { return key.startsWith('bloco'); })
+      .map(function(key) {
+        var bloco = obj.estruturaResposta[key];
+        return '<div style="margin-bottom: 16px;">' +
+          '<div style="font-weight: 600; color: var(--primary); margin-bottom: 8px; font-size: 14px;">' +
+            '<i class="fas fa-comment-dots"></i> ' + bloco.titulo +
+          '</div>' +
+          '<div class="message-box" style="white-space: pre-wrap; margin-bottom: 8px;">' +
+            '<button class="copy-btn" onclick="copyToClipboard(`' + bloco.texto.replace(/`/g, '\\`').replace(/\$/g, '\\$') + '`, this)">' +
+              '<i class="fas fa-copy"></i> Copiar' +
+            '</button>' +
+            bloco.texto +
+          '</div>' +
+          (bloco.objetivo ? '<div style="font-size: 12px; color: var(--text-secondary); font-style: italic;"><strong>Objetivo:</strong> ' + bloco.objetivo + '</div>' : '') +
+          (bloco.gatilhos && bloco.gatilhos.length > 0 ? '<div style="margin-top: 6px;">' + bloco.gatilhos.map(function(g) {
+            return '<span class="badge badge-purple" style="font-size: 10px; margin-right: 4px;">' + g + '</span>';
+          }).join('') + '</div>' : '') +
+        '</div>';
+      }).join('');
+
+    // Build usage tips
+    var dicasHtml = obj.dicasUso.map(function(dica) {
+      return '<li style="padding: 4px 0; font-size: 12px; color: var(--text-secondary);"><i class="fas fa-check" style="color: var(--secondary); margin-right: 6px;"></i>' + dica + '</li>';
+    }).join('');
+
+    return '<div class="accordion" style="margin-bottom: 16px;">' +
+      '<div class="accordion-header" style="border-left: 4px solid var(--primary);">' +
+        '<div class="accordion-title">' +
+          '<span class="badge ' + frequenciaBadge + '" style="margin-right: 8px; font-size: 10px;">' + obj.frequencia + '</span>' +
+          '<span style="font-weight: 600;">"' + obj.objecao + '"</span>' +
+        '</div>' +
+        '<i class="fas fa-chevron-down"></i>' +
+      '</div>' +
+      '<div class="accordion-content" style="padding: 0;">' +
+        '<div style="padding: 16px; background: #fafafa; border-bottom: 1px solid var(--border);">' +
+          '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 13px; margin-bottom: 12px;">' +
+            '<div><i class="fas fa-clock"></i> <strong>Momento:</strong> ' + obj.momento + '</div>' +
+            '<div><i class="fas fa-user"></i> <strong>Perfil Comum:</strong> ' + perfilBadges + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="padding: 20px;">' +
+          '<div style="margin-bottom: 24px;">' +
+            '<h4 style="font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--primary);">📋 Estrutura de Resposta</h4>' +
+            blocosHtml +
+          '</div>' +
+          '<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; padding-top: 20px; border-top: 1px solid var(--border);">' +
+            '<div>' +
+              '<h4 style="font-size: 13px; font-weight: 600; margin-bottom: 8px;"><i class="fab fa-whatsapp" style="color: #25D366;"></i> Versão Pocket (WhatsApp)</h4>' +
+              '<div class="message-box" style="font-size: 12px; background: #f0fdf4;">' +
+                '<button class="copy-btn" onclick="copyToClipboard(`' + obj.versaoPocket.replace(/`/g, '\\`').replace(/\$/g, '\\$') + '`, this)">' +
+                  '<i class="fas fa-copy"></i> Copiar' +
+                '</button>' +
+                obj.versaoPocket +
+              '</div>' +
+            '</div>' +
+            '<div>' +
+              '<h4 style="font-size: 13px; font-weight: 600; margin-bottom: 8px;"><i class="fas fa-lightbulb"></i> Dicas de Uso</h4>' +
+              '<ul style="list-style: none; padding: 0; margin: 0;">' + dicasHtml + '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
       '</div>' +
     '</div>';
   }).join('');
 
-  // Tabs de categorias
-  var categorias = Object.entries(OBJECOES_EXPANDIDAS);
-  var tabsHtml = categorias.map(function(entry, index) {
-    var key = entry[0];
-    var cat = entry[1];
-    return '<div class="tab ' + (index === 0 ? 'active' : '') + '" data-tab="' + key + '">' +
-      '<i class="fas fa-' + cat.icone + '" style="color: ' + cat.cor + ';"></i> ' + cat.categoria.split(' ')[0] +
-    '</div>';
-  }).join('');
-
-  // Conteudo de cada categoria
-  var tabContentsHtml = categorias.map(function(entry, index) {
-    var key = entry[0];
-    var cat = entry[1];
-    var objecoesItems = cat.objecoes.map(function(obj) {
-      var passosHtml = obj.tecnica_call.passos.map(function(p) {
-        return '<li style="padding: 6px 0; border-bottom: 1px solid var(--border);">' + p + '</li>';
-      }).join('');
-      var gatilhosHtml = obj.tecnica_call.gatilhos.map(function(g) {
-        return '<span class="badge badge-purple" style="margin-right: 4px;">' + g + '</span>';
-      }).join('');
-      var argumentosHtml = obj.argumentos.map(function(a) {
-        return '<li style="display: flex; align-items: flex-start; gap: 8px; padding: 6px 0;"><i class="fas fa-check-circle" style="color: var(--secondary);"></i>' + a + '</li>';
-      }).join('');
-
-      return '<div class="accordion" style="margin-bottom: 16px;">' +
-        '<div class="accordion-header" style="border-left: 4px solid ' + cat.cor + ';">' +
+  // Special Cases Section
+  var casosEspeciaisHtml = '<div class="card fade-in" style="margin-bottom: 24px; border-left: 4px solid #ef4444;">' +
+    '<div class="card-header" style="background: rgba(239, 68, 68, 0.05);">' +
+      '<h3 class="card-title"><i class="fas fa-exclamation-triangle"></i> Casos Especiais - Objeções Complexas</h3>' +
+      '<span class="badge badge-danger">Alta Gravidade</span>' +
+    '</div>' +
+    '<div style="padding: 20px;">' +
+      // Consulta Cara
+      '<div class="accordion" style="margin-bottom: 16px;">' +
+        '<div class="accordion-header" style="border-left: 4px solid #ef4444; background: #fef2f2;">' +
           '<div class="accordion-title">' +
-            '<span class="badge" style="background: ' + cat.cor + '20; color: ' + cat.cor + '; margin-right: 8px;">' +
-              (obj.nivel === 'muito_comum' ? 'MUITO COMUM' : obj.nivel === 'comum' ? 'COMUM' : 'RARO') +
-            '</span>' +
-            '"' + obj.titulo + '"' +
+            '<span class="badge badge-danger" style="margin-right: 8px;">CRÍTICO</span>' +
+            '<span style="font-weight: 600;">"' + objecoes.casosEspeciais.consultaCara.objecao + '"</span>' +
           '</div>' +
           '<i class="fas fa-chevron-down"></i>' +
         '</div>' +
-        '<div class="accordion-content" style="padding: 0;">' +
-          '<div style="padding: 20px; background: #fafafa; border-bottom: 1px solid var(--border);">' +
-            '<div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;">' +
-              '<i class="fas fa-info-circle"></i> <strong>Contexto:</strong> ' + obj.contexto +
-            '</div>' +
+        '<div class="accordion-content" style="padding: 20px;">' +
+          '<div style="background: #fef2f2; padding: 12px; border-radius: 8px; margin-bottom: 16px; border: 1px solid #fecaca;">' +
+            '<div style="font-size: 12px; color: #991b1b;"><strong>⚠️ Gravidade:</strong> ' + objecoes.casosEspeciais.consultaCara.gravidade + '</div>' +
+            '<div style="font-size: 12px; color: #991b1b; margin-top: 4px;"><strong>Momento:</strong> ' + objecoes.casosEspeciais.consultaCara.momento + '</div>' +
           '</div>' +
-          '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0;">' +
-            '<!-- Coluna Esquerda: Tecnica para Call -->' +
-            '<div style="padding: 20px; border-right: 1px solid var(--border);">' +
-              '<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">' +
-                '<div style="width: 32px; height: 32px; background: var(--primary); border-radius: 6px; display: flex; align-items: center; justify-content: center;">' +
-                  '<i class="fas fa-phone-alt" style="color: white; font-size: 14px;"></i>' +
+          Object.keys(objecoes.casosEspeciais.consultaCara.estruturaResposta)
+            .filter(function(key) { return key.startsWith('bloco'); })
+            .map(function(key) {
+              var bloco = objecoes.casosEspeciais.consultaCara.estruturaResposta[key];
+              return '<div style="margin-bottom: 16px;">' +
+                '<div style="font-weight: 600; color: #dc2626; margin-bottom: 8px; font-size: 14px;">' +
+                  '<i class="fas fa-shield-alt"></i> ' + bloco.titulo +
                 '</div>' +
-                '<div>' +
-                  '<div style="font-weight: 600; font-size: 14px;">Para Call ao Vivo</div>' +
-                  '<div style="font-size: 12px; color: var(--text-secondary);">' + obj.tecnica_call.nome + '</div>' +
+                '<div class="message-box" style="white-space: pre-wrap;">' +
+                  '<button class="copy-btn" onclick="copyToClipboard(`' + bloco.texto.replace(/`/g, '\\`').replace(/\$/g, '\\$') + '`, this)">' +
+                    '<i class="fas fa-copy"></i> Copiar' +
+                  '</button>' +
+                  bloco.texto +
                 '</div>' +
-              '</div>' +
-              '<div style="font-weight: 500; margin-bottom: 8px; font-size: 13px;">Passos:</div>' +
-              '<ol style="list-style: decimal; padding-left: 20px; margin-bottom: 16px; font-size: 13px;">' +
-                passosHtml +
-              '</ol>' +
-              '<div style="font-weight: 500; margin-bottom: 8px; font-size: 13px;">Gatilhos Mentais:</div>' +
-              '<div style="margin-bottom: 16px;">' + gatilhosHtml + '</div>' +
-              '<div style="font-weight: 500; margin-bottom: 8px; font-size: 13px;">Argumentos de Apoio:</div>' +
-              '<ul style="list-style: none; padding: 0; font-size: 13px;">' +
-                argumentosHtml +
-              '</ul>' +
-              '<div style="margin-top: 16px; padding: 12px; background: rgba(16, 185, 129, 0.1); border-radius: 8px; font-size: 12px;">' +
-                '<i class="fas fa-chart-line" style="color: var(--secondary);"></i>' +
-                ' <strong>Dado de suporte:</strong> ' + obj.dados_suporte +
-              '</div>' +
-            '</div>' +
-            '<!-- Coluna Direita: Script WhatsApp -->' +
-            '<div style="padding: 20px;">' +
-              '<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">' +
-                '<div style="width: 32px; height: 32px; background: #25D366; border-radius: 6px; display: flex; align-items: center; justify-content: center;">' +
-                  '<i class="fab fa-whatsapp" style="color: white; font-size: 16px;"></i>' +
-                '</div>' +
-                '<div>' +
-                  '<div style="font-weight: 600; font-size: 14px;">Para WhatsApp</div>' +
-                  '<div style="font-size: 12px; color: var(--text-secondary);">Copie e envie</div>' +
-                '</div>' +
-              '</div>' +
-              '<div class="message-box" style="font-size: 13px; white-space: pre-wrap; max-height: 400px; overflow-y: auto;">' +
-                '<button class="copy-btn" onclick="copyToClipboard(`' + obj.script_whatsapp.replace(/`/g, '\\`').replace(/\$/g, '\\$') + '`, this)">' +
-                  '<i class="fas fa-copy"></i> Copiar' +
-                '</button>' +
-                obj.script_whatsapp +
-              '</div>' +
-            '</div>' +
+              '</div>';
+            }).join('') +
+          '<div style="margin-top: 16px; padding: 12px; background: #f0fdf4; border-radius: 8px; border: 1px solid #bbf7d0;">' +
+            '<h5 style="font-size: 12px; font-weight: 600; margin-bottom: 8px; color: var(--secondary);">✅ Dicas Essenciais:</h5>' +
+            '<ul style="list-style: none; padding: 0; margin: 0;">' +
+              objecoes.casosEspeciais.consultaCara.dicasUso.map(function(dica) {
+                return '<li style="padding: 4px 0; font-size: 11px; color: #166534;">' + dica + '</li>';
+              }).join('') +
+            '</ul>' +
           '</div>' +
         '</div>' +
-      '</div>';
-    }).join('');
-
-    return '<div id="' + key + '" class="tab-content ' + (index === 0 ? 'active' : '') + '">' +
-      objecoesItems +
-    '</div>';
-  }).join('');
-
-  // Tecnicas Gerais
-  var tecnicasHtml = TECNICAS_GERAIS.map(function(t) {
-    var passosHtml = t.passos.map(function(p) {
-      return '<li style="padding: 8px 0; border-bottom: 1px solid var(--border);">' + p + '</li>';
-    }).join('');
-    return '<div class="card" style="margin-bottom: 0;">' +
-      '<div style="font-weight: 600; margin-bottom: 4px;">' + t.nome + '</div>' +
-      '<div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">' + t.descricao + '</div>' +
-      '<ul style="list-style: none; padding: 0; font-size: 13px;">' +
-        passosHtml +
-      '</ul>' +
-    '</div>';
-  }).join('');
-
-  // Gatilhos Mentais
-  var gatilhosCards = GATILHOS_MENTAIS.map(function(g) {
-    return '<div style="padding: 16px; background: white; border: 1px solid var(--border); border-radius: 8px;">' +
-      '<div style="font-weight: 600; color: var(--primary); margin-bottom: 4px;">' + g.nome + '</div>' +
-      '<div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">' + g.uso + '</div>' +
-      '<div style="font-size: 13px; font-style: italic; padding: 8px; background: var(--bg-page); border-radius: 4px;">' +
-        '"' + g.exemplo + '"' +
       '</div>' +
-    '</div>';
-  }).join('');
-
-  return '<div class="page-header">' +
-    '<h1 class="page-title"><i class="fas fa-shield-alt"></i> Arsenal de Vendas</h1>' +
-    '<p class="page-subtitle">Ferramentas completas para quebrar objecoes em calls e WhatsApp</p>' +
-  '</div>' +
-  statsHtml +
-  '<div class="card fade-in" style="margin-bottom: 24px;">' +
-    '<div class="card-header">' +
-      '<h3 class="card-title"><i class="fas fa-star"></i> Diferenciais Cabelo & Saúde - Método Manifesto</h3>' +
-    '</div>' +
-    '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">' +
-      diferenciaisHtml +
-    '</div>' +
-  '</div>' +
-  '<div class="card fade-in" style="margin-bottom: 24px;">' +
-    '<div class="card-header">' +
-      '<h3 class="card-title"><i class="fas fa-exclamation-circle"></i> Tratativas de Objecoes por Categoria</h3>' +
-      '<span class="badge badge-info">' + Object.values(OBJECOES_EXPANDIDAS).reduce(function(acc, cat) { return acc + cat.objecoes.length; }, 0) + ' objecoes</span>' +
-    '</div>' +
-    '<div class="tabs" style="margin-bottom: 20px;">' +
-      tabsHtml +
-    '</div>' +
-    '<div class="tab-contents">' +
-      tabContentsHtml +
-    '</div>' +
-  '</div>' +
-  '<div class="grid grid-2">' +
-    '<div class="card fade-in">' +
-      '<div class="card-header">' +
-        '<h3 class="card-title"><i class="fas fa-lightbulb"></i> Tecnicas de Negociacao</h3>' +
-      '</div>' +
-      '<div style="display: flex; flex-direction: column; gap: 16px;">' +
-        tecnicasHtml +
-      '</div>' +
-    '</div>' +
-    '<div class="card fade-in">' +
-      '<div class="card-header">' +
-        '<h3 class="card-title"><i class="fas fa-brain"></i> Gatilhos Mentais</h3>' +
-      '</div>' +
-      '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">' +
-        gatilhosCards +
+      // Calvicie Avancada
+      '<div class="accordion">' +
+        '<div class="accordion-header" style="border-left: 4px solid #ef4444; background: #fef2f2;">' +
+          '<div class="accordion-title">' +
+            '<span class="badge badge-danger" style="margin-right: 8px;">CRÍTICO</span>' +
+            '<span style="font-weight: 600;">"' + objecoes.casosEspeciais.calvicieAvancada.objecao + '"</span>' +
+          '</div>' +
+          '<i class="fas fa-chevron-down"></i>' +
+        '</div>' +
+        '<div class="accordion-content" style="padding: 20px;">' +
+          '<div style="background: #fef2f2; padding: 12px; border-radius: 8px; margin-bottom: 16px; border: 1px solid #fecaca;">' +
+            '<div style="font-size: 12px; color: #991b1b;"><strong>⚠️ Gravidade:</strong> ' + objecoes.casosEspeciais.calvicieAvancada.gravidade + '</div>' +
+            '<div style="font-size: 12px; color: #991b1b; margin-top: 4px;"><strong>Momento:</strong> ' + objecoes.casosEspeciais.calvicieAvancada.momento + '</div>' +
+          '</div>' +
+          Object.keys(objecoes.casosEspeciais.calvicieAvancada.estruturaResposta)
+            .filter(function(key) { return key.startsWith('bloco'); })
+            .map(function(key) {
+              var bloco = objecoes.casosEspeciais.calvicieAvancada.estruturaResposta[key];
+              return '<div style="margin-bottom: 16px;">' +
+                '<div style="font-weight: 600; color: #dc2626; margin-bottom: 8px; font-size: 14px;">' +
+                  '<i class="fas fa-shield-alt"></i> ' + bloco.titulo +
+                '</div>' +
+                '<div class="message-box" style="white-space: pre-wrap;">' +
+                  '<button class="copy-btn" onclick="copyToClipboard(`' + bloco.texto.replace(/`/g, '\\`').replace(/\$/g, '\\$') + '`, this)">' +
+                    '<i class="fas fa-copy"></i> Copiar' +
+                  '</button>' +
+                  bloco.texto +
+                '</div>' +
+              '</div>';
+            }).join('') +
+          '<div style="margin-top: 16px; padding: 12px; background: #f0fdf4; border-radius: 8px; border: 1px solid #bbf7d0;">' +
+            '<h5 style="font-size: 12px; font-weight: 600; margin-bottom: 8px; color: var(--secondary);">✅ Dicas Essenciais:</h5>' +
+            '<ul style="list-style: none; padding: 0; margin: 0;">' +
+              objecoes.casosEspeciais.calvicieAvancada.dicasUso.map(function(dica) {
+                return '<li style="padding: 4px 0; font-size: 11px; color: #166534;">' + dica + '</li>';
+              }).join('') +
+            '</ul>' +
+          '</div>' +
+        '</div>' +
       '</div>' +
     '</div>' +
   '</div>';
+
+  // Mental Triggers Reference
+  var gatilhosReferenceHtml = '<div class="card fade-in">' +
+    '<div class="card-header">' +
+      '<h3 class="card-title"><i class="fas fa-brain"></i> Gatilhos Mentais Mais Eficazes</h3>' +
+    '</div>' +
+    '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 20px;">' +
+      Object.keys(objecoes.principiosGerais.gatilhosMaisEficazes).map(function(key) {
+        var gatilho = objecoes.principiosGerais.gatilhosMaisEficazes[key];
+        var gatilhoNome = key.charAt(0).toUpperCase() + key.slice(1);
+        return '<div style="padding: 16px; background: white; border: 1px solid var(--border); border-radius: 8px;">' +
+          '<div style="font-weight: 600; color: var(--primary); margin-bottom: 4px; font-size: 13px;">' + gatilhoNome + '</div>' +
+          '<div style="font-size: 12px; color: var(--text-secondary); line-height: 1.5;">' + gatilho + '</div>' +
+        '</div>';
+      }).join('') +
+    '</div>' +
+  '</div>';
+
+  return '<div class="page-header">' +
+    '<h1 class="page-title"><i class="fas fa-shield-alt"></i> Objeções & Contornos Especializados</h1>' +
+    '<p class="page-subtitle">Sistema completo de contorno para vendas de tricologia - ' + objecoes.metadata.versao + '</p>' +
+  '</div>' +
+  statsHtml +
+  principiosHtml +
+  '<div class="card fade-in" style="margin-bottom: 24px;">' +
+    '<div class="card-header">' +
+      '<h3 class="card-title"><i class="fas fa-comments"></i> Objeções Principais</h3>' +
+      '<span class="badge badge-info">11 objeções mapeadas</span>' +
+    '</div>' +
+    '<div style="padding: 20px;">' +
+      objecoesHtml +
+    '</div>' +
+  '</div>' +
+  casosEspeciaisHtml +
+  gatilhosReferenceHtml;
 }
 
 function renderScripts() {
