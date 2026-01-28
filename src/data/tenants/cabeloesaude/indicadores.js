@@ -263,7 +263,7 @@ export const indicadores = {
   metasIndividuais: {
     titulo: "Metas Individuais do Comercial",
 
-    metaDiaria: {
+    diarias: {
       nome: "Meta Diária",
       consultasAgendadas: "2-3 consultas/dia",
       leadsContatados: "15-20 leads/dia",
@@ -271,7 +271,7 @@ export const indicadores = {
       tempoResposta: "< 2 horas para qualquer lead novo"
     },
 
-    metaSemanal: {
+    semanais: {
       nome: "Meta Semanal",
       consultasAgendadas: "10-15 consultas/semana",
       consultasRealizadas: "8-12 consultas realizadas/semana",
@@ -279,7 +279,7 @@ export const indicadores = {
       ticketMedio: "R$ 3.000 - R$ 5.000"
     },
 
-    metaMensal: {
+    mensais: {
       nome: "Meta Mensal",
       consultasAgendadas: "40-60 consultas/mês",
       consultasRealizadas: "32-48 consultas realizadas/mês",
