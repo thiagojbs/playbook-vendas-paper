@@ -1135,15 +1135,45 @@ function renderObjecoesCabeloeSaude() {
       .filter(function(key) { return key.startsWith('bloco'); })
       .map(function(key) {
         var bloco = obj.estruturaResposta[key];
+
+        // Handle conditional blocks (e.g., vouPensar.bloco2)
+        if (bloco.condicional && bloco.opcoes) {
+          var opcoesHtml = Object.keys(bloco.opcoes).map(function(opcaoKey) {
+            var opcaoTexto = bloco.opcoes[opcaoKey];
+            return '<div style="margin-bottom: 12px; padding: 12px; background: var(--card-bg); border-left: 3px solid var(--secondary); border-radius: 4px;">' +
+              '<div style="font-size: 12px; font-weight: 600; color: var(--secondary); margin-bottom: 6px; text-transform: uppercase;">' + opcaoKey.replace(/([A-Z])/g, ' $1').trim() + '</div>' +
+              '<div class="message-box" style="white-space: pre-wrap;">' +
+                '<button class="copy-btn" onclick="copyToClipboard(`' + opcaoTexto.replace(/`/g, '\\`').replace(/\$/g, '\\$') + '`, this)">' +
+                  '<i class="fas fa-copy"></i> Copiar' +
+                '</button>' +
+                opcaoTexto +
+              '</div>' +
+            '</div>';
+          }).join('');
+
+          return '<div style="margin-bottom: 16px;">' +
+            '<div style="font-weight: 600; color: var(--primary); margin-bottom: 8px; font-size: 14px;">' +
+              '<i class="fas fa-comment-dots"></i> ' + bloco.titulo +
+              ' <span class="badge badge-warning" style="font-size: 10px; margin-left: 8px;">Condicional</span>' +
+            '</div>' +
+            opcoesHtml +
+            (bloco.objetivo ? '<div style="font-size: 12px; color: var(--text-secondary); font-style: italic; margin-top: 8px;"><strong>Objetivo:</strong> ' + bloco.objetivo + '</div>' : '') +
+            (bloco.gatilhos && bloco.gatilhos.length > 0 ? '<div style="margin-top: 6px;">' + bloco.gatilhos.map(function(g) {
+              return '<span class="badge badge-purple" style="font-size: 10px; margin-right: 4px;">' + g + '</span>';
+            }).join('') + '</div>' : '') +
+          '</div>';
+        }
+
+        // Handle normal blocks with texto property
         return '<div style="margin-bottom: 16px;">' +
           '<div style="font-weight: 600; color: var(--primary); margin-bottom: 8px; font-size: 14px;">' +
             '<i class="fas fa-comment-dots"></i> ' + bloco.titulo +
           '</div>' +
           '<div class="message-box" style="white-space: pre-wrap; margin-bottom: 8px;">' +
-            '<button class="copy-btn" onclick="copyToClipboard(`' + bloco.texto.replace(/`/g, '\\`').replace(/\$/g, '\\$') + '`, this)">' +
+            '<button class="copy-btn" onclick="copyToClipboard(`' + (bloco.texto || '').replace(/`/g, '\\`').replace(/\$/g, '\\$') + '`, this)">' +
               '<i class="fas fa-copy"></i> Copiar' +
             '</button>' +
-            bloco.texto +
+            (bloco.texto || '') +
           '</div>' +
           (bloco.objetivo ? '<div style="font-size: 12px; color: var(--text-secondary); font-style: italic;"><strong>Objetivo:</strong> ' + bloco.objetivo + '</div>' : '') +
           (bloco.gatilhos && bloco.gatilhos.length > 0 ? '<div style="margin-top: 6px;">' + bloco.gatilhos.map(function(g) {
@@ -1227,10 +1257,10 @@ function renderObjecoesCabeloeSaude() {
                   '<i class="fas fa-shield-alt"></i> ' + bloco.titulo +
                 '</div>' +
                 '<div class="message-box" style="white-space: pre-wrap;">' +
-                  '<button class="copy-btn" onclick="copyToClipboard(`' + bloco.texto.replace(/`/g, '\\`').replace(/\$/g, '\\$') + '`, this)">' +
+                  '<button class="copy-btn" onclick="copyToClipboard(`' + (bloco.texto || '').replace(/`/g, '\\`').replace(/\$/g, '\\$') + '`, this)">' +
                     '<i class="fas fa-copy"></i> Copiar' +
                   '</button>' +
-                  bloco.texto +
+                  (bloco.texto || '') +
                 '</div>' +
               '</div>';
             }).join('') +
@@ -1267,10 +1297,10 @@ function renderObjecoesCabeloeSaude() {
                   '<i class="fas fa-shield-alt"></i> ' + bloco.titulo +
                 '</div>' +
                 '<div class="message-box" style="white-space: pre-wrap;">' +
-                  '<button class="copy-btn" onclick="copyToClipboard(`' + bloco.texto.replace(/`/g, '\\`').replace(/\$/g, '\\$') + '`, this)">' +
+                  '<button class="copy-btn" onclick="copyToClipboard(`' + (bloco.texto || '').replace(/`/g, '\\`').replace(/\$/g, '\\$') + '`, this)">' +
                     '<i class="fas fa-copy"></i> Copiar' +
                   '</button>' +
-                  bloco.texto +
+                  (bloco.texto || '') +
                 '</div>' +
               '</div>';
             }).join('') +
