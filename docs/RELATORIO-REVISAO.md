@@ -12,7 +12,7 @@ Revisão completa e sistemática de todos os arquivos do Playbook 2025 para Cabe
 
 **Resultado:**
 - ✅ **31/31 testes passando**
-- ❌ **2 bugs encontrados e corrigidos**
+- ❌ **3 bugs encontrados e corrigidos**
 - ⚠️ **0 avisos**
 - 🎯 **100% funcional**
 
@@ -107,6 +107,70 @@ DIFERENCIAIS = playbook.DIFERENCIAIS || objecoes.DIFERENCIAIS || PV_DIFERENCIAIS
 - Fallback final para `PV_DIFERENCIAIS` (Paper Vines)
 
 **Commit:** `5a438d4`
+
+---
+
+### Bug #3: Runtime Error em Blocos Condicionais
+
+**Severidade:** ❌ Crítico
+**Localização:** `src/pages/playbook.js` (linhas 1143, 1260, 1300)
+
+**Problema:**
+```javascript
+// ERRO RUNTIME:
+'<button onclick="copyToClipboard(`' +
+  bloco.texto.replace(/`/g, '\\`') +  // ❌ bloco.texto é undefined!
+'`)">'
+```
+
+**Impacto:**
+- Erro: "Cannot read properties of undefined (reading 'replace')"
+- Sistema quebrado ao acessar página de objeções
+- 100% dos acessos afetados
+- Funcionalidade principal bloqueada
+
+**Causa:**
+- `vouPensar.bloco2` é um bloco condicional
+- Tem estrutura diferente: `{ condicional: true, opcoes: {...} }`
+- NÃO tem propriedade `.texto`
+- Código tentava acessar `bloco.texto.replace()` → undefined.replace() → ERRO
+
+**Correção:**
+```javascript
+// DEPOIS (linhas 1143-1180)
+if (bloco.condicional && bloco.opcoes) {
+  // Renderiza cada opção separadamente
+  var opcoesHtml = Object.keys(bloco.opcoes).map(function(opcaoKey) {
+    var opcaoTexto = bloco.opcoes[opcaoKey];
+    return '<div>' +
+      '<button onclick="copyToClipboard(`' +
+        opcaoTexto.replace(/`/g, '\\`') +  // ✅ Correto!
+      '`)">' +
+    '</div>';
+  }).join('');
+  return opcoesHtml;
+}
+
+// Para blocos normais:
+'<button onclick="copyToClipboard(`' +
+  (bloco.texto || '').replace(/`/g, '\\`') +  // ✅ Fallback seguro!
+'`)">'
+```
+
+**Melhorias:**
+- ✅ Detecta blocos condicionais automaticamente
+- ✅ Renderiza 3 opções (seForValor, seForDuvida, seForTempo)
+- ✅ Badge "Condicional" para identificação visual
+- ✅ Fallback seguro `(bloco.texto || '')` em todas as ocorrências
+- ✅ Aplicado em 3 localizações (objeções principais + 2 casos especiais)
+
+**Testes Adicionados:**
+- ✅ `test-runtime.js` - Simula execução real
+- ✅ `check-objecoes.js` - Valida estrutura de dados
+- ✅ Reconhece blocos condicionais como válidos
+
+**Commit:** `d830c3c`
+**Documentação:** `docs/RELATORIO-BUGFIX-RUNTIME.md`
 
 ---
 
