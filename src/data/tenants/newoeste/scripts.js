@@ -743,6 +743,237 @@ export const POWER_PHRASES = {
 };
 
 // ========================================
+// ESTATISTICAS DOS SCRIPTS
+// ========================================
+
+export const SCRIPTS_STATS = {
+  total_scripts: '8+',
+  categorias: '4',
+  sequencias: '3',
+  taxa_resposta: '72%'
+};
+
+// ========================================
+// ETAPAS DO FUNIL DE VENDAS
+// ========================================
+
+export const ETAPAS_FUNIL = {
+  prospeccao: {
+    nome: 'Prospeccao',
+    icone: 'bullhorn',
+    cor: '#FF6B35',
+    descricao: 'Primeiro contato com potenciais clientes',
+    objetivo: 'Despertar interesse e qualificar o lead',
+    tempo_ideal: 'Manhã (9h-11h) ou tarde (14h-17h)',
+    scripts: [
+      {
+        id: 'cold-call-residencial',
+        titulo: 'Ligacao Fria - Residencial',
+        tipo: 'principal',
+        contexto: 'Ligacao para residencia sem contato previo',
+        dica: 'Seja cordial mas objetivo. Tempo e precioso.',
+        mensagem: `[ABERTURA - 15 segundos]
+Ola, bom dia/boa tarde! Me chamo [SEU NOME], sou consultor da New Oeste, provedor de internet de Foz do Iguacu. Estou ligando porque estamos levando fibra optica para sua regiao, no [BAIRRO]. O [NOME] esta em casa/disponivel?
+
+[QUALIFICACAO RAPIDA - 30 segundos]
+[NOME], voce usa internet em casa atualmente?
+
+[SE SIM] Qual operadora voce usa hoje?
+[SE NAO] Entendo. Tem interesse em ter internet de alta velocidade?
+
+[DESCOBERTA RAPIDA - 1 minuto]
+E posso te fazer duas perguntas rapidas?
+1. Qual o principal uso da internet ai? Trabalho, estudos, entretenimento?
+2. Voce esta satisfeito com a velocidade e estabilidade?
+
+[FECHAMENTO - 20 segundos]
+Otimo! Vou te enviar pelo WhatsApp [NUMERO] os detalhes da nossa internet e planos. Da uma olhada e qualquer duvida, e so chamar. Obrigado pela atencao!`,
+        variacoes: [
+          {
+            nome: 'Manha',
+            mensagem: 'Bom dia! Espero nao estar atrapalhando. Me chamo [NOME] da New Oeste...'
+          },
+          {
+            nome: 'Tarde',
+            mensagem: 'Boa tarde! Tem um minutinho? Sou da New Oeste, internet fibra optica...'
+          }
+        ],
+        gatilhos: ['Fibra optica', 'Regiao', 'Velocidade', 'Estabilidade']
+      },
+      {
+        id: 'whatsapp-primeiro-contato',
+        titulo: 'WhatsApp - Primeiro Contato',
+        tipo: 'principal',
+        contexto: 'Mensagem inicial via WhatsApp',
+        dica: 'Use emojis com moderacao. Seja profissional mas acessivel.',
+        mensagem: `Ola, [NOME]! 👋
+
+Me chamo [SEU NOME], sou da *New Oeste* - provedor de internet de Foz do Iguacu.
+
+Estamos levando *fibra optica* para o [BAIRRO] e vim te contar sobre isso! 🚀
+
+Voce usa internet em casa atualmente?`,
+        variacoes: [
+          {
+            nome: 'Com urgencia',
+            mensagem: `Ola [NOME]! ⚡
+
+Fibra optica chegando no [BAIRRO] - *ultimas vagas este mes*
+
+Tem interesse em garantir a sua? 🚀`
+          }
+        ],
+        gatilhos: ['Fibra', 'Bairro', 'Novidade']
+      }
+    ]
+  },
+
+  qualificacao: {
+    nome: 'Qualificacao',
+    icone: 'filter',
+    cor: '#FFD700',
+    descricao: 'Identificar necessidades e perfil do cliente',
+    objetivo: 'Entender as dores e necessidades especificas',
+    tempo_ideal: 'Durante a conversa inicial',
+    scripts: [
+      {
+        id: 'qualificacao-necessidades',
+        titulo: 'Descoberta de Necessidades',
+        tipo: 'principal',
+        contexto: 'Cliente demonstrou interesse inicial',
+        dica: 'Faca perguntas abertas. Escute mais do que fala.',
+        mensagem: `Perfeito! Para te indicar o melhor plano, me conta:
+
+1. Quantas pessoas usam a internet ai?
+2. Qual o principal uso? (trabalho, estudos, jogos, streaming)
+3. Tem algum problema com a internet atual?
+4. O que e mais importante pra voce: velocidade ou preco?`,
+        variacoes: [],
+        gatilhos: ['Perguntas abertas', 'Escuta ativa', 'Necessidades']
+      }
+    ]
+  },
+
+  apresentacao: {
+    nome: 'Apresentacao',
+    icone: 'presentation',
+    cor: '#FF8C42',
+    descricao: 'Apresentar solucoes e planos',
+    objetivo: 'Mostrar como nosso servico resolve as dores',
+    tempo_ideal: 'Apos qualificacao completa',
+    scripts: [
+      {
+        id: 'apresentacao-planos',
+        titulo: 'Apresentacao Comercial',
+        tipo: 'principal',
+        contexto: 'Cliente qualificado e interessado',
+        dica: 'Foque nos beneficios, nao nas caracteristicas.',
+        mensagem: `Baseado no que voce me contou, tenho a solucao perfeita! 💡
+
+*New Oeste Fibra [VELOCIDADE] Mbps*
+✅ Velocidade simetrica (upload = download)
+✅ Sem quedas ou lentidao
+✅ Instalacao em ate 72h
+✅ Suporte local 24/7
+✅ Wi-Fi profissional incluso
+
+*R$ [VALOR]/mes* - sem taxa de instalacao! 🎉
+
+Faz sentido pra voce?`,
+        variacoes: [
+          {
+            nome: 'Foco em velocidade',
+            mensagem: `Com *[VELOCIDADE] Mbps* voce vai poder:
+📺 Assistir 4K em varias TVs simultaneamente
+🎮 Jogar online sem lag
+💼 Trabalhar em videoconferencia sem travar
+📱 Conectar todos os dispositivos
+
+Tudo isso por R$ [VALOR]/mes. Incrivel, ne?`
+          }
+        ],
+        gatilhos: ['Beneficios', 'Solucao', 'Preco']
+      }
+    ]
+  },
+
+  fechamento: {
+    nome: 'Fechamento',
+    icone: 'handshake',
+    cor: '#10B981',
+    descricao: 'Fechar a venda e agendar instalacao',
+    objetivo: 'Converter o lead em cliente',
+    tempo_ideal: 'Apos apresentacao e esclarecimento de duvidas',
+    scripts: [
+      {
+        id: 'fechamento-venda',
+        titulo: 'Fechamento de Venda',
+        tipo: 'principal',
+        contexto: 'Cliente decidiu pela contratacao',
+        dica: 'Seja assertivo. Confirme todos os detalhes.',
+        mensagem: `Excelente escolha! 🎉
+
+Vou confirmar os dados:
+📍 Endereco: [ENDERECO COMPLETO]
+📱 Contato: [TELEFONE]
+📧 Email: [EMAIL]
+💳 Forma de pagamento: [FORMA]
+
+*Proximos passos:*
+1️⃣ Vou gerar seu contrato (chega em minutos)
+2️⃣ Voce assina digitalmente
+3️⃣ Agendamos a instalacao
+
+Instalacao disponivel: [DIA] ou [DIA]. Qual prefere?`,
+        variacoes: [],
+        gatilhos: ['Confirmacao', 'Proximo passo', 'Agendamento']
+      }
+    ]
+  }
+};
+
+// ========================================
+// SEQUENCIAS DE FOLLOW-UP
+// ========================================
+
+export const SEQUENCIAS_COMPLETAS = [
+  {
+    nome: 'Follow-up Lead Frio',
+    descricao: 'Sequencia para leads que demonstraram interesse mas nao responderam',
+    etapas: [
+      { dia: 1, canal: 'WhatsApp', mensagem: 'Ola! Enviei informacoes sobre nossa fibra. Conseguiu dar uma olhada?' },
+      { dia: 3, canal: 'WhatsApp', mensagem: 'Oi [NOME]! So pra garantir que nao perdeu a oportunidade. Ainda temos vagas!' },
+      { dia: 7, canal: 'Ligacao', mensagem: 'Ligar para verificar interesse e esclarecer duvidas' }
+    ]
+  },
+  {
+    nome: 'Pos-Venda Satisfacao',
+    descricao: 'Garantir satisfacao e pedir indicacao',
+    etapas: [
+      { dia: 7, canal: 'WhatsApp', mensagem: 'Ola! Tudo certo com a internet? Precisa de alguma ajuda?' },
+      { dia: 30, canal: 'WhatsApp', mensagem: 'Como ta sendo sua experiencia? Se puder indicar pra um amigo, agradecemos! 😊' }
+    ]
+  }
+];
+
+// ========================================
+// TEMPLATES POR SEGMENTO
+// ========================================
+
+export const TEMPLATES_SEGMENTO = {
+  residencial: {
+    nome: 'Residencial',
+    foco: 'Familia, streaming, home office',
+    mensagem: 'Internet que acompanha sua familia! Netflix, jogos, trabalho - tudo ao mesmo tempo.'
+  },
+  empresarial: {
+    nome: 'Empresarial',
+    foco: 'Produtividade, confiabilidade, suporte',
+    mensagem: 'Internet profissional para sua empresa. Suporte dedicado e SLA garantido.'
+  }
+};
+
+// ========================================
 // DICAS GERAIS DE COMUNICACAO
 // ========================================
 

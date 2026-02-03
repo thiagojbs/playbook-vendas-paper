@@ -27,7 +27,7 @@ export async function renderDesempenho(env, path, tenantData = {}) {
   return renderDesempenhoHome(env, tenantData);
 }
 
-function renderDesempenhoHome(env) {
+function renderDesempenhoHome(env, tenantData = {}) {
   const content = `
     <div class="page-header">
       <h1 class="page-title"><i class="fas fa-chart-line"></i> Desempenho do Vendedor</h1>
