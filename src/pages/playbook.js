@@ -1354,28 +1354,29 @@ function renderObjecoesCabeloeSaude() {
 }
 
 function renderScripts() {
-  // Validacao defensiva
-  if (!SCRIPTS_STATS || !ETAPAS_FUNIL || !DICAS_COMUNICACAO) {
-    return layout('Scripts', `
-      <div class="page-header">
-        <h1 class="page-title">Scripts de Vendas</h1>
-        <p class="page-subtitle" style="color: #ef4444;">
-          Erro ao carregar scripts. Por favor, tente novamente ou entre em contato com o suporte.
-        </p>
-      </div>
-      <div class="card">
-        <p><strong>Debug Info:</strong></p>
-        <ul>
-          <li>SCRIPTS_STATS: ${SCRIPTS_STATS ? 'OK' : 'UNDEFINED'}</li>
-          <li>ETAPAS_FUNIL: ${ETAPAS_FUNIL ? 'OK' : 'UNDEFINED'}</li>
-          <li>DICAS_COMUNICACAO: ${DICAS_COMUNICACAO ? 'OK' : 'UNDEFINED'}</li>
-        </ul>
-      </div>
-    `, 'scripts', tenantConfig);
-  }
+  try {
+    // Validacao defensiva
+    if (!SCRIPTS_STATS || !ETAPAS_FUNIL || !DICAS_COMUNICACAO) {
+      return layout('Scripts', `
+        <div class="page-header">
+          <h1 class="page-title">Scripts de Vendas</h1>
+          <p class="page-subtitle" style="color: #ef4444;">
+            Erro ao carregar scripts. Por favor, tente novamente ou entre em contato com o suporte.
+          </p>
+        </div>
+        <div class="card">
+          <p><strong>Debug Info:</strong></p>
+          <ul>
+            <li>SCRIPTS_STATS: ${SCRIPTS_STATS ? 'OK' : 'UNDEFINED'}</li>
+            <li>ETAPAS_FUNIL: ${ETAPAS_FUNIL ? 'OK' : 'UNDEFINED'}</li>
+            <li>DICAS_COMUNICACAO: ${DICAS_COMUNICACAO ? 'OK' : 'UNDEFINED'}</li>
+          </ul>
+        </div>
+      `, 'scripts', tenantConfig);
+    }
 
-  // Stats
-  const statsHtml = `
+    // Stats
+    const statsHtml = `
     <div class="stats-grid" style="margin-bottom: 24px;">
       <div class="stat-card purple">
         <div class="stat-value">${SCRIPTS_STATS.total_scripts}</div>
@@ -1690,6 +1691,28 @@ function renderScripts() {
 
     ${testeGratuitoHtml}
   `;
+  } catch (error) {
+    return layout('Scripts - Erro', `
+      <div class="page-header">
+        <h1 class="page-title" style="color: #ef4444;"><i class="fas fa-exclamation-triangle"></i> Erro ao Carregar Scripts</h1>
+      </div>
+      <div class="card">
+        <h3>Detalhes do Erro:</h3>
+        <pre style="background: #f3f4f6; padding: 16px; border-radius: 8px; overflow: auto; font-size: 12px;">${error.message}\n\nStack:\n${error.stack || 'No stack trace'}</pre>
+
+        <h3 style="margin-top: 24px;">Debug Info:</h3>
+        <ul>
+          <li>SCRIPTS_STATS exists: ${typeof SCRIPTS_STATS !== 'undefined'}</li>
+          <li>ETAPAS_FUNIL exists: ${typeof ETAPAS_FUNIL !== 'undefined'}</li>
+          <li>DICAS_COMUNICACAO exists: ${typeof DICAS_COMUNICACAO !== 'undefined'}</li>
+          <li>DICAS_COMUNICACAO type: ${typeof DICAS_COMUNICACAO}</li>
+          <li>DICAS_COMUNICACAO isArray: ${Array.isArray(DICAS_COMUNICACAO)}</li>
+        </ul>
+
+        <a href="/" class="btn btn-primary" style="margin-top: 16px;">Voltar para Home</a>
+      </div>
+    `, 'scripts', tenantConfig);
+  }
 }
 
 function renderObjecoes() {
