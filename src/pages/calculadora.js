@@ -9,6 +9,11 @@ export function renderCalculadora(tenantData = {}) {
     return renderCalculadoraCabeloeSaude(tenantData);
   }
 
+  // Se for newoeste, renderizar calculadora especifica
+  if (tenantId === 'newoeste') {
+    return renderCalculadoraNewOeste(tenantData);
+  }
+
   // Calculadora padrao (Paper Vines)
   const content = `
     <div class="page-header">
@@ -1641,3 +1646,651 @@ function renderCalculadoraCabeloeSaude(tenantData) {
 
   return layout('Calculadora', content, 'calculadora', config);
 }
+
+// Calculadora especifica para New Oeste (ISP/Telecom)
+function renderCalculadoraNewOeste(tenantData) {
+  const config = tenantData.config || {};
+
+  const content = `
+    <div style="background: linear-gradient(135deg, #FF6B35 0%, #FFD700 50%, #FF8C42 100%); border-radius: 16px; padding: 32px; margin-bottom: 24px; color: white;">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+        <div style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-calculator" style="font-size: 22px;"></i>
+        </div>
+        <div>
+          <h1 style="font-size: 24px; font-weight: 800; margin: 0;">Calculadora de Propostas</h1>
+          <p style="font-size: 14px; margin: 0; opacity: 0.95;">Monte propostas personalizadas de internet fibra</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="card" style="grid-column: span 2;">
+        <div class="card-header">
+          <h3 class="card-title"><i class="fas fa-sliders-h"></i> Configuracao da Proposta</h3>
+        </div>
+
+        <form id="calculadoraForm">
+          <!-- TIPO DE CLIENTE -->
+          <div style="margin-bottom: 24px;">
+            <h4 style="color: #FF6B35; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-users"></i> Tipo de Cliente
+            </h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <label class="tipo-card" id="tipo_residencial">
+                <input type="radio" name="tipo" value="residencial" onchange="atualizarPlanos()" checked>
+                <div class="tipo-content">
+                  <i class="fas fa-home"></i>
+                  <div>
+                    <div class="tipo-nome">Residencial</div>
+                    <div class="tipo-desc">Planos para casa e familia</div>
+                  </div>
+                </div>
+              </label>
+              <label class="tipo-card" id="tipo_empresarial">
+                <input type="radio" name="tipo" value="empresarial" onchange="atualizarPlanos()">
+                <div class="tipo-content">
+                  <i class="fas fa-building"></i>
+                  <div>
+                    <div class="tipo-nome">Empresarial</div>
+                    <div class="tipo-desc">Planos para negocios</div>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- PLANO BASE -->
+          <div style="margin-bottom: 24px;">
+            <h4 style="color: #FF8C42; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-box"></i> Plano de Internet
+            </h4>
+            <div id="planosContainer" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+              <!-- Planos serao inseridos via JavaScript -->
+            </div>
+          </div>
+
+          <!-- INSTALACAO -->
+          <div style="margin-bottom: 24px;">
+            <h4 style="color: #10b981; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-wrench"></i> Instalacao
+            </h4>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+              <label class="checkbox-card">
+                <input type="radio" name="instalacao" value="padrao" onchange="calcularProposta()" checked>
+                <div class="checkbox-content">
+                  <i class="fas fa-calendar-check"></i>
+                  <div>
+                    <div class="checkbox-title">Padrao (72h)</div>
+                    <div class="checkbox-preco" style="color: #10b981;">GRATIS</div>
+                  </div>
+                </div>
+              </label>
+              <label class="checkbox-card">
+                <input type="radio" name="instalacao" value="expressa" onchange="calcularProposta()">
+                <div class="checkbox-content">
+                  <i class="fas fa-bolt"></i>
+                  <div>
+                    <div class="checkbox-title">Expressa (24h)</div>
+                    <div class="checkbox-preco">+R$ 99,00</div>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- EXTRAS -->
+          <div style="margin-bottom: 24px;">
+            <h4 style="color: #3b82f6; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-plus-circle"></i> Servicos Adicionais
+            </h4>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+              <label class="checkbox-card">
+                <input type="checkbox" id="wifi_premium" onchange="calcularProposta()">
+                <div class="checkbox-content">
+                  <i class="fas fa-wifi"></i>
+                  <div>
+                    <div class="checkbox-title">WiFi Premium</div>
+                    <div class="checkbox-preco">+R$ 29,90/mes</div>
+                    <div style="font-size: 10px; color: var(--text-secondary);">Roteador mesh de alta performance</div>
+                  </div>
+                </div>
+              </label>
+
+              <label class="checkbox-card">
+                <input type="checkbox" id="ip_fixo" onchange="calcularProposta()">
+                <div class="checkbox-content">
+                  <i class="fas fa-network-wired"></i>
+                  <div>
+                    <div class="checkbox-title">IP Fixo</div>
+                    <div class="checkbox-preco">+R$ 49,90/mes</div>
+                    <div style="font-size: 10px; color: var(--text-secondary);">Ideal para empresas e servidores</div>
+                  </div>
+                </div>
+              </label>
+
+              <label class="checkbox-card">
+                <input type="checkbox" id="suporte_premium" onchange="calcularProposta()">
+                <div class="checkbox-content">
+                  <i class="fas fa-headset"></i>
+                  <div>
+                    <div class="checkbox-title">Suporte Premium</div>
+                    <div class="checkbox-preco">+R$ 39,90/mes</div>
+                    <div style="font-size: 10px; color: var(--text-secondary);">Atendimento prioritario 24/7</div>
+                  </div>
+                </div>
+              </label>
+
+              <label class="checkbox-card">
+                <input type="checkbox" id="tv_adicional" onchange="calcularProposta()">
+                <div class="checkbox-content">
+                  <i class="fas fa-tv"></i>
+                  <div>
+                    <div class="checkbox-title">Watch+ Extra</div>
+                    <div class="checkbox-preco">+R$ 19,90/mes</div>
+                    <div style="font-size: 10px; color: var(--text-secondary);">Pontos adicionais de TV</div>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- FIDELIDADE -->
+          <div style="margin-bottom: 24px;">
+            <h4 style="color: #8b5cf6; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-handshake"></i> Fidelidade
+            </h4>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+              <label class="checkbox-card">
+                <input type="radio" name="fidelidade" value="sem" onchange="calcularProposta()">
+                <div class="checkbox-content">
+                  <i class="fas fa-times"></i>
+                  <div>
+                    <div class="checkbox-title">Sem Fidelidade</div>
+                    <div class="checkbox-preco" style="color: var(--text-secondary);">Valor normal</div>
+                  </div>
+                </div>
+              </label>
+              <label class="checkbox-card">
+                <input type="radio" name="fidelidade" value="12" onchange="calcularProposta()" checked>
+                <div class="checkbox-content">
+                  <i class="fas fa-gift"></i>
+                  <div>
+                    <div class="checkbox-title">12 meses</div>
+                    <div class="checkbox-preco" style="color: #10b981;">Promocao</div>
+                  </div>
+                </div>
+              </label>
+              <label class="checkbox-card">
+                <input type="radio" name="fidelidade" value="24" onchange="calcularProposta()">
+                <div class="checkbox-content">
+                  <i class="fas fa-star"></i>
+                  <div>
+                    <div class="checkbox-title">24 meses</div>
+                    <div class="checkbox-preco" style="color: #10b981;">Melhor desconto</div>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- FORMA DE PAGAMENTO -->
+          <div style="margin-bottom: 24px;">
+            <h4 style="color: #ef4444; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-credit-card"></i> Forma de Pagamento
+            </h4>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+              <label class="checkbox-card">
+                <input type="radio" name="pagamento" value="boleto" onchange="calcularProposta()" checked>
+                <div class="checkbox-content">
+                  <i class="fas fa-barcode"></i>
+                  <div>
+                    <div class="checkbox-title">Boleto</div>
+                    <div class="checkbox-preco" style="color: var(--text-secondary);">Mensal</div>
+                  </div>
+                </div>
+              </label>
+              <label class="checkbox-card">
+                <input type="radio" name="pagamento" value="debito" onchange="calcularProposta()">
+                <div class="checkbox-content">
+                  <i class="fas fa-credit-card"></i>
+                  <div>
+                    <div class="checkbox-title">Debito Auto</div>
+                    <div class="checkbox-preco" style="color: #10b981;">-5%</div>
+                  </div>
+                </div>
+              </label>
+              <label class="checkbox-card">
+                <input type="radio" name="pagamento" value="pix" onchange="calcularProposta()">
+                <div class="checkbox-content">
+                  <i class="fas fa-qrcode"></i>
+                  <div>
+                    <div class="checkbox-title">Pix Auto</div>
+                    <div class="checkbox-preco" style="color: #10b981;">-8%</div>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- RESUMO -->
+      <div class="card" style="position: sticky; top: 32px; height: fit-content;">
+        <div class="card-header">
+          <h3 class="card-title"><i class="fas fa-receipt"></i> Resumo da Proposta</h3>
+        </div>
+
+        <div id="resumoItens" style="margin-bottom: 16px; font-size: 13px;"></div>
+
+        <div style="margin-bottom: 20px; padding: 16px; background: var(--bg-page); border-radius: 8px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="color: var(--text-secondary);">Plano:</span>
+            <span id="resumoPlano" style="font-weight: 600;">R$ 0,00</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="color: var(--text-secondary);">Extras:</span>
+            <span id="resumoExtras" style="font-weight: 600;">R$ 0,00</span>
+          </div>
+          <div id="descontoLine" style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="color: var(--text-secondary);">Desconto:</span>
+            <span id="resumoDesconto" style="font-weight: 600; color: #10b981;">R$ 0,00</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px dashed var(--border);">
+            <span style="font-weight: 600;">MENSALIDADE:</span>
+            <span id="valorMensalidade" style="font-weight: 700; color: #FF6B35; font-size: 18px;">R$ 0,00</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 20px; padding: 16px; background: rgba(255, 107, 53, 0.1); border-radius: 8px; border-left: 4px solid #FF6B35;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="color: var(--text-secondary);">Instalacao:</span>
+            <span id="resumoInstalacao" style="font-weight: 600;">GRATIS</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px dashed var(--border);">
+            <span style="font-weight: 600;">CUSTO INICIAL:</span>
+            <span id="valorInicial" style="font-weight: 700; color: #FF6B35; font-size: 18px;">R$ 0,00</span>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; background: linear-gradient(135deg, #FF6B35, #FF8C42); border-radius: 12px; margin-bottom: 20px;">
+          <div>
+            <div style="font-size: 12px; color: rgba(255,255,255,0.8);">ECONOMIA ANUAL</div>
+            <div style="font-size: 28px; font-weight: 700; color: white;" id="valorEconomia">R$ 0</div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <button class="btn btn-primary" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #FF6B35, #FF8C42); border: none;" onclick="gerarProposta()">
+            <i class="fas fa-file-export"></i> Gerar Proposta
+          </button>
+
+          <button class="btn btn-secondary" style="width: 100%; justify-content: center;" onclick="copiarResumo()">
+            <i class="fas fa-copy"></i> Copiar Resumo
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="propostaModal">
+      <div class="modal" style="max-width: 700px;">
+        <div class="modal-header">
+          <h3 class="modal-title">Proposta Comercial</h3>
+          <button class="modal-close" onclick="closeModal('propostaModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div id="propostaContent" style="white-space: pre-wrap; font-family: 'Segoe UI', system-ui, sans-serif; background: linear-gradient(135deg, #FF6B35, #FF8C42); color: #ffffff; padding: 24px; border-radius: 12px; max-height: 450px; overflow-y: auto; line-height: 1.6; font-size: 14px;"></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" onclick="closeModal('propostaModal')">Fechar</button>
+          <button class="btn btn-primary" onclick="copiarProposta()" style="background: #FF6B35; border-color: #FF6B35;"><i class="fas fa-copy"></i> Copiar</button>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .tipo-card {
+        display: block;
+        padding: 16px;
+        border: 2px solid var(--border);
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+        background: white;
+      }
+      .tipo-card:hover {
+        border-color: #FF6B35;
+        transform: translateY(-2px);
+      }
+      .tipo-card input { display: none; }
+      .tipo-card:has(input:checked) {
+        border-color: #FF6B35;
+        background: rgba(255, 107, 53, 0.05);
+        box-shadow: 0 4px 12px rgba(255, 107, 53, 0.15);
+      }
+      .tipo-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .tipo-content i {
+        font-size: 24px;
+        color: #FF6B35;
+      }
+      .tipo-nome {
+        font-weight: 700;
+        font-size: 15px;
+      }
+      .tipo-desc {
+        font-size: 12px;
+        color: var(--text-secondary);
+      }
+
+      .plano-card {
+        display: block;
+        padding: 16px;
+        border: 2px solid var(--border);
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+        background: white;
+      }
+      .plano-card:hover {
+        border-color: #FF6B35;
+        transform: translateY(-2px);
+      }
+      .plano-card input { display: none; }
+      .plano-card input:checked + .plano-content { color: #FF6B35; }
+      .plano-card:has(input:checked) {
+        border-color: #FF6B35;
+        background: rgba(255, 107, 53, 0.05);
+        box-shadow: 0 4px 12px rgba(255, 107, 53, 0.15);
+      }
+      .plano-card.popular { border-color: #FFD700; }
+      .plano-card.popular:has(input:checked) {
+        border-color: #FFD700;
+        background: rgba(255, 215, 0, 0.05);
+      }
+      .plano-nome { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+      .plano-mega { font-size: 20px; font-weight: 700; color: #FF6B35; margin-bottom: 4px; }
+      .plano-preco { font-size: 22px; font-weight: 700; color: #FF6B35; margin-bottom: 4px; }
+      .plano-preco span { font-size: 12px; font-weight: 400; color: var(--text-secondary); }
+      .plano-preco-regular {
+        font-size: 12px;
+        color: var(--text-secondary);
+        text-decoration: line-through;
+        display: block;
+        margin-top: -2px;
+      }
+      .plano-features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-top: 8px;
+      }
+      .plano-features span {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 10px;
+        color: var(--text-secondary);
+        background: var(--bg-page);
+        padding: 3px 6px;
+        border-radius: 4px;
+      }
+
+      .checkbox-card {
+        display: flex;
+        align-items: center;
+        padding: 14px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+        background: white;
+      }
+      .checkbox-card:hover { border-color: #FF6B35; }
+      .checkbox-card input { display: none; }
+      .checkbox-card:has(input:checked) {
+        border-color: #FF8C42;
+        background: rgba(255, 140, 66, 0.05);
+      }
+      .checkbox-content { display: flex; align-items: center; gap: 12px; width: 100%; }
+      .checkbox-content i { font-size: 18px; color: #FF6B35; min-width: 20px; }
+      .checkbox-title { font-weight: 600; font-size: 13px; }
+      .checkbox-preco { font-size: 12px; color: #FF8C42; font-weight: 600; }
+    </style>
+
+    <script>
+      const PLANOS = {
+        residencial: {
+          prime: { nome: 'PRIME', mega: '800 MEGA', valor: 69.90, valorRegular: 119.90, promo: true, features: ['Fibra FTTH', 'WiFi+ incluso', 'Watch+'] },
+          max: { nome: 'MAX', mega: '850 MEGA', valor: 139.90, valorRegular: null, promo: false, features: ['Fibra FTTH', 'WiFi+ incluso', 'Watch+', 'HBO Max'] },
+          elite: { nome: 'ELITE', mega: '950 MEGA', valor: 159.90, valorRegular: null, promo: false, features: ['Fibra FTTH', 'WiFi+ incluso', 'Watch+', 'Suporte VIP'] }
+        },
+        empresarial: {
+          prime_emp: { nome: 'PRIME EMP', mega: '800 MEGA', valor: 119.90, valorRegular: null, promo: false, features: ['Fibra FTTH', 'WiFi+ incluso', 'SLA garantido'] },
+          elite_emp: { nome: 'ELITE EMP', mega: '950 MEGA', valor: 159.90, valorRegular: null, promo: false, features: ['Fibra FTTH', 'WiFi+ incluso', 'SLA garantido', 'Suporte prioritario'] },
+          starter: { nome: 'BUSINESS STARTER', mega: '800 MEGA', valor: 289.90, valorRegular: null, promo: false, features: ['Fibra FTTH', 'WiFi+ incluso', 'IPv4 fixo', 'SLA 99.5%'] },
+          business: { nome: 'BUSINESS', mega: '950 MEGA', valor: 389.90, valorRegular: null, promo: false, features: ['Fibra FTTH', 'WiFi+ incluso', 'IPv4 fixo', 'SLA 99.9%', 'Suporte dedicado'] }
+        }
+      };
+
+      function getTipoCliente() {
+        const radios = document.getElementsByName('tipo');
+        for (let radio of radios) {
+          if (radio.checked) return radio.value;
+        }
+        return 'residencial';
+      }
+
+      function getPlanoSelecionado() {
+        const radios = document.getElementsByName('plano');
+        for (let radio of radios) {
+          if (radio.checked) return radio.value;
+        }
+        return null;
+      }
+
+      function atualizarPlanos() {
+        const tipo = getTipoCliente();
+        const planos = PLANOS[tipo];
+        const container = document.getElementById('planosContainer');
+
+        let html = '';
+        let index = 0;
+        for (let key in planos) {
+          const plano = planos[key];
+          const isPopular = (tipo === 'residencial' && key === 'max') || (tipo === 'empresarial' && key === 'starter');
+          const checked = index === 0 ? 'checked' : '';
+
+          html += \`
+            <label class="plano-card \${isPopular ? 'popular' : ''}" id="plano_\${key}">
+              <input type="radio" name="plano" value="\${key}" onchange="calcularProposta()" \${checked}>
+              <div class="plano-content">
+                \${isPopular ? '<span class="badge badge-success" style="position: absolute; top: -10px; right: 10px; font-size: 10px;">POPULAR</span>' : ''}
+                <div class="plano-nome">\${plano.nome}</div>
+                <div class="plano-mega">\${plano.mega}</div>
+                <div class="plano-preco">R$ \${plano.valor.toFixed(2).replace('.', ',')}<span>/mes</span></div>
+                \${plano.promo ? \`<div class="plano-preco-regular">de R$ \${plano.valorRegular.toFixed(2).replace('.', ',')}</div>\` : ''}
+                <div class="plano-features">
+                  \${plano.features.map(f => \`<span><i class="fas fa-check-circle"></i> \${f}</span>\`).join('')}
+                </div>
+              </div>
+            </label>
+          \`;
+          index++;
+        }
+
+        container.innerHTML = html;
+        calcularProposta();
+      }
+
+      function calcularProposta() {
+        const tipo = getTipoCliente();
+        const planoKey = getPlanoSelecionado();
+        if (!planoKey) return;
+
+        const plano = PLANOS[tipo][planoKey];
+        let valorPlano = plano.valor;
+        let valorExtras = 0;
+        let itensExtras = [];
+
+        // Extras mensais
+        if (document.getElementById('wifi_premium').checked) {
+          valorExtras += 29.90;
+          itensExtras.push('WiFi Premium: R$ 29,90');
+        }
+        if (document.getElementById('ip_fixo').checked) {
+          valorExtras += 49.90;
+          itensExtras.push('IP Fixo: R$ 49,90');
+        }
+        if (document.getElementById('suporte_premium').checked) {
+          valorExtras += 39.90;
+          itensExtras.push('Suporte Premium: R$ 39,90');
+        }
+        if (document.getElementById('tv_adicional').checked) {
+          valorExtras += 19.90;
+          itensExtras.push('Watch+ Extra: R$ 19,90');
+        }
+
+        const subtotal = valorPlano + valorExtras;
+
+        // Desconto pagamento
+        const pagamento = document.querySelector('input[name="pagamento"]:checked').value;
+        let desconto = 0;
+        if (pagamento === 'debito') {
+          desconto = subtotal * 0.05;
+        } else if (pagamento === 'pix') {
+          desconto = subtotal * 0.08;
+        }
+
+        const total = subtotal - desconto;
+
+        // Instalacao
+        const instalacao = document.querySelector('input[name="instalacao"]:checked').value;
+        const custoInstalacao = instalacao === 'expressa' ? 99 : 0;
+        const custoInicial = total + custoInstalacao;
+
+        // Economia anual (comparando com preco regular do PRIME se aplicavel)
+        let economiaAnual = 0;
+        if (plano.promo && plano.valorRegular) {
+          economiaAnual = (plano.valorRegular - plano.valor) * 12;
+        } else if (desconto > 0) {
+          economiaAnual = desconto * 12;
+        }
+
+        // Atualizar UI
+        document.getElementById('resumoPlano').textContent = formatCurrency(valorPlano);
+        document.getElementById('resumoExtras').textContent = formatCurrency(valorExtras);
+
+        if (desconto > 0) {
+          document.getElementById('descontoLine').style.display = 'flex';
+          document.getElementById('resumoDesconto').textContent = '- ' + formatCurrency(desconto);
+        } else {
+          document.getElementById('descontoLine').style.display = 'none';
+        }
+
+        document.getElementById('valorMensalidade').textContent = formatCurrency(total);
+        document.getElementById('resumoInstalacao').textContent = custoInstalacao > 0 ? 'R$ ' + custoInstalacao.toFixed(2).replace('.', ',') : 'GRATIS';
+        document.getElementById('valorInicial').textContent = formatCurrency(custoInicial);
+        document.getElementById('valorEconomia').textContent = 'R$ ' + Math.round(economiaAnual);
+
+        // Itens resumo
+        document.getElementById('resumoItens').innerHTML = itensExtras.length > 0 ?
+          '<div style="padding: 12px; background: var(--bg-page); border-radius: 8px; margin-bottom: 8px;">' +
+          itensExtras.map(i => '<div style="padding: 4px 0; font-size: 12px; color: var(--text-secondary);">' + i + '</div>').join('') +
+          '</div>' : '';
+      }
+
+      function gerarProposta() {
+        const tipo = getTipoCliente();
+        const planoKey = getPlanoSelecionado();
+        const plano = PLANOS[tipo][planoKey];
+        const mensalidade = document.getElementById('valorMensalidade').textContent;
+        const instalacao = document.querySelector('input[name="instalacao"]:checked').value;
+        const fidelidade = document.querySelector('input[name="fidelidade"]:checked').value;
+        const pagamento = document.querySelector('input[name="pagamento"]:checked').value;
+
+        let proposta = '🌐 *PROPOSTA COMERCIAL*\\n';
+        proposta += '━━━━━━━━━━━━━━━━━━━━━━━\\n\\n';
+
+        proposta += '📡 *NEW OESTE TELECOM*\\n';
+        proposta += 'Internet Fibra Optica em Foz do Iguacu\\n\\n';
+
+        proposta += '📦 *PLANO SELECIONADO*\\n';
+        proposta += '▸ ' + plano.nome + '\\n';
+        proposta += '▸ ' + plano.mega + ' de velocidade REAL\\n';
+        proposta += '▸ Fibra FTTH ate sua casa\\n\\n';
+
+        proposta += '✨ *INCLUSOS NO PLANO*\\n';
+        plano.features.forEach(f => { proposta += '▸ ' + f + '\\n'; });
+
+        // Extras
+        let extras = [];
+        if (document.getElementById('wifi_premium').checked) extras.push('WiFi Premium');
+        if (document.getElementById('ip_fixo').checked) extras.push('IP Fixo');
+        if (document.getElementById('suporte_premium').checked) extras.push('Suporte Premium');
+        if (document.getElementById('tv_adicional').checked) extras.push('Watch+ Extra');
+
+        if (extras.length > 0) {
+          proposta += '\\n🎁 *EXTRAS ADICIONADOS*\\n';
+          extras.forEach(e => { proposta += '▸ ' + e + '\\n'; });
+        }
+
+        proposta += '\\n━━━━━━━━━━━━━━━━━━━━━━━\\n\\n';
+
+        proposta += '💰 *INVESTIMENTO*\\n\\n';
+        proposta += '📅 Mensalidade: *' + mensalidade + '*\\n';
+
+        if (pagamento === 'debito') {
+          proposta += '   🎁 5% desconto no debito automatico\\n';
+        } else if (pagamento === 'pix') {
+          proposta += '   🎁 8% desconto no Pix automatico\\n';
+        }
+
+        proposta += '\\n🔧 Instalacao: *' + (instalacao === 'expressa' ? 'R$ 99,00 (24h)' : 'GRATIS (72h)') + '*\\n';
+
+        if (fidelidade !== 'sem') {
+          proposta += '\\n📜 Fidelidade: ' + fidelidade + ' meses\\n';
+        }
+
+        proposta += '\\n━━━━━━━━━━━━━━━━━━━━━━━\\n\\n';
+
+        proposta += '⚡ Instalacao rapida em ate ' + (instalacao === 'expressa' ? '24 horas' : '72 horas') + '\\n';
+        proposta += '🏠 Fibra optica direto ate sua casa\\n';
+        proposta += '📞 Suporte local 24/7\\n';
+        proposta += '📱 App New Oeste Connect\\n\\n';
+
+        proposta += '⏰ *Validade: 7 dias*\\n\\n';
+
+        proposta += '━━━━━━━━━━━━━━━━━━━━━━━\\n';
+        proposta += '🌐 New Oeste | newoeste.com.br';
+
+        document.getElementById('propostaContent').textContent = proposta.replace(/\\\\n/g, '\\n');
+        openModal('propostaModal');
+      }
+
+      function copiarProposta() {
+        const proposta = document.getElementById('propostaContent').textContent;
+        navigator.clipboard.writeText(proposta).then(() => { showToast('Proposta copiada!'); });
+      }
+
+      function copiarResumo() {
+        const tipo = getTipoCliente();
+        const planoKey = getPlanoSelecionado();
+        const plano = PLANOS[tipo][planoKey];
+        const mensalidade = document.getElementById('valorMensalidade').textContent;
+        const resumo = 'Plano: ' + plano.nome + ' ' + plano.mega + '\\nMensalidade: ' + mensalidade;
+        navigator.clipboard.writeText(resumo).then(() => { showToast('Resumo copiado!'); });
+      }
+
+      // Inicializar
+      atualizarPlanos();
+    </script>
+  `;
+
+  return layout('Calculadora', content, 'calculadora', config);
+}
+
