@@ -10,11 +10,16 @@ export const TENANT_CONFIG = {
 
   // Aparencia e Branding
   tema: {
-    corPrimaria: '#0066cc',      // Azul tecnologia
-    corSecundaria: '#00cc66',    // Verde conectividade
-    corAcento: '#ff6600',        // Laranja destaque
-    logo: '/assets/newoeste-logo.png',
-    favicon: '/assets/favicon.ico'
+    corPrimaria: '#FF6B35',      // Laranja New Oeste (da logo)
+    corSecundaria: '#FFD700',    // Amarelo New Oeste (da logo)
+    corAcento: '#FF8C42',        // Laranja claro destaque
+    corTexto: '#2C2C2C',         // Texto escuro
+    corFundo: '#FFFFFF',         // Fundo branco
+    corFundoSecundario: '#FFF8E7', // Fundo levemente amarelado
+    gradiente: 'linear-gradient(135deg, #FF6B35 0%, #FFD700 100%)', // Gradiente laranja-amarelo
+    logo: '/assets/newoeste/logo.png',
+    logoUrl: 'https://raw.githubusercontent.com/thiagojbs/playbook-vendas-paper/main/src/assets/newoeste/logo.png',
+    favicon: '/assets/newoeste/favicon.ico'
   },
 
   // Informacoes da Empresa

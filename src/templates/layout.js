@@ -84,6 +84,29 @@ export function layout(title, content, activeMenu = '', tenantConfig = null) {
       <text x="45" y="22" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="${corPrimaria}">Cabelo</text>
       <text x="45" y="38" font-family="Inter, sans-serif" font-size="14" font-weight="400" fill="${corSecundaria}">&amp; Saúde</text>
     </svg>`);
+  } else if (config.id === 'newoeste') {
+    // Logo New Oeste - Círculos concêntricos laranja e amarelo
+    logoUrl = 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 50">
+      <defs>
+        <linearGradient id="gradNewoeste" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:${corPrimaria};stop-opacity:1" />
+          <stop offset="100%" style="stop-color:${corSecundaria};stop-opacity:1" />
+        </linearGradient>
+      </defs>
+      <!-- Círculo externo laranja -->
+      <circle cx="25" cy="25" r="22" fill="none" stroke="${corPrimaria}" stroke-width="3"/>
+      <!-- Círculo médio amarelo -->
+      <circle cx="25" cy="25" r="16" fill="none" stroke="${corSecundaria}" stroke-width="2.5"/>
+      <!-- Círculo interno laranja -->
+      <circle cx="25" cy="25" r="10" fill="none" stroke="${corPrimaria}" stroke-width="2"/>
+      <!-- Centro amarelo -->
+      <circle cx="25" cy="25" r="4" fill="${corSecundaria}"/>
+      <!-- Pontos de conexão -->
+      <circle cx="12" cy="25" r="2.5" fill="${corPrimaria}"/>
+      <circle cx="38" cy="25" r="2.5" fill="${corPrimaria}"/>
+      <!-- Texto NEW OESTE -->
+      <text x="60" y="32" font-family="Inter, sans-serif" font-size="22" font-weight="800" letter-spacing="1" fill="${corPrimaria}">NEW OESTE</text>
+    </svg>`);
   } else {
     logoUrl = 'https://doc.papervines.digital/images/logo-paper.png';
   }
@@ -94,8 +117,10 @@ export function layout(title, content, activeMenu = '', tenantConfig = null) {
   const propostasUrl = links.propostas || '#';
 
   // Query string para manter o tenant nos links internos
+  // Apenas adicionar tenant query se não for o padrão E se tenant tem domínio próprio
   const tenantId = config.id || 'papervines';
-  const tenantQuery = tenantId !== 'papervines' ? `?tenant=${tenantId}` : '';
+  const temDominioPersonalizado = config.dominio && config.dominio !== '';
+  const tenantQuery = (tenantId !== 'papervines' && !temDominioPersonalizado) ? `?tenant=${tenantId}` : '';
 
   return `<!DOCTYPE html>
 <html lang="pt-BR">
