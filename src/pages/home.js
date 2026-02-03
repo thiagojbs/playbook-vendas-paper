@@ -339,93 +339,96 @@ function renderHomeNewOeste(tenantData) {
   const tenantQuery = temDominioPersonalizado ? '' : '?tenant=newoeste';
 
   const content = `
-    <!-- Hero Section Compacto -->
-    <div style="background: linear-gradient(135deg, #FF6B35 0%, #FFD700 100%); border-radius: 16px; padding: 32px; margin-bottom: 24px;">
-      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-        <i class="fas fa-wifi" style="font-size: 24px; color: white;"></i>
+    <!-- Hero Section Suavizado -->
+    <div style="background: white; border: 2px solid #FFE5D9; border-radius: 16px; padding: 32px; margin-bottom: 24px; position: relative; overflow: hidden;">
+      <div style="position: absolute; top: -20px; right: -20px; width: 150px; height: 150px; background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), rgba(255, 215, 0, 0.05)); border-radius: 50%;"></div>
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; position: relative; z-index: 1;">
+        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 215, 0, 0.1)); border: 2px solid #FFE5D9; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-wifi" style="font-size: 20px; color: #FF6B35;"></i>
+        </div>
         <div>
-          <h1 style="color: white; font-size: 24px; font-weight: 700; margin: 0;">Playbook de Vendas</h1>
-          <p style="color: rgba(255,255,255,0.9); margin: 0; font-size: 14px;">New Oeste - Internet Fibra Óptica</p>
+          <h1 style="color: #1a1a1a; font-size: 24px; font-weight: 700; margin: 0;">Playbook de Vendas</h1>
+          <p style="color: #666; margin: 0; font-size: 14px;">New Oeste - Internet Fibra Óptica</p>
         </div>
       </div>
-      <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin-bottom: 16px;">
+      <p style="color: #666; font-size: 14px; margin-bottom: 16px; position: relative; z-index: 1;">
         Scripts, calculadora e ferramentas para fechar mais vendas
       </p>
-      <div style="display: flex; gap: 8px;">
-        <a href="/playbook${tenantQuery}" style="padding: 10px 20px; background: white; color: #FF6B35; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 14px;">
+      <div style="display: flex; gap: 8px; position: relative; z-index: 1;">
+        <a href="/playbook${tenantQuery}" style="padding: 10px 20px; background: #FF6B35; color: white; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 14px; transition: all 0.2s;">
           <i class="fas fa-book-open"></i> Ver Playbook
         </a>
-        <a href="/playbook/scripts${tenantQuery}" style="padding: 10px 20px; background: rgba(255,255,255,0.2); color: white; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 14px; border: 1px solid rgba(255,255,255,0.3);">
+        <a href="/playbook/scripts${tenantQuery}" style="padding: 10px 20px; background: white; color: #FF6B35; border: 2px solid #FFE5D9; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 14px; transition: all 0.2s;">
           <i class="fas fa-comment-dots"></i> Scripts
         </a>
       </div>
     </div>
 
-    <!-- Quiz Rápido - Plano Ideal -->
-    <div style="background: linear-gradient(135deg, #EF4444 0%, #FF6B35 100%); border: 2px solid #FF8C42; border-radius: 16px; padding: 24px; margin-bottom: 24px; color: white;">
+    <!-- Quiz Suavizado -->
+    <div style="background: white; border: 2px solid #FFE5D9; border-radius: 16px; padding: 24px; margin-bottom: 24px;">
       <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
-        <div style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-          <i class="fas fa-bullseye" style="font-size: 20px;"></i>
+        <div style="width: 40px; height: 40px; background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 215, 0, 0.1)); border: 2px solid #FFE5D9; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-bullseye" style="font-size: 18px; color: #FF6B35;"></i>
         </div>
         <div>
-          <h2 style="font-size: 18px; font-weight: 700; margin: 0;">Descubra o Plano Ideal</h2>
-          <p style="font-size: 13px; margin: 0; color: rgba(255,255,255,0.9);">Ferramenta para usar com o cliente (presencial ou WhatsApp)</p>
+          <h2 style="font-size: 18px; font-weight: 700; margin: 0; color: #1a1a1a;">Descubra o Plano Ideal</h2>
+          <p style="font-size: 13px; margin: 0; color: #666;">Ferramenta para usar com o cliente</p>
         </div>
       </div>
 
-      <div id="quiz-plano" style="background: rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; backdrop-filter: blur(10px);">
+      <div id="quiz-plano" style="background: #FAFAFA; border: 1px solid #eee; border-radius: 12px; padding: 20px;">
         <div style="margin-bottom: 16px;">
-          <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px;">1. Tipo de cliente:</label>
+          <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: #333;">1. Tipo de cliente:</label>
           <div style="display: flex; gap: 8px;">
-            <button onclick="setTipo('residencial')" id="btn-residencial" style="flex: 1; padding: 10px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; font-weight: 600; cursor: pointer; font-size: 13px;">
+            <button onclick="setTipo('residencial')" id="btn-residencial" style="flex: 1; padding: 10px; background: white; border: 2px solid #E0E0E0; border-radius: 8px; color: #333; font-weight: 600; cursor: pointer; font-size: 13px; transition: all 0.2s;">
               <i class="fas fa-home"></i> Residencial
             </button>
-            <button onclick="setTipo('empresarial')" id="btn-empresarial" style="flex: 1; padding: 10px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; font-weight: 600; cursor: pointer; font-size: 13px;">
+            <button onclick="setTipo('empresarial')" id="btn-empresarial" style="flex: 1; padding: 10px; background: white; border: 2px solid #E0E0E0; border-radius: 8px; color: #333; font-weight: 600; cursor: pointer; font-size: 13px; transition: all 0.2s;">
               <i class="fas fa-building"></i> Empresarial
             </button>
           </div>
         </div>
 
         <div style="margin-bottom: 16px;">
-          <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px;">2. Quantas pessoas usam?</label>
+          <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: #333;">2. Quantas pessoas usam?</label>
           <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
-            <button onclick="setPessoas(1)" id="btn-1" style="padding: 10px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; font-weight: 600; cursor: pointer; font-size: 13px;">1-2</button>
-            <button onclick="setPessoas(3)" id="btn-3" style="padding: 10px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; font-weight: 600; cursor: pointer; font-size: 13px;">3-5</button>
-            <button onclick="setPessoas(6)" id="btn-6" style="padding: 10px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; font-weight: 600; cursor: pointer; font-size: 13px;">6-10</button>
-            <button onclick="setPessoas(11)" id="btn-11" style="padding: 10px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; font-weight: 600; cursor: pointer; font-size: 13px;">10+</button>
+            <button onclick="setPessoas(1)" id="btn-1" style="padding: 10px; background: white; border: 2px solid #E0E0E0; border-radius: 8px; color: #333; font-weight: 600; cursor: pointer; font-size: 13px; transition: all 0.2s;">1-2</button>
+            <button onclick="setPessoas(3)" id="btn-3" style="padding: 10px; background: white; border: 2px solid #E0E0E0; border-radius: 8px; color: #333; font-weight: 600; cursor: pointer; font-size: 13px; transition: all 0.2s;">3-5</button>
+            <button onclick="setPessoas(6)" id="btn-6" style="padding: 10px; background: white; border: 2px solid #E0E0E0; border-radius: 8px; color: #333; font-weight: 600; cursor: pointer; font-size: 13px; transition: all 0.2s;">6-10</button>
+            <button onclick="setPessoas(11)" id="btn-11" style="padding: 10px; background: white; border: 2px solid #E0E0E0; border-radius: 8px; color: #333; font-weight: 600; cursor: pointer; font-size: 13px; transition: all 0.2s;">10+</button>
           </div>
         </div>
 
         <div style="margin-bottom: 16px;">
-          <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px;">3. Uso principal:</label>
+          <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: #333;">3. Uso principal:</label>
           <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
-            <button onclick="setUso('trabalho')" id="btn-trabalho" style="padding: 10px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; font-weight: 600; cursor: pointer; font-size: 13px;">
+            <button onclick="setUso('trabalho')" id="btn-trabalho" style="padding: 10px; background: white; border: 2px solid #E0E0E0; border-radius: 8px; color: #333; font-weight: 600; cursor: pointer; font-size: 13px; transition: all 0.2s;">
               <i class="fas fa-briefcase"></i> Trabalho/Estudos
             </button>
-            <button onclick="setUso('streaming')" id="btn-streaming" style="padding: 10px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; font-weight: 600; cursor: pointer; font-size: 13px;">
+            <button onclick="setUso('streaming')" id="btn-streaming" style="padding: 10px; background: white; border: 2px solid #E0E0E0; border-radius: 8px; color: #333; font-weight: 600; cursor: pointer; font-size: 13px; transition: all 0.2s;">
               <i class="fas fa-tv"></i> Streaming/Netflix
             </button>
-            <button onclick="setUso('jogos')" id="btn-jogos" style="padding: 10px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; font-weight: 600; cursor: pointer; font-size: 13px;">
+            <button onclick="setUso('jogos')" id="btn-jogos" style="padding: 10px; background: white; border: 2px solid #E0E0E0; border-radius: 8px; color: #333; font-weight: 600; cursor: pointer; font-size: 13px; transition: all 0.2s;">
               <i class="fas fa-gamepad"></i> Jogos Online
             </button>
-            <button onclick="setUso('misto')" id="btn-misto" style="padding: 10px; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; font-weight: 600; cursor: pointer; font-size: 13px;">
+            <button onclick="setUso('misto')" id="btn-misto" style="padding: 10px; background: white; border: 2px solid #E0E0E0; border-radius: 8px; color: #333; font-weight: 600; cursor: pointer; font-size: 13px; transition: all 0.2s;">
               <i class="fas fa-th"></i> Tudo (Misto)
             </button>
           </div>
         </div>
 
-        <button onclick="calcularPlano()" style="width: 100%; padding: 14px; background: white; color: #FF6B35; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 15px; margin-bottom: 16px;">
+        <button onclick="calcularPlano()" style="width: 100%; padding: 14px; background: #FF6B35; color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 15px; margin-bottom: 16px; transition: all 0.2s;">
           <i class="fas fa-bullseye"></i> Ver Plano Ideal
         </button>
 
-        <div id="resultado-quiz" style="display: none; background: rgba(255,255,255,0.15); border-radius: 10px; padding: 16px; border: 2px solid rgba(255,255,255,0.3);">
+        <div id="resultado-quiz" style="display: none; background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), rgba(255, 215, 0, 0.05)); border: 2px solid #FFE5D9; border-radius: 10px; padding: 16px;">
           <div style="text-align: center; margin-bottom: 12px;">
-            <div style="font-size: 14px; margin-bottom: 4px;"><i class="fas fa-check-circle"></i> Plano Recomendado:</div>
-            <div id="plano-nome" style="font-size: 22px; font-weight: 800;"></div>
-            <div id="plano-velocidade" style="font-size: 18px; margin-top: 4px;"></div>
-            <div id="plano-preco" style="font-size: 16px; margin-top: 4px;"></div>
+            <div style="font-size: 14px; margin-bottom: 4px; color: #666;"><i class="fas fa-check-circle" style="color: #10B981;"></i> Plano Recomendado:</div>
+            <div id="plano-nome" style="font-size: 22px; font-weight: 800; color: #FF6B35;"></div>
+            <div id="plano-velocidade" style="font-size: 18px; margin-top: 4px; color: #333;"></div>
+            <div id="plano-preco" style="font-size: 16px; margin-top: 4px; color: #666;"></div>
           </div>
-          <div id="plano-beneficios" style="font-size: 13px; line-height: 1.6; margin-bottom: 12px;"></div>
+          <div id="plano-beneficios" style="font-size: 13px; line-height: 1.6; margin-bottom: 12px; color: #666;"></div>
           <button onclick="copiarResultado()" style="width: 100%; padding: 12px; background: #10B981; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 14px;">
             <i class="fas fa-copy"></i> Copiar para WhatsApp
           </button>
@@ -435,438 +438,304 @@ function renderHomeNewOeste(tenantData) {
 
     <!-- Planos Residenciais -->
     <div style="margin-bottom: 24px;">
-      <h2 style="font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+      <h2 style="font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; color: #1a1a1a;">
         <i class="fas fa-home" style="color: #FF6B35;"></i> Planos Residenciais
       </h2>
 
       <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
         <!-- PRIME -->
-        <div class="card" style="position: relative;">
-          <div style="position: absolute; top: -10px; right: 16px; background: #EF4444; color: white; padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 700;">PROMOÇÃO</div>
-          <div style="text-align: center; padding: 16px 16px 0 16px;">
-            <div style="font-size: 12px; font-weight: 700; color: #FF6B35; text-transform: uppercase; margin-bottom: 4px;">Prime</div>
-            <div style="font-size: 36px; font-weight: 800; color: #FF6B35; line-height: 1;">800</div>
-            <div style="font-size: 13px; color: #666; margin-bottom: 12px;">MEGA</div>
-            <div style="background: #FFF4E6; padding: 12px; border-radius: 8px; margin-bottom: 12px;">
-              <div style="text-decoration: line-through; font-size: 11px; color: #999;">R$ 119,90</div>
-              <div style="font-size: 28px; font-weight: 800; color: #FF6B35;">R$ 69<span style="font-size: 18px;">,90</span></div>
-              <div style="font-size: 10px; color: #666;">/mês (Fev-Mar)</div>
+        <div style="background: white; border: 2px solid #FFE5D9; border-radius: 12px; padding: 20px; position: relative; transition: all 0.2s;">
+          <div style="position: absolute; top: -10px; right: 16px; background: #FF6B35; color: white; padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 700;">PROMOÇÃO</div>
+          <div style="text-align: center; margin-bottom: 16px;">
+            <div style="font-size: 12px; font-weight: 700; color: #FF6B35; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;">Prime</div>
+            <div style="font-size: 40px; font-weight: 800; color: #333; line-height: 1; margin-bottom: 4px;">800</div>
+            <div style="font-size: 13px; color: #999; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px;">MEGA</div>
+            <div style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), rgba(255, 215, 0, 0.05)); border: 1px solid #FFE5D9; padding: 16px; border-radius: 10px; margin-bottom: 4px;">
+              <div style="text-decoration: line-through; font-size: 12px; color: #999; margin-bottom: 4px;">R$ 119,90</div>
+              <div style="font-size: 32px; font-weight: 800; color: #FF6B35; line-height: 1;">R$ 69<span style="font-size: 20px;">,90</span></div>
+              <div style="font-size: 11px; color: #666; margin-top: 4px;">/mês (Fev-Mar)</div>
             </div>
           </div>
-          <div style="padding: 0 16px 16px 16px; font-size: 12px;">
-            <div style="margin-bottom: 6px;"><i class="fas fa-check" style="color: #10B981;"></i> Instalação grátis</div>
-            <div style="margin-bottom: 6px;"><i class="fas fa-check" style="color: #10B981;"></i> Roteador WiFi+ incluso</div>
-            <div style="margin-bottom: 6px;"><i class="fas fa-check" style="color: #10B981;"></i> Watch+ (30 canais)</div>
-            <div style="margin-bottom: 12px;"><i class="fas fa-check" style="color: #10B981;"></i> App com descontos</div>
-            <button onclick="copiarPlano('prime-res')" style="width: 100%; padding: 10px; background: #FF6B35; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px;">
-              <i class="fas fa-copy"></i> Copiar para WhatsApp
-            </button>
+          <div style="font-size: 12px; color: #666; margin-bottom: 16px;">
+            <div style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;"><i class="fas fa-check" style="color: #10B981; font-size: 10px;"></i> Instalação grátis</div>
+            <div style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;"><i class="fas fa-check" style="color: #10B981; font-size: 10px;"></i> Roteador WiFi+ incluso</div>
+            <div style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;"><i class="fas fa-check" style="color: #10B981; font-size: 10px;"></i> Watch+ (30 canais)</div>
+            <div style="display: flex; align-items: center; gap: 8px;"><i class="fas fa-check" style="color: #10B981; font-size: 10px;"></i> App com descontos</div>
           </div>
+          <button onclick="copiarPlano('prime-res')" style="width: 100%; padding: 12px; background: #FF6B35; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px; transition: all 0.2s;">
+            <i class="fas fa-copy"></i> Copiar para WhatsApp
+          </button>
         </div>
 
         <!-- MAX -->
-        <div class="card" style="position: relative; border: 2px solid #6B46C1;">
+        <div style="background: white; border: 2px solid #E0D5F5; border-radius: 12px; padding: 20px; position: relative; box-shadow: 0 4px 12px rgba(107, 70, 193, 0.08); transition: all 0.2s;">
           <div style="position: absolute; top: -10px; right: 16px; background: #6B46C1; color: white; padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 700;">+ VENDIDO</div>
-          <div style="text-align: center; padding: 16px 16px 0 16px;">
-            <div style="font-size: 12px; font-weight: 700; color: #6B46C1; text-transform: uppercase; margin-bottom: 4px;">Max</div>
-            <div style="font-size: 36px; font-weight: 800; color: #6B46C1; line-height: 1;">850</div>
-            <div style="font-size: 13px; color: #666; margin-bottom: 12px;">MEGA</div>
-            <div style="background: #F3E8FF; padding: 12px; border-radius: 8px; margin-bottom: 8px;">
-              <div style="font-size: 28px; font-weight: 800; color: #6B46C1;">R$ 139<span style="font-size: 18px;">,90</span></div>
-              <div style="font-size: 10px; color: #666;">/mês</div>
+          <div style="text-align: center; margin-bottom: 16px;">
+            <div style="font-size: 12px; font-weight: 700; color: #6B46C1; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;">Max</div>
+            <div style="font-size: 40px; font-weight: 800; color: #333; line-height: 1; margin-bottom: 4px;">850</div>
+            <div style="font-size: 13px; color: #999; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px;">MEGA</div>
+            <div style="background: linear-gradient(135deg, rgba(107, 70, 193, 0.05), rgba(139, 92, 246, 0.05)); border: 1px solid #E0D5F5; padding: 16px; border-radius: 10px; margin-bottom: 8px;">
+              <div style="font-size: 32px; font-weight: 800; color: #6B46C1; line-height: 1;">R$ 139<span style="font-size: 20px;">,90</span></div>
+              <div style="font-size: 11px; color: #666; margin-top: 4px;">/mês</div>
             </div>
-            <div style="background: #6B46C1; color: white; padding: 8px; border-radius: 6px; font-size: 11px; font-weight: 700; margin-bottom: 12px;">
+            <div style="background: #6B46C1; color: white; padding: 8px; border-radius: 8px; font-size: 11px; font-weight: 700; margin-bottom: 4px;">
               <i class="fas fa-film"></i> HBO MAX INCLUSO
             </div>
           </div>
-          <div style="padding: 0 16px 16px 16px; font-size: 12px;">
-            <div style="margin-bottom: 6px;"><i class="fas fa-check" style="color: #10B981;"></i> Instalação grátis</div>
-            <div style="margin-bottom: 6px;"><i class="fas fa-check" style="color: #10B981;"></i> Roteador WiFi+ incluso</div>
-            <div style="margin-bottom: 6px;"><i class="fas fa-check" style="color: #10B981;"></i> Watch+ (30 canais)</div>
-            <div style="margin-bottom: 12px;"><i class="fas fa-check" style="color: #10B981;"></i> Assistência Premium</div>
-            <button onclick="copiarPlano('max-res')" style="width: 100%; padding: 10px; background: #6B46C1; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px;">
-              <i class="fas fa-copy"></i> Copiar para WhatsApp
-            </button>
+          <div style="font-size: 12px; color: #666; margin-bottom: 16px;">
+            <div style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;"><i class="fas fa-check" style="color: #10B981; font-size: 10px;"></i> Instalação grátis</div>
+            <div style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;"><i class="fas fa-check" style="color: #10B981; font-size: 10px;"></i> Roteador WiFi+ incluso</div>
+            <div style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;"><i class="fas fa-check" style="color: #10B981; font-size: 10px;"></i> Watch+ (30 canais)</div>
+            <div style="display: flex; align-items: center; gap: 8px;"><i class="fas fa-check" style="color: #10B981; font-size: 10px;"></i> App com descontos</div>
           </div>
+          <button onclick="copiarPlano('max-res')" style="width: 100%; padding: 12px; background: #6B46C1; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px; transition: all 0.2s;">
+            <i class="fas fa-copy"></i> Copiar para WhatsApp
+          </button>
         </div>
 
         <!-- ELITE -->
-        <div class="card" style="position: relative;">
-          <div style="position: absolute; top: -10px; right: 16px; background: #FFD700; color: #1F2937; padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 700;">PREMIUM</div>
-          <div style="text-align: center; padding: 16px 16px 0 16px;">
-            <div style="font-size: 12px; font-weight: 700; color: #FFD700; text-transform: uppercase; margin-bottom: 4px;">Elite</div>
-            <div style="font-size: 36px; font-weight: 800; color: #FFD700; line-height: 1;">950</div>
-            <div style="font-size: 13px; color: #666; margin-bottom: 12px;">MEGA</div>
-            <div style="background: #FFF9E6; padding: 12px; border-radius: 8px; margin-bottom: 12px;">
-              <div style="font-size: 28px; font-weight: 800; color: #FFD700;">R$ 159<span style="font-size: 18px;">,90</span></div>
-              <div style="font-size: 10px; color: #666;">/mês</div>
+        <div style="background: white; border: 2px solid #FFE5D9; border-radius: 12px; padding: 20px; position: relative; transition: all 0.2s;">
+          <div style="text-align: center; margin-bottom: 16px;">
+            <div style="font-size: 12px; font-weight: 700; color: #FF8C42; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;">Elite</div>
+            <div style="font-size: 40px; font-weight: 800; color: #333; line-height: 1; margin-bottom: 4px;">950</div>
+            <div style="font-size: 13px; color: #999; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px;">MEGA</div>
+            <div style="background: linear-gradient(135deg, rgba(255, 140, 66, 0.05), rgba(255, 215, 0, 0.05)); border: 1px solid #FFE5D9; padding: 16px; border-radius: 10px; margin-bottom: 4px;">
+              <div style="font-size: 32px; font-weight: 800; color: #FF8C42; line-height: 1;">R$ 159<span style="font-size: 20px;">,90</span></div>
+              <div style="font-size: 11px; color: #666; margin-top: 4px;">/mês</div>
             </div>
           </div>
-          <div style="padding: 0 16px 16px 16px; font-size: 12px;">
-            <div style="margin-bottom: 6px;"><i class="fas fa-check" style="color: #10B981;"></i> Instalação grátis</div>
-            <div style="margin-bottom: 6px;"><i class="fas fa-check" style="color: #10B981;"></i> Roteador WiFi+ incluso</div>
-            <div style="margin-bottom: 6px;"><i class="fas fa-check" style="color: #10B981;"></i> Watch+ (30 canais)</div>
-            <div style="margin-bottom: 6px;"><i class="fas fa-check" style="color: #10B981;"></i> Assistência Prioritária</div>
-            <div style="margin-bottom: 12px;"><i class="fas fa-check" style="color: #10B981;"></i> App Premium</div>
-            <button onclick="copiarPlano('elite-res')" style="width: 100%; padding: 10px; background: #FFD700; color: #1F2937; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px;">
-              <i class="fas fa-copy"></i> Copiar para WhatsApp
-            </button>
+          <div style="font-size: 12px; color: #666; margin-bottom: 16px;">
+            <div style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;"><i class="fas fa-check" style="color: #10B981; font-size: 10px;"></i> Instalação grátis</div>
+            <div style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;"><i class="fas fa-check" style="color: #10B981; font-size: 10px;"></i> Roteador WiFi+ incluso</div>
+            <div style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;"><i class="fas fa-check" style="color: #10B981; font-size: 10px;"></i> Watch+ (30 canais)</div>
+            <div style="display: flex; align-items: center; gap: 8px;"><i class="fas fa-check" style="color: #10B981; font-size: 10px;"></i> Suporte VIP prioritário</div>
           </div>
+          <button onclick="copiarPlano('elite-res')" style="width: 100%; padding: 12px; background: #FF8C42; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px; transition: all 0.2s;">
+            <i class="fas fa-copy"></i> Copiar para WhatsApp
+          </button>
         </div>
       </div>
     </div>
 
     <!-- Planos Empresariais -->
     <div style="margin-bottom: 24px;">
-      <h2 style="font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
-        <i class="fas fa-building" style="color: #FF6B35;"></i> Planos Empresariais
+      <h2 style="font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; color: #1a1a1a;">
+        <i class="fas fa-building" style="color: #3b82f6;"></i> Planos Empresariais
       </h2>
 
       <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
-        <!-- PRIME EMPRESARIAL -->
-        <div class="card">
-          <div style="text-align: center; padding: 16px 16px 0 16px;">
-            <div style="font-size: 12px; font-weight: 700; color: #3B82F6; text-transform: uppercase; margin-bottom: 4px;">Prime</div>
-            <div style="font-size: 32px; font-weight: 800; color: #3B82F6; line-height: 1;">800</div>
-            <div style="font-size: 12px; color: #666; margin-bottom: 10px;">MEGA</div>
-            <div style="background: #EFF6FF; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
-              <div style="font-size: 24px; font-weight: 800; color: #3B82F6;">R$ 119<span style="font-size: 16px;">,90</span></div>
-              <div style="font-size: 10px; color: #666;">/mês</div>
+        <!-- PRIME EMP -->
+        <div style="background: white; border: 2px solid #DBEAFE; border-radius: 12px; padding: 20px; transition: all 0.2s;">
+          <div style="text-align: center; margin-bottom: 12px;">
+            <div style="font-size: 11px; font-weight: 700; color: #3b82f6; text-transform: uppercase; margin-bottom: 6px;">Prime Emp</div>
+            <div style="font-size: 32px; font-weight: 800; color: #333; line-height: 1; margin-bottom: 2px;">800</div>
+            <div style="font-size: 11px; color: #999; margin-bottom: 12px;">MEGA</div>
+            <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(96, 165, 250, 0.05)); border: 1px solid #DBEAFE; padding: 12px; border-radius: 8px;">
+              <div style="font-size: 24px; font-weight: 800; color: #3b82f6;">R$ 119<span style="font-size: 16px;">,90</span></div>
+              <div style="font-size: 10px; color: #666; margin-top: 2px;">/mês</div>
             </div>
           </div>
-          <div style="padding: 0 16px 16px 16px; font-size: 11px;">
-            <div style="margin-bottom: 4px;"><i class="fas fa-check" style="color: #10B981;"></i> Instalação grátis</div>
-            <div style="margin-bottom: 4px;"><i class="fas fa-check" style="color: #10B981;"></i> Roteador WiFi+</div>
-            <div style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #10B981;"></i> Assistência Premium</div>
-            <button onclick="copiarPlano('prime-emp')" style="width: 100%; padding: 8px; background: #3B82F6; color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 12px;">
-              <i class="fas fa-copy"></i> Copiar
-            </button>
+          <div style="font-size: 11px; color: #666; margin-bottom: 12px;">
+            <div style="margin-bottom: 6px;"><i class="fas fa-check" style="color: #10B981; font-size: 9px;"></i> SLA garantido</div>
+            <div style="margin-bottom: 6px;"><i class="fas fa-check" style="color: #10B981; font-size: 9px;"></i> WiFi+ incluso</div>
+            <div><i class="fas fa-check" style="color: #10B981; font-size: 9px;"></i> Suporte prioritário</div>
           </div>
+          <button onclick="copiarPlano('prime-emp')" style="width: 100%; padding: 10px; background: #3b82f6; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 12px;">
+            <i class="fas fa-copy"></i> Copiar
+          </button>
         </div>
 
-        <!-- ELITE EMPRESARIAL -->
-        <div class="card">
-          <div style="text-align: center; padding: 16px 16px 0 16px;">
-            <div style="font-size: 12px; font-weight: 700; color: #3B82F6; text-transform: uppercase; margin-bottom: 4px;">Elite</div>
-            <div style="font-size: 32px; font-weight: 800; color: #3B82F6; line-height: 1;">950</div>
-            <div style="font-size: 12px; color: #666; margin-bottom: 10px;">MEGA</div>
-            <div style="background: #EFF6FF; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
-              <div style="font-size: 24px; font-weight: 800; color: #3B82F6;">R$ 159<span style="font-size: 16px;">,90</span></div>
-              <div style="font-size: 10px; color: #666;">/mês</div>
+        <!-- ELITE EMP -->
+        <div style="background: white; border: 2px solid #DBEAFE; border-radius: 12px; padding: 20px; transition: all 0.2s;">
+          <div style="text-align: center; margin-bottom: 12px;">
+            <div style="font-size: 11px; font-weight: 700; color: #2563eb; text-transform: uppercase; margin-bottom: 6px;">Elite Emp</div>
+            <div style="font-size: 32px; font-weight: 800; color: #333; line-height: 1; margin-bottom: 2px;">950</div>
+            <div style="font-size: 11px; color: #999; margin-bottom: 12px;">MEGA</div>
+            <div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(59, 130, 246, 0.05)); border: 1px solid #DBEAFE; padding: 12px; border-radius: 8px;">
+              <div style="font-size: 24px; font-weight: 800; color: #2563eb;">R$ 159<span style="font-size: 16px;">,90</span></div>
+              <div style="font-size: 10px; color: #666; margin-top: 2px;">/mês</div>
             </div>
           </div>
-          <div style="padding: 0 16px 16px 16px; font-size: 11px;">
-            <div style="margin-bottom: 4px;"><i class="fas fa-check" style="color: #10B981;"></i> Instalação grátis</div>
-            <div style="margin-bottom: 4px;"><i class="fas fa-check" style="color: #10B981;"></i> Roteador WiFi+</div>
-            <div style="margin-bottom: 4px;"><i class="fas fa-check" style="color: #10B981;"></i> Assistência Prioritária</div>
-            <div style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #10B981;"></i> Corporate</div>
-            <button onclick="copiarPlano('elite-emp')" style="width: 100%; padding: 8px; background: #3B82F6; color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 12px;">
-              <i class="fas fa-copy"></i> Copiar
-            </button>
+          <div style="font-size: 11px; color: #666; margin-bottom: 12px;">
+            <div style="margin-bottom: 6px;"><i class="fas fa-check" style="color: #10B981; font-size: 9px;"></i> SLA garantido</div>
+            <div style="margin-bottom: 6px;"><i class="fas fa-check" style="color: #10B981; font-size: 9px;"></i> WiFi+ incluso</div>
+            <div><i class="fas fa-check" style="color: #10B981; font-size: 9px;"></i> Suporte dedicado</div>
           </div>
+          <button onclick="copiarPlano('elite-emp')" style="width: 100%; padding: 10px; background: #2563eb; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 12px;">
+            <i class="fas fa-copy"></i> Copiar
+          </button>
         </div>
 
         <!-- BUSINESS STARTER -->
-        <div class="card" style="border: 2px solid #10B981;">
-          <div style="text-align: center; padding: 16px 16px 0 16px;">
-            <div style="font-size: 11px; font-weight: 700; color: #10B981; text-transform: uppercase; margin-bottom: 4px;">Business Starter</div>
-            <div style="font-size: 32px; font-weight: 800; color: #10B981; line-height: 1;">800</div>
-            <div style="font-size: 12px; color: #666; margin-bottom: 10px;">MEGA</div>
-            <div style="background: #ECFDF5; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
-              <div style="font-size: 24px; font-weight: 800; color: #10B981;">R$ 289<span style="font-size: 16px;">,90</span></div>
-              <div style="font-size: 10px; color: #666;">/mês</div>
+        <div style="background: white; border: 2px solid #D1FAE5; border-radius: 12px; padding: 20px; transition: all 0.2s;">
+          <div style="text-align: center; margin-bottom: 12px;">
+            <div style="font-size: 11px; font-weight: 700; color: #10b981; text-transform: uppercase; margin-bottom: 6px;">B. Starter</div>
+            <div style="font-size: 32px; font-weight: 800; color: #333; line-height: 1; margin-bottom: 2px;">800</div>
+            <div style="font-size: 11px; color: #999; margin-bottom: 12px;">MEGA</div>
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(5, 150, 105, 0.05)); border: 1px solid #D1FAE5; padding: 12px; border-radius: 8px;">
+              <div style="font-size: 24px; font-weight: 800; color: #10b981;">R$ 289<span style="font-size: 16px;">,90</span></div>
+              <div style="font-size: 10px; color: #666; margin-top: 2px;">/mês</div>
             </div>
           </div>
-          <div style="padding: 0 16px 16px 16px; font-size: 11px;">
-            <div style="margin-bottom: 4px;"><i class="fas fa-check" style="color: #10B981;"></i> IPv4 FIXO</div>
-            <div style="margin-bottom: 4px;"><i class="fas fa-check" style="color: #10B981;"></i> Instalação grátis</div>
-            <div style="margin-bottom: 4px;"><i class="fas fa-check" style="color: #10B981;"></i> Roteador WiFi+</div>
-            <div style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #10B981;"></i> Assistência Premium</div>
-            <button onclick="copiarPlano('starter-emp')" style="width: 100%; padding: 8px; background: #10B981; color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 12px;">
-              <i class="fas fa-copy"></i> Copiar
-            </button>
+          <div style="font-size: 11px; color: #666; margin-bottom: 12px;">
+            <div style="margin-bottom: 6px;"><i class="fas fa-check" style="color: #10B981; font-size: 9px;"></i> IPv4 fixo incluso</div>
+            <div style="margin-bottom: 6px;"><i class="fas fa-check" style="color: #10B981; font-size: 9px;"></i> SLA 99.5%</div>
+            <div><i class="fas fa-check" style="color: #10B981; font-size: 9px;"></i> WiFi empresarial</div>
           </div>
+          <button onclick="copiarPlano('business-starter')" style="width: 100%; padding: 10px; background: #10b981; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 12px;">
+            <i class="fas fa-copy"></i> Copiar
+          </button>
         </div>
 
         <!-- BUSINESS -->
-        <div class="card" style="border: 2px solid #F59E0B;">
-          <div style="text-align: center; padding: 16px 16px 0 16px;">
-            <div style="font-size: 12px; font-weight: 700; color: #F59E0B; text-transform: uppercase; margin-bottom: 4px;">Business</div>
-            <div style="font-size: 32px; font-weight: 800; color: #F59E0B; line-height: 1;">950</div>
-            <div style="font-size: 12px; color: #666; margin-bottom: 10px;">MEGA</div>
-            <div style="background: #FEF3C7; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
-              <div style="font-size: 24px; font-weight: 800; color: #F59E0B;">R$ 389<span style="font-size: 16px;">,90</span></div>
-              <div style="font-size: 10px; color: #666;">/mês</div>
+        <div style="background: white; border: 2px solid #D1FAE5; border-radius: 12px; padding: 20px; transition: all 0.2s;">
+          <div style="text-align: center; margin-bottom: 12px;">
+            <div style="font-size: 11px; font-weight: 700; color: #059669; text-transform: uppercase; margin-bottom: 6px;">Business</div>
+            <div style="font-size: 32px; font-weight: 800; color: #333; line-height: 1; margin-bottom: 2px;">950</div>
+            <div style="font-size: 11px; color: #999; margin-bottom: 12px;">MEGA</div>
+            <div style="background: linear-gradient(135deg, rgba(5, 150, 105, 0.05), rgba(16, 185, 129, 0.05)); border: 1px solid #D1FAE5; padding: 12px; border-radius: 8px;">
+              <div style="font-size: 24px; font-weight: 800; color: #059669;">R$ 389<span style="font-size: 16px;">,90</span></div>
+              <div style="font-size: 10px; color: #666; margin-top: 2px;">/mês</div>
             </div>
           </div>
-          <div style="padding: 0 16px 16px 16px; font-size: 11px;">
-            <div style="margin-bottom: 4px;"><i class="fas fa-check" style="color: #10B981;"></i> IPv4 FIXO</div>
-            <div style="margin-bottom: 4px;"><i class="fas fa-check" style="color: #10B981;"></i> Instalação grátis</div>
-            <div style="margin-bottom: 4px;"><i class="fas fa-check" style="color: #10B981;"></i> Roteador WiFi+</div>
-            <div style="margin-bottom: 4px;"><i class="fas fa-check" style="color: #10B981;"></i> Assistência Prioritária</div>
-            <div style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #10B981;"></i> Corporate</div>
-            <button onclick="copiarPlano('business-emp')" style="width: 100%; padding: 8px; background: #F59E0B; color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 12px;">
-              <i class="fas fa-copy"></i> Copiar
-            </button>
+          <div style="font-size: 11px; color: #666; margin-bottom: 12px;">
+            <div style="margin-bottom: 6px;"><i class="fas fa-check" style="color: #10B981; font-size: 9px;"></i> IPv4 fixo incluso</div>
+            <div style="margin-bottom: 6px;"><i class="fas fa-check" style="color: #10B981; font-size: 9px;"></i> SLA 99.9%</div>
+            <div><i class="fas fa-check" style="color: #10B981; font-size: 9px;"></i> Suporte técnico 24/7</div>
           </div>
+          <button onclick="copiarPlano('business')" style="width: 100%; padding: 10px; background: #059669; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 12px;">
+            <i class="fas fa-copy"></i> Copiar
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- Ferramentas Compactas -->
-    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px;">
-      <a href="/playbook${tenantQuery}" class="card" style="text-decoration: none; color: inherit; text-align: center; padding: 16px;">
-        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #FF6B35, #FF8C42); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px;">
-          <i class="fas fa-book-open" style="font-size: 20px; color: white;"></i>
-        </div>
-        <div style="font-weight: 700; font-size: 13px;">Playbook</div>
-        <div style="font-size: 11px; color: #666;">Processo completo</div>
-      </a>
-
-      <a href="/playbook/scripts${tenantQuery}" class="card" style="text-decoration: none; color: inherit; text-align: center; padding: 16px;">
-        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #FFD700, #FDE047); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px;">
-          <i class="fas fa-comment-dots" style="font-size: 20px; color: #1F2937;"></i>
-        </div>
-        <div style="font-weight: 700; font-size: 13px;">Scripts</div>
-        <div style="font-size: 11px; color: #666;">Mensagens prontas</div>
-      </a>
-
-      <a href="/playbook/objecoes${tenantQuery}" class="card" style="text-decoration: none; color: inherit; text-align: center; padding: 16px;">
-        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #EF4444, #F87171); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px;">
-          <i class="fas fa-shield-alt" style="font-size: 20px; color: white;"></i>
-        </div>
-        <div style="font-weight: 700; font-size: 13px;">Objeções</div>
-        <div style="font-size: 11px; color: #666;">Tratamento</div>
-      </a>
-
-      <a href="/clientes${tenantQuery}" class="card" style="text-decoration: none; color: inherit; text-align: center; padding: 16px;">
-        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #EF4444, #F87171); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px;">
-          <i class="fas fa-users" style="font-size: 20px; color: white;"></i>
-        </div>
-        <div style="font-weight: 700; font-size: 13px;">Pipeline</div>
-        <div style="font-size: 11px; color: #666;">Gestão de vendas</div>
-      </a>
-    </div>
-
-    <!-- Diferenciais Compactos -->
-    <div class="card" style="background: linear-gradient(135deg, #1F2937, #374151); color: white; padding: 20px; margin-bottom: 24px;">
-      <h3 style="font-size: 16px; font-weight: 700; margin: 0 0 16px 0; text-align: center;"><i class="fas fa-bolt"></i> Diferenciais New Oeste</h3>
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; font-size: 12px;">
-        <div><i class="fas fa-check-circle" style="color: #10B981;"></i> Fibra FTTH real</div>
-        <div><i class="fas fa-check-circle" style="color: #10B981;"></i> Empresa local</div>
-        <div><i class="fas fa-check-circle" style="color: #10B981;"></i> Instalação 72h</div>
-        <div><i class="fas fa-check-circle" style="color: #10B981;"></i> Suporte 24/7</div>
-        <div><i class="fas fa-check-circle" style="color: #10B981;"></i> Sem taxas extras</div>
-        <div><i class="fas fa-check-circle" style="color: #10B981;"></i> Super App Connect</div>
-      </div>
-    </div>
+    <style>
+      .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+      }
+      button:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+      }
+    </style>
 
     <script>
-      // Estado do quiz
-      let quizState = { tipo: null, pessoas: null, uso: null };
-
-      // Textos para WhatsApp
-      const planosWhatsApp = {
-        'prime-res': \`*NEW OESTE - PLANO PRIME*
-
-> 800 MEGA de velocidade
-> R$ 69,90/mês (Fev e Mar)
-> Depois R$ 119,90/mês
-
-INCLUSO:
-• Instalação GRÁTIS
-• Roteador WiFi+ incluso
-• Watch+ com 30 canais ao vivo
-• App NEW OESTE CONNECT com descontos
-
-Fibra óptica até sua casa!
-Quer agendar a instalação?\`,
-        'max-res': \`*NEW OESTE - PLANO MAX*
-
-> 850 MEGA de velocidade
-> R$ 139,90/mês
-
-*HBO MAX INCLUSO!*
-Plano Standard (2 dispositivos Full HD)
-
-INCLUSO:
-• Instalação GRÁTIS
-• Roteador WiFi+ incluso
-• Watch+ com 30 canais ao vivo
-• Assistência Premium
-• App com descontos
-
-Nosso plano MAIS VENDIDO!
-Vamos fechar?\`,
-        'elite-res': \`*NEW OESTE - PLANO ELITE*
-
-> 950 MEGA de velocidade
-> R$ 159,90/mês
-
-INCLUSO:
-• Instalação GRÁTIS
-• Roteador WiFi+ incluso
-• Watch+ com 30 canais ao vivo
-• Assistência PRIORITÁRIA
-• App Premium com descontos VIP
-
-O melhor plano residencial!
-Garanta já o seu!\`,
-        'prime-emp': \`*NEW OESTE EMPRESARIAL - PRIME*
-
-> 800 MEGA de velocidade
-> R$ 119,90/mês
-
-INCLUSO:
-• Instalação GRÁTIS
-• Roteador WiFi+ incluso
-• Assistência Premium
-
-Ideal para pequenos negócios!
-Posso agendar a visita técnica?\`,
-        'elite-emp': \`*NEW OESTE EMPRESARIAL - ELITE*
-
-> 950 MEGA de velocidade
-> R$ 159,90/mês
-
-INCLUSO:
-• Instalação GRÁTIS
-• Roteador WiFi+ incluso
-• Assistência PRIORITÁRIA
-• Acesso Corporate
-
-Internet profissional!
-Vamos agendar?\`,
-        'starter-emp': \`*NEW OESTE - BUSINESS STARTER*
-
-> 800 MEGA de velocidade
-> R$ 289,90/mês
-
-*IPv4 FIXO INCLUSO*
-
-INCLUSO:
-• Instalação GRÁTIS
-• Roteador WiFi+ incluso
-• Assistência Premium
-
-Perfeito para empresas que precisam de IP fixo!
-Quer mais detalhes?\`,
-        'business-emp': \`*NEW OESTE - BUSINESS*
-
-> 950 MEGA de velocidade
-> R$ 389,90/mês
-
-*IPv4 FIXO INCLUSO*
-
-INCLUSO:
-• Instalação GRÁTIS
-• Roteador WiFi+ incluso
-• Assistência PRIORITÁRIA
-• Acesso Corporate
-
-Nosso plano empresarial TOP!
-Posso enviar a proposta formal?\`
-      };
+      const quizState = { tipo: null, pessoas: null, uso: null };
 
       function setTipo(tipo) {
         quizState.tipo = tipo;
-        document.querySelectorAll('[id^="btn-residencial"], [id^="btn-empresarial"]').forEach(btn => {
-          btn.style.background = 'rgba(255,255,255,0.2)';
-          btn.style.borderColor = 'rgba(255,255,255,0.3)';
+        ['btn-residencial', 'btn-empresarial'].forEach(id => {
+          const btn = document.getElementById(id);
+          if (btn) {
+            btn.style.background = 'white';
+            btn.style.borderColor = '#E0E0E0';
+            btn.style.color = '#333';
+          }
         });
-        document.getElementById('btn-' + tipo).style.background = 'rgba(255,255,255,0.3)';
-        document.getElementById('btn-' + tipo).style.borderColor = 'white';
+        const selected = document.getElementById('btn-' + tipo);
+        if (selected) {
+          selected.style.background = '#FF6B35';
+          selected.style.borderColor = '#FF6B35';
+          selected.style.color = 'white';
+        }
       }
 
       function setPessoas(num) {
         quizState.pessoas = num;
-        // Reset todos os botões de pessoas
         ['btn-1', 'btn-3', 'btn-6', 'btn-11'].forEach(id => {
           const btn = document.getElementById(id);
           if (btn) {
-            btn.style.background = 'rgba(255,255,255,0.2)';
-            btn.style.borderColor = 'rgba(255,255,255,0.3)';
+            btn.style.background = 'white';
+            btn.style.borderColor = '#E0E0E0';
+            btn.style.color = '#333';
           }
         });
-        // Destacar o selecionado
         const selected = document.getElementById('btn-' + num);
         if (selected) {
-          selected.style.background = 'rgba(255,255,255,0.3)';
-          selected.style.borderColor = 'white';
+          selected.style.background = '#FF6B35';
+          selected.style.borderColor = '#FF6B35';
+          selected.style.color = 'white';
         }
       }
 
       function setUso(uso) {
         quizState.uso = uso;
-        document.querySelectorAll('[id^="btn-trabalho"], [id^="btn-streaming"], [id^="btn-jogos"], [id^="btn-misto"]').forEach(btn => {
-          btn.style.background = 'rgba(255,255,255,0.2)';
-          btn.style.borderColor = 'rgba(255,255,255,0.3)';
+        ['btn-trabalho', 'btn-streaming', 'btn-jogos', 'btn-misto'].forEach(id => {
+          const btn = document.getElementById(id);
+          if (btn) {
+            btn.style.background = 'white';
+            btn.style.borderColor = '#E0E0E0';
+            btn.style.color = '#333';
+          }
         });
-        document.getElementById('btn-' + uso).style.background = 'rgba(255,255,255,0.3)';
-        document.getElementById('btn-' + uso).style.borderColor = 'white';
+        const selected = document.getElementById('btn-' + uso);
+        if (selected) {
+          selected.style.background = '#FF6B35';
+          selected.style.borderColor = '#FF6B35';
+          selected.style.color = 'white';
+        }
       }
 
       function calcularPlano() {
-        const { tipo, pessoas, uso } = quizState;
-
-        if (!tipo || !pessoas || !uso) {
+        if (!quizState.tipo || !quizState.pessoas || !quizState.uso) {
           alert('Por favor, responda todas as perguntas!');
           return;
         }
 
         let plano = {};
 
-        if (tipo === 'residencial') {
-          if (pessoas <= 2 && uso !== 'jogos') {
-            plano = { nome: 'PRIME', velocidade: '800 MEGA', preco: 'R$ 69,90/mês', beneficios: '• Perfeito para 1-2 pessoas\\n• Streaming em HD\\n• Navegação rápida\\n• Instalação grátis + WiFi+' };
-          } else if (pessoas <= 5 || uso === 'streaming') {
-            plano = { nome: 'MAX', velocidade: '850 MEGA', preco: 'R$ 139,90/mês', beneficios: '• MAIS VENDIDO\\n• HBO MAX INCLUSO\\n• Perfeito para 3-5 pessoas\\n• Múltiplos streamings 4K\\n• Watch+ 30 canais' };
+        if (quizState.tipo === 'residencial') {
+          if (quizState.pessoas <= 2) {
+            plano = { nome: 'PRIME', velocidade: '800 MEGA', preco: 'R$ 69,90/mês', beneficios: 'Perfeito para 1-2 pessoas. Inclui instalação grátis, WiFi+ e Watch+.' };
+          } else if (quizState.pessoas <= 5) {
+            plano = { nome: 'MAX', velocidade: '850 MEGA', preco: 'R$ 139,90/mês', beneficios: 'Ideal para famílias até 5 pessoas. Inclui HBO Max, WiFi+ e Watch+.' };
           } else {
-            plano = { nome: 'ELITE', velocidade: '950 MEGA', preco: 'R$ 159,90/mês', beneficios: '• PREMIUM\\n• Ideal para 6+ pessoas\\n• Jogos online sem lag\\n• Home office profissional\\n• Assistência prioritária' };
+            plano = { nome: 'ELITE', velocidade: '950 MEGA', preco: 'R$ 159,90/mês', beneficios: 'Para casas com 6+ pessoas. Máxima velocidade e suporte VIP.' };
           }
         } else {
-          if (pessoas <= 5) {
-            plano = { nome: 'PRIME EMPRESARIAL', velocidade: '800 MEGA', preco: 'R$ 119,90/mês', beneficios: '• Pequenos negócios\\n• Até 5 funcionários\\n• Assistência Premium\\n• Instalação grátis' };
-          } else if (pessoas <= 10 && uso !== 'misto') {
-            plano = { nome: 'ELITE EMPRESARIAL', velocidade: '950 MEGA', preco: 'R$ 159,90/mês', beneficios: '• Médias empresas\\n• Até 10 funcionários\\n• Assistência prioritária\\n• Acesso Corporate' };
-          } else if (pessoas <= 10) {
-            plano = { nome: 'BUSINESS STARTER', velocidade: '800 MEGA', preco: 'R$ 289,90/mês', beneficios: '• Com IPv4 FIXO\\n• Perfeito para servidores\\n• Acesso remoto\\n• Assistência Premium' };
+          if (quizState.pessoas <= 5) {
+            plano = { nome: 'PRIME EMPRESARIAL', velocidade: '800 MEGA', preco: 'R$ 119,90/mês', beneficios: 'Para pequenas empresas. SLA garantido e suporte prioritário.' };
+          } else if (quizState.pessoas <= 10) {
+            plano = { nome: 'BUSINESS STARTER', velocidade: '800 MEGA', preco: 'R$ 289,90/mês', beneficios: 'Com IPv4 fixo. SLA 99.5% e WiFi empresarial.' };
           } else {
-            plano = { nome: 'BUSINESS', velocidade: '950 MEGA', preco: 'R$ 389,90/mês', beneficios: '• Empresas grandes\\n• IPv4 FIXO\\n• 10+ funcionários\\n• Assistência prioritária\\n• Corporate' };
+            plano = { nome: 'BUSINESS', velocidade: '950 MEGA', preco: 'R$ 389,90/mês', beneficios: 'Máxima performance empresarial. IPv4, SLA 99.9% e suporte 24/7.' };
           }
         }
 
         document.getElementById('plano-nome').textContent = plano.nome;
         document.getElementById('plano-velocidade').textContent = plano.velocidade;
         document.getElementById('plano-preco').textContent = plano.preco;
-        document.getElementById('plano-beneficios').innerHTML = plano.beneficios.replace(/\\n/g, '<br>');
+        document.getElementById('plano-beneficios').textContent = plano.beneficios;
         document.getElementById('resultado-quiz').style.display = 'block';
-
-        window.planoRecomendado = \`*PLANO RECOMENDADO PARA VOCÊ*
-
-*\${plano.nome}*
-> \${plano.velocidade}
-> \${plano.preco}
-
-\${plano.beneficios.replace(/<br>/g, '\\n')}
-
-*NEW OESTE TELECOM*
-Fibra óptica de verdade!
-
-Quer agendar a instalação?\`;
       }
 
       function copiarResultado() {
-        if (window.planoRecomendado) {
-          navigator.clipboard.writeText(window.planoRecomendado).then(() => {
-            alert('Texto copiado! Cole no WhatsApp do cliente.');
-          });
-        }
+        const nome = document.getElementById('plano-nome').textContent;
+        const velocidade = document.getElementById('plano-velocidade').textContent;
+        const preco = document.getElementById('plano-preco').textContent;
+        const beneficios = document.getElementById('plano-beneficios').textContent;
+
+        const texto = \`*PLANO RECOMENDADO*\\n\\n*\${nome}*\\n\${velocidade}\\n\${preco}\\n\\n\${beneficios}\\n\\nQuer saber mais? Entre em contato!\`;
+
+        navigator.clipboard.writeText(texto).then(() => {
+          alert('✅ Texto copiado! Cole no WhatsApp do cliente.');
+        });
       }
 
       function copiarPlano(planoId) {
-        const texto = planosWhatsApp[planoId];
-        navigator.clipboard.writeText(texto).then(() => {
+        const planos = {
+          'prime-res': '*PLANO PRIME RESIDENCIAL*\\n\\n*800 MEGA*\\nR$ 69,90/mês (promo Fev-Mar)\\n\\n✓ Instalação grátis\\n✓ Roteador WiFi+ incluso\\n✓ Watch+ (30 canais)\\n✓ App com descontos\\n\\nGaranta já!',
+          'max-res': '*PLANO MAX RESIDENCIAL*\\n\\n*850 MEGA*\\nR$ 139,90/mês\\n\\n✓ HBO MAX INCLUSO\\n✓ Instalação grátis\\n✓ WiFi+ incluso\\n✓ Watch+ (30 canais)\\n\\nPlano mais vendido!',
+          'elite-res': '*PLANO ELITE RESIDENCIAL*\\n\\n*950 MEGA*\\nR$ 159,90/mês\\n\\n✓ Máxima velocidade\\n✓ Instalação grátis\\n✓ WiFi+ incluso\\n✓ Suporte VIP\\n\\nVelocidade premium!',
+          'prime-emp': '*PRIME EMPRESARIAL*\\n\\n*800 MEGA*\\nR$ 119,90/mês\\n\\n✓ SLA garantido\\n✓ WiFi+ incluso\\n✓ Suporte prioritário\\n\\nIdeal para sua empresa!',
+          'elite-emp': '*ELITE EMPRESARIAL*\\n\\n*950 MEGA*\\nR$ 159,90/mês\\n\\n✓ SLA garantido\\n✓ WiFi+ incluso\\n✓ Suporte dedicado\\n\\nPerformance profissional!',
+          'business-starter': '*BUSINESS STARTER*\\n\\n*800 MEGA*\\nR$ 289,90/mês\\n\\n✓ IPv4 fixo incluso\\n✓ SLA 99.5%\\n✓ WiFi empresarial\\n\\nPara empresas em crescimento!',
+          'business': '*BUSINESS*\\n\\n*950 MEGA*\\nR$ 389,90/mês\\n\\n✓ IPv4 fixo incluso\\n✓ SLA 99.9%\\n✓ Suporte 24/7\\n\\nMáximo para sua empresa!'
+        };
+
+        navigator.clipboard.writeText(planos[planoId]).then(() => {
           alert('✅ Texto copiado! Cole no WhatsApp do cliente.');
         });
       }
