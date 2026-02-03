@@ -1274,6 +1274,7 @@ function renderObjecoesNewOeste() {
   const tenantQuery = tenantConfig.id ? `?tenant=${tenantConfig.id}` : '';
   
   return `
+    <!-- Hero Section -->
     <div style="background: linear-gradient(135deg, #EF4444 0%, #FF6B35 50%, #F59E0B 100%); border-radius: 16px; padding: 32px; margin-bottom: 24px; color: white;">
       <div style="display: flex; align-items: center; gap: 12px;">
         <div style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
@@ -1286,9 +1287,355 @@ function renderObjecoesNewOeste() {
       </div>
     </div>
 
-    <div class="card" style="padding: 24px; text-align: center;">
-      <p style="font-size: 16px; color: #666;">Conteúdo completo de objeções carregando...</p>
+    <!-- Navegação Rápida -->
+    <div class="card" style="margin-bottom: 24px; padding: 20px;">
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
+        <a href="#preco" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #FEE2E2; border-radius: 8px; text-decoration: none; color: #EF4444; font-size: 13px; font-weight: 600;">
+          <i class="fas fa-dollar-sign"></i> Preço
+        </a>
+        <a href="#concorrente" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #DBEAFE; border-radius: 8px; text-decoration: none; color: #3B82F6; font-size: 13px; font-weight: 600;">
+          <i class="fas fa-wifi"></i> Concorrente
+        </a>
+        <a href="#tecnicas" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #D1FAE5; border-radius: 8px; text-decoration: none; color: #10B981; font-size: 13px; font-weight: 600;">
+          <i class="fas fa-brain"></i> Técnicas
+        </a>
+        <a href="#gatilhos" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #FFF7ED; border-radius: 8px; text-decoration: none; color: #F59E0B; font-size: 13px; font-weight: 600;">
+          <i class="fas fa-bolt"></i> Gatilhos
+        </a>
+      </div>
     </div>
+
+    <!-- Objeções de Preço -->
+    <div id="preco" class="card" style="margin-bottom: 24px; padding: 24px;">
+      <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-dollar-sign" style="color: #EF4444;"></i> Objeções de Preço
+      </h2>
+
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <!-- Objeção 1 -->
+        <div class="card" style="border: 2px solid #FEE2E2;">
+          <div style="padding: 16px; background: #FEE2E2; border-radius: 8px 8px 0 0;">
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0; color: #EF4444;">
+              "Está muito caro / Encontrei mais barato"
+            </h3>
+          </div>
+          <div style="padding: 16px;">
+            <div style="background: #FFF1F2; padding: 12px; border-radius: 6px; margin-bottom: 12px;">
+              <strong style="font-size: 13px; color: #EF4444;">POR QUE ACONTECE:</strong>
+              <p style="font-size: 12px; margin: 4px 0 0 0; color: #666;">Cliente comparou apenas preço, sem entender diferença técnica entre fibra FTTH e outras tecnologias.</p>
+            </div>
+            <div style="background: #F9FAFB; padding: 14px; border-radius: 6px; border-left: 4px solid #EF4444;">
+              <strong style="font-size: 13px; color: #EF4444;">RESPOSTA:</strong>
+              <p style="font-size: 13px; margin: 8px 0 0 0; line-height: 1.6; color: #374151;">
+                "Entendo perfeitamente! E eu concordo que tem opções mais baratas no mercado.<br><br>
+                Mas deixa eu te explicar a diferença:<br><br>
+                <strong>As mais baratas geralmente são:</strong><br>
+                • Cabo coaxial ou rádio<br>
+                • Velocidade "até" (nunca real)<br>
+                • Cai quando chove<br>
+                • Trava em horário de pico<br><br>
+                <strong>A New Oeste é fibra FTTH:</strong><br>
+                • Fibra até DENTRO da casa<br>
+                • Velocidade GARANTIDA<br>
+                • Estável 24/7<br>
+                • Não divide com vizinho<br><br>
+                Você economiza R$ 30/mês mas fica nervoso toda vez que cair? Vale a pena?<br><br>
+                Além disso: instalação GRÁTIS + WiFi+ incluso!"
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Objeção 2 -->
+        <div class="card" style="border: 2px solid #FEE2E2;">
+          <div style="padding: 16px; background: #FEE2E2; border-radius: 8px 8px 0 0;">
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0; color: #EF4444;">
+              "Não tenho dinheiro agora"
+            </h3>
+          </div>
+          <div style="padding: 16px;">
+            <div style="background: #F9FAFB; padding: 14px; border-radius: 6px; border-left: 4px solid #EF4444;">
+              <strong style="font-size: 13px; color: #EF4444;">RESPOSTA:</strong>
+              <p style="font-size: 13px; margin: 8px 0 0 0; line-height: 1.6; color: #374151;">
+                "Eu entendo! E olha, por isso mesmo vale a pena a New Oeste.<br><br>
+                Internet é ferramenta de trabalho, não é despesa - é investimento.<br><br>
+                Se sua internet cai no meio de uma reunião, você pode perder um cliente. Isso não sai mais caro?<br><br>
+                E tem mais: com instalação grátis, você NÃO paga nada adiantado.<br><br>
+                Primeira mensalidade só vence 30 dias depois da instalação."
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Objeção 3 -->
+        <div class="card" style="border: 2px solid #FEE2E2;">
+          <div style="padding: 16px; background: #FEE2E2; border-radius: 8px 8px 0 0;">
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0; color: #EF4444;">
+              "Deixa eu ver meu orçamento"
+            </h3>
+          </div>
+          <div style="padding: 16px;">
+            <div style="background: #F9FAFB; padding: 14px; border-radius: 6px; border-left: 4px solid #EF4444;">
+              <strong style="font-size: 13px; color: #EF4444;">RESPOSTA:</strong>
+              <p style="font-size: 13px; margin: 8px 0 0 0; line-height: 1.6; color: #374151;">
+                "Claro! Quanto você paga hoje? [R$ X]<br><br>
+                Você já tem esse valor no orçamento, certo?<br><br>
+                A diferença é de R$ [diferença].<br><br>
+                Por essa diferença você ganha velocidade real, suporte 24/7 local, instalação grátis e WiFi+ incluso.<br><br>
+                É substituir o que você já paga por algo melhor!"
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Objeções sobre Concorrente -->
+    <div id="concorrente" class="card" style="margin-bottom: 24px; padding: 24px;">
+      <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-wifi" style="color: #3B82F6;"></i> Objeções sobre Concorrência
+      </h2>
+
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <!-- Objeção 1 -->
+        <div class="card" style="border: 2px solid #DBEAFE;">
+          <div style="padding: 16px; background: #DBEAFE; border-radius: 8px 8px 0 0;">
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0; color: #3B82F6;">
+              "Já tenho internet e estou satisfeito"
+            </h3>
+          </div>
+          <div style="padding: 16px;">
+            <div style="background: #F9FAFB; padding: 14px; border-radius: 6px; border-left: 4px solid #3B82F6;">
+              <p style="font-size: 13px; margin: 0; line-height: 1.6; color: #374151;">
+                "Que ótimo! Posso te fazer uma pergunta?<br><br>
+                Você já testou a velocidade REAL? Muitas vezes contratamos 200 mega mas chega só 80.<br><br>
+                A New Oeste tem velocidade GARANTIDA. Se contratar 800, recebe 800 mesmo.<br><br>
+                Como somos de Foz, qualquer problema é resolvido RÁPIDO.<br><br>
+                Que tal testar? 7 dias grátis. Se não gostar, cancela sem custo."
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Objeção 2 -->
+        <div class="card" style="border: 2px solid #DBEAFE;">
+          <div style="padding: 16px; background: #DBEAFE; border-radius: 8px 8px 0 0;">
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0; color: #3B82F6;">
+              "Tenho contrato com [concorrente]"
+            </h3>
+          </div>
+          <div style="padding: 16px;">
+            <div style="background: #F9FAFB; padding: 14px; border-radius: 6px; border-left: 4px solid #3B82F6;">
+              <p style="font-size: 13px; margin: 0; line-height: 1.6; color: #374151;">
+                "Entendo! Quanto tempo falta? [X meses]<br><br>
+                Você tem 3 opções:<br>
+                1. Esperar acabar<br>
+                2. Pagar a multa<br>
+                3. Negociar cancelamento<br><br>
+                Muitas vezes eles mesmos liberam sem multa.<br><br>
+                Posso já te colocar na agenda? Quando chegar perto eu confirmo."
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Objeção 3 -->
+        <div class="card" style="border: 2px solid #DBEAFE;">
+          <div style="padding: 16px; background: #DBEAFE; border-radius: 8px 8px 0 0;">
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0; color: #3B82F6;">
+              "[Concorrente] é mais conhecida"
+            </h3>
+          </div>
+          <div style="padding: 16px;">
+            <div style="background: #F9FAFB; padding: 14px; border-radius: 6px; border-left: 4px solid #3B82F6;">
+              <p style="font-size: 13px; margin: 0; line-height: 1.6; color: #374151;">
+                "Verdade, são grandes.<br><br>
+                Mas justamente por isso o atendimento é impessoal. Você vira número.<br><br>
+                A New Oeste é DAQUI de Foz. Donos, técnicos - todo mundo mora aqui.<br><br>
+                Você não é número, é vizinho.<br><br>
+                Já temos mais de 3.000 clientes em Foz.<br><br>
+                Você prefere ser bem atendido por quem conhece Foz ou ser número numa empresa gigante?"
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Técnicas Gerais -->
+    <div id="tecnicas" class="card" style="margin-bottom: 24px; padding: 24px;">
+      <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-brain" style="color: #10B981;"></i> Técnicas de Tratamento
+      </h2>
+
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+        <!-- Técnica 1 -->
+        <div class="card" style="border: 2px solid #D1FAE5;">
+          <div style="padding: 16px;">
+            <div style="width: 40px; height: 40px; background: #10B981; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+              <i class="fas fa-check-double" style="color: white; font-size: 18px;"></i>
+            </div>
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0 0 8px 0; color: #10B981;">Feel, Felt, Found</h3>
+            <p style="font-size: 13px; color: #666; margin: 0 0 12px 0; line-height: 1.5;">
+              Técnica de empatia para desarmar resistência
+            </p>
+            <div style="background: #F0FDF4; padding: 12px; border-radius: 6px; font-size: 12px;">
+              <strong>FEEL:</strong> "Eu entendo como você se sente..."<br>
+              <strong>FELT:</strong> "Outros clientes sentiram isso..."<br>
+              <strong>FOUND:</strong> "Mas descobriram que..."
+            </div>
+          </div>
+        </div>
+
+        <!-- Técnica 2 -->
+        <div class="card" style="border: 2px solid #D1FAE5;">
+          <div style="padding: 16px;">
+            <div style="width: 40px; height: 40px; background: #10B981; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+              <i class="fas fa-question-circle" style="color: white; font-size: 18px;"></i>
+            </div>
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0 0 8px 0; color: #10B981;">Perguntas Clarificadoras</h3>
+            <p style="font-size: 13px; color: #666; margin: 0 0 12px 0; line-height: 1.5;">
+              Descobrir objeção real
+            </p>
+            <div style="background: #F0FDF4; padding: 12px; border-radius: 6px; font-size: 12px;">
+              "Além do preço, tem mais algo?"<br>
+              "O que te deixaria confortável?"<br>
+              "Se não fosse o preço, fecharia hoje?"
+            </div>
+          </div>
+        </div>
+
+        <!-- Técnica 3 -->
+        <div class="card" style="border: 2px solid #D1FAE5;">
+          <div style="padding: 16px;">
+            <div style="width: 40px; height: 40px; background: #10B981; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+              <i class="fas fa-balance-scale" style="color: white; font-size: 18px;"></i>
+            </div>
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0 0 8px 0; color: #10B981;">Balança de Valor</h3>
+            <p style="font-size: 13px; color: #666; margin: 0 0 12px 0; line-height: 1.5;">
+              Mostrar que benefícios superam investimento
+            </p>
+            <div style="background: #F0FDF4; padding: 12px; border-radius: 6px; font-size: 12px;">
+              "De um lado: R$ 30/mês<br>
+              Do outro: Estabilidade, suporte local<br>
+              O que pesa mais?"
+            </div>
+          </div>
+        </div>
+
+        <!-- Técnica 4 -->
+        <div class="card" style="border: 2px solid #D1FAE5;">
+          <div style="padding: 16px;">
+            <div style="width: 40px; height: 40px; background: #10B981; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+              <i class="fas fa-history" style="color: white; font-size: 18px;"></i>
+            </div>
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0 0 8px 0; color: #10B981;">Caso de Sucesso</h3>
+            <p style="font-size: 13px; color: #666; margin: 0 0 12px 0; line-height: 1.5;">
+              Usar exemplo real de cliente similar
+            </p>
+            <div style="background: #F0FDF4; padding: 12px; border-radius: 6px; font-size: 12px;">
+              "Tive um cliente no seu bairro com mesma dúvida.<br>
+              Hoje ele diz que foi a melhor decisão."
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gatilhos Mentais -->
+    <div id="gatilhos" class="card" style="margin-bottom: 24px; padding: 24px;">
+      <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-bolt" style="color: #F59E0B;"></i> Gatilhos Mentais
+      </h2>
+
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+        <div style="padding: 16px; background: #FFF7ED; border: 2px solid #F59E0B; border-radius: 10px;">
+          <h3 style="font-size: 14px; font-weight: 700; margin: 0 0 8px 0; color: #F59E0B;">
+            <i class="fas fa-fire"></i> Escassez
+          </h3>
+          <p style="font-size: 12px; color: #666; margin: 0;">"Só 3 vagas esta semana..."</p>
+        </div>
+
+        <div style="padding: 16px; background: #FFF7ED; border: 2px solid #F59E0B; border-radius: 10px;">
+          <h3 style="font-size: 14px; font-weight: 700; margin: 0 0 8px 0; color: #F59E0B;">
+            <i class="fas fa-users"></i> Prova Social
+          </h3>
+          <p style="font-size: 12px; color: #666; margin: 0;">"Mais de 3.000 famílias em Foz..."</p>
+        </div>
+
+        <div style="padding: 16px; background: #FFF7ED; border: 2px solid #F59E0B; border-radius: 10px;">
+          <h3 style="font-size: 14px; font-weight: 700; margin: 0 0 8px 0; color: #F59E0B;">
+            <i class="fas fa-chart-line"></i> Autoridade
+          </h3>
+          <p style="font-size: 12px; color: #666; margin: 0;">"Empresa local há X anos..."</p>
+        </div>
+
+        <div style="padding: 16px; background: #FFF7ED; border: 2px solid #F59E0B; border-radius: 10px;">
+          <h3 style="font-size: 14px; font-weight: 700; margin: 0 0 8px 0; color: #F59E0B;">
+            <i class="fas fa-gift"></i> Reciprocidade
+          </h3>
+          <p style="font-size: 12px; color: #666; margin: 0;">"Instalação grátis só pra você..."</p>
+        </div>
+
+        <div style="padding: 16px; background: #FFF7ED; border: 2px solid #F59E0B; border-radius: 10px;">
+          <h3 style="font-size: 14px; font-weight: 700; margin: 0 0 8px 0; color: #F59E0B;">
+            <i class="fas fa-thumbs-up"></i> Consistência
+          </h3>
+          <p style="font-size: 12px; color: #666; margin: 0;">"Você disse que quer qualidade..."</p>
+        </div>
+
+        <div style="padding: 16px; background: #FFF7ED; border: 2px solid #F59E0B; border-radius: 10px;">
+          <h3 style="font-size: 14px; font-weight: 700; margin: 0 0 8px 0; color: #F59E0B;">
+            <i class="fas fa-map-marker-alt"></i> Proximidade
+          </h3>
+          <p style="font-size: 12px; color: #666; margin: 0;">"Somos de Foz, seus vizinhos..."</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dicas Finais -->
+    <div class="card" style="padding: 24px; background: linear-gradient(135deg, #1F2937, #374151); color: white;">
+      <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0;">
+        <i class="fas fa-lightbulb"></i> Regras de Ouro
+      </h2>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+        <div style="background: rgba(255,255,255,0.1); padding: 16px; border-radius: 8px;">
+          <h3 style="font-size: 14px; font-weight: 700; margin: 0 0 8px 0;">
+            <i class="fas fa-ear-listen" style="color: #FFD700;"></i> Sempre Ouça Primeiro
+          </h3>
+          <p style="font-size: 12px; margin: 0; opacity: 0.9;">Não interrompa. Deixe o cliente desabafar.</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.1); padding: 16px; border-radius: 8px;">
+          <h3 style="font-size: 14px; font-weight: 700; margin: 0 0 8px 0;">
+            <i class="fas fa-heart" style="color: #FFD700;"></i> Empatia é Chave
+          </h3>
+          <p style="font-size: 12px; margin: 0; opacity: 0.9;">"Eu entendo..." desarma resistência.</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.1); padding: 16px; border-radius: 8px;">
+          <h3 style="font-size: 14px; font-weight: 700; margin: 0 0 8px 0;">
+            <i class="fas fa-ban" style="color: #FFD700;"></i> Nunca Desqualifique
+          </h3>
+          <p style="font-size: 12px; margin: 0; opacity: 0.9;">Não fale mal do concorrente. Foque em você.</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.1); padding: 16px; border-radius: 8px;">
+          <h3 style="font-size: 14px; font-weight: 700; margin: 0 0 8px 0;">
+            <i class="fas fa-forward" style="color: #FFD700;"></i> Avance Sempre
+          </h3>
+          <p style="font-size: 12px; margin: 0; opacity: 0.9;">Após resolver, proponha próximo passo.</p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Smooth scroll
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+    </script>
   `;
 }
 
