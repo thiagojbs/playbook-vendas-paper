@@ -1397,14 +1397,16 @@ function renderScripts() {
     </div>
   `;
 
-  // Dicas de Comunicacao
-  const dicasHtml = DICAS_COMUNICACAO.map(cat => `
+  // Dicas de Comunicacao - com validacao defensiva
+  const dicasHtml = DICAS_COMUNICACAO
+    .filter(cat => cat && cat.dicas && Array.isArray(cat.dicas))
+    .map(cat => `
     <div style="background: white; border: 1px solid var(--border); border-radius: 8px; padding: 16px;">
       <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
         <div style="width: 32px; height: 32px; background: var(--primary); border-radius: 6px; display: flex; align-items: center; justify-content: center;">
-          <i class="fas fa-${cat.icone}" style="color: white; font-size: 14px;"></i>
+          <i class="fas fa-${cat.icone || 'info'}" style="color: white; font-size: 14px;"></i>
         </div>
-        <span style="font-weight: 600;">${cat.titulo}</span>
+        <span style="font-weight: 600;">${cat.titulo || 'Dica'}</span>
       </div>
       <ul style="list-style: none; padding: 0; margin: 0; font-size: 13px;">
         ${cat.dicas.map(d => `<li style="padding: 4px 0; color: var(--text-secondary);"><i class="fas fa-check" style="color: var(--secondary); margin-right: 8px;"></i>${d}</li>`).join('')}
