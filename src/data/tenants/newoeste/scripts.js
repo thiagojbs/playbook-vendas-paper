@@ -940,18 +940,31 @@ export const SEQUENCIAS_COMPLETAS = [
   {
     nome: 'Follow-up Lead Frio',
     descricao: 'Sequencia para leads que demonstraram interesse mas nao responderam',
+    icone: 'route',
     etapas: [
-      { dia: 1, canal: 'WhatsApp', mensagem: 'Ola! Enviei informacoes sobre nossa fibra. Conseguiu dar uma olhada?' },
-      { dia: 3, canal: 'WhatsApp', mensagem: 'Oi [NOME]! So pra garantir que nao perdeu a oportunidade. Ainda temos vagas!' },
-      { dia: 7, canal: 'Ligacao', mensagem: 'Ligar para verificar interesse e esclarecer duvidas' }
+      { dia: 1, acao: 'Primeiro contato WhatsApp', script_id: 'whatsapp-primeiro-contato' },
+      { dia: 3, acao: 'Follow-up se nao respondeu', script_id: 'whatsapp-primeiro-contato' },
+      { dia: 7, acao: 'Ligacao de reengajamento', script_id: 'cold-call-residencial' }
     ]
   },
   {
     nome: 'Pos-Venda Satisfacao',
     descricao: 'Garantir satisfacao e pedir indicacao',
+    icone: 'star',
     etapas: [
-      { dia: 7, canal: 'WhatsApp', mensagem: 'Ola! Tudo certo com a internet? Precisa de alguma ajuda?' },
-      { dia: 30, canal: 'WhatsApp', mensagem: 'Como ta sendo sua experiencia? Se puder indicar pra um amigo, agradecemos! 😊' }
+      { dia: 7, acao: 'Check-in de satisfacao', script_id: 'whatsapp-primeiro-contato' },
+      { dia: 30, acao: 'Pedido de indicacao', script_id: 'whatsapp-primeiro-contato' }
+    ]
+  },
+  {
+    nome: 'Sequencia de Vendas Completa',
+    descricao: 'Do primeiro contato ate o fechamento',
+    icone: 'flag-checkered',
+    etapas: [
+      { dia: 0, acao: 'Prospeccao inicial', script_id: 'cold-call-residencial' },
+      { dia: 1, acao: 'Qualificacao de necessidades', script_id: 'qualificacao-necessidades' },
+      { dia: 2, acao: 'Apresentacao comercial', script_id: 'apresentacao-planos' },
+      { dia: 3, acao: 'Fechamento de venda', script_id: 'fechamento-venda' }
     ]
   }
 ];
@@ -963,13 +976,31 @@ export const SEQUENCIAS_COMPLETAS = [
 export const TEMPLATES_SEGMENTO = {
   residencial: {
     nome: 'Residencial',
-    foco: 'Familia, streaming, home office',
-    mensagem: 'Internet que acompanha sua familia! Netflix, jogos, trabalho - tudo ao mesmo tempo.'
+    icone: 'home',
+    dores: ['Internet lenta', 'Quedas constantes', 'Suporte ruim', 'Preco alto'],
+    script_personalizado: `Oi [Nome]! Internet que acompanha sua familia! 🏠
+
+Com New Oeste Fibra voce tem:
+✅ Velocidade garantida para Netflix, jogos e home office
+✅ Estabilidade - sem quedas ou lentidao
+✅ Suporte local 24/7
+✅ Instalacao rapida em ate 72h
+
+Posso te passar os planos e valores?`
   },
   empresarial: {
     nome: 'Empresarial',
-    foco: 'Produtividade, confiabilidade, suporte',
-    mensagem: 'Internet profissional para sua empresa. Suporte dedicado e SLA garantido.'
+    icone: 'building',
+    dores: ['Sem SLA', 'Suporte demorado', 'Instabilidade', 'Velocidade insuficiente'],
+    script_personalizado: `Oi [Nome]! Internet profissional para sua empresa! 💼
+
+New Oeste Fibra Empresarial oferece:
+🚀 Velocidade simetrica dedicada
+📊 SLA garantido com compensacao
+👨‍💻 Suporte tecnico prioritario 24/7
+🔒 IP fixo e seguranca reforçada
+
+Posso apresentar nossos planos empresariais?`
   }
 };
 
