@@ -71,11 +71,713 @@ export function renderPlaybook(path, tenantData = {}) {
     // Renderizar playbook especifico do tenant
     if (tenantId === 'cabeloesaude') {
       content = renderPlaybookCabeloeSaude();
+    } else if (tenantId === 'newoeste') {
+      content = renderPlaybookNewOeste();
     } else {
       content = renderPlaybookMain();
     }
   }
   return layout('Playbook', content, activeMenu, tenantConfig);
+}
+
+// ========================================
+// NEW OESTE - Playbook Telecom/ISP
+// ========================================
+function renderPlaybookNewOeste() {
+  const empresaNome = tenantConfig.nome || 'New Oeste';
+  const tenantQuery = tenantConfig.id ? `?tenant=${tenantConfig.id}` : '';
+
+  return `
+    <!-- Hero Section -->
+    <div style="background: linear-gradient(135deg, #FF6B35 0%, #FFD700 50%, #FF8C42 100%); border-radius: 16px; padding: 32px; margin-bottom: 24px; color: white;">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+        <div style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-book-open" style="font-size: 22px;"></i>
+        </div>
+        <div>
+          <h1 style="font-size: 24px; font-weight: 800; margin: 0;">Playbook de Vendas</h1>
+          <p style="font-size: 14px; margin: 0; opacity: 0.95;">Processo completo para fechar mais contratos</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Indice Rapido -->
+    <div class="card" style="margin-bottom: 24px; padding: 20px;">
+      <h2 style="font-size: 16px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-list" style="color: #FF6B35;"></i> Índice Rápido
+      </h2>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+        <a href="#processo" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #FFF4E6; border-radius: 8px; text-decoration: none; color: #FF6B35; font-size: 13px; font-weight: 600;">
+          <i class="fas fa-route"></i> Processo de Vendas
+        </a>
+        <a href="#diferenciais" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #FFF9E6; border-radius: 8px; text-decoration: none; color: #FFD700; font-size: 13px; font-weight: 600;">
+          <i class="fas fa-star"></i> Diferenciais
+        </a>
+        <a href="#scripts" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #FFF4E6; border-radius: 8px; text-decoration: none; color: #F59E0B; font-size: 13px; font-weight: 600;">
+          <i class="fas fa-comment-dots"></i> Scripts
+        </a>
+        <a href="#objecoes" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #FEE2E2; border-radius: 8px; text-decoration: none; color: #EF4444; font-size: 13px; font-weight: 600;">
+          <i class="fas fa-shield-alt"></i> Objeções
+        </a>
+        <a href="#tecnicas" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #DBEAFE; border-radius: 8px; text-decoration: none; color: #3B82F6; font-size: 13px; font-weight: 600;">
+          <i class="fas fa-brain"></i> Técnicas
+        </a>
+        <a href="#checklist" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #D1FAE5; border-radius: 8px; text-decoration: none; color: #10B981; font-size: 13px; font-weight: 600;">
+          <i class="fas fa-check-square"></i> Checklist
+        </a>
+      </div>
+    </div>
+
+    <!-- Processo de Vendas -->
+    <div id="processo" class="card" style="margin-bottom: 24px; padding: 24px;">
+      <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-route" style="color: #FF6B35;"></i> Processo de Vendas - 5 Etapas
+      </h2>
+
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <!-- Etapa 1: Prospecção -->
+        <div style="border-left: 4px solid #FF6B35; padding-left: 16px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 32px; height: 32px; background: #FF6B35; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px;">1</div>
+            <h3 style="font-size: 16px; font-weight: 700; margin: 0;">Prospecção e Qualificação</h3>
+          </div>
+          <div style="font-size: 13px; color: #666; margin-bottom: 12px;">Identificar leads qualificados e entender necessidades do cliente</div>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+            <div style="padding: 10px; background: #FFF4E6; border-radius: 6px; font-size: 12px;">
+              <i class="fas fa-check" style="color: #FF6B35;"></i> Verificar cobertura no endereço
+            </div>
+            <div style="padding: 10px; background: #FFF4E6; border-radius: 6px; font-size: 12px;">
+              <i class="fas fa-check" style="color: #FF6B35;"></i> Identificar concorrente atual
+            </div>
+            <div style="padding: 10px; background: #FFF4E6; border-radius: 6px; font-size: 12px;">
+              <i class="fas fa-check" style="color: #FF6B35;"></i> Entender uso principal (trabalho/streaming/jogos)
+            </div>
+            <div style="padding: 10px; background: #FFF4E6; border-radius: 6px; font-size: 12px;">
+              <i class="fas fa-check" style="color: #FF6B35;"></i> Mapear número de usuários/dispositivos
+            </div>
+          </div>
+        </div>
+
+        <!-- Etapa 2: Apresentação -->
+        <div style="border-left: 4px solid #FFD700; padding-left: 16px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 32px; height: 32px; background: #FFD700; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #1F2937; font-weight: 700; font-size: 14px;">2</div>
+            <h3 style="font-size: 16px; font-weight: 700; margin: 0;">Apresentação da Solução</h3>
+          </div>
+          <div style="font-size: 13px; color: #666; margin-bottom: 12px;">Mostrar como New Oeste resolve as dores do cliente</div>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+            <div style="padding: 10px; background: #FFF9E6; border-radius: 6px; font-size: 12px;">
+              <i class="fas fa-check" style="color: #FFD700;"></i> Apresentar plano ideal (usar quiz)
+            </div>
+            <div style="padding: 10px; background: #FFF9E6; border-radius: 6px; font-size: 12px;">
+              <i class="fas fa-check" style="color: #FFD700;"></i> Enfatizar fibra FTTH real
+            </div>
+            <div style="padding: 10px; background: #FFF9E6; border-radius: 6px; font-size: 12px;">
+              <i class="fas fa-check" style="color: #FFD700;"></i> Destacar empresa local de Foz
+            </div>
+            <div style="padding: 10px; background: #FFF9E6; border-radius: 6px; font-size: 12px;">
+              <i class="fas fa-check" style="color: #FFD700;"></i> Mencionar bônus (Watch+, WiFi+, App)
+            </div>
+          </div>
+        </div>
+
+        <!-- Etapa 3: Demonstração Técnica -->
+        <div style="border-left: 4px solid #F59E0B; padding-left: 16px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 32px; height: 32px; background: #F59E0B; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px;">3</div>
+            <h3 style="font-size: 16px; font-weight: 700; margin: 0;">Demonstração Técnica</h3>
+          </div>
+          <div style="font-size: 13px; color: #666; margin-bottom: 12px;">Explicar aspectos técnicos que diferenciam New Oeste</div>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+            <div style="padding: 10px; background: #FFF7ED; border-radius: 6px; font-size: 12px;">
+              <i class="fas fa-check" style="color: #F59E0B;"></i> Explicar fibra vs cabo/rádio
+            </div>
+            <div style="padding: 10px; background: #FFF7ED; border-radius: 6px; font-size: 12px;">
+              <i class="fas fa-check" style="color: #F59E0B;"></i> Mostrar velocidade simétrica
+            </div>
+            <div style="padding: 10px; background: #FFF7ED; border-radius: 6px; font-size: 12px;">
+              <i class="fas fa-check" style="color: #F59E0B;"></i> Demonstrar app New Oeste Connect
+            </div>
+            <div style="padding: 10px; background: #FFF7ED; border-radius: 6px; font-size: 12px;">
+              <i class="fas fa-check" style="color: #F59E0B;"></i> Explicar suporte 24/7
+            </div>
+          </div>
+        </div>
+
+        <!-- Etapa 4: Fechamento -->
+        <div style="border-left: 4px solid #EF4444; padding-left: 16px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 32px; height: 32px; background: #EF4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px;">4</div>
+            <h3 style="font-size: 16px; font-weight: 700; margin: 0;">Fechamento</h3>
+          </div>
+          <div style="font-size: 13px; color: #666; margin-bottom: 12px;">Superar objeções e fechar o contrato</div>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+            <div style="padding: 10px; background: #FEE2E2; border-radius: 6px; font-size: 12px;">
+              <i class="fas fa-check" style="color: #EF4444;"></i> Tratar objeções de preço
+            </div>
+            <div style="padding: 10px; background: #FEE2E2; border-radius: 6px; font-size: 12px;">
+              <i class="fas fa-check" style="color: #EF4444;"></i> Oferecer teste de velocidade
+            </div>
+            <div style="padding: 10px; background: #FEE2E2; border-radius: 6px; font-size: 12px;">
+              <i class="fas fa-check" style="color: #EF4444;"></i> Criar senso de urgência (promoção)
+            </div>
+            <div style="padding: 10px; background: #FEE2E2; border-radius: 6px; font-size: 12px;">
+              <i class="fas fa-check" style="color: #EF4444;"></i> Fechar data de instalação
+            </div>
+          </div>
+        </div>
+
+        <!-- Etapa 5: Pós-Venda -->
+        <div style="border-left: 4px solid #10B981; padding-left: 16px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 32px; height: 32px; background: #10B981; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px;">5</div>
+            <h3 style="font-size: 16px; font-weight: 700; margin: 0;">Pós-Venda e Follow-up</h3>
+          </div>
+          <div style="font-size: 13px; color: #666; margin-bottom: 12px;">Garantir instalação e satisfação do cliente</div>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+            <div style="padding: 10px; background: #D1FAE5; border-radius: 6px; font-size: 12px;">
+              <i class="fas fa-check" style="color: #10B981;"></i> Confirmar dados e agendamento
+            </div>
+            <div style="padding: 10px; background: #D1FAE5; border-radius: 6px; font-size: 12px;">
+              <i class="fas fa-check" style="color: #10B981;"></i> Acompanhar instalação técnica
+            </div>
+            <div style="padding: 10px; background: #D1FAE5; border-radius: 6px; font-size: 12px;">
+              <i class="fas fa-check" style="color: #10B981;"></i> Ligar 24h pós-instalação
+            </div>
+            <div style="padding: 10px; background: #D1FAE5; border-radius: 6px; font-size: 12px;">
+              <i class="fas fa-check" style="color: #10B981;"></i> Pedir indicações e avaliação
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Diferenciais New Oeste -->
+    <div id="diferenciais" class="card" style="margin-bottom: 24px; padding: 24px;">
+      <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-star" style="color: #FFD700;"></i> Diferenciais Competitivos
+      </h2>
+
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+        <div style="padding: 16px; background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(255,215,0,0.1)); border: 1px solid #FF6B35; border-radius: 12px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 40px; height: 40px; background: #FF6B35; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+              <i class="fas fa-network-wired" style="color: white; font-size: 18px;"></i>
+            </div>
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0;">Fibra FTTH Real</h3>
+          </div>
+          <p style="font-size: 13px; color: #666; margin: 0; line-height: 1.5;">Fibra óptica até dentro da casa do cliente. Não é cabo coaxial nem rádio. Velocidade real e estável 24/7.</p>
+        </div>
+
+        <div style="padding: 16px; background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(245,158,11,0.1)); border: 1px solid #FFD700; border-radius: 12px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 40px; height: 40px; background: #FFD700; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+              <i class="fas fa-map-marker-alt" style="color: #1F2937; font-size: 18px;"></i>
+            </div>
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0;">Empresa Local</h3>
+          </div>
+          <p style="font-size: 13px; color: #666; margin: 0; line-height: 1.5;">Nascemos em Foz do Iguaçu. Conhecemos a cidade e atendemos nossos vizinhos. Suporte rápido e próximo.</p>
+        </div>
+
+        <div style="padding: 16px; background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(248,113,113,0.1)); border: 1px solid #EF4444; border-radius: 12px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 40px; height: 40px; background: #EF4444; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+              <i class="fas fa-clock" style="color: white; font-size: 18px;"></i>
+            </div>
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0;">Instalação em 72h</h3>
+          </div>
+          <p style="font-size: 13px; color: #666; margin: 0; line-height: 1.5;">Cliente não espera semanas. Instalação agendada e realizada em até 3 dias úteis após aprovação.</p>
+        </div>
+
+        <div style="padding: 16px; background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(52,211,153,0.1)); border: 1px solid #10B981; border-radius: 12px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 40px; height: 40px; background: #10B981; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+              <i class="fas fa-headset" style="color: white; font-size: 18px;"></i>
+            </div>
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0;">Suporte 24/7</h3>
+          </div>
+          <p style="font-size: 13px; color: #666; margin: 0; line-height: 1.5;">Equipe técnica disponível todos os dias, 24 horas. Problema resolvido rápido, sem espera.</p>
+        </div>
+
+        <div style="padding: 16px; background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(129,140,248,0.1)); border: 1px solid #6366F1; border-radius: 12px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 40px; height: 40px; background: #6366F1; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+              <i class="fas fa-mobile-alt" style="color: white; font-size: 18px;"></i>
+            </div>
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0;">App New Oeste Connect</h3>
+          </div>
+          <p style="font-size: 13px; color: #666; margin: 0; line-height: 1.5;">App exclusivo com descontos em parceiros, teste de velocidade e gestão de conta na palma da mão.</p>
+        </div>
+
+        <div style="padding: 16px; background: linear-gradient(135deg, rgba(168,85,247,0.1), rgba(192,132,252,0.1)); border: 1px solid #A855F7; border-radius: 12px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 40px; height: 40px; background: #A855F7; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+              <i class="fas fa-dollar-sign" style="color: white; font-size: 18px;"></i>
+            </div>
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0;">Sem Taxas Ocultas</h3>
+          </div>
+          <p style="font-size: 13px; color: #666; margin: 0; line-height: 1.5;">Preço transparente. Instalação grátis, WiFi+ incluso, sem cobrança de visita técnica.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts Principais -->
+    <div id="scripts" class="card" style="margin-bottom: 24px; padding: 24px;">
+      <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-comment-dots" style="color: #FF6B35;"></i> Scripts Principais
+      </h2>
+
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <!-- Script: Abordagem Inicial -->
+        <div class="accordion">
+          <div class="accordion-header">
+            <div class="accordion-title">
+              <i class="fas fa-phone" style="color: #FF6B35; margin-right: 8px;"></i>
+              Abordagem Inicial - Primeiro Contato
+            </div>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="accordion-content">
+            <div style="background: #FFF4E6; padding: 16px; border-radius: 8px; border-left: 4px solid #FF6B35;">
+              <p style="margin: 0 0 12px 0; font-size: 13px; line-height: 1.6;">
+                "Olá [Nome], tudo bem? Aqui é [Seu Nome] da <strong>New Oeste Telecom</strong>, empresa de internet fibra óptica de Foz do Iguaçu.<br><br>
+                Vi que você está na [Bairro/Região] e tenho uma ótima notícia: acabamos de habilitar fibra FTTH na sua rua!<br><br>
+                Posso te fazer 3 perguntinhas rápidas para ver se vale a pena você conhecer nossas condições?"
+              </p>
+              <div style="background: white; padding: 12px; border-radius: 6px; margin-top: 12px;">
+                <strong style="font-size: 12px; color: #FF6B35;">OBJETIVO:</strong>
+                <p style="margin: 4px 0 0 0; font-size: 12px; color: #666;">Criar curiosidade e qualificar rapidamente sem ser invasivo</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Script: Qualificação -->
+        <div class="accordion">
+          <div class="accordion-header">
+            <div class="accordion-title">
+              <i class="fas fa-clipboard-check" style="color: #FFD700; margin-right: 8px;"></i>
+              Qualificação - 3 Perguntas Chave
+            </div>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="accordion-content">
+            <div style="background: #FFF9E6; padding: 16px; border-radius: 8px; border-left: 4px solid #FFD700;">
+              <div style="margin-bottom: 16px;">
+                <strong style="font-size: 13px;">1. Qual internet você usa hoje?</strong>
+                <p style="margin: 4px 0 0 0; font-size: 12px; color: #666;">→ Identificar concorrente e possíveis insatisfações</p>
+              </div>
+              <div style="margin-bottom: 16px;">
+                <strong style="font-size: 13px;">2. Quantas pessoas usam a internet em casa/empresa?</strong>
+                <p style="margin: 4px 0 0 0; font-size: 12px; color: #666;">→ Dimensionar plano ideal</p>
+              </div>
+              <div style="margin-bottom: 16px;">
+                <strong style="font-size: 13px;">3. Vocês usam mais para trabalho, streaming ou jogos?</strong>
+                <p style="margin: 4px 0 0 0; font-size: 12px; color: #666;">→ Personalizar argumentação</p>
+              </div>
+              <div style="background: white; padding: 12px; border-radius: 6px; margin-top: 12px;">
+                <strong style="font-size: 12px; color: #FFD700;">DICA:</strong>
+                <p style="margin: 4px 0 0 0; font-size: 12px; color: #666;">Use o quiz da Visão Geral para facilitar essa conversa!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Script: Apresentação do Plano -->
+        <div class="accordion">
+          <div class="accordion-header">
+            <div class="accordion-title">
+              <i class="fas fa-presentation" style="color: #F59E0B; margin-right: 8px;"></i>
+              Apresentação do Plano
+            </div>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="accordion-content">
+            <div style="background: #FFF7ED; padding: 16px; border-radius: 8px; border-left: 4px solid #F59E0B;">
+              <p style="margin: 0 0 12px 0; font-size: 13px; line-height: 1.6;">
+                "Perfeito! Pelo que você me contou, o plano ideal para você é o <strong>[NOME DO PLANO]</strong> de <strong>[VELOCIDADE]</strong>.<br><br>
+                Olha só o que está incluso:<br>
+                • Fibra óptica FTTH direto na sua casa<br>
+                • Velocidade real de [X] MEGA (não é até, é garantido!)<br>
+                • Roteador WiFi+ incluso<br>
+                • Instalação completamente GRÁTIS<br>
+                • Suporte 24/7 com equipe local<br>
+                • App New Oeste Connect com descontos<br><br>
+                E o melhor: <strong>R$ [PREÇO]/mês</strong>. [Se tiver promoção: "E neste mês ainda temos uma condição especial!"]<br><br>
+                A instalação sai em até 72 horas. Posso agendar para você?"
+              </p>
+              <div style="background: white; padding: 12px; border-radius: 6px; margin-top: 12px;">
+                <strong style="font-size: 12px; color: #F59E0B;">IMPORTANTE:</strong>
+                <p style="margin: 4px 0 0 0; font-size: 12px; color: #666;">Sempre mencionar que é fibra FTTH real, não cabo ou rádio</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Script: Fechamento -->
+        <div class="accordion">
+          <div class="accordion-header">
+            <div class="accordion-title">
+              <i class="fas fa-check-circle" style="color: #10B981; margin-right: 8px;"></i>
+              Fechamento - Assumir a Venda
+            </div>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="accordion-content">
+            <div style="background: #D1FAE5; padding: 16px; border-radius: 8px; border-left: 4px solid #10B981;">
+              <p style="margin: 0 0 12px 0; font-size: 13px; line-height: 1.6;">
+                <strong>Técnica do fechamento assumido:</strong><br><br>
+                "Ótimo! Então vou te colocar aqui para instalação na [Terça/Quinta/etc]. Você prefere período da manhã ou tarde?"<br><br>
+                <strong>OU:</strong><br><br>
+                "Perfeito! Vou precisar de alguns dados para agilizar sua instalação: CPF, RG e um comprovante de endereço. Pode ser conta de luz ou água. Você tem aí?"<br><br>
+                <strong>Frase de urgência:</strong><br>
+                "Ah, e só lembrando: essa promoção de [BENEFÍCIO] é válida só até [DATA]. Por isso é bom a gente agendar logo para você não perder!"
+              </p>
+              <div style="background: white; padding: 12px; border-radius: 6px; margin-top: 12px;">
+                <strong style="font-size: 12px; color: #10B981;">MINDSET:</strong>
+                <p style="margin: 4px 0 0 0; font-size: 12px; color: #666;">Não pergunte "quer fechar?". Assuma que o cliente já decidiu e parta para os próximos passos!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Objeções Mais Comuns -->
+    <div id="objecoes" class="card" style="margin-bottom: 24px; padding: 24px;">
+      <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-shield-alt" style="color: #EF4444;"></i> Objeções Mais Comuns
+      </h2>
+
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <!-- Objeção 1: Preço -->
+        <div style="border: 1px solid #FEE2E2; border-radius: 10px; overflow: hidden;">
+          <div style="background: #FEE2E2; padding: 12px; display: flex; align-items: center; gap: 10px;">
+            <i class="fas fa-dollar-sign" style="color: #EF4444;"></i>
+            <strong style="font-size: 14px;">"Está muito caro"</strong>
+          </div>
+          <div style="padding: 16px; background: white;">
+            <p style="margin: 0 0 10px 0; font-size: 13px; color: #666; line-height: 1.5;">
+              <strong style="color: #EF4444;">Resposta:</strong><br>
+              "Entendo! E eu concordo que tem opções mais baratas no mercado. Mas deixa eu te explicar uma coisa importante: essas empresas mais baratas geralmente são rádio ou cabo coaxial. A internet cai quando chove, a velocidade não é real.<br><br>
+              A New Oeste é <strong>fibra FTTH</strong> - a fibra vai até dentro da sua casa. É a mesma tecnologia que grandes empresas usam. Velocidade estável 24/7, não importa se está chovendo ou se o vizinho está usando.<br><br>
+              Pensa comigo: você vai economizar R$ 20-30 reais por mês mas vai ficar nervoso toda vez que cair ou travar? Vale a pena? Além disso, a instalação é grátis e o roteador WiFi+ já está incluso."
+            </p>
+            <div style="background: #FFF4E6; padding: 10px; border-radius: 6px; font-size: 12px; margin-top: 12px;">
+              <strong>TÉCNICA:</strong> Educar sobre diferença técnica + mostrar custo-benefício
+            </div>
+          </div>
+        </div>
+
+        <!-- Objeção 2: Já tenho internet -->
+        <div style="border: 1px solid #FEE2E2; border-radius: 10px; overflow: hidden;">
+          <div style="background: #FEE2E2; padding: 12px; display: flex; align-items: center; gap: 10px;">
+            <i class="fas fa-wifi" style="color: #EF4444;"></i>
+            <strong style="font-size: 14px;">"Já tenho internet e estou satisfeito"</strong>
+          </div>
+          <div style="padding: 16px; background: white;">
+            <p style="margin: 0 0 10px 0; font-size: 13px; color: #666; line-height: 1.5;">
+              <strong style="color: #EF4444;">Resposta:</strong><br>
+              "Que ótimo que você está satisfeito! Posso te fazer uma pergunta? Você já testou a velocidade real da sua internet? Muitas vezes contratamos 200 mega mas na prática chega só 80-100.<br><br>
+              A New Oeste tem uma diferença: nossa velocidade é <strong>garantida</strong>. Se você contratar 800 mega, você vai ter 800 mega reais. E como somos de Foz, qualquer problema é resolvido rápido - não precisa esperar técnico de Curitiba ou São Paulo.<br><br>
+              Sem compromisso: que tal eu agendar uma instalação? Você usa por 7 dias e compara com a sua internet atual. Se não gostar, pode cancelar sem custo. O que acha?"
+            </p>
+            <div style="background: #FFF4E6; padding: 10px; border-radius: 6px; font-size: 12px; margin-top: 12px;">
+              <strong>TÉCNICA:</strong> Criar dúvida sobre qualidade atual + oferecer teste sem risco
+            </div>
+          </div>
+        </div>
+
+        <!-- Objeção 3: Fidelização -->
+        <div style="border: 1px solid #FEE2E2; border-radius: 10px; overflow: hidden;">
+          <div style="background: #FEE2E2; padding: 12px; display: flex; align-items: center; gap: 10px;">
+            <i class="fas fa-lock" style="color: #EF4444;"></i>
+            <strong style="font-size: 14px;">"Não quero ficar preso em contrato de fidelidade"</strong>
+          </div>
+          <div style="padding: 16px; background: white;">
+            <p style="margin: 0 0 10px 0; font-size: 13px; color: #666; line-height: 1.5;">
+              <strong style="color: #EF4444;">Resposta:</strong><br>
+              "Perfeito, eu te entendo completamente! A boa notícia: a New Oeste trabalha com fidelidade de apenas <strong>12 meses</strong>, que é o padrão do mercado para amortizar a instalação gratuita.<br><br>
+              Mas olha só: se você se fidelizou com outra empresa, é porque eles te ofereceram algum benefício, certo? Aqui é a mesma coisa - você ganha instalação grátis, WiFi+ incluso e preço promocional.<br><br>
+              E pensa: se a internet é boa mesmo, você não vai querer trocar. Nossos clientes ficam em média 3-4 anos conosco, não por contrato, mas porque a qualidade é diferenciada. O contrato é só uma formalidade."
+            </p>
+            <div style="background: #FFF4E6; padding: 10px; border-radius: 6px; font-size: 12px; margin-top: 12px;">
+              <strong>TÉCNICA:</strong> Minimizar importância da fidelidade + justificar com benefícios recebidos
+            </div>
+          </div>
+        </div>
+
+        <!-- Objeção 4: Vou pensar -->
+        <div style="border: 1px solid #FEE2E2; border-radius: 10px; overflow: hidden;">
+          <div style="background: #FEE2E2; padding: 12px; display: flex; align-items: center; gap: 10px;">
+            <i class="fas fa-clock" style="color: #EF4444;"></i>
+            <strong style="font-size: 14px;">"Vou pensar e te dou um retorno"</strong>
+          </div>
+          <div style="padding: 16px; background: white;">
+            <p style="margin: 0 0 10px 0; font-size: 13px; color: #666; line-height: 1.5;">
+              <strong style="color: #EF4444;">Resposta:</strong><br>
+              "Claro, super tranquilo! Só para eu te ajudar melhor: tem alguma dúvida específica que ficou? Ou você quer comparar com outra empresa?<br><br>
+              [Se disser que vai comparar]<br>
+              'Perfeito! Deixa eu te dar uma dica: quando for comparar, pergunta se é fibra FTTH real ou se é cabo/rádio. E pergunta também se a velocidade é garantida ou se é 'até'. Faz muita diferença!<br><br>
+              Ah, e só um aviso: essa promoção de [BENEFÍCIO] vale só até [DATA]. Se você decidir depois, pode ser que não tenha mais essa condição. Por isso é bom garantir a sua vaga agora e depois você decide se fica ou não. O que acha?'"
+            </p>
+            <div style="background: #FFF4E6; padding: 10px; border-radius: 6px; font-size: 12px; margin-top: 12px;">
+              <strong>TÉCNICA:</strong> Descobrir objeção real + criar senso de urgência
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Técnicas de Vendas -->
+    <div id="tecnicas" class="card" style="margin-bottom: 24px; padding: 24px;">
+      <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-brain" style="color: #3B82F6;"></i> Técnicas e Gatilhos Mentais
+      </h2>
+
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+        <div style="padding: 16px; border: 2px solid #DBEAFE; border-radius: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <div style="width: 36px; height: 36px; background: #3B82F6; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+              <i class="fas fa-bolt" style="color: white; font-size: 16px;"></i>
+            </div>
+            <strong style="font-size: 14px;">Escassez</strong>
+          </div>
+          <p style="font-size: 12px; color: #666; margin: 0 0 8px 0;">Criar senso de urgência sobre disponibilidade ou promoção</p>
+          <div style="background: #EFF6FF; padding: 10px; border-radius: 6px; font-size: 11px; font-style: italic;">
+            "Temos só 5 vagas para instalação esta semana no seu bairro..."
+          </div>
+        </div>
+
+        <div style="padding: 16px; border: 2px solid #DBEAFE; border-radius: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <div style="width: 36px; height: 36px; background: #3B82F6; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+              <i class="fas fa-users" style="color: white; font-size: 16px;"></i>
+            </div>
+            <strong style="font-size: 14px;">Prova Social</strong>
+          </div>
+          <p style="font-size: 12px; color: #666; margin: 0 0 8px 0;">Mostrar que outros clientes já confiam</p>
+          <div style="background: #EFF6FF; padding: 10px; border-radius: 6px; font-size: 11px; font-style: italic;">
+            "Mais de 3.000 famílias em Foz já usam New Oeste..."
+          </div>
+        </div>
+
+        <div style="padding: 16px; border: 2px solid #DBEAFE; border-radius: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <div style="width: 36px; height: 36px; background: #3B82F6; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+              <i class="fas fa-gift" style="color: white; font-size: 16px;"></i>
+            </div>
+            <strong style="font-size: 14px;">Bônus</strong>
+          </div>
+          <p style="font-size: 12px; color: #666; margin: 0 0 8px 0;">Destacar o que vem incluso sem custo adicional</p>
+          <div style="background: #EFF6FF; padding: 10px; border-radius: 6px; font-size: 11px; font-style: italic;">
+            "Instalação grátis + WiFi+ incluso + Watch+ com 30 canais..."
+          </div>
+        </div>
+
+        <div style="padding: 16px; border: 2px solid #DBEAFE; border-radius: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <div style="width: 36px; height: 36px; background: #3B82F6; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+              <i class="fas fa-map-marker-alt" style="color: white; font-size: 16px;"></i>
+            </div>
+            <strong style="font-size: 14px;">Proximidade</strong>
+          </div>
+          <p style="font-size: 12px; color: #666; margin: 0 0 8px 0;">Reforçar que somos empresa local de Foz</p>
+          <div style="background: #EFF6FF; padding: 10px; border-radius: 6px; font-size: 11px; font-style: italic;">
+            "Somos daqui de Foz. Se der problema, resolvemos rápido..."
+          </div>
+        </div>
+
+        <div style="padding: 16px; border: 2px solid #DBEAFE; border-radius: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <div style="width: 36px; height: 36px; background: #3B82F6; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+              <i class="fas fa-chart-line" style="color: white; font-size: 16px;"></i>
+            </div>
+            <strong style="font-size: 14px;">Comparação</strong>
+          </div>
+          <p style="font-size: 12px; color: #666; margin: 0 0 8px 0;">Mostrar diferença técnica vs concorrentes</p>
+          <div style="background: #EFF6FF; padding: 10px; border-radius: 6px; font-size: 11px; font-style: italic;">
+            "Fibra FTTH vs cabo coaxial: velocidade real vs 'até'..."
+          </div>
+        </div>
+
+        <div style="padding: 16px; border: 2px solid #DBEAFE; border-radius: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <div style="width: 36px; height: 36px; background: #3B82F6; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+              <i class="fas fa-shield-alt" style="color: white; font-size: 16px;"></i>
+            </div>
+            <strong style="font-size: 14px;">Garantia</strong>
+          </div>
+          <p style="font-size: 12px; color: #666; margin: 0 0 8px 0;">Reduzir risco percebido pelo cliente</p>
+          <div style="background: #EFF6FF; padding: 10px; border-radius: 6px; font-size: 11px; font-style: italic;">
+            "Se não gostar em 7 dias, cancelamos sem custo..."
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Checklist de Vendas -->
+    <div id="checklist" class="card" style="margin-bottom: 24px; padding: 24px;">
+      <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-check-square" style="color: #10B981;"></i> Checklist de Vendas
+      </h2>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <!-- Checklist Pré-Venda -->
+        <div>
+          <h3 style="font-size: 15px; font-weight: 700; margin: 0 0 12px 0; color: #FF6B35;">
+            <i class="fas fa-clipboard-list"></i> Pré-Venda
+          </h3>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <label style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #F9FAFB; border-radius: 6px; cursor: pointer; font-size: 13px;">
+              <input type="checkbox" style="width: 18px; height: 18px;">
+              Verificar cobertura no endereço
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #F9FAFB; border-radius: 6px; cursor: pointer; font-size: 13px;">
+              <input type="checkbox" style="width: 18px; height: 18px;">
+              Identificar concorrente atual
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #F9FAFB; border-radius: 6px; cursor: pointer; font-size: 13px;">
+              <input type="checkbox" style="width: 18px; height: 18px;">
+              Fazer 3 perguntas de qualificação
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #F9FAFB; border-radius: 6px; cursor: pointer; font-size: 13px;">
+              <input type="checkbox" style="width: 18px; height: 18px;">
+              Usar quiz para recomendar plano
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #F9FAFB; border-radius: 6px; cursor: pointer; font-size: 13px;">
+              <input type="checkbox" style="width: 18px; height: 18px;">
+              Explicar fibra FTTH vs cabo/rádio
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #F9FAFB; border-radius: 6px; cursor: pointer; font-size: 13px;">
+              <input type="checkbox" style="width: 18px; height: 18px;">
+              Destacar empresa local de Foz
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #F9FAFB; border-radius: 6px; cursor: pointer; font-size: 13px;">
+              <input type="checkbox" style="width: 18px; height: 18px;">
+              Mencionar bônus (WiFi+, Watch+, App)
+            </label>
+          </div>
+        </div>
+
+        <!-- Checklist Fechamento -->
+        <div>
+          <h3 style="font-size: 15px; font-weight: 700; margin: 0 0 12px 0; color: #10B981;">
+            <i class="fas fa-handshake"></i> Fechamento
+          </h3>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <label style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #F9FAFB; border-radius: 6px; cursor: pointer; font-size: 13px;">
+              <input type="checkbox" style="width: 18px; height: 18px;">
+              Tratar todas objeções
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #F9FAFB; border-radius: 6px; cursor: pointer; font-size: 13px;">
+              <input type="checkbox" style="width: 18px; height: 18px;">
+              Criar senso de urgência
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #F9FAFB; border-radius: 6px; cursor: pointer; font-size: 13px;">
+              <input type="checkbox" style="width: 18px; height: 18px;">
+              Confirmar CPF e RG do titular
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #F9FAFB; border-radius: 6px; cursor: pointer; font-size: 13px;">
+              <input type="checkbox" style="width: 18px; height: 18px;">
+              Solicitar comprovante de endereço
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #F9FAFB; border-radius: 6px; cursor: pointer; font-size: 13px;">
+              <input type="checkbox" style="width: 18px; height: 18px;">
+              Agendar data e período instalação
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #F9FAFB; border-radius: 6px; cursor: pointer; font-size: 13px;">
+              <input type="checkbox" style="width: 18px; height: 18px;">
+              Confirmar telefone para contato
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; padding: 10px; background: #F9FAFB; border-radius: 6px; cursor: pointer; font-size: 13px;">
+              <input type="checkbox" style="width: 18px; height: 18px;">
+              Cadastrar no sistema/CRM
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Links Úteis -->
+    <div class="card" style="padding: 24px;">
+      <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-link" style="color: #6366F1;"></i> Links Úteis
+      </h2>
+
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+        <a href="/playbook/scripts${tenantQuery}" style="display: flex; align-items: center; gap: 12px; padding: 14px; background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 8px; text-decoration: none; color: inherit;">
+          <i class="fas fa-comment-dots" style="color: #FF6B35; font-size: 18px;"></i>
+          <div>
+            <div style="font-weight: 600; font-size: 13px;">Scripts Completos</div>
+            <div style="font-size: 11px; color: #666;">Todas as mensagens prontas</div>
+          </div>
+        </a>
+
+        <a href="/playbook/objecoes${tenantQuery}" style="display: flex; align-items: center; gap: 12px; padding: 14px; background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 8px; text-decoration: none; color: inherit;">
+          <i class="fas fa-shield-alt" style="color: #EF4444; font-size: 18px;"></i>
+          <div>
+            <div style="font-weight: 600; font-size: 13px;">Tratamento de Objeções</div>
+            <div style="font-size: 11px; color: #666;">Como responder dúvidas</div>
+          </div>
+        </a>
+
+        <a href="/clientes${tenantQuery}" style="display: flex; align-items: center; gap: 12px; padding: 14px; background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 8px; text-decoration: none; color: inherit;">
+          <i class="fas fa-users" style="color: #10B981; font-size: 18px;"></i>
+          <div>
+            <div style="font-weight: 600; font-size: 13px;">Pipeline de Vendas</div>
+            <div style="font-size: 11px; color: #666;">Gerencie seus clientes</div>
+          </div>
+        </a>
+
+        <a href="/${tenantQuery}" style="display: flex; align-items: center; gap: 12px; padding: 14px; background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 8px; text-decoration: none; color: inherit;">
+          <i class="fas fa-home" style="color: #FFD700; font-size: 18px;"></i>
+          <div>
+            <div style="font-weight: 600; font-size: 13px;">Visão Geral</div>
+            <div style="font-size: 11px; color: #666;">Voltar ao início</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <script>
+      // Accordion functionality
+      document.querySelectorAll('.accordion-header').forEach(header => {
+        header.addEventListener('click', () => {
+          const accordion = header.parentElement;
+          const content = accordion.querySelector('.accordion-content');
+          const icon = header.querySelector('.fa-chevron-down');
+
+          const isOpen = content.style.maxHeight;
+
+          // Close all accordions
+          document.querySelectorAll('.accordion-content').forEach(c => {
+            c.style.maxHeight = null;
+          });
+          document.querySelectorAll('.accordion-header .fa-chevron-down').forEach(i => {
+            i.style.transform = 'rotate(0deg)';
+          });
+
+          // Open clicked accordion if it was closed
+          if (!isOpen) {
+            content.style.maxHeight = content.scrollHeight + 'px';
+            icon.style.transform = 'rotate(180deg)';
+          }
+        });
+      });
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    </script>
+  `;
 }
 
 function renderPlaybookMain() {
