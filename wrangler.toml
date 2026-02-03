@@ -2,9 +2,10 @@ name = "playbook-vendas-paper"
 main = "src/index.js"
 compatibility_date = "2024-01-01"
 
-# Custom domain
+# Custom domains
 routes = [
-  { pattern = "vendas.papervines.digital", custom_domain = true }
+  { pattern = "vendas.papervines.digital", custom_domain = true },
+  { pattern = "playbook.newoeste.com.br", custom_domain = true }
 ]
 
 # Variaveis de ambiente

@@ -20,6 +20,13 @@ import * as CS_OBJECOES from './tenants/cabeloesaude/objecoes.js';
 import * as CS_SCRIPTS from './tenants/cabeloesaude/scripts.js';
 import * as CS_PRECOS from './tenants/cabeloesaude/precos.js';
 
+// New Oeste
+import { TENANT_CONFIG as NO_CONFIG } from './tenants/newoeste/config.js';
+import * as NO_PLAYBOOK from './tenants/newoeste/playbook.js';
+import * as NO_OBJECOES from './tenants/newoeste/objecoes.js';
+import * as NO_SCRIPTS from './tenants/newoeste/scripts.js';
+import * as NO_PRECOS from './tenants/newoeste/precos.js';
+
 // ========================================
 // REGISTRO DE TENANTS
 // ========================================
@@ -40,6 +47,14 @@ const TENANTS_DATA = {
     scripts: CS_SCRIPTS,
     precos: CS_PRECOS,
     agentes: null
+  },
+  newoeste: {
+    config: NO_CONFIG,
+    playbook: NO_PLAYBOOK,
+    objecoes: NO_OBJECOES,
+    scripts: NO_SCRIPTS,
+    precos: NO_PRECOS,
+    agentes: null
   }
 };
 
@@ -49,7 +64,8 @@ const TENANTS_REGISTRY = {
     id: 'papervines',
     nome: 'Paper Vines',
     status: 'ativo',
-    path: './tenants/papervines'
+    path: './tenants/papervines',
+    dominio: 'vendas.papervines.digital'
   },
   cabeloesaude: {
     id: 'cabeloesaude',
@@ -58,6 +74,14 @@ const TENANTS_REGISTRY = {
     status: 'ativo',
     path: './tenants/cabeloesaude',
     dominio: 'vendas.cabeloesaude.com.br'
+  },
+  newoeste: {
+    id: 'newoeste',
+    nome: 'New Oeste',
+    nomeCompleto: 'New Oeste Telecomunicacoes',
+    status: 'ativo',
+    path: './tenants/newoeste',
+    dominio: 'playbook.newoeste.com.br'
   }
 };
 
@@ -78,16 +102,31 @@ export function getTenantFromRequest(request) {
     return headerTenant;
   }
 
-  // Opcao 2: Subdominio (tenant.dominio.com)
+  // Opcao 2: Dominio completo ou Subdominio
+  // Verificar dominio completo primeiro
+  if (url.hostname === 'vendas.papervines.digital') {
+    return 'papervines';
+  }
+  if (url.hostname === 'vendas.cabeloesaude.com.br') {
+    return 'cabeloesaude';
+  }
+  if (url.hostname === 'playbook.newoeste.com.br') {
+    return 'newoeste';
+  }
+
+  // Verificar subdominio
   const hostParts = url.hostname.split('.');
   if (hostParts.length >= 3) {
     const subdomain = hostParts[0];
     // Mapear subdominios para tenants
     if (subdomain === 'vendas' && url.hostname.includes('papervines')) {
-      // Continua para verificar query param
+      return 'papervines';
     }
     if (subdomain === 'vendas' && url.hostname.includes('cabeloesaude')) {
       return 'cabeloesaude';
+    }
+    if (subdomain === 'playbook' && url.hostname.includes('newoeste')) {
+      return 'newoeste';
     }
     if (TENANTS_REGISTRY[subdomain]) {
       return subdomain;
