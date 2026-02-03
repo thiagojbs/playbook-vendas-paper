@@ -978,14 +978,44 @@ export const TEMPLATES_SEGMENTO = {
 // ========================================
 
 export const DICAS_COMUNICACAO = [
-  'Use o nome do cliente frequentemente',
-  'Fale com entusiasmo e energia',
-  'Escute mais do que fala (regra 70/30)',
-  'Faca perguntas abertas',
-  'Confirme entendimento constantemente',
-  'Use pausas estrategicas',
-  'Espelhe a linguagem do cliente',
-  'Seja sempre verdadeiro e transparente',
-  'Nao prometa o que nao pode cumprir',
-  'Trate cada cliente como unico'
+  {
+    titulo: 'Melhores Horarios',
+    icone: 'clock',
+    dicas: [
+      'Segunda a sexta: 9h-11h e 14h-17h',
+      'Evite horario de almoco (12h-13h)',
+      'Responda em ate 2h durante negociacao',
+      'Finais de semana: apenas urgencias'
+    ]
+  },
+  {
+    titulo: 'Tom de Voz',
+    icone: 'comments',
+    dicas: [
+      'Seja profissional mas acessivel',
+      'Use emojis com moderacao',
+      'Fale com energia e entusiasmo',
+      'Use o nome do cliente frequentemente'
+    ]
+  },
+  {
+    titulo: 'Tecnicas de Vendas',
+    icone: 'lightbulb',
+    dicas: [
+      'Escute mais do que fala (regra 70/30)',
+      'Faca perguntas abertas',
+      'Confirme entendimento constantemente',
+      'Espelhe a linguagem do cliente'
+    ]
+  },
+  {
+    titulo: 'O que Evitar',
+    icone: 'ban',
+    dicas: [
+      'Mensagens muito longas',
+      'Pressao excessiva',
+      'Promessas que nao pode cumprir',
+      'Falar mal da concorrencia'
+    ]
+  }
 ];
