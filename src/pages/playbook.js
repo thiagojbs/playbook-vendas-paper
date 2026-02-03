@@ -52,6 +52,8 @@ export function renderPlaybook(path, tenantData = {}) {
     // Renderizar scripts especifico do tenant
     if (tenantId === 'cabeloesaude') {
       content = renderScriptsCabeloeSaude();
+    } else if (tenantId === 'newoeste') {
+      content = renderScriptsNewOeste();
     } else {
       content = renderScripts();
     }
@@ -752,6 +754,59 @@ function renderPlaybookNewOeste() {
         });
       });
     </script>
+  `;
+}
+
+
+// ========================================
+// NEW OESTE - Scripts e Mensagens Prontas  
+// ========================================
+function renderScriptsNewOeste() {
+  const tenantQuery = tenantConfig.id ? `?tenant=${tenantConfig.id}` : '';
+  
+  return `
+    <div style="background: linear-gradient(135deg, #FF6B35 0%, #FFD700 50%, #FF8C42 100%); border-radius: 16px; padding: 32px; margin-bottom: 24px; color: white;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-comment-dots" style="font-size: 22px;"></i>
+        </div>
+        <div>
+          <h1 style="font-size: 24px; font-weight: 800; margin: 0;">Scripts e Mensagens Prontas</h1>
+          <p style="font-size: 14px; margin: 0; opacity: 0.95;">Templates otimizados para WhatsApp e vendas</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="padding: 24px;">
+      <p style="font-size: 14px; color: #666; margin: 0;">Página de Scripts New Oeste em construção. Em breve conteúdo completo de telecom.</p>
+    </div>
+  `;
+}
+
+
+// ========================================
+// NEW OESTE - Scripts e Mensagens Prontas
+// ========================================
+function renderScriptsNewOeste() {
+  const tenantQuery = tenantConfig.id ? `?tenant=${tenantConfig.id}` : '';
+  
+  return `
+    <div style="background: linear-gradient(135deg, #FF6B35 0%, #FFD700 50%, #FF8C42 100%); border-radius: 16px; padding: 32px; margin-bottom: 24px; color: white;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-comment-dots" style="font-size: 22px;"></i>
+        </div>
+        <div>
+          <h1 style="font-size: 24px; font-weight: 800; margin: 0;">Scripts e Mensagens Prontas</h1>
+          <p style="font-size: 14px; margin: 0; opacity: 0.95;">Templates para WhatsApp, email e telefone - New Oeste Telecom</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="padding: 24px; text-align: center;">
+      <p style="font-size: 16px; color: #666; margin: 0;">🚧 Página de Scripts em construção</p>
+      <p style="font-size: 14px; color: #999; margin: 8px 0 0 0;">Em breve: Scripts completos de WhatsApp, Email e Telefone focados em Telecom</p>
+    </div>
   `;
 }
 
