@@ -10,6 +10,10 @@ export function renderHome(tenantData = {}) {
     return renderHomeCabeloeSaude(tenantData);
   }
 
+  if (tenantId === 'newoeste') {
+    return renderHomeNewOeste(tenantData);
+  }
+
   // Default: Paper Vines
   return renderHomePaperVines(tenantData);
 }
@@ -320,6 +324,334 @@ function renderHomeCabeloeSaude(tenantData) {
     </div>
   `;
   return layout('Visao Geral', content, 'home', config);
+}
+
+// ========================================
+// HOME PAGE - NEW OESTE TELECOM
+// ========================================
+function renderHomeNewOeste(tenantData) {
+  const config = tenantData.config || {};
+  const temDominioPersonalizado = config.dominio && config.dominio !== '';
+  const tenantQuery = temDominioPersonalizado ? '' : '?tenant=newoeste';
+
+  const content = `
+    <!-- Hero Section -->
+    <div style="background: linear-gradient(135deg, #FF6B35 0%, #FFD700 100%); border-radius: 20px; padding: 48px; margin-bottom: 32px; position: relative; overflow: hidden;">
+      <div style="position: absolute; top: -50px; right: -50px; width: 250px; height: 250px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+      <div style="position: absolute; bottom: -80px; left: -80px; width: 200px; height: 200px; background: rgba(255,255,255,0.08); border-radius: 50%;"></div>
+
+      <div style="position: relative; z-index: 1;">
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+          <div style="width: 64px; height: 64px; background: rgba(255,255,255,0.25); border-radius: 18px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
+            <i class="fas fa-wifi" style="font-size: 32px; color: white;"></i>
+          </div>
+          <div>
+            <h1 style="color: white; font-size: 36px; font-weight: 800; margin: 0; text-shadow: 0 2px 10px rgba(0,0,0,0.1);">Playbook de Vendas</h1>
+            <p style="color: rgba(255,255,255,0.95); margin: 4px 0 0 0; font-size: 18px; font-weight: 500;">New Oeste Telecom - Internet Fibra Óptica</p>
+          </div>
+        </div>
+
+        <p style="color: rgba(255,255,255,0.95); font-size: 16px; max-width: 700px; line-height: 1.7; margin-bottom: 28px; font-weight: 500;">
+          Sistema completo de vendas para internet de ultra velocidade. Scripts prontos, tratamento de objeções, calculadora de planos e gestão do pipeline comercial.
+        </p>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="/playbook${tenantQuery}" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; background: white; color: #FF6B35; border-radius: 12px; font-weight: 700; text-decoration: none; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+            <i class="fas fa-book-open"></i> Ver Playbook Completo
+          </a>
+          <a href="/calculadora${tenantQuery}" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; background: rgba(255,255,255,0.2); color: white; border-radius: 12px; font-weight: 700; text-decoration: none; border: 2px solid rgba(255,255,255,0.4); backdrop-filter: blur(10px);">
+            <i class="fas fa-calculator"></i> Calcular Plano Ideal
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Rápidas -->
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px;">
+      <div style="background: white; border: 2px solid #FFE5D9; border-radius: 16px; padding: 24px; text-align: center;">
+        <div style="font-size: 32px; font-weight: 800; color: #FF6B35; margin-bottom: 8px;">3</div>
+        <div style="font-size: 13px; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Planos Residenciais</div>
+        <div style="margin-top: 8px; font-size: 12px; color: #999;">De 800 a 950 Mega</div>
+      </div>
+
+      <div style="background: white; border: 2px solid #FFF4E6; border-radius: 16px; padding: 24px; text-align: center;">
+        <div style="font-size: 32px; font-weight: 800; color: #FFD700; margin-bottom: 8px;">4</div>
+        <div style="font-size: 13px; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Planos Empresariais</div>
+        <div style="margin-top: 8px; font-size: 12px; color: #999;">Com SLA e IP fixo</div>
+      </div>
+
+      <div style="background: white; border: 2px solid #FFE5D9; border-radius: 16px; padding: 24px; text-align: center;">
+        <div style="font-size: 32px; font-weight: 800; color: #FF6B35; margin-bottom: 8px;">72h</div>
+        <div style="font-size: 13px; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Instalação Rápida</div>
+        <div style="margin-top: 8px; font-size: 12px; color: #999;">Até 3 dias úteis</div>
+      </div>
+
+      <div style="background: white; border: 2px solid #FFF4E6; border-radius: 16px; padding: 24px; text-align: center;">
+        <div style="font-size: 32px; font-weight: 800; color: #FFD700; margin-bottom: 8px;">24/7</div>
+        <div style="font-size: 13px; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Suporte Local</div>
+        <div style="margin-top: 8px; font-size: 12px; color: #999;">Atendimento rápido</div>
+      </div>
+    </div>
+
+    <!-- Planos em Destaque -->
+    <div style="margin-bottom: 32px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <i class="fas fa-star" style="color: #FF6B35; font-size: 22px;"></i>
+          <h2 style="font-size: 22px; font-weight: 700; margin: 0;">Planos Mais Vendidos</h2>
+        </div>
+        <a href="/playbook/precos${tenantQuery}" style="color: #FF6B35; font-weight: 600; text-decoration: none; font-size: 14px;">
+          Ver todos os planos <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+        <!-- Plano PRIME -->
+        <div style="background: white; border: 3px solid #FF6B35; border-radius: 16px; padding: 28px; position: relative; box-shadow: 0 4px 12px rgba(255, 107, 53, 0.15);">
+          <div style="position: absolute; top: -12px; right: 20px; background: #FF6B35; color: white; padding: 6px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">PROMOÇÃO</div>
+
+          <div style="text-align: center; margin-bottom: 20px;">
+            <div style="font-size: 14px; font-weight: 700; color: #FF6B35; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Plano Prime</div>
+            <div style="font-size: 48px; font-weight: 800; color: #FF6B35; line-height: 1;">800</div>
+            <div style="font-size: 16px; font-weight: 600; color: #666; margin-bottom: 16px;">MEGA</div>
+
+            <div style="background: #FFF4E6; padding: 16px; border-radius: 12px;">
+              <div style="text-decoration: line-through; color: #999; font-size: 13px; margin-bottom: 4px;">De R$ 119,90</div>
+              <div style="font-size: 14px; color: #666; font-weight: 600;">POR</div>
+              <div style="font-size: 36px; font-weight: 800; color: #FF6B35;">
+                R$ <span style="font-size: 48px;">69</span>,90
+              </div>
+              <div style="font-size: 12px; color: #666; margin-top: 4px;">/mês em Fev e Mar 2026</div>
+              <div style="font-size: 11px; color: #999; margin-top: 4px;">depois R$ 119,90/mês</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #FFE5D9;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+              <i class="fas fa-check-circle" style="color: #10B981; font-size: 16px;"></i>
+              <span style="font-size: 13px; font-weight: 500;">Instalação GRÁTIS</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+              <i class="fas fa-check-circle" style="color: #10B981; font-size: 16px;"></i>
+              <span style="font-size: 13px; font-weight: 500;">Roteador WiFi+ incluso</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+              <i class="fas fa-check-circle" style="color: #10B981; font-size: 16px;"></i>
+              <span style="font-size: 13px; font-weight: 500;">Watch+ (30 canais)</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-check-circle" style="color: #10B981; font-size: 16px;"></i>
+              <span style="font-size: 13px; font-weight: 500;">App com descontos</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plano MAX -->
+        <div style="background: linear-gradient(135deg, #6B46C1 0%, #9333EA 100%); border-radius: 16px; padding: 28px; position: relative; color: white; box-shadow: 0 8px 24px rgba(107, 70, 193, 0.3); transform: scale(1.05);">
+          <div style="position: absolute; top: -12px; right: 20px; background: #FFD700; color: #6B46C1; padding: 6px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">MAIS VENDIDO</div>
+
+          <div style="text-align: center; margin-bottom: 20px;">
+            <div style="font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; color: rgba(255,255,255,0.9);">Plano Max</div>
+            <div style="font-size: 48px; font-weight: 800; line-height: 1;">850</div>
+            <div style="font-size: 16px; font-weight: 600; margin-bottom: 16px; color: rgba(255,255,255,0.9);">MEGA</div>
+
+            <div style="background: rgba(255,255,255,0.15); padding: 16px; border-radius: 12px; backdrop-filter: blur(10px);">
+              <div style="font-size: 14px; font-weight: 600; margin-bottom: 4px;">POR APENAS</div>
+              <div style="font-size: 36px; font-weight: 800;">
+                R$ <span style="font-size: 48px;">139</span>,90
+              </div>
+              <div style="font-size: 12px; margin-top: 4px; color: rgba(255,255,255,0.9);">/mês</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px; padding: 16px; background: rgba(255,255,255,0.1); border-radius: 12px; text-align: center; margin-bottom: 20px;">
+            <div style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">🎬 HBO MAX INCLUSO</div>
+            <div style="font-size: 12px; color: rgba(255,255,255,0.8);">Plano Standard (2 dispositivos Full HD)</div>
+          </div>
+
+          <div style="padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+              <i class="fas fa-check-circle" style="font-size: 16px;"></i>
+              <span style="font-size: 13px; font-weight: 500;">Instalação GRÁTIS</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+              <i class="fas fa-check-circle" style="font-size: 16px;"></i>
+              <span style="font-size: 13px; font-weight: 500;">Roteador WiFi+ incluso</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+              <i class="fas fa-check-circle" style="font-size: 16px;"></i>
+              <span style="font-size: 13px; font-weight: 500;">Watch+ (30 canais)</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-check-circle" style="font-size: 16px;"></i>
+              <span style="font-size: 13px; font-weight: 500;">Assistência Premium</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plano ELITE -->
+        <div style="background: white; border: 3px solid #FFD700; border-radius: 16px; padding: 28px; position: relative; box-shadow: 0 4px 12px rgba(255, 215, 0, 0.15);">
+          <div style="position: absolute; top: -12px; right: 20px; background: #FFD700; color: #1F2937; padding: 6px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">PREMIUM</div>
+
+          <div style="text-align: center; margin-bottom: 20px;">
+            <div style="font-size: 14px; font-weight: 700; color: #FFD700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Plano Elite</div>
+            <div style="font-size: 48px; font-weight: 800; color: #FFD700; line-height: 1;">950</div>
+            <div style="font-size: 16px; font-weight: 600; color: #666; margin-bottom: 16px;">MEGA</div>
+
+            <div style="background: #FFF9E6; padding: 16px; border-radius: 12px;">
+              <div style="font-size: 14px; color: #666; font-weight: 600; margin-bottom: 4px;">POR APENAS</div>
+              <div style="font-size: 36px; font-weight: 800; color: #FFD700;">
+                R$ <span style="font-size: 48px;">159</span>,90
+              </div>
+              <div style="font-size: 12px; color: #666; margin-top: 4px;">/mês</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #FFF4E6;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+              <i class="fas fa-check-circle" style="color: #10B981; font-size: 16px;"></i>
+              <span style="font-size: 13px; font-weight: 500;">Instalação GRÁTIS</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+              <i class="fas fa-check-circle" style="color: #10B981; font-size: 16px;"></i>
+              <span style="font-size: 13px; font-weight: 500;">Roteador WiFi+ incluso</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+              <i class="fas fa-check-circle" style="color: #10B981; font-size: 16px;"></i>
+              <span style="font-size: 13px; font-weight: 500;">Watch+ (30 canais)</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+              <i class="fas fa-check-circle" style="color: #10B981; font-size: 16px;"></i>
+              <span style="font-size: 13px; font-weight: 500;">Assistência Prioritária</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-check-circle" style="color: #10B981; font-size: 16px;"></i>
+              <span style="font-size: 13px; font-weight: 500;">App Premium + descontos</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ferramentas do Vendedor -->
+    <div style="margin-bottom: 32px;">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+        <i class="fas fa-toolbox" style="color: #FF6B35; font-size: 22px;"></i>
+        <h2 style="font-size: 22px; font-weight: 700; margin: 0;">Ferramentas do Consultor</h2>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+        <a href="/playbook${tenantQuery}" style="text-decoration: none; color: inherit;">
+          <div style="background: white; border: 2px solid #FFE5D9; border-radius: 16px; padding: 24px; text-align: center; transition: all 0.3s; cursor: pointer;" onmouseover="this.style.borderColor='#FF6B35'; this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 24px rgba(255, 107, 53, 0.2)';" onmouseout="this.style.borderColor='#FFE5D9'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+            <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #FF6B35, #FF8C42); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);">
+              <i class="fas fa-book-open" style="font-size: 28px; color: white;"></i>
+            </div>
+            <div style="font-weight: 700; font-size: 16px; margin-bottom: 4px; color: #1F2937;">Playbook</div>
+            <div style="font-size: 13px; color: #6B7280;">Processo de vendas completo</div>
+          </div>
+        </a>
+
+        <a href="/playbook/scripts${tenantQuery}" style="text-decoration: none; color: inherit;">
+          <div style="background: white; border: 2px solid #FFF4E6; border-radius: 16px; padding: 24px; text-align: center; transition: all 0.3s; cursor: pointer;" onmouseover="this.style.borderColor='#FFD700'; this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 24px rgba(255, 215, 0, 0.2)';" onmouseout="this.style.borderColor='#FFF4E6'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+            <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #FFD700, #FDE047); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);">
+              <i class="fas fa-comment-dots" style="font-size: 28px; color: #1F2937;"></i>
+            </div>
+            <div style="font-weight: 700; font-size: 16px; margin-bottom: 4px; color: #1F2937;">Scripts</div>
+            <div style="font-size: 13px; color: #6B7280;">Mensagens prontas por etapa</div>
+          </div>
+        </a>
+
+        <a href="/playbook/objecoes${tenantQuery}" style="text-decoration: none; color: inherit;">
+          <div style="background: white; border: 2px solid #FFE5D9; border-radius: 16px; padding: 24px; text-align: center; transition: all 0.3s; cursor: pointer;" onmouseover="this.style.borderColor='#FF6B35'; this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 24px rgba(255, 107, 53, 0.2)';" onmouseout="this.style.borderColor='#FFE5D9'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+            <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #EF4444, #F87171); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);">
+              <i class="fas fa-shield-alt" style="font-size: 28px; color: white;"></i>
+            </div>
+            <div style="font-weight: 700; font-size: 16px; margin-bottom: 4px; color: #1F2937;">Objeções</div>
+            <div style="font-size: 13px; color: #6B7280;">Tratamento de resistências</div>
+          </div>
+        </a>
+
+        <a href="/calculadora${tenantQuery}" style="text-decoration: none; color: inherit;">
+          <div style="background: white; border: 2px solid #E0E7FF; border-radius: 16px; padding: 24px; text-align: center; transition: all 0.3s; cursor: pointer;" onmouseover="this.style.borderColor='#6366F1'; this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 24px rgba(99, 102, 241, 0.2)';" onmouseout="this.style.borderColor='#E0E7FF'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+            <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #6366F1, #818CF8); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);">
+              <i class="fas fa-calculator" style="font-size: 28px; color: white;"></i>
+            </div>
+            <div style="font-weight: 700; font-size: 16px; margin-bottom: 4px; color: #1F2937;">Calculadora</div>
+            <div style="font-size: 13px; color: #6B7280;">Plano ideal por perfil</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Diferenciais New Oeste -->
+    <div style="background: linear-gradient(135deg, #1F2937 0%, #374151 100%); border-radius: 20px; padding: 40px; margin-bottom: 32px; color: white;">
+      <div style="text-align: center; margin-bottom: 32px;">
+        <h2 style="font-size: 28px; font-weight: 800; margin: 0 0 12px 0;">Por que New Oeste?</h2>
+        <p style="font-size: 16px; color: rgba(255,255,255,0.8); margin: 0;">Diferenciais que você deve destacar na venda</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+        <div style="background: rgba(255,255,255,0.1); border-radius: 16px; padding: 24px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+          <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #FF6B35, #FFD700); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+            <i class="fas fa-bolt" style="font-size: 24px; color: white;"></i>
+          </div>
+          <div style="font-weight: 700; font-size: 16px; margin-bottom: 8px;">Fibra FTTH Real</div>
+          <div style="font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.6;">Fibra óptica até dentro de casa. Velocidade simétrica (download = upload) garantida.</div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.1); border-radius: 16px; padding: 24px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+          <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #FF6B35, #FFD700); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+            <i class="fas fa-map-marker-alt" style="font-size: 24px; color: white;"></i>
+          </div>
+          <div style="font-weight: 700; font-size: 16px; margin-bottom: 8px;">Empresa Local</div>
+          <div style="font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.6;">Atendimento em Foz do Iguaçu. Suporte técnico que conhece a região e chega rápido.</div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.1); border-radius: 16px; padding: 24px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+          <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #FF6B35, #FFD700); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+            <i class="fas fa-clock" style="font-size: 24px; color: white;"></i>
+          </div>
+          <div style="font-weight: 700; font-size: 16px; margin-bottom: 8px;">Instalação Rápida</div>
+          <div style="font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.6;">Instalação em até 72h. Sem espera de semanas como nas grandes operadoras.</div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.1); border-radius: 16px; padding: 24px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+          <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #FF6B35, #FFD700); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+            <i class="fas fa-headset" style="font-size: 24px; color: white;"></i>
+          </div>
+          <div style="font-weight: 700; font-size: 16px; margin-bottom: 8px;">Suporte 24/7</div>
+          <div style="font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.6;">Atendimento prioritário para clientes. Fale com gente de verdade, não robôs.</div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.1); border-radius: 16px; padding: 24px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+          <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #FF6B35, #FFD700); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+            <i class="fas fa-gift" style="font-size: 24px; color: white;"></i>
+          </div>
+          <div style="font-weight: 700; font-size: 16px; margin-bottom: 8px;">Sem Taxas Extras</div>
+          <div style="font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.6;">Instalação grátis. Roteador WiFi+ incluso. Sem custos escondidos.</div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.1); border-radius: 16px; padding: 24px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+          <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #FF6B35, #FFD700); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+            <i class="fas fa-mobile-alt" style="font-size: 24px; color: white;"></i>
+          </div>
+          <div style="font-weight: 700; font-size: 16px; margin-bottom: 8px;">Super App Connect</div>
+          <div style="font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.6;">App exclusivo com descontos em parceiros (cinema, lojas, serviços) e revistas digitais.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Final -->
+    <div style="background: linear-gradient(135deg, #FF6B35 0%, #FFD700 100%); border-radius: 20px; padding: 40px; text-align: center;">
+      <h3 style="color: white; font-size: 24px; font-weight: 800; margin: 0 0 12px 0;">Pronto para vender mais?</h3>
+      <p style="color: rgba(255,255,255,0.95); font-size: 16px; margin: 0 0 24px 0;">Acesse o playbook completo e domine o processo de vendas da New Oeste</p>
+      <a href="/playbook${tenantQuery}" style="display: inline-flex; align-items: center; gap: 10px; padding: 16px 32px; background: white; color: #FF6B35; border-radius: 12px; font-weight: 700; text-decoration: none; font-size: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+        <i class="fas fa-rocket"></i> Acessar Playbook Completo
+      </a>
+    </div>
+  `;
+
+  return layout('Visão Geral', content, 'home', config);
 }
 
 // ========================================
