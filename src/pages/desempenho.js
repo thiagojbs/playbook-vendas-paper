@@ -15,6 +15,21 @@ const FUNIL_PADRAO = {
 const DIAS_SEMANA = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
 
 export async function renderDesempenho(env, path, tenantData = {}) {
+  const config = tenantData.config || {};
+  const tenantId = config.id || 'papervines';
+
+  // Se for newoeste, renderizar versao especifica
+  if (tenantId === 'newoeste') {
+    if (path === '/desempenho/planejamento') {
+      return renderPlanejamentoNewOeste(env, tenantData);
+    } else if (path === '/desempenho/acompanhamento') {
+      return renderAcompanhamentoNewOeste(env, tenantData);
+    } else if (path === '/desempenho/relatorio') {
+      return renderRelatorioNewOeste(env, tenantData);
+    }
+    return renderDesempenhoHomeNewOeste(env, tenantData);
+  }
+
   if (path === '/desempenho/planejamento') {
     return renderPlanejamento(env, tenantData);
   } else if (path === '/desempenho/acompanhamento') {
@@ -1698,4 +1713,673 @@ function renderRelatorio(env, tenantData = {}) {
   `;
 
   return layout('Relatório de Desempenho', content, 'desempenho', tenantData?.config);
+}
+
+// ========================================
+// FUNCOES NEW OESTE (ISP/TELECOM)
+// ========================================
+
+function renderDesempenhoHomeNewOeste(env, tenantData = {}) {
+  const config = tenantData?.config || {};
+
+  const content = `
+    <div style="background: linear-gradient(135deg, #FF6B35 0%, #FFD700 50%, #FF8C42 100%); border-radius: 16px; padding: 32px; margin-bottom: 24px; color: white;">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+        <div style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-chart-line" style="font-size: 22px;"></i>
+        </div>
+        <div>
+          <h1 style="font-size: 24px; font-weight: 800; margin: 0;">Desempenho de Vendas</h1>
+          <p style="font-size: 14px; margin: 0; opacity: 0.95;">Acompanhe metas, atividades e resultados de vendas</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-grid" style="margin-bottom: 32px;">
+      <div class="stat-card" style="background: linear-gradient(135deg, #FF6B35, #FF8C42);">
+        <div class="stat-value"><i class="fas fa-bullseye"></i></div>
+        <div class="stat-label">Planejamento</div>
+      </div>
+      <div class="stat-card" style="background: linear-gradient(135deg, #FFD700, #FFA500);">
+        <div class="stat-value"><i class="fas fa-calendar-check"></i></div>
+        <div class="stat-label">Acompanhamento</div>
+      </div>
+      <div class="stat-card" style="background: linear-gradient(135deg, #10b981, #059669);">
+        <div class="stat-value"><i class="fas fa-chart-bar"></i></div>
+        <div class="stat-label">Relatório</div>
+      </div>
+    </div>
+
+    <div class="grid grid-3">
+      <a href="/desempenho/planejamento" class="card" style="text-decoration: none; color: inherit; cursor: pointer; transition: all 0.2s; border: 2px solid transparent;">
+        <div class="card-header">
+          <h3 class="card-title" style="color: #FF6B35;"><i class="fas fa-bullseye"></i> Planejamento de Metas</h3>
+        </div>
+        <p style="color: var(--text-secondary); margin-bottom: 16px; font-size: 13px;">
+          Defina suas metas mensais de vendas: quantos contratos, qual ticket médio, e qual receita total você quer atingir.
+        </p>
+        <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(255, 107, 53, 0.05); border-radius: 8px; border-left: 3px solid #FF6B35;">
+          <i class="fas fa-arrow-right" style="color: #FF6B35;"></i>
+          <div>
+            <div style="font-weight: 600; font-size: 13px;">Calcular Metas</div>
+            <div style="font-size: 11px; color: var(--text-secondary);">Metas semanais e diárias</div>
+          </div>
+        </div>
+      </a>
+
+      <a href="/desempenho/acompanhamento" class="card" style="text-decoration: none; color: inherit; cursor: pointer; transition: all 0.2s; border: 2px solid transparent;">
+        <div class="card-header">
+          <h3 class="card-title" style="color: #FFD700;"><i class="fas fa-calendar-check"></i> Acompanhamento Diário</h3>
+        </div>
+        <p style="color: var(--text-secondary); margin-bottom: 16px; font-size: 13px;">
+          Registre suas atividades diárias: ligações feitas, visitas técnicas, propostas enviadas e contratos fechados.
+        </p>
+        <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(255, 215, 0, 0.05); border-radius: 8px; border-left: 3px solid #FFD700;">
+          <i class="fas fa-arrow-right" style="color: #FFD700;"></i>
+          <div>
+            <div style="font-weight: 600; font-size: 13px;">Registrar Atividades</div>
+            <div style="font-size: 11px; color: var(--text-secondary);">Acompanhamento semanal</div>
+          </div>
+        </div>
+      </a>
+
+      <a href="/desempenho/relatorio" class="card" style="text-decoration: none; color: inherit; cursor: pointer; transition: all 0.2s; border: 2px solid transparent;">
+        <div class="card-header">
+          <h3 class="card-title" style="color: #10b981;"><i class="fas fa-chart-bar"></i> Relatório Mensal</h3>
+        </div>
+        <p style="color: var(--text-secondary); margin-bottom: 16px; font-size: 13px;">
+          Visualize suas métricas de performance: taxa de conversão, ticket médio, receita gerada e comparativo com metas.
+        </p>
+        <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(16, 185, 129, 0.05); border-radius: 8px; border-left: 3px solid #10b981;">
+          <i class="fas fa-arrow-right" style="color: #10b981;"></i>
+          <div>
+            <div style="font-weight: 600; font-size: 13px;">Ver Relatório</div>
+            <div style="font-size: 11px; color: var(--text-secondary);">Análise de resultados</div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <style>
+      .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        border-color: #FF6B35 !important;
+      }
+    </style>
+  `;
+
+  return layout('Desempenho', content, 'desempenho', config);
+}
+
+function renderPlanejamentoNewOeste(env, tenantData = {}) {
+  const config = tenantData?.config || {};
+
+  const content = `
+    <div style="background: linear-gradient(135deg, #FF6B35 0%, #FFD700 50%, #FF8C42 100%); border-radius: 16px; padding: 32px; margin-bottom: 24px; color: white;">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+        <a href="/desempenho" style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: all 0.2s;">
+          <i class="fas fa-arrow-left" style="font-size: 16px;"></i>
+        </a>
+        <div>
+          <h1 style="font-size: 24px; font-weight: 800; margin: 0;">Planejamento de Metas</h1>
+          <p style="font-size: 14px; margin: 0; opacity: 0.95;">Defina suas metas mensais e calcule metas diárias</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-calculator"></i> Calcular Metas de Vendas</h3>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+        <div class="form-group">
+          <label class="form-label">Meta de Contratos no Mês</label>
+          <input type="number" class="form-input" id="metaContratos" value="30" min="1" onchange="calcularMetas()">
+          <small style="color: var(--text-secondary); margin-top: 4px; display: block;">Quantos contratos você quer fechar este mês?</small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Ticket Médio Esperado</label>
+          <input type="number" class="form-input" id="ticketMedio" value="120" min="1" onchange="calcularMetas()">
+          <small style="color: var(--text-secondary); margin-top: 4px; display: block;">Valor médio dos planos (R$)</small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Taxa de Conversão (%)</label>
+          <input type="number" class="form-input" id="taxaConversao" value="20" min="1" max="100" onchange="calcularMetas()">
+          <small style="color: var(--text-secondary); margin-top: 4px; display: block;">Quantos % dos leads viram clientes?</small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Dias Úteis no Mês</label>
+          <input type="number" class="form-input" id="diasUteis" value="22" min="1" onchange="calcularMetas()">
+          <small style="color: var(--text-secondary); margin-top: 4px; display: block;">Quantos dias você vai trabalhar?</small>
+        </div>
+      </div>
+
+      <div style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 215, 0, 0.1)); padding: 24px; border-radius: 12px; border-left: 4px solid #FF6B35; margin-bottom: 24px;">
+        <h4 style="color: #FF6B35; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+          <i class="fas fa-chart-line"></i> Suas Metas Calculadas
+        </h4>
+
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 16px;">
+          <div style="background: white; padding: 16px; border-radius: 8px; text-align: center;">
+            <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 4px;">Contratos/Dia</div>
+            <div style="font-size: 24px; font-weight: 700; color: #FF6B35;" id="metaDia">1.4</div>
+          </div>
+          <div style="background: white; padding: 16px; border-radius: 8px; text-align: center;">
+            <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 4px;">Contratos/Semana</div>
+            <div style="font-size: 24px; font-weight: 700; color: #FFD700;" id="metaSemana">7</div>
+          </div>
+          <div style="background: white; padding: 16px; border-radius: 8px; text-align: center;">
+            <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 4px;">Leads Necessários</div>
+            <div style="font-size: 24px; font-weight: 700; color: #10b981;" id="leadsNecessarios">150</div>
+          </div>
+          <div style="background: white; padding: 16px; border-radius: 8px; text-align: center;">
+            <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 4px;">Receita Esperada</div>
+            <div style="font-size: 24px; font-weight: 700; color: #8b5cf6;" id="receitaEsperada">R$ 3.6k</div>
+          </div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.5); padding: 16px; border-radius: 8px;">
+          <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px; color: #FF6B35;">💡 Recomendações:</div>
+          <ul style="margin: 0; padding-left: 20px; font-size: 12px; color: var(--text-secondary);">
+            <li>Faça pelo menos <strong id="ligacoesDia">0</strong> ligações por dia</li>
+            <li>Realize <strong id="visitasSemana">0</strong> visitas técnicas por semana</li>
+            <li>Envie <strong id="propostasSemana">0</strong> propostas por semana</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 12px;">
+        <button class="btn btn-primary" onclick="salvarMetas()" style="background: linear-gradient(135deg, #FF6B35, #FF8C42); border: none;">
+          <i class="fas fa-save"></i> Salvar Metas
+        </button>
+        <button class="btn btn-secondary" onclick="window.print()">
+          <i class="fas fa-print"></i> Imprimir
+        </button>
+      </div>
+    </div>
+
+    <script>
+      function calcularMetas() {
+        const metaContratos = parseInt(document.getElementById('metaContratos').value) || 0;
+        const ticketMedio = parseFloat(document.getElementById('ticketMedio').value) || 0;
+        const taxaConversao = parseFloat(document.getElementById('taxaConversao').value) || 0;
+        const diasUteis = parseInt(document.getElementById('diasUteis').value) || 0;
+
+        // Calcular metas
+        const metaDia = (metaContratos / diasUteis).toFixed(1);
+        const metaSemana = Math.round(metaContratos / 4);
+        const leadsNecessarios = Math.round(metaContratos / (taxaConversao / 100));
+        const receitaEsperada = metaContratos * ticketMedio;
+
+        // Recomendações
+        const ligacoesDia = Math.round(leadsNecessarios / diasUteis * 2); // 2x leads
+        const visitasSemana = Math.round(metaSemana * 1.5); // 1.5x contratos
+        const propostasSemana = Math.round(metaSemana * 2); // 2x contratos
+
+        // Atualizar UI
+        document.getElementById('metaDia').textContent = metaDia;
+        document.getElementById('metaSemana').textContent = metaSemana;
+        document.getElementById('leadsNecessarios').textContent = leadsNecessarios;
+        document.getElementById('receitaEsperada').textContent = 'R$ ' + (receitaEsperada / 1000).toFixed(1) + 'k';
+
+        document.getElementById('ligacoesDia').textContent = ligacoesDia;
+        document.getElementById('visitasSemana').textContent = visitasSemana;
+        document.getElementById('propostasSemana').textContent = propostasSemana;
+      }
+
+      function salvarMetas() {
+        const metas = {
+          contratos: document.getElementById('metaContratos').value,
+          ticket: document.getElementById('ticketMedio').value,
+          conversao: document.getElementById('taxaConversao').value,
+          dias: document.getElementById('diasUteis').value,
+          data: new Date().toISOString()
+        };
+        localStorage.setItem('newoeste_metas', JSON.stringify(metas));
+        showToast('Metas salvas com sucesso!');
+      }
+
+      // Carregar metas salvas
+      const metasSalvas = localStorage.getItem('newoeste_metas');
+      if (metasSalvas) {
+        const metas = JSON.parse(metasSalvas);
+        document.getElementById('metaContratos').value = metas.contratos || 30;
+        document.getElementById('ticketMedio').value = metas.ticket || 120;
+        document.getElementById('taxaConversao').value = metas.conversao || 20;
+        document.getElementById('diasUteis').value = metas.dias || 22;
+      }
+
+      // Calcular ao carregar
+      calcularMetas();
+    </script>
+  `;
+
+  return layout('Planejamento', content, 'desempenho', config);
+}
+
+function renderAcompanhamentoNewOeste(env, tenantData = {}) {
+  const config = tenantData?.config || {};
+
+  const content = `
+    <div style="background: linear-gradient(135deg, #FF6B35 0%, #FFD700 50%, #FF8C42 100%); border-radius: 16px; padding: 32px; margin-bottom: 24px; color: white;">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+        <a href="/desempenho" style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: all 0.2s;">
+          <i class="fas fa-arrow-left" style="font-size: 16px;"></i>
+        </a>
+        <div>
+          <h1 style="font-size: 24px; font-weight: 800; margin: 0;">Acompanhamento Diário</h1>
+          <p style="font-size: 14px; margin: 0; opacity: 0.95;">Registre suas atividades e acompanhe o progresso</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-calendar-week"></i> Semana Atual</h3>
+      </div>
+
+      <div style="margin-bottom: 24px;">
+        <label class="form-label">Selecione o Dia</label>
+        <select class="form-select" id="diaSelecionado" onchange="carregarDia()">
+          <option value="seg">Segunda-feira</option>
+          <option value="ter">Terça-feira</option>
+          <option value="qua">Quarta-feira</option>
+          <option value="qui">Quinta-feira</option>
+          <option value="sex">Sexta-feira</option>
+          <option value="sab">Sábado</option>
+        </select>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px;">
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-phone" style="color: #FF6B35;"></i> Ligações Realizadas
+          </label>
+          <input type="number" class="form-input" id="ligacoes" value="0" min="0" onchange="salvarDia()">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-user-check" style="color: #10b981;"></i> Contatos Qualificados
+          </label>
+          <input type="number" class="form-input" id="qualificados" value="0" min="0" onchange="salvarDia()">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-home" style="color: #3b82f6;"></i> Visitas Técnicas
+          </label>
+          <input type="number" class="form-input" id="visitas" value="0" min="0" onchange="salvarDia()">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-file-invoice" style="color: #FFD700;"></i> Propostas Enviadas
+          </label>
+          <input type="number" class="form-input" id="propostas" value="0" min="0" onchange="salvarDia()">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-check-circle" style="color: #10b981;"></i> Contratos Fechados
+          </label>
+          <input type="number" class="form-input" id="contratos" value="0" min="0" onchange="salvarDia()">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-dollar-sign" style="color: #8b5cf6;"></i> Receita Gerada (R$)
+          </label>
+          <input type="number" class="form-input" id="receita" value="0" min="0" onchange="salvarDia()">
+        </div>
+      </div>
+
+      <div style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 215, 0, 0.1)); padding: 20px; border-radius: 12px; border-left: 4px solid #FF6B35; margin-bottom: 20px;">
+        <h4 style="color: #FF6B35; margin-bottom: 16px;">📊 Resumo da Semana</h4>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+          <div style="background: white; padding: 12px; border-radius: 8px; text-align: center;">
+            <div style="font-size: 11px; color: var(--text-secondary);">Total Ligações</div>
+            <div style="font-size: 20px; font-weight: 700; color: #FF6B35;" id="totalLigacoes">0</div>
+          </div>
+          <div style="background: white; padding: 12px; border-radius: 8px; text-align: center;">
+            <div style="font-size: 11px; color: var(--text-secondary);">Total Visitas</div>
+            <div style="font-size: 20px; font-weight: 700; color: #3b82f6;" id="totalVisitas">0</div>
+          </div>
+          <div style="background: white; padding: 12px; border-radius: 8px; text-align: center;">
+            <div style="font-size: 11px; color: var(--text-secondary);">Total Contratos</div>
+            <div style="font-size: 20px; font-weight: 700; color: #10b981;" id="totalContratos">0</div>
+          </div>
+          <div style="background: white; padding: 12px; border-radius: 8px; text-align: center;">
+            <div style="font-size: 11px; color: var(--text-secondary);">Taxa Conversão</div>
+            <div style="font-size: 20px; font-weight: 700; color: #FFD700;" id="taxaConversao">0%</div>
+          </div>
+          <div style="background: white; padding: 12px; border-radius: 8px; text-align: center;">
+            <div style="font-size: 11px; color: var(--text-secondary);">Receita Semana</div>
+            <div style="font-size: 20px; font-weight: 700; color: #8b5cf6;" id="receitaSemana">R$ 0</div>
+          </div>
+          <div style="background: white; padding: 12px; border-radius: 8px; text-align: center;">
+            <div style="font-size: 11px; color: var(--text-secondary);">Ticket Médio</div>
+            <div style="font-size: 20px; font-weight: 700; color: #ef4444;" id="ticketMedio">R$ 0</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 12px;">
+        <button class="btn btn-primary" onclick="limparSemana()" style="background: linear-gradient(135deg, #FF6B35, #FF8C42); border: none;">
+          <i class="fas fa-sync"></i> Nova Semana
+        </button>
+        <button class="btn btn-secondary" onclick="exportarDados()">
+          <i class="fas fa-download"></i> Exportar Dados
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const DIAS = ['seg', 'ter', 'qua', 'qui', 'sex', 'sab'];
+
+      function carregarDia() {
+        const dia = document.getElementById('diaSelecionado').value;
+        const dados = JSON.parse(localStorage.getItem('newoeste_atividades_' + dia) || '{}');
+
+        document.getElementById('ligacoes').value = dados.ligacoes || 0;
+        document.getElementById('qualificados').value = dados.qualificados || 0;
+        document.getElementById('visitas').value = dados.visitas || 0;
+        document.getElementById('propostas').value = dados.propostas || 0;
+        document.getElementById('contratos').value = dados.contratos || 0;
+        document.getElementById('receita').value = dados.receita || 0;
+
+        atualizarResumo();
+      }
+
+      function salvarDia() {
+        const dia = document.getElementById('diaSelecionado').value;
+        const dados = {
+          ligacoes: parseInt(document.getElementById('ligacoes').value) || 0,
+          qualificados: parseInt(document.getElementById('qualificados').value) || 0,
+          visitas: parseInt(document.getElementById('visitas').value) || 0,
+          propostas: parseInt(document.getElementById('propostas').value) || 0,
+          contratos: parseInt(document.getElementById('contratos').value) || 0,
+          receita: parseFloat(document.getElementById('receita').value) || 0
+        };
+
+        localStorage.setItem('newoeste_atividades_' + dia, JSON.stringify(dados));
+        atualizarResumo();
+      }
+
+      function atualizarResumo() {
+        let totalLigacoes = 0, totalVisitas = 0, totalContratos = 0, totalQualificados = 0, receitaTotal = 0;
+
+        DIAS.forEach(dia => {
+          const dados = JSON.parse(localStorage.getItem('newoeste_atividades_' + dia) || '{}');
+          totalLigacoes += dados.ligacoes || 0;
+          totalVisitas += dados.visitas || 0;
+          totalContratos += dados.contratos || 0;
+          totalQualificados += dados.qualificados || 0;
+          receitaTotal += dados.receita || 0;
+        });
+
+        const taxa = totalQualificados > 0 ? ((totalContratos / totalQualificados) * 100).toFixed(1) : 0;
+        const ticket = totalContratos > 0 ? (receitaTotal / totalContratos).toFixed(0) : 0;
+
+        document.getElementById('totalLigacoes').textContent = totalLigacoes;
+        document.getElementById('totalVisitas').textContent = totalVisitas;
+        document.getElementById('totalContratos').textContent = totalContratos;
+        document.getElementById('taxaConversao').textContent = taxa + '%';
+        document.getElementById('receitaSemana').textContent = 'R$ ' + receitaTotal.toFixed(0);
+        document.getElementById('ticketMedio').textContent = 'R$ ' + ticket;
+      }
+
+      function limparSemana() {
+        if (confirm('Deseja limpar todos os dados da semana e começar uma nova?')) {
+          DIAS.forEach(dia => {
+            localStorage.removeItem('newoeste_atividades_' + dia);
+          });
+          carregarDia();
+          showToast('Semana limpa! Comece um novo registro.');
+        }
+      }
+
+      function exportarDados() {
+        let csv = 'Dia,Ligações,Qualificados,Visitas,Propostas,Contratos,Receita\\n';
+        const nomesDias = {'seg': 'Segunda', 'ter': 'Terça', 'qua': 'Quarta', 'qui': 'Quinta', 'sex': 'Sexta', 'sab': 'Sábado'};
+
+        DIAS.forEach(dia => {
+          const dados = JSON.parse(localStorage.getItem('newoeste_atividades_' + dia) || '{}');
+          csv += nomesDias[dia] + ',' + (dados.ligacoes || 0) + ',' + (dados.qualificados || 0) + ',' +
+                 (dados.visitas || 0) + ',' + (dados.propostas || 0) + ',' + (dados.contratos || 0) + ',' +
+                 (dados.receita || 0) + '\\n';
+        });
+
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'atividades_newoeste.csv';
+        a.click();
+      }
+
+      // Selecionar dia atual
+      const hoje = new Date().getDay();
+      const diasMap = {0: 'seg', 1: 'seg', 2: 'ter', 3: 'qua', 4: 'qui', 5: 'sex', 6: 'sab'};
+      document.getElementById('diaSelecionado').value = diasMap[hoje];
+
+      // Carregar dia atual
+      carregarDia();
+    </script>
+  `;
+
+  return layout('Acompanhamento', content, 'desempenho', config);
+}
+
+function renderRelatorioNewOeste(env, tenantData = {}) {
+  const config = tenantData?.config || {};
+
+  const content = `
+    <div style="background: linear-gradient(135deg, #FF6B35 0%, #FFD700 50%, #FF8C42 100%); border-radius: 16px; padding: 32px; margin-bottom: 24px; color: white;">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+        <a href="/desempenho" style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: all 0.2s;">
+          <i class="fas fa-arrow-left" style="font-size: 16px;"></i>
+        </a>
+        <div>
+          <h1 style="font-size: 24px; font-weight: 800; margin: 0;">Relatório de Performance</h1>
+          <p style="font-size: 14px; margin: 0; opacity: 0.95;">Análise completa dos seus resultados</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 24px;">
+      <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-chart-pie"></i> Resumo do Mês</h3>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+        <div style="background: linear-gradient(135deg, #FF6B35, #FF8C42); padding: 20px; border-radius: 12px; color: white; text-align: center;">
+          <div style="font-size: 12px; opacity: 0.9; margin-bottom: 8px;">Total de Ligações</div>
+          <div style="font-size: 32px; font-weight: 700;" id="relTotalLigacoes">0</div>
+        </div>
+        <div style="background: linear-gradient(135deg, #3b82f6, #2563eb); padding: 20px; border-radius: 12px; color: white; text-align: center;">
+          <div style="font-size: 12px; opacity: 0.9; margin-bottom: 8px;">Visitas Realizadas</div>
+          <div style="font-size: 32px; font-weight: 700;" id="relTotalVisitas">0</div>
+        </div>
+        <div style="background: linear-gradient(135deg, #10b981, #059669); padding: 20px; border-radius: 12px; color: white; text-align: center;">
+          <div style="font-size: 12px; opacity: 0.9; margin-bottom: 8px;">Contratos Fechados</div>
+          <div style="font-size: 32px; font-weight: 700;" id="relTotalContratos">0</div>
+        </div>
+        <div style="background: linear-gradient(135deg, #8b5cf6, #7c3aed); padding: 20px; border-radius: 12px; color: white; text-align: center;">
+          <div style="font-size: 12px; opacity: 0.9; margin-bottom: 8px;">Receita Total</div>
+          <div style="font-size: 32px; font-weight: 700;" id="relReceitaTotal">R$ 0</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+        <div style="background: var(--bg-page); padding: 16px; border-radius: 8px; border-left: 3px solid #FFD700;">
+          <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 4px;">Taxa de Conversão</div>
+          <div style="font-size: 24px; font-weight: 700; color: #FFD700;" id="relTaxaConversao">0%</div>
+        </div>
+        <div style="background: var(--bg-page); padding: 16px; border-radius: 8px; border-left: 3px solid #ef4444;">
+          <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 4px;">Ticket Médio</div>
+          <div style="font-size: 24px; font-weight: 700; color: #ef4444;" id="relTicketMedio">R$ 0</div>
+        </div>
+        <div style="background: var(--bg-page); padding: 16px; border-radius: 8px; border-left: 3px solid #10b981;">
+          <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 4px;">Atingimento de Meta</div>
+          <div style="font-size: 24px; font-weight: 700; color: #10b981;" id="relAtingimento">0%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"><i class="fas fa-calendar-week"></i> Performance Semanal</h3>
+        </div>
+
+        <table style="width: 100%; font-size: 13px;">
+          <thead>
+            <tr style="border-bottom: 2px solid var(--border);">
+              <th style="text-align: left; padding: 8px; color: var(--text-secondary);">Semana</th>
+              <th style="text-align: center; padding: 8px; color: var(--text-secondary);">Ligações</th>
+              <th style="text-align: center; padding: 8px; color: var(--text-secondary);">Contratos</th>
+              <th style="text-align: center; padding: 8px; color: var(--text-secondary);">Receita</th>
+            </tr>
+          </thead>
+          <tbody id="tabelaSemanal">
+            <tr>
+              <td colspan="4" style="text-align: center; padding: 24px; color: var(--text-secondary);">
+                Registre suas atividades para ver o relatório
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"><i class="fas fa-trophy"></i> Conquistas do Mês</h3>
+        </div>
+
+        <div id="conquistas" style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="padding: 12px; background: rgba(16, 185, 129, 0.1); border-radius: 8px; border-left: 3px solid #10b981; display: flex; align-items: center; gap: 12px;">
+            <i class="fas fa-check-circle" style="font-size: 24px; color: #10b981;"></i>
+            <div>
+              <div style="font-weight: 600; font-size: 13px;">Meta Atingida</div>
+              <div style="font-size: 11px; color: var(--text-secondary);">Você bateu sua meta de contratos!</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const DIAS = ['seg', 'ter', 'qua', 'qui', 'sex', 'sab'];
+
+      function gerarRelatorio() {
+        let totalLigacoes = 0, totalVisitas = 0, totalContratos = 0, totalQualificados = 0, receitaTotal = 0;
+
+        // Calcular totais
+        DIAS.forEach(dia => {
+          const dados = JSON.parse(localStorage.getItem('newoeste_atividades_' + dia) || '{}');
+          totalLigacoes += dados.ligacoes || 0;
+          totalVisitas += dados.visitas || 0;
+          totalContratos += dados.contratos || 0;
+          totalQualificados += dados.qualificados || 0;
+          receitaTotal += dados.receita || 0;
+        });
+
+        // Calcular métricas
+        const taxaConversao = totalQualificados > 0 ? ((totalContratos / totalQualificados) * 100).toFixed(1) : 0;
+        const ticketMedio = totalContratos > 0 ? (receitaTotal / totalContratos).toFixed(0) : 0;
+
+        // Carregar meta
+        const metasSalvas = localStorage.getItem('newoeste_metas');
+        let metaContratos = 30;
+        if (metasSalvas) {
+          const metas = JSON.parse(metasSalvas);
+          metaContratos = parseInt(metas.contratos) || 30;
+        }
+
+        const atingimento = ((totalContratos / metaContratos) * 100).toFixed(0);
+
+        // Atualizar UI
+        document.getElementById('relTotalLigacoes').textContent = totalLigacoes;
+        document.getElementById('relTotalVisitas').textContent = totalVisitas;
+        document.getElementById('relTotalContratos').textContent = totalContratos;
+        document.getElementById('relReceitaTotal').textContent = 'R$ ' + receitaTotal.toLocaleString('pt-BR');
+        document.getElementById('relTaxaConversao').textContent = taxaConversao + '%';
+        document.getElementById('relTicketMedio').textContent = 'R$ ' + ticketMedio;
+        document.getElementById('relAtingimento').textContent = atingimento + '%';
+
+        // Gerar tabela semanal (simplificado - apenas semana atual)
+        const tbody = document.getElementById('tabelaSemanal');
+        tbody.innerHTML = \`
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px;">Semana Atual</td>
+            <td style="text-align: center; padding: 12px;">\${totalLigacoes}</td>
+            <td style="text-align: center; padding: 12px; font-weight: 600; color: #10b981;">\${totalContratos}</td>
+            <td style="text-align: center; padding: 12px; font-weight: 600;">R$ \${receitaTotal.toFixed(0)}</td>
+          </tr>
+        \`;
+
+        // Atualizar conquistas
+        const conquistas = document.getElementById('conquistas');
+        let conquistasHTML = '';
+
+        if (atingimento >= 100) {
+          conquistasHTML += \`
+            <div style="padding: 12px; background: rgba(16, 185, 129, 0.1); border-radius: 8px; border-left: 3px solid #10b981; display: flex; align-items: center; gap: 12px;">
+              <i class="fas fa-trophy" style="font-size: 24px; color: #FFD700;"></i>
+              <div>
+                <div style="font-weight: 600; font-size: 13px;">🎉 Meta Atingida!</div>
+                <div style="font-size: 11px; color: var(--text-secondary);">Você alcançou \${atingimento}% da sua meta</div>
+              </div>
+            </div>
+          \`;
+        }
+
+        if (totalContratos >= 10) {
+          conquistasHTML += \`
+            <div style="padding: 12px; background: rgba(255, 107, 53, 0.1); border-radius: 8px; border-left: 3px solid #FF6B35; display: flex; align-items: center; gap: 12px;">
+              <i class="fas fa-fire" style="font-size: 24px; color: #FF6B35;"></i>
+              <div>
+                <div style="font-weight: 600; font-size: 13px;">Vendedor Destaque</div>
+                <div style="font-size: 11px; color: var(--text-secondary);">\${totalContratos} contratos fechados</div>
+              </div>
+            </div>
+          \`;
+        }
+
+        if (taxaConversao >= 20) {
+          conquistasHTML += \`
+            <div style="padding: 12px; background: rgba(59, 130, 246, 0.1); border-radius: 8px; border-left: 3px solid #3b82f6; display: flex; align-items: center; gap: 12px;">
+              <i class="fas fa-chart-line" style="font-size: 24px; color: #3b82f6;"></i>
+              <div>
+                <div style="font-weight: 600; font-size: 13px;">Alta Conversão</div>
+                <div style="font-size: 11px; color: var(--text-secondary);">\${taxaConversao}% de taxa de conversão</div>
+              </div>
+            </div>
+          \`;
+        }
+
+        if (!conquistasHTML) {
+          conquistasHTML = \`
+            <div style="padding: 24px; text-align: center; color: var(--text-secondary);">
+              Continue registrando suas atividades para desbloquear conquistas!
+            </div>
+          \`;
+        }
+
+        conquistas.innerHTML = conquistasHTML;
+      }
+
+      // Gerar relatório ao carregar
+      gerarRelatorio();
+    </script>
+  `;
+
+  return layout('Relatório', content, 'desempenho', config);
 }

@@ -42,8 +42,7 @@ const DEFAULT_TENANT_CONFIG = {
     propostas: 'https://www.figma.com/files/team/1082649090502569616/project/412083277/Vendas'
   },
   modulos: {
-    desempenho: true,
-    agentes: true
+    desempenho: true
   }
 };
 
@@ -1010,9 +1009,6 @@ export function layout(title, content, activeMenu = '', tenantConfig = null) {
       <a href="/calculadora${tenantQuery}" class="nav-tab ${activeMenu === 'calculadora' ? 'active' : ''}">
         <i class="fas fa-calculator"></i> Calculadora
       </a>
-      ${modulos.agentes !== false ? `<a href="/playbook/agentes${tenantQuery}" class="nav-tab ${activeMenu === 'planos' ? 'active' : ''}">
-        <i class="fas fa-robot"></i> Agentes IA
-      </a>` : ''}
       ${modulos.desempenho !== false ? `<a href="/desempenho${tenantQuery}" class="nav-tab ${activeMenu === 'desempenho' ? 'active' : ''}">
         <i class="fas fa-chart-line"></i> Desempenho
       </a>` : ''}
