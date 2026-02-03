@@ -362,13 +362,13 @@ function renderHomeNewOeste(tenantData) {
     </div>
 
     <!-- Quiz Rápido - Plano Ideal -->
-    <div style="background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%); border: 2px solid #818CF8; border-radius: 16px; padding: 24px; margin-bottom: 24px; color: white;">
+    <div style="background: linear-gradient(135deg, #EF4444 0%, #FF6B35 100%); border: 2px solid #FF8C42; border-radius: 16px; padding: 24px; margin-bottom: 24px; color: white;">
       <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
         <div style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-          <i class="fas fa-magic" style="font-size: 20px;"></i>
+          <i class="fas fa-bullseye" style="font-size: 20px;"></i>
         </div>
         <div>
-          <h2 style="font-size: 18px; font-weight: 700; margin: 0;">🎯 Descubra o Plano Ideal</h2>
+          <h2 style="font-size: 18px; font-weight: 700; margin: 0;">Descubra o Plano Ideal</h2>
           <p style="font-size: 13px; margin: 0; color: rgba(255,255,255,0.9);">Ferramenta para usar com o cliente (presencial ou WhatsApp)</p>
         </div>
       </div>
@@ -414,13 +414,13 @@ function renderHomeNewOeste(tenantData) {
           </div>
         </div>
 
-        <button onclick="calcularPlano()" style="width: 100%; padding: 14px; background: white; color: #6366F1; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 15px; margin-bottom: 16px;">
-          <i class="fas fa-magic"></i> Ver Plano Ideal
+        <button onclick="calcularPlano()" style="width: 100%; padding: 14px; background: white; color: #FF6B35; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 15px; margin-bottom: 16px;">
+          <i class="fas fa-bullseye"></i> Ver Plano Ideal
         </button>
 
         <div id="resultado-quiz" style="display: none; background: rgba(255,255,255,0.15); border-radius: 10px; padding: 16px; border: 2px solid rgba(255,255,255,0.3);">
           <div style="text-align: center; margin-bottom: 12px;">
-            <div style="font-size: 14px; margin-bottom: 4px;">✨ Plano Recomendado:</div>
+            <div style="font-size: 14px; margin-bottom: 4px;"><i class="fas fa-check-circle"></i> Plano Recomendado:</div>
             <div id="plano-nome" style="font-size: 22px; font-weight: 800;"></div>
             <div id="plano-velocidade" style="font-size: 18px; margin-top: 4px;"></div>
             <div id="plano-preco" style="font-size: 16px; margin-top: 4px;"></div>
@@ -476,7 +476,7 @@ function renderHomeNewOeste(tenantData) {
               <div style="font-size: 10px; color: #666;">/mês</div>
             </div>
             <div style="background: #6B46C1; color: white; padding: 8px; border-radius: 6px; font-size: 11px; font-weight: 700; margin-bottom: 12px;">
-              🎬 HBO MAX INCLUSO
+              <i class="fas fa-film"></i> HBO MAX INCLUSO
             </div>
           </div>
           <div style="padding: 0 16px 16px 16px; font-size: 12px;">
@@ -519,7 +519,7 @@ function renderHomeNewOeste(tenantData) {
     <!-- Planos Empresariais -->
     <div style="margin-bottom: 24px;">
       <h2 style="font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
-        <i class="fas fa-building" style="color: #3B82F6;"></i> Planos Empresariais
+        <i class="fas fa-building" style="color: #FF6B35;"></i> Planos Empresariais
       </h2>
 
       <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
@@ -640,7 +640,7 @@ function renderHomeNewOeste(tenantData) {
       </a>
 
       <a href="/clientes${tenantQuery}" class="card" style="text-decoration: none; color: inherit; text-align: center; padding: 16px;">
-        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #6366F1, #818CF8); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px;">
+        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #EF4444, #F87171); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px;">
           <i class="fas fa-users" style="font-size: 20px; color: white;"></i>
         </div>
         <div style="font-weight: 700; font-size: 13px;">Pipeline</div>
@@ -650,7 +650,7 @@ function renderHomeNewOeste(tenantData) {
 
     <!-- Diferenciais Compactos -->
     <div class="card" style="background: linear-gradient(135deg, #1F2937, #374151); color: white; padding: 20px; margin-bottom: 24px;">
-      <h3 style="font-size: 16px; font-weight: 700; margin: 0 0 16px 0; text-align: center;">⚡ Diferenciais New Oeste</h3>
+      <h3 style="font-size: 16px; font-weight: 700; margin: 0 0 16px 0; text-align: center;"><i class="fas fa-bolt"></i> Diferenciais New Oeste</h3>
       <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; font-size: 12px;">
         <div><i class="fas fa-check-circle" style="color: #10B981;"></i> Fibra FTTH real</div>
         <div><i class="fas fa-check-circle" style="color: #10B981;"></i> Empresa local</div>
@@ -667,95 +667,104 @@ function renderHomeNewOeste(tenantData) {
 
       // Textos para WhatsApp
       const planosWhatsApp = {
-        'prime-res': \`🌟 *NEW OESTE - PLANO PRIME*
+        'prime-res': \`*NEW OESTE - PLANO PRIME*
 
-📶 800 MEGA de velocidade
-💰 R$ 69,90/mês (Fev e Mar)
-   Depois R$ 119,90/mês
+> 800 MEGA de velocidade
+> R$ 69,90/mês (Fev e Mar)
+> Depois R$ 119,90/mês
 
-✅ Instalação GRÁTIS
-✅ Roteador WiFi+ incluso
-✅ Watch+ com 30 canais ao vivo
-✅ App NEW OESTE CONNECT com descontos
+INCLUSO:
+• Instalação GRÁTIS
+• Roteador WiFi+ incluso
+• Watch+ com 30 canais ao vivo
+• App NEW OESTE CONNECT com descontos
 
-Fibra óptica até sua casa! 🚀
+Fibra óptica até sua casa!
 Quer agendar a instalação?\`,
-        'max-res': \`⭐ *NEW OESTE - PLANO MAX*
+        'max-res': \`*NEW OESTE - PLANO MAX*
 
-📶 850 MEGA de velocidade
-💰 R$ 139,90/mês
+> 850 MEGA de velocidade
+> R$ 139,90/mês
 
-🎬 *HBO MAX INCLUSO!*
-   Plano Standard (2 dispositivos Full HD)
+*HBO MAX INCLUSO!*
+Plano Standard (2 dispositivos Full HD)
 
-✅ Instalação GRÁTIS
-✅ Roteador WiFi+ incluso
-✅ Watch+ com 30 canais ao vivo
-✅ Assistência Premium
-✅ App com descontos
+INCLUSO:
+• Instalação GRÁTIS
+• Roteador WiFi+ incluso
+• Watch+ com 30 canais ao vivo
+• Assistência Premium
+• App com descontos
 
-Nosso plano MAIS VENDIDO! 🔥
+Nosso plano MAIS VENDIDO!
 Vamos fechar?\`,
-        'elite-res': \`👑 *NEW OESTE - PLANO ELITE*
+        'elite-res': \`*NEW OESTE - PLANO ELITE*
 
-📶 950 MEGA de velocidade
-💰 R$ 159,90/mês
+> 950 MEGA de velocidade
+> R$ 159,90/mês
 
-✅ Instalação GRÁTIS
-✅ Roteador WiFi+ incluso
-✅ Watch+ com 30 canais ao vivo
-✅ Assistência PRIORITÁRIA
-✅ App Premium com descontos VIP
+INCLUSO:
+• Instalação GRÁTIS
+• Roteador WiFi+ incluso
+• Watch+ com 30 canais ao vivo
+• Assistência PRIORITÁRIA
+• App Premium com descontos VIP
 
-O melhor plano residencial! 💎
+O melhor plano residencial!
 Garanta já o seu!\`,
-        'prime-emp': \`💼 *NEW OESTE EMPRESARIAL - PRIME*
+        'prime-emp': \`*NEW OESTE EMPRESARIAL - PRIME*
 
-📶 800 MEGA de velocidade
-💰 R$ 119,90/mês
+> 800 MEGA de velocidade
+> R$ 119,90/mês
 
-✅ Instalação GRÁTIS
-✅ Roteador WiFi+ incluso
-✅ Assistência Premium
+INCLUSO:
+• Instalação GRÁTIS
+• Roteador WiFi+ incluso
+• Assistência Premium
 
-Ideal para pequenos negócios! 🏢
+Ideal para pequenos negócios!
 Posso agendar a visita técnica?\`,
-        'elite-emp': \`💼 *NEW OESTE EMPRESARIAL - ELITE*
+        'elite-emp': \`*NEW OESTE EMPRESARIAL - ELITE*
 
-📶 950 MEGA de velocidade
-💰 R$ 159,90/mês
+> 950 MEGA de velocidade
+> R$ 159,90/mês
 
-✅ Instalação GRÁTIS
-✅ Roteador WiFi+ incluso
-✅ Assistência PRIORITÁRIA
-✅ Acesso Corporate
+INCLUSO:
+• Instalação GRÁTIS
+• Roteador WiFi+ incluso
+• Assistência PRIORITÁRIA
+• Acesso Corporate
 
-Internet profissional! 🚀
+Internet profissional!
 Vamos agendar?\`,
-        'starter-emp': \`🏢 *NEW OESTE - BUSINESS STARTER*
+        'starter-emp': \`*NEW OESTE - BUSINESS STARTER*
 
-📶 800 MEGA de velocidade
-💰 R$ 289,90/mês
+> 800 MEGA de velocidade
+> R$ 289,90/mês
 
-🔒 *IPv4 FIXO INCLUSO*
-✅ Instalação GRÁTIS
-✅ Roteador WiFi+ incluso
-✅ Assistência Premium
+*IPv4 FIXO INCLUSO*
+
+INCLUSO:
+• Instalação GRÁTIS
+• Roteador WiFi+ incluso
+• Assistência Premium
 
 Perfeito para empresas que precisam de IP fixo!
 Quer mais detalhes?\`,
-        'business-emp': \`🏢 *NEW OESTE - BUSINESS*
+        'business-emp': \`*NEW OESTE - BUSINESS*
 
-📶 950 MEGA de velocidade
-💰 R$ 389,90/mês
+> 950 MEGA de velocidade
+> R$ 389,90/mês
 
-🔒 *IPv4 FIXO INCLUSO*
-✅ Instalação GRÁTIS
-✅ Roteador WiFi+ incluso
-✅ Assistência PRIORITÁRIA
-✅ Acesso Corporate
+*IPv4 FIXO INCLUSO*
 
-Nosso plano empresarial TOP! 👔
+INCLUSO:
+• Instalação GRÁTIS
+• Roteador WiFi+ incluso
+• Assistência PRIORITÁRIA
+• Acesso Corporate
+
+Nosso plano empresarial TOP!
 Posso enviar a proposta formal?\`
       };
 
@@ -771,14 +780,20 @@ Posso enviar a proposta formal?\`
 
       function setPessoas(num) {
         quizState.pessoas = num;
-        document.querySelectorAll('[id^="btn-"][id$]').forEach(btn => {
-          if (btn.id.match(/^btn-\\d+$/)) {
+        // Reset todos os botões de pessoas
+        ['btn-1', 'btn-3', 'btn-6', 'btn-11'].forEach(id => {
+          const btn = document.getElementById(id);
+          if (btn) {
             btn.style.background = 'rgba(255,255,255,0.2)';
             btn.style.borderColor = 'rgba(255,255,255,0.3)';
           }
         });
-        document.getElementById('btn-' + num).style.background = 'rgba(255,255,255,0.3)';
-        document.getElementById('btn-' + num).style.borderColor = 'white';
+        // Destacar o selecionado
+        const selected = document.getElementById('btn-' + num);
+        if (selected) {
+          selected.style.background = 'rgba(255,255,255,0.3)';
+          selected.style.borderColor = 'white';
+        }
       }
 
       function setUso(uso) {
@@ -803,21 +818,21 @@ Posso enviar a proposta formal?\`
 
         if (tipo === 'residencial') {
           if (pessoas <= 2 && uso !== 'jogos') {
-            plano = { nome: 'PRIME', velocidade: '800 MEGA', preco: 'R$ 69,90/mês', beneficios: '✅ Perfeito para 1-2 pessoas\\n✅ Streaming em HD\\n✅ Navegação rápida\\n✅ Instalação grátis + WiFi+' };
+            plano = { nome: 'PRIME', velocidade: '800 MEGA', preco: 'R$ 69,90/mês', beneficios: '• Perfeito para 1-2 pessoas\\n• Streaming em HD\\n• Navegação rápida\\n• Instalação grátis + WiFi+' };
           } else if (pessoas <= 5 || uso === 'streaming') {
-            plano = { nome: 'MAX', velocidade: '850 MEGA', preco: 'R$ 139,90/mês', beneficios: '⭐ MAIS VENDIDO\\n🎬 HBO MAX INCLUSO\\n✅ Perfeito para 3-5 pessoas\\n✅ Múltiplos streamings 4K\\n✅ Watch+ 30 canais' };
+            plano = { nome: 'MAX', velocidade: '850 MEGA', preco: 'R$ 139,90/mês', beneficios: '• MAIS VENDIDO\\n• HBO MAX INCLUSO\\n• Perfeito para 3-5 pessoas\\n• Múltiplos streamings 4K\\n• Watch+ 30 canais' };
           } else {
-            plano = { nome: 'ELITE', velocidade: '950 MEGA', preco: 'R$ 159,90/mês', beneficios: '👑 PREMIUM\\n✅ Ideal para 6+ pessoas\\n✅ Jogos online sem lag\\n✅ Home office profissional\\n✅ Assistência prioritária' };
+            plano = { nome: 'ELITE', velocidade: '950 MEGA', preco: 'R$ 159,90/mês', beneficios: '• PREMIUM\\n• Ideal para 6+ pessoas\\n• Jogos online sem lag\\n• Home office profissional\\n• Assistência prioritária' };
           }
         } else {
           if (pessoas <= 5) {
-            plano = { nome: 'PRIME EMPRESARIAL', velocidade: '800 MEGA', preco: 'R$ 119,90/mês', beneficios: '💼 Pequenos negócios\\n✅ Até 5 funcionários\\n✅ Assistência Premium\\n✅ Instalação grátis' };
+            plano = { nome: 'PRIME EMPRESARIAL', velocidade: '800 MEGA', preco: 'R$ 119,90/mês', beneficios: '• Pequenos negócios\\n• Até 5 funcionários\\n• Assistência Premium\\n• Instalação grátis' };
           } else if (pessoas <= 10 && uso !== 'misto') {
-            plano = { nome: 'ELITE EMPRESARIAL', velocidade: '950 MEGA', preco: 'R$ 159,90/mês', beneficios: '💼 Médias empresas\\n✅ Até 10 funcionários\\n✅ Assistência prioritária\\n✅ Acesso Corporate' };
+            plano = { nome: 'ELITE EMPRESARIAL', velocidade: '950 MEGA', preco: 'R$ 159,90/mês', beneficios: '• Médias empresas\\n• Até 10 funcionários\\n• Assistência prioritária\\n• Acesso Corporate' };
           } else if (pessoas <= 10) {
-            plano = { nome: 'BUSINESS STARTER', velocidade: '800 MEGA', preco: 'R$ 289,90/mês', beneficios: '🏢 Com IPv4 FIXO\\n✅ Perfeito para servidores\\n✅ Acesso remoto\\n✅ Assistência Premium' };
+            plano = { nome: 'BUSINESS STARTER', velocidade: '800 MEGA', preco: 'R$ 289,90/mês', beneficios: '• Com IPv4 FIXO\\n• Perfeito para servidores\\n• Acesso remoto\\n• Assistência Premium' };
           } else {
-            plano = { nome: 'BUSINESS', velocidade: '950 MEGA', preco: 'R$ 389,90/mês', beneficios: '🏢 Empresas grandes\\n🔒 IPv4 FIXO\\n✅ 10+ funcionários\\n✅ Assistência prioritária\\n✅ Corporate' };
+            plano = { nome: 'BUSINESS', velocidade: '950 MEGA', preco: 'R$ 389,90/mês', beneficios: '• Empresas grandes\\n• IPv4 FIXO\\n• 10+ funcionários\\n• Assistência prioritária\\n• Corporate' };
           }
         }
 
@@ -827,15 +842,15 @@ Posso enviar a proposta formal?\`
         document.getElementById('plano-beneficios').innerHTML = plano.beneficios.replace(/\\n/g, '<br>');
         document.getElementById('resultado-quiz').style.display = 'block';
 
-        window.planoRecomendado = \`✨ *PLANO RECOMENDADO PARA VOCÊ*
+        window.planoRecomendado = \`*PLANO RECOMENDADO PARA VOCÊ*
 
-🎯 *\${plano.nome}*
-📶 \${plano.velocidade}
-💰 \${plano.preco}
+*\${plano.nome}*
+> \${plano.velocidade}
+> \${plano.preco}
 
 \${plano.beneficios.replace(/<br>/g, '\\n')}
 
-🚀 *NEW OESTE TELECOM*
+*NEW OESTE TELECOM*
 Fibra óptica de verdade!
 
 Quer agendar a instalação?\`;
@@ -844,7 +859,7 @@ Quer agendar a instalação?\`;
       function copiarResultado() {
         if (window.planoRecomendado) {
           navigator.clipboard.writeText(window.planoRecomendado).then(() => {
-            alert('✅ Texto copiado! Cole no WhatsApp do cliente.');
+            alert('Texto copiado! Cole no WhatsApp do cliente.');
           });
         }
       }
