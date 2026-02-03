@@ -765,6 +765,7 @@ function renderScriptsNewOeste() {
   const tenantQuery = tenantConfig.id ? `?tenant=${tenantConfig.id}` : '';
   
   return `
+    <!-- Hero Section -->
     <div style="background: linear-gradient(135deg, #FF6B35 0%, #FFD700 50%, #FF8C42 100%); border-radius: 16px; padding: 32px; margin-bottom: 24px; color: white;">
       <div style="display: flex; align-items: center; gap: 12px;">
         <div style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
@@ -772,14 +773,489 @@ function renderScriptsNewOeste() {
         </div>
         <div>
           <h1 style="font-size: 24px; font-weight: 800; margin: 0;">Scripts e Mensagens Prontas</h1>
-          <p style="font-size: 14px; margin: 0; opacity: 0.95;">Templates otimizados para WhatsApp e vendas</p>
+          <p style="font-size: 14px; margin: 0; opacity: 0.95;">Templates otimizados para WhatsApp, email e telefone</p>
         </div>
       </div>
     </div>
 
-    <div class="card" style="padding: 24px;">
-      <p style="font-size: 14px; color: #666; margin: 0;">Página de Scripts New Oeste em construção. Em breve conteúdo completo de telecom.</p>
+    <!-- Navegação Rápida -->
+    <div class="card" style="margin-bottom: 24px; padding: 20px;">
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
+        <a href="#whatsapp" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #D1FAE5; border-radius: 8px; text-decoration: none; color: #10B981; font-size: 13px; font-weight: 600;">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+        <a href="#email" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #DBEAFE; border-radius: 8px; text-decoration: none; color: #3B82F6; font-size: 13px; font-weight: 600;">
+          <i class="fas fa-envelope"></i> Email
+        </a>
+        <a href="#ligacao" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #FFF4E6; border-radius: 8px; text-decoration: none; color: #FF6B35; font-size: 13px; font-weight: 600;">
+          <i class="fas fa-phone"></i> Ligação
+        </a>
+        <a href="#followup" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #FEE2E2; border-radius: 8px; text-decoration: none; color: #EF4444; font-size: 13px; font-weight: 600;">
+          <i class="fas fa-redo"></i> Follow-up
+        </a>
+      </div>
     </div>
+
+    <!-- Scripts WhatsApp -->
+    <div id="whatsapp" class="card" style="margin-bottom: 24px; padding: 24px;">
+      <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+        <i class="fab fa-whatsapp" style="color: #10B981;"></i> Scripts para WhatsApp
+      </h2>
+
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <!-- Script 1 -->
+        <div class="card" style="border: 2px solid #D1FAE5; background: white;">
+          <div style="padding: 16px; border-bottom: 1px solid #E5E7EB;">
+            <div style="display: flex; align-items: center; justify-content: between; margin-bottom: 8px;">
+              <h3 style="font-size: 15px; font-weight: 700; margin: 0; color: #10B981;">
+                <i class="fas fa-star"></i> Primeiro Contato - Lead Novo
+              </h3>
+            </div>
+            <div style="font-size: 12px; color: #666;">Use quando: Lead preencheu formulário ou demonstrou interesse</div>
+          </div>
+          <div style="padding: 16px;">
+            <div style="background: #F9FAFB; padding: 16px; border-radius: 8px; font-size: 13px; line-height: 1.6; font-family: monospace; white-space: pre-wrap;">Olá [Nome]!
+
+Aqui é [Seu Nome] da NEW OESTE TELECOM
+
+Vi que você tem interesse em internet fibra óptica de qualidade!
+
+Estamos em Foz do Iguaçu levando internet de verdade para nossos vizinhos.
+
+Posso te fazer 3 perguntinhas rápidas para encontrar o plano perfeito pra você?</div>
+            <button onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent)" style="margin-top: 12px; padding: 8px 16px; background: #10B981; color: white; border: none; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600;">
+              <i class="fas fa-copy"></i> Copiar Script
+            </button>
+          </div>
+        </div>
+
+        <!-- Script 2 -->
+        <div class="card" style="border: 2px solid #D1FAE5; background: white;">
+          <div style="padding: 16px; border-bottom: 1px solid #E5E7EB;">
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0 0 8px 0; color: #10B981;">Qualificação - 3 Perguntas</h3>
+            <div style="font-size: 12px; color: #666;">Use quando: Cliente demonstrou interesse inicial</div>
+          </div>
+          <div style="padding: 16px;">
+            <div style="background: #F9FAFB; padding: 16px; border-radius: 8px; font-size: 13px; line-height: 1.6; font-family: monospace; white-space: pre-wrap;">Perfeito! São só 3 perguntinhas:
+
+1. Qual internet você usa hoje?
+(Quero entender o que podemos melhorar pra você)
+
+2. Quantas pessoas usam internet na sua casa/empresa?
+
+3. Vocês usam mais para:
+   - Trabalho/home office
+   - Netflix/streaming
+   - Jogos online
+   - Tudo um pouco
+
+Com essas info consigo te indicar o plano ideal!</div>
+            <button onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent)" style="margin-top: 12px; padding: 8px 16px; background: #10B981; color: white; border: none; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600;">
+              <i class="fas fa-copy"></i> Copiar Script
+            </button>
+          </div>
+        </div>
+
+        <!-- Script 3 -->
+        <div class="card" style="border: 2px solid #D1FAE5; background: white;">
+          <div style="padding: 16px; border-bottom: 1px solid #E5E7EB;">
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0 0 8px 0; color: #10B981;">Apresentação - Plano Ideal</h3>
+            <div style="font-size: 12px; color: #666;">Use quando: Após qualificação, apresentar plano</div>
+          </div>
+          <div style="padding: 16px;">
+            <div style="background: #F9FAFB; padding: 16px; border-radius: 8px; font-size: 13px; line-height: 1.6; font-family: monospace; white-space: pre-wrap;">Show! Pelo que você me contou, o plano perfeito é o [NOME DO PLANO]!
+
+[X] MEGA de velocidade REAL
+R$ [PREÇO]/mês
+
+O QUE ESTÁ INCLUSO:
+• Fibra óptica FTTH até sua casa
+• Instalação GRÁTIS
+• Roteador WiFi+ incluso
+• Watch+ com 30 canais ao vivo
+• Suporte 24/7 com equipe local
+• App New Oeste Connect
+
+DIFERENCIAL: Não é cabo nem rádio! É fibra de verdade. A velocidade que você contrata é a que você recebe!
+
+A instalação sai em até 72 horas.
+
+Posso agendar para você?</div>
+            <button onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent)" style="margin-top: 12px; padding: 8px 16px; background: #10B981; color: white; border: none; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600;">
+              <i class="fas fa-copy"></i> Copiar Script
+            </button>
+          </div>
+        </div>
+
+        <!-- Script 4 -->
+        <div class="card" style="border: 2px solid #D1FAE5; background: white;">
+          <div style="padding: 16px; border-bottom: 1px solid #E5E7EB;">
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0 0 8px 0; color: #10B981;">Fechamento - Assumir Venda</h3>
+            <div style="font-size: 12px; color: #666;">Use quando: Cliente demonstrou interesse no plano</div>
+          </div>
+          <div style="padding: 16px;">
+            <div style="background: #F9FAFB; padding: 16px; border-radius: 8px; font-size: 13px; line-height: 1.6; font-family: monospace; white-space: pre-wrap;">Perfeito! Então vou te colocar na agenda!
+
+Você prefere instalação pela manhã (8h-12h) ou tarde (13h-17h)?
+
+Vou precisar de:
+• CPF
+• RG
+• Comprovante de endereço (conta de luz ou água)
+
+Pode me mandar uma foto dos documentos?
+
+Ah! Essa promoção é válida só até [DATA]. Por isso é bom garantir logo!</div>
+            <button onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent)" style="margin-top: 12px; padding: 8px 16px; background: #10B981; color: white; border: none; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600;">
+              <i class="fas fa-copy"></i> Copiar Script
+            </button>
+          </div>
+        </div>
+
+        <!-- Script 5 -->
+        <div class="card" style="border: 2px solid #D1FAE5; background: white;">
+          <div style="padding: 16px; border-bottom: 1px solid #E5E7EB;">
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0 0 8px 0; color: #10B981;">Objeção: "Está caro"</h3>
+            <div style="font-size: 12px; color: #666;">Use quando: Cliente achar o preço alto</div>
+          </div>
+          <div style="padding: 16px;">
+            <div style="background: #F9FAFB; padding: 16px; border-radius: 8px; font-size: 13px; line-height: 1.6; font-family: monospace; white-space: pre-wrap;">Entendo perfeitamente!
+
+Deixa eu te explicar a diferença:
+
+As mais baratas geralmente são:
+✗ Cabo coaxial ou rádio
+✗ Velocidade "até" (nunca é real)
+✗ Cai quando chove
+✗ Trava em horário de pico
+
+A New Oeste é:
+✓ Fibra FTTH (até dentro de casa)
+✓ Velocidade GARANTIDA
+✓ Estável 24/7
+✓ Empresa local - suporte rápido
+
+Você economiza R$ 30/mês mas fica nervoso toda vez que cair?
+
+Vale mais a pena ter tranquilidade e produtividade, concorda?
+
+Além disso: instalação GRÁTIS + WiFi+ incluso!</div>
+            <button onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent)" style="margin-top: 12px; padding: 8px 16px; background: #10B981; color: white; border: none; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600;">
+              <i class="fas fa-copy"></i> Copiar Script
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts Email -->
+    <div id="email" class="card" style="margin-bottom: 24px; padding: 24px;">
+      <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-envelope" style="color: #3B82F6;"></i> Templates de Email
+      </h2>
+
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <!-- Email 1 -->
+        <div class="card" style="border: 2px solid #DBEAFE; background: white;">
+          <div style="padding: 16px; border-bottom: 1px solid #E5E7EB;">
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0 0 8px 0; color: #3B82F6;">Email - Primeiro Contato Profissional</h3>
+            <div style="font-size: 12px; color: #666;"><strong>Assunto:</strong> Internet Fibra Óptica em Foz - Proposta Personalizada</div>
+          </div>
+          <div style="padding: 16px;">
+            <div style="background: #F9FAFB; padding: 16px; border-radius: 8px; font-size: 13px; line-height: 1.6; white-space: pre-wrap;">Olá [Nome],
+
+Sou [Seu Nome], consultor comercial da New Oeste Telecom.
+
+Identificamos que sua empresa/residência está em nossa área de cobertura em Foz do Iguaçu e gostaria de apresentar nossas soluções de internet fibra óptica.
+
+A New Oeste oferece:
+• Fibra FTTH (até dentro do estabelecimento)
+• Velocidades de 800 a 950 MEGA
+• Instalação em até 72 horas
+• Suporte técnico 24/7 com equipe local
+• Sem taxas ocultas
+
+Nossos planos começam em R$ 69,90/mês para residências e R$ 119,90/mês para empresas.
+
+Estou à disposição para agendar uma conversa rápida e apresentar a proposta ideal para seu perfil.
+
+Atenciosamente,
+[Seu Nome]
+New Oeste Telecom
+WhatsApp: [Número]</div>
+            <button onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent)" style="margin-top: 12px; padding: 8px 16px; background: #3B82F6; color: white; border: none; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600;">
+              <i class="fas fa-copy"></i> Copiar Email
+            </button>
+          </div>
+        </div>
+
+        <!-- Email 2 -->
+        <div class="card" style="border: 2px solid #DBEAFE; background: white;">
+          <div style="padding: 16px; border-bottom: 1px solid #E5E7EB;">
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0 0 8px 0; color: #3B82F6;">Email - Follow-up Após Proposta</h3>
+            <div style="font-size: 12px; color: #666;"><strong>Assunto:</strong> Re: Proposta Internet New Oeste - Alguma dúvida?</div>
+          </div>
+          <div style="padding: 16px;">
+            <div style="background: #F9FAFB; padding: 16px; border-radius: 8px; font-size: 13px; line-height: 1.6; white-space: pre-wrap;">Olá [Nome],
+
+Espero que esteja bem!
+
+Retorno sobre a proposta que enviei referente ao plano [NOME] de [X] MEGA.
+
+Ficou alguma dúvida sobre:
+→ Cobertura no seu endereço?
+→ Processo de instalação?
+→ Formas de pagamento?
+→ Valores e benefícios inclusos?
+
+Estou à disposição para esclarecer qualquer ponto!
+
+Lembrando que a promoção com instalação gratuita é válida até [DATA].
+
+Aguardo seu retorno.
+
+Atenciosamente,
+[Seu Nome]
+New Oeste Telecom</div>
+            <button onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent)" style="margin-top: 12px; padding: 8px 16px; background: #3B82F6; color: white; border: none; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600;">
+              <i class="fas fa-copy"></i> Copiar Email
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts Ligação -->
+    <div id="ligacao" class="card" style="margin-bottom: 24px; padding: 24px;">
+      <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-phone" style="color: #FF6B35;"></i> Roteiros para Ligação
+      </h2>
+
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+        <!-- Ligação Ativa -->
+        <div class="card" style="border: 2px solid #FFF4E6; background: white;">
+          <div style="padding: 16px; background: #FFF4E6; border-radius: 8px 8px 0 0;">
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0; color: #FF6B35;">
+              <i class="fas fa-phone-volume"></i> Ligação Ativa - Oferta
+            </h3>
+          </div>
+          <div style="padding: 16px;">
+            <div style="margin-bottom: 12px;">
+              <strong style="color: #FF6B35; font-size: 13px;">ABERTURA:</strong>
+              <p style="font-size: 12px; margin: 4px 0 0 0; color: #666;">"Bom dia, [Nome]! Aqui é [Seu Nome] da New Oeste Telecom. Estou ligando porque acabamos de habilitar fibra óptica na sua rua."</p>
+            </div>
+            <div style="margin-bottom: 12px;">
+              <strong style="color: #FF6B35; font-size: 13px;">QUALIFICAÇÃO:</strong>
+              <p style="font-size: 12px; margin: 4px 0 0 0; color: #666;">"Você já usa internet aí? Qual operadora? E como anda a qualidade?"</p>
+            </div>
+            <div style="margin-bottom: 12px;">
+              <strong style="color: #FF6B35; font-size: 13px;">APRESENTAÇÃO:</strong>
+              <p style="font-size: 12px; margin: 4px 0 0 0; color: #666;">"A gente trabalha com fibra FTTH - vai até dentro da casa. Tenho um plano de [X] MEGA por R$ [PREÇO] com instalação grátis."</p>
+            </div>
+            <div>
+              <strong style="color: #FF6B35; font-size: 13px;">FECHAMENTO:</strong>
+              <p style="font-size: 12px; margin: 4px 0 0 0; color: #666;">"Posso te enviar os detalhes no WhatsApp? Qual seu número?"</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ligação Receptiva -->
+        <div class="card" style="border: 2px solid #FFF4E6; background: white;">
+          <div style="padding: 16px; background: #FFF4E6; border-radius: 8px 8px 0 0;">
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0; color: #FF6B35;">
+              <i class="fas fa-phone-alt"></i> Ligação Receptiva
+            </h3>
+          </div>
+          <div style="padding: 16px;">
+            <div style="margin-bottom: 12px;">
+              <strong style="color: #FF6B35; font-size: 13px;">ABERTURA:</strong>
+              <p style="font-size: 12px; margin: 4px 0 0 0; color: #666;">"New Oeste Telecom, bom dia! Aqui é [Seu Nome], como posso te ajudar?"</p>
+            </div>
+            <div style="margin-bottom: 12px;">
+              <strong style="color: #FF6B35; font-size: 13px;">QUALIFICAÇÃO:</strong>
+              <p style="font-size: 12px; margin: 4px 0 0 0; color: #666;">"Deixa eu anotar: nome completo e endereço? [Verificar cobertura] Temos cobertura sim!"</p>
+            </div>
+            <div style="margin-bottom: 12px;">
+              <strong style="color: #FF6B35; font-size: 13px;">NECESSIDADES:</strong>
+              <p style="font-size: 12px; margin: 4px 0 0 0; color: #666;">"Quantas pessoas usam? Vocês usam mais para trabalho, Netflix ou jogos?"</p>
+            </div>
+            <div>
+              <strong style="color: #FF6B35; font-size: 13px;">FECHAMENTO:</strong>
+              <p style="font-size: 12px; margin: 4px 0 0 0; color: #666;">"Pelo seu uso, o ideal é o [PLANO]. Posso já te colocar na agenda?"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sequências Follow-up -->
+    <div id="followup" class="card" style="margin-bottom: 24px; padding: 24px;">
+      <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-redo" style="color: #EF4444;"></i> Sequências de Follow-up
+      </h2>
+
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+        <!-- Sequência 1 -->
+        <div class="card" style="border: 2px solid #FEE2E2; background: white;">
+          <div style="padding: 16px; background: #FEE2E2; border-radius: 8px 8px 0 0;">
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0; color: #EF4444;">
+              <i class="fas fa-clock"></i> Lead Frio (não respondeu)
+            </h3>
+          </div>
+          <div style="padding: 16px; font-size: 12px;">
+            <div style="margin-bottom: 10px;">
+              <span style="display: inline-block; background: #EF4444; color: white; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-bottom: 4px;">DIA 1</span>
+              <div style="color: #666;">Primeiro contato com apresentação</div>
+            </div>
+            <div style="margin-bottom: 10px;">
+              <span style="display: inline-block; background: #EF4444; color: white; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-bottom: 4px;">DIA 3</span>
+              <div style="color: #666;">"Oi [Nome]! Viu minha mensagem? Ficou alguma dúvida?"</div>
+            </div>
+            <div style="margin-bottom: 10px;">
+              <span style="display: inline-block; background: #EF4444; color: white; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-bottom: 4px;">DIA 7</span>
+              <div style="color: #666;">"[Nome], promoção acaba dia [X]. Vale a pena garantir!"</div>
+            </div>
+            <div>
+              <span style="display: inline-block; background: #EF4444; color: white; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-bottom: 4px;">DIA 14</span>
+              <div style="color: #666;">"Olá! Ainda tem interesse? Posso te ajudar!"</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sequência 2 -->
+        <div class="card" style="border: 2px solid #FEE2E2; background: white;">
+          <div style="padding: 16px; background: #FEE2E2; border-radius: 8px 8px 0 0;">
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0; color: #EF4444;">
+              <i class="fas fa-user-clock"></i> Interessado (não fechou)
+            </h3>
+          </div>
+          <div style="padding: 16px; font-size: 12px;">
+            <div style="margin-bottom: 10px;">
+              <span style="display: inline-block; background: #EF4444; color: white; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-bottom: 4px;">DIA 1</span>
+              <div style="color: #666;">"E aí? Conseguiu tirar suas dúvidas?"</div>
+            </div>
+            <div style="margin-bottom: 10px;">
+              <span style="display: inline-block; background: #EF4444; color: white; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-bottom: 4px;">DIA 2</span>
+              <div style="color: #666;">"Trouxe condição especial: [BENEFÍCIO]"</div>
+            </div>
+            <div style="margin-bottom: 10px;">
+              <span style="display: inline-block; background: #EF4444; color: white; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-bottom: 4px;">DIA 5</span>
+              <div style="color: #666;">"Abriu vaga de instalação pra amanhã!"</div>
+            </div>
+            <div>
+              <span style="display: inline-block; background: #EF4444; color: white; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-bottom: 4px;">DIA 10</span>
+              <div style="color: #666;">"Última chance! Promoção acaba hoje."</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sequência 3 -->
+        <div class="card" style="border: 2px solid #D1FAE5; background: white;">
+          <div style="padding: 16px; background: #D1FAE5; border-radius: 8px 8px 0 0;">
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0; color: #10B981;">
+              <i class="fas fa-check-circle"></i> Pós-Venda (fechou)
+            </h3>
+          </div>
+          <div style="padding: 16px; font-size: 12px;">
+            <div style="margin-bottom: 10px;">
+              <span style="display: inline-block; background: #10B981; color: white; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-bottom: 4px;">DIA 0</span>
+              <div style="color: #666;">"Parabéns! Instalação agendada para [DATA]"</div>
+            </div>
+            <div style="margin-bottom: 10px;">
+              <span style="display: inline-block; background: #10B981; color: white; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-bottom: 4px;">1 DIA ANTES</span>
+              <div style="color: #666;">"Amanhã é o dia! Técnico entre [HORÁRIO]"</div>
+            </div>
+            <div style="margin-bottom: 10px;">
+              <span style="display: inline-block; background: #10B981; color: white; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-bottom: 4px;">1 DIA DEPOIS</span>
+              <div style="color: #666;">"Gostou da velocidade? Tudo ok?"</div>
+            </div>
+            <div>
+              <span style="display: inline-block; background: #10B981; color: white; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-bottom: 4px;">7 DIAS</span>
+              <div style="color: #666;">"Conhece alguém que precisa? Temos indicação!"</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sequência 4 -->
+        <div class="card" style="border: 2px solid #FFF7ED; background: white;">
+          <div style="padding: 16px; background: #FFF7ED; border-radius: 8px 8px 0 0;">
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0; color: #F59E0B;">
+              <i class="fas fa-undo"></i> Reativação (lead antigo)
+            </h3>
+          </div>
+          <div style="padding: 16px; font-size: 12px;">
+            <div style="margin-bottom: 10px;">
+              <span style="display: inline-block; background: #F59E0B; color: white; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-bottom: 4px;">TENT. 1</span>
+              <div style="color: #666;">"Faz tempo! Agora temos novos planos"</div>
+            </div>
+            <div style="margin-bottom: 10px;">
+              <span style="display: inline-block; background: #F59E0B; color: white; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-bottom: 4px;">TENT. 2</span>
+              <div style="color: #666;">"Lançamento: [X] MEGA com desconto!"</div>
+            </div>
+            <div>
+              <span style="display: inline-block; background: #F59E0B; color: white; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-bottom: 4px;">TENT. 3</span>
+              <div style="color: #666;">"Último aviso! Válido só até [DATA]"</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dicas de Comunicação -->
+    <div class="card" style="padding: 24px; background: linear-gradient(135deg, #1F2937, #374151); color: white;">
+      <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0;">
+        <i class="fas fa-lightbulb"></i> Dicas de Comunicação
+      </h2>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+        <div style="background: rgba(255,255,255,0.1); padding: 16px; border-radius: 8px;">
+          <h3 style="font-size: 14px; font-weight: 700; margin: 0 0 8px 0;">
+            <i class="fas fa-smile" style="color: #FFD700;"></i> Tom Amigável
+          </h3>
+          <p style="font-size: 12px; margin: 0; opacity: 0.9;">Use linguagem natural. Seja próximo mas profissional.</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.1); padding: 16px; border-radius: 8px;">
+          <h3 style="font-size: 14px; font-weight: 700; margin: 0 0 8px 0;">
+            <i class="fas fa-bolt" style="color: #FFD700;"></i> Seja Rápido
+          </h3>
+          <p style="font-size: 12px; margin: 0; opacity: 0.9;">Responda em até 5 minutos. Cliente quente não espera.</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.1); padding: 16px; border-radius: 8px;">
+          <h3 style="font-size: 14px; font-weight: 700; margin: 0 0 8px 0;">
+            <i class="fas fa-chart-line" style="color: #FFD700;"></i> Personalize
+          </h3>
+          <p style="font-size: 12px; margin: 0; opacity: 0.9;">Use o nome do cliente. Adapte ao contexto.</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.1); padding: 16px; border-radius: 8px;">
+          <h3 style="font-size: 14px; font-weight: 700; margin: 0 0 8px 0;">
+            <i class="fas fa-check-double" style="color: #FFD700;"></i> Confirme Sempre
+          </h3>
+          <p style="font-size: 12px; margin: 0; opacity: 0.9;">Dados, datas, horários. Evite erros confirmando.</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.1); padding: 16px; border-radius: 8px;">
+          <h3 style="font-size: 14px; font-weight: 700; margin: 0 0 8px 0;">
+            <i class="fas fa-ban" style="color: #FFD700;"></i> Evite Jargões
+          </h3>
+          <p style="font-size: 12px; margin: 0; opacity: 0.9;">Cliente não sabe o que é "CGNAT". Fale simples.</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.1); padding: 16px; border-radius: 8px;">
+          <h3 style="font-size: 14px; font-weight: 700; margin: 0 0 8px 0;">
+            <i class="fas fa-fire" style="color: #FFD700;"></i> Crie Urgência
+          </h3>
+          <p style="font-size: 12px; margin: 0; opacity: 0.9;">Promoção limitada, vagas de instalação. Use com verdade!</p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Smooth scroll
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+    </script>
   `;
 }
 
