@@ -63,6 +63,8 @@ export function renderPlaybook(path, tenantData = {}) {
     // Renderizar objecoes especifico do tenant
     if (tenantId === 'cabeloesaude') {
       content = renderObjecoesCabeloeSaude();
+    } else if (tenantId === 'newoeste') {
+      content = renderObjecoesNewOeste();
     } else {
       content = renderObjecoes();
     }
@@ -1263,6 +1265,32 @@ New Oeste Telecom</div>
 // ========================================
 // NEW OESTE - Scripts e Mensagens Prontas
 // ========================================
+
+
+// ========================================
+// NEW OESTE - Objeções e Tratamento
+// ========================================
+function renderObjecoesNewOeste() {
+  const tenantQuery = tenantConfig.id ? `?tenant=${tenantConfig.id}` : '';
+  
+  return `
+    <div style="background: linear-gradient(135deg, #EF4444 0%, #FF6B35 50%, #F59E0B 100%); border-radius: 16px; padding: 32px; margin-bottom: 24px; color: white;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-shield-alt" style="font-size: 22px;"></i>
+        </div>
+        <div>
+          <h1 style="font-size: 24px; font-weight: 800; margin: 0;">Tratamento de Objeções</h1>
+          <p style="font-size: 14px; margin: 0; opacity: 0.95;">Como responder dúvidas e superar resistências</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="padding: 24px; text-align: center;">
+      <p style="font-size: 16px; color: #666;">Conteúdo completo de objeções carregando...</p>
+    </div>
+  `;
+}
 
 function renderPlaybookMain() {
   // Diferenciais Paper Vines
