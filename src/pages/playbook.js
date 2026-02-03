@@ -741,18 +741,21 @@ function renderPlaybookNewOeste() {
     </div>
 
     <script>
-      // Accordion functionality
+      // Accordion functionality - usar classes CSS em vez de maxHeight
       document.querySelectorAll('.accordion-header').forEach(header => {
         header.addEventListener('click', () => {
           const accordion = header.parentElement;
           const content = accordion.querySelector('.accordion-content');
           const icon = header.querySelector('.fa-chevron-down');
 
-          const isOpen = content.style.maxHeight;
+          const isOpen = content.classList.contains('active');
 
           // Close all accordions
           document.querySelectorAll('.accordion-content').forEach(c => {
-            c.style.maxHeight = null;
+            c.classList.remove('active');
+          });
+          document.querySelectorAll('.accordion-header').forEach(h => {
+            h.classList.remove('active');
           });
           document.querySelectorAll('.accordion-header .fa-chevron-down').forEach(i => {
             i.style.transform = 'rotate(0deg)';
@@ -760,7 +763,8 @@ function renderPlaybookNewOeste() {
 
           // Open clicked accordion if it was closed
           if (!isOpen) {
-            content.style.maxHeight = content.scrollHeight + 'px';
+            content.classList.add('active');
+            header.classList.add('active');
             icon.style.transform = 'rotate(180deg)';
           }
         });
