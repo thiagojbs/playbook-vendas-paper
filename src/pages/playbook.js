@@ -1354,6 +1354,26 @@ function renderObjecoesCabeloeSaude() {
 }
 
 function renderScripts() {
+  // Validacao defensiva
+  if (!SCRIPTS_STATS || !ETAPAS_FUNIL || !DICAS_COMUNICACAO) {
+    return layout('Scripts', `
+      <div class="page-header">
+        <h1 class="page-title">Scripts de Vendas</h1>
+        <p class="page-subtitle" style="color: #ef4444;">
+          Erro ao carregar scripts. Por favor, tente novamente ou entre em contato com o suporte.
+        </p>
+      </div>
+      <div class="card">
+        <p><strong>Debug Info:</strong></p>
+        <ul>
+          <li>SCRIPTS_STATS: ${SCRIPTS_STATS ? 'OK' : 'UNDEFINED'}</li>
+          <li>ETAPAS_FUNIL: ${ETAPAS_FUNIL ? 'OK' : 'UNDEFINED'}</li>
+          <li>DICAS_COMUNICACAO: ${DICAS_COMUNICACAO ? 'OK' : 'UNDEFINED'}</li>
+        </ul>
+      </div>
+    `, 'scripts', tenantConfig);
+  }
+
   // Stats
   const statsHtml = `
     <div class="stats-grid" style="margin-bottom: 24px;">
